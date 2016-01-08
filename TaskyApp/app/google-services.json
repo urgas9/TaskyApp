@@ -1,0 +1,51 @@
+{
+  "project_info": {
+    "project_id": "taskyapp-d5115",
+    "project_number": "1031869063962",
+    "name": "TaskyApp"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1031869063962:android:67d37c1d726edcfa",
+        "client_id": "android:si.uni_lj.fri.taskyapp",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "si.uni_lj.fri.taskyapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1031869063962-n0eloi8ohkjo9plbrvoghvp632r268hv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "si.uni_lj.fri.taskyapp",
+            "certificate_hash": "B4C7C5A16D6EA8358C7F9CD67516DAB91130A977"
+          }
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}
