@@ -27,6 +27,10 @@ dependencies {
     compile 'com.google.android.gms:play-services:8.4.0'
 
     compile 'com.jakewharton:butterknife:7.0.1'
+    compile('com.github.afollestad.material-dialogs:core:0.8.5.3@aar') {
+        // For material design dialogs https://github.com/afollestad/material-dialogs
+        transitive = true
+    }
 }
 
 // Fixed compile error - GPlay version conflict

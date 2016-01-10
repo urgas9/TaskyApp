@@ -1,40 +1,41 @@
 package si.uni_lj.fri.taskyapp;
 
-import android.app.Dialog;
-import android.app.PendingIntent;
+import android.Manifest;
 import android.content.BroadcastReceiver;
-import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.ActivityRecognition;
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import si.uni_lj.fri.taskyapp.activity_recognition.ActivityRecognitionIntentService;
 import si.uni_lj.fri.taskyapp.broadcast_receivers.NewSensorReadingReceiver;
 import si.uni_lj.fri.taskyapp.global.AppHelper;
+import si.uni_lj.fri.taskyapp.global.PermissionsHelper;
+import si.uni_lj.fri.taskyapp.sensor.SensingManager;
 
 
 // Activity recognition android: http://tutsberry.com/activity-recognition-implementation-on-android/
-public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
+public class MainActivity extends AppCompatActivity{
 
     private static final String TAG = "MainActivity";
-    private GoogleApiClient mGApiClient;
     BroadcastReceiver newSensorReadingReceiver;
+    SensingManager mSensingManager;
 
     @Bind(R.id.app_status_tv)
     TextView mStatusTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,20 +46,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mStatusTextView.setText("Launching main activity");
-        if(AppHelper.isPlayServiceAvailable(this)){
+        mStatusTextView.setText("Launching main activity.");
+        if(!AppHelper.isPlayServiceAvailable(this)){
             Snackbar.make(findViewById(R.id.main_coordinator_layout), "Google Play Services are not available! Please install them first.", Snackbar.LENGTH_INDEFINITE).show();
         }
 
-        mGApiClient = new GoogleApiClient.Builder(this)
-                .addApi(ActivityRecognition.API)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .build();
-        //Connect to Google API
-        mGApiClient.connect();
-
-        newSensorReadingReceiver = new NewSensorReadingReceiver(mStatusTextView);
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +60,18 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             }
         });
 
+
         */
+        /** Requesting permissions for Android Marshmallow and above **/
+        PermissionsHelper.requestLocationsPermissions(this);
+
+        mStatusTextView.setText("Requesting alarm updates.");
+        mSensingManager = new SensingManager(this);
+        mSensingManager.senseOnInterval();
+        //mSensingManager.senseOnActivityRecognition();
+        mSensingManager.senseOnLocationChanged();
+
+        newSensorReadingReceiver = new NewSensorReadingReceiver(mStatusTextView);
 
         //Filter the Intent and register broadcast receiver
         IntentFilter filter = new IntentFilter();
@@ -102,39 +105,52 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     protected void onDestroy() {
         super.onDestroy();
 
+        mSensingManager.dispose();
         //Disconnect and detach the receiver
-        mGApiClient.disconnect();
         unregisterReceiver(newSensorReadingReceiver);
     }
 
     @Override
-    public void onConnected(Bundle bundle) {
-        Intent i = new Intent(this, ActivityRecognitionIntentService.class);
-        PendingIntent mActivityRecongPendingIntent = PendingIntent
-                .getService(this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+    public void onRequestPermissionsResult(int requestCode, final String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        Log.d(TAG, "connected to ActivityRecognition");
-        ActivityRecognition.ActivityRecognitionApi.requestActivityUpdates(mGApiClient, 0, mActivityRecongPendingIntent);
+        Log.d(TAG, "onRequestPermissionsResult reached");
+        switch (requestCode) {
+            case PermissionsHelper.REQUEST_LOCATION_PERMISSIONS_CODE:
+                for (int i = 0; i < permissions.length; i++) {
+                    if (permissions[i].equals(Manifest.permission.ACCESS_FINE_LOCATION) && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                        mSensingManager.checkForPendingActions();
+                    }
+                    PermissionsHelper.markAsAsked(this, permissions[i]);
+                }
 
-        //Update the TextView
-        mStatusTextView.setText("Connected to Google Play Services.");
-    }
+                if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                        || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                    new MaterialDialog.Builder(MainActivity.this)
+                            .content(getString(R.string.permission_location_denied))
+                            .positiveText(getString(R.string.ok))
+                            .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                @Override
+                                public void onClick(MaterialDialog materialDialog, DialogAction dialogAction) {
+                                    ActivityCompat.requestPermissions(MainActivity.this, permissions, PermissionsHelper.REQUEST_WRITE_STORAGE_PERMISSIONS_CODE);
+                                }
+                            })
+                            .build()
+                            .show();
+                } else {
+                    Snackbar s = Snackbar.make(findViewById(R.id.main_coordinator_layout),
+                            R.string.permission_location_forever_denied, Snackbar.LENGTH_LONG);
+                    s.setAction(R.string.action_settings, new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            PermissionsHelper.openAppOSSettings(MainActivity.this);
+                        }
+                    });
+                    s.show();
+                }
+                break;
 
-    @Override
-    public void onConnectionSuspended(int i) {
-        Log.d(TAG, "Suspended to ActivityRecognition");
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.d(TAG, "Not connected to ActivityRecognition");
-
-        Dialog errorDialog = GoogleApiAvailability.getInstance().getErrorDialog(
-                this,
-                connectionResult.getErrorCode(),
-                1);
-        if(errorDialog != null){
-            errorDialog.show();
         }
     }
+
 }
