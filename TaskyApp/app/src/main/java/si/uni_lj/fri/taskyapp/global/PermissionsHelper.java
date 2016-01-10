@@ -73,18 +73,17 @@ public class PermissionsHelper {
 
         Fragment frag = null;
         Activity act = null;
-        if(fragmentOrActivity instanceof Fragment){
-            frag = (Fragment)fragmentOrActivity;
-        }
-        else if(fragmentOrActivity instanceof Activity){
+        if (fragmentOrActivity instanceof Fragment) {
+            frag = (Fragment) fragmentOrActivity;
+        } else if (fragmentOrActivity instanceof Activity) {
             act = (Activity) fragmentOrActivity;
         }
-        if(act == null && frag == null){
+        if (act == null && frag == null) {
             return;
         }
 
         Context ctx = act;
-        if(frag != null){
+        if (frag != null) {
             ctx = frag.getContext();
         }
 
@@ -135,15 +134,14 @@ public class PermissionsHelper {
         Fragment frag = null;
         Activity act = null;
         Context ctx = null;
-        if(fragmentOrActivity instanceof Fragment){
-            frag = (Fragment)fragmentOrActivity;
+        if (fragmentOrActivity instanceof Fragment) {
+            frag = (Fragment) fragmentOrActivity;
             ctx = frag.getContext();
-        }
-        else if(fragmentOrActivity instanceof Activity){
+        } else if (fragmentOrActivity instanceof Activity) {
             act = (Activity) fragmentOrActivity;
             ctx = act;
         }
-        if(act == null && frag == null){
+        if (act == null && frag == null) {
             Log.e("requestStoragePermissin", "Object passed was neither of type Activity nor Fragment");
             return false;
         }
@@ -153,10 +151,9 @@ public class PermissionsHelper {
         final String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
         // Requesting permissions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !PermissionsHelper.hasPermission(ctx, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-            if(frag != null) {
+            if (frag != null) {
                 frag.requestPermissions(permissions, REQUEST_WRITE_STORAGE_PERMISSIONS_CODE);
-            }
-            else{
+            } else {
                 act.requestPermissions(permissions, REQUEST_WRITE_STORAGE_PERMISSIONS_CODE);
             }
             return false;
@@ -180,7 +177,7 @@ public class PermissionsHelper {
         return true;
     }
 
-    public static void requestLocationsPermissions(Activity a){
+    public static void requestLocationsPermissions(Activity a) {
         String[] permissions = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
 
         // Requesting permissions

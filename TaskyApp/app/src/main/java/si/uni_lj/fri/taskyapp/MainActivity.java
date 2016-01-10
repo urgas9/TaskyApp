@@ -27,7 +27,7 @@ import si.uni_lj.fri.taskyapp.sensor.SensingManager;
 
 
 // Activity recognition android: http://tutsberry.com/activity-recognition-implementation-on-android/
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     BroadcastReceiver newSensorReadingReceiver;
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
 
         mStatusTextView.setText("Launching main activity.");
-        if(!AppHelper.isPlayServiceAvailable(this)){
+        if (!AppHelper.isPlayServiceAvailable(this)) {
             Snackbar.make(findViewById(R.id.main_coordinator_layout), "Google Play Services are not available! Please install them first.", Snackbar.LENGTH_INDEFINITE).show();
         }
 

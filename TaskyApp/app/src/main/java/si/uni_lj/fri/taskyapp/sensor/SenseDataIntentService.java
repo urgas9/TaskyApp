@@ -21,7 +21,7 @@ public class SenseDataIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if(ActivityRecognitionResult.hasResult(intent)) {
+        if (ActivityRecognitionResult.hasResult(intent)) {
             //Extract the result from the Response
             ActivityRecognitionResult result = ActivityRecognitionResult.extractResult(intent);
             DetectedActivity detectedActivity = result.getMostProbableActivity();
@@ -39,11 +39,10 @@ public class SenseDataIntentService extends IntentService {
             Log.d(TAG, "Confidence : " + confidence);
 
 
-
             //Send Broadcast to be listen in MainActivity
             this.sendBroadcast(i);
 
-        }else if(LocationResult.hasResult(intent)){
+        } else if (LocationResult.hasResult(intent)) {
             Log.d(TAG, "Got intent from location update.");
         } else {
             Log.d(TAG, "Got intent from fired alarm.");
@@ -52,8 +51,7 @@ public class SenseDataIntentService extends IntentService {
 
     //Get the activity name
     private String getActivityName(int type) {
-        switch (type)
-        {
+        switch (type) {
             case DetectedActivity.IN_VEHICLE:
                 return "In Vehicle";
             case DetectedActivity.ON_BICYCLE:

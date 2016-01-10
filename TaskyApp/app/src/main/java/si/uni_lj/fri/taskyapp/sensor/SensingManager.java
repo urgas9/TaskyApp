@@ -21,16 +21,11 @@ import si.uni_lj.fri.taskyapp.global.PermissionsHelper;
  */
 public class SensingManager implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    enum SensingPolicy{
-        NONE, LOCATION_UPDATES, INTERVAL, ACTIVITY_UPDATES
-    }
     private static final String TAG = "SensingManager";
-
     private Context mContext;
     private GoogleApiClient mGoogleApiClient;
     private SensingPolicy mWhichPolicy = SensingPolicy.NONE; // 0 = interval, 1 = activity changed, 2 = location changed
     private boolean mPendingAction;
-
     public SensingManager(Context context) {
         super();
         this.mContext = context;
@@ -40,20 +35,18 @@ public class SensingManager implements GoogleApiClient.ConnectionCallbacks, Goog
 
     public void senseOnActivityRecognition() {
         mWhichPolicy = SensingPolicy.ACTIVITY_UPDATES;
-        if(mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
+        if (mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
             buildGoogleApiClient().connect();
-        }
-        else{
+        } else {
             requestActivityUpdates();
         }
     }
 
     public void senseOnLocationChanged() {
         mWhichPolicy = SensingPolicy.LOCATION_UPDATES;
-        if(mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
+        if (mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
             buildGoogleApiClient().connect();
-        }
-        else{
+        } else {
             requestLocationUpdates();
         }
     }
@@ -63,7 +56,7 @@ public class SensingManager implements GoogleApiClient.ConnectionCallbacks, Goog
         requestAlarmIntervalUpdates();
     }
 
-    private GoogleApiClient buildGoogleApiClient(){
+    private GoogleApiClient buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(mContext)
                 .addApi(ActivityRecognition.API)
                 .addApi(LocationServices.API)
@@ -80,7 +73,7 @@ public class SensingManager implements GoogleApiClient.ConnectionCallbacks, Goog
         } else {
             Log.d(TAG, "onConnected, bundle == null");
         }
-        switch (mWhichPolicy){
+        switch (mWhichPolicy) {
             case ACTIVITY_UPDATES:
                 requestActivityUpdates();
                 break;
@@ -108,7 +101,7 @@ public class SensingManager implements GoogleApiClient.ConnectionCallbacks, Goog
     }
 
     private void requestLocationUpdates() {
-        if(!PermissionsHelper.hasPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION)){
+        if (!PermissionsHelper.hasPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION)) {
             Log.d(TAG, "No location permissions provided.");
             mPendingAction = true;
             return;
@@ -121,9 +114,9 @@ public class SensingManager implements GoogleApiClient.ConnectionCallbacks, Goog
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, myLocationRequest, getSensingServicePendingIntent());
     }
 
-    private void requestAlarmIntervalUpdates(){
+    private void requestAlarmIntervalUpdates() {
         Log.d(TAG, "Firing requested alarm interval updates.");
-        AlarmManager am = (AlarmManager)mContext.getSystemService(Context.ALARM_SERVICE);
+        AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
         am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 Constants.APPROXIMATE_INTERVAL_MILISECS,
                 Constants.APPROXIMATE_INTERVAL_MILISECS,
@@ -135,10 +128,10 @@ public class SensingManager implements GoogleApiClient.ConnectionCallbacks, Goog
      * For example. Requesting location updates cannot be done, while user don't grant
      * ACCESS_FINE_LOCATION permission
      */
-    public void checkForPendingActions(){
+    public void checkForPendingActions() {
 
-        if(mPendingAction){
-            switch (mWhichPolicy){
+        if (mPendingAction) {
+            switch (mWhichPolicy) {
                 case LOCATION_UPDATES:
                     requestLocationUpdates();
                     break;
@@ -147,8 +140,9 @@ public class SensingManager implements GoogleApiClient.ConnectionCallbacks, Goog
             }
         }
     }
-    public void dispose(){
-        if(mGoogleApiClient != null) {
+
+    public void dispose() {
+        if (mGoogleApiClient != null) {
             mGoogleApiClient.disconnect();
         }
     }
@@ -169,5 +163,9 @@ public class SensingManager implements GoogleApiClient.ConnectionCallbacks, Goog
         if(errorDialog != null){
             errorDialog.show();
         }*/
+    }
+
+    enum SensingPolicy {
+        NONE, LOCATION_UPDATES, INTERVAL, ACTIVITY_UPDATES
     }
 }
