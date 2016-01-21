@@ -21,6 +21,7 @@ public class SenseDataIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        String policy = intent.getStringExtra("sensing_policy");
         if (ActivityRecognitionResult.hasResult(intent)) {
             //Extract the result from the Response
             ActivityRecognitionResult result = ActivityRecognitionResult.extractResult(intent);
@@ -44,9 +45,13 @@ public class SenseDataIntentService extends IntentService {
 
         } else if (LocationResult.hasResult(intent)) {
             Log.d(TAG, "Got intent from location update.");
-        } else {
+
+        } else if (policy != null && policy.equals("INTERVAL")){
             Log.d(TAG, "Got intent from fired alarm.");
+        } else{
+            Log.d(TAG, "Policy unresolved: " + policy);
         }
+
     }
 
     //Get the activity name

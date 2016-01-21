@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 import si.uni_lj.fri.taskyapp.broadcast_receivers.NewSensorReadingReceiver;
 import si.uni_lj.fri.taskyapp.global.AppHelper;
 import si.uni_lj.fri.taskyapp.global.PermissionsHelper;
-import si.uni_lj.fri.taskyapp.sensor.SensingManager;
+import si.uni_lj.fri.taskyapp.sensor.SensingInitiator;
 
 
 // Activity recognition android: http://tutsberry.com/activity-recognition-implementation-on-android/
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     BroadcastReceiver newSensorReadingReceiver;
-    SensingManager mSensingManager;
+    SensingInitiator mSensingInitiator;
 
     @Bind(R.id.app_status_tv)
     TextView mStatusTextView;
@@ -66,10 +66,10 @@ public class MainActivity extends AppCompatActivity {
         PermissionsHelper.requestLocationsPermissions(this);
 
         mStatusTextView.setText("Requesting alarm updates.");
-        mSensingManager = new SensingManager(this);
-        mSensingManager.senseOnInterval();
+        mSensingInitiator = new SensingInitiator(this);
+        mSensingInitiator.senseOnInterval();
         //mSensingManager.senseOnActivityRecognition();
-        mSensingManager.senseOnLocationChanged();
+        mSensingInitiator.senseOnLocationChanged();
 
         newSensorReadingReceiver = new NewSensorReadingReceiver(mStatusTextView);
 
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        mSensingManager.dispose();
+        mSensingInitiator.dispose();
         //Disconnect and detach the receiver
         unregisterReceiver(newSensorReadingReceiver);
     }
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
             case PermissionsHelper.REQUEST_LOCATION_PERMISSIONS_CODE:
                 for (int i = 0; i < permissions.length; i++) {
                     if (permissions[i].equals(Manifest.permission.ACCESS_FINE_LOCATION) && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                        mSensingManager.checkForPendingActions();
+                        mSensingInitiator.checkForPendingActions();
                     }
                     PermissionsHelper.markAsAsked(this, permissions[i]);
                 }

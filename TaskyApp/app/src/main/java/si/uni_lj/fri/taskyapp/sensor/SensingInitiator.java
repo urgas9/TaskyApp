@@ -5,12 +5,16 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.ActivityRecognition;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
@@ -19,14 +23,14 @@ import si.uni_lj.fri.taskyapp.global.PermissionsHelper;
 /**
  * Created by urgas9 on 10. 01. 2016.
  */
-public class SensingManager implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = "SensingManager";
     private Context mContext;
     private GoogleApiClient mGoogleApiClient;
     private SensingPolicy mWhichPolicy = SensingPolicy.NONE; // 0 = interval, 1 = activity changed, 2 = location changed
     private boolean mPendingAction;
-    public SensingManager(Context context) {
+    public SensingInitiator(Context context) {
         super();
         this.mContext = context;
         this.mWhichPolicy = SensingPolicy.NONE;
@@ -73,6 +77,7 @@ public class SensingManager implements GoogleApiClient.ConnectionCallbacks, Goog
         } else {
             Log.d(TAG, "onConnected, bundle == null");
         }
+        stopAllUpdates();
         switch (mWhichPolicy) {
             case ACTIVITY_UPDATES:
                 requestActivityUpdates();
@@ -83,29 +88,30 @@ public class SensingManager implements GoogleApiClient.ConnectionCallbacks, Goog
             default:
                 Log.e(TAG, "Connected to Google Play services, but requested policy is not handled, code: " + mWhichPolicy);
         }
-        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-            Log.d(TAG, "connected to ActivityRecognition");
-            ActivityRecognition.ActivityRecognitionApi.requestActivityUpdates(mGoogleApiClient, 0, getSensingServicePendingIntent());
-        }
     }
 
     private PendingIntent getSensingServicePendingIntent() {
         Intent i = new Intent(mContext, SenseDataIntentService.class);
+        if(mWhichPolicy == SensingPolicy.INTERVAL) {
+            i.putExtra("sensing_policy", mWhichPolicy.toString());
+        }
         return PendingIntent
                 .getService(mContext, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     private void requestActivityUpdates() {
         Log.d(TAG, "Starting requested activity recognition updates.");
+        stopAllUpdates();
         ActivityRecognition.ActivityRecognitionApi.requestActivityUpdates(mGoogleApiClient, 0, getSensingServicePendingIntent());
     }
 
     private void requestLocationUpdates() {
-        if (!PermissionsHelper.hasPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+        if (!PermissionsHelper.hasPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION)) {
             Log.d(TAG, "No location permissions provided.");
             mPendingAction = true;
             return;
         }
+        stopAllUpdates();
         Log.d(TAG, "Firing requested location updates.");
         LocationRequest myLocationRequest = new LocationRequest();
         myLocationRequest.setInterval(Constants.APPROXIMATE_INTERVAL_MILISECS);
@@ -115,6 +121,7 @@ public class SensingManager implements GoogleApiClient.ConnectionCallbacks, Goog
     }
 
     private void requestAlarmIntervalUpdates() {
+        stopAllUpdates();
         Log.d(TAG, "Firing requested alarm interval updates.");
         AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
         am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
@@ -141,6 +148,17 @@ public class SensingManager implements GoogleApiClient.ConnectionCallbacks, Goog
         }
     }
 
+    /**
+     * Stopping all updates, regardless of sensing policy
+     */
+    public void stopAllUpdates(){
+        if(mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, getSensingServicePendingIntent());
+            ActivityRecognition.ActivityRecognitionApi.removeActivityUpdates(mGoogleApiClient, getSensingServicePendingIntent());
+        }
+        AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+        am.cancel(getSensingServicePendingIntent());
+    }
     public void dispose() {
         if (mGoogleApiClient != null) {
             mGoogleApiClient.disconnect();

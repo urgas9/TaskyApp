@@ -181,10 +181,7 @@ public class PermissionsHelper {
         String[] permissions = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
 
         // Requesting permissions
-        String[] unaskedPerms = PermissionsHelper.findUnAskedPermissions(a, permissions);
-        if (unaskedPerms.length > 0) {
-            ActivityCompat.requestPermissions(a, unaskedPerms, REQUEST_LOCATION_PERMISSIONS_CODE);
-        }
+        ActivityCompat.requestPermissions(a, permissions, REQUEST_LOCATION_PERMISSIONS_CODE);
     }
 
     /**
