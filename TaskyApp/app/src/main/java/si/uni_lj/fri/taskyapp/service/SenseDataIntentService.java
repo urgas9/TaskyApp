@@ -1,4 +1,4 @@
-package si.uni_lj.fri.taskyapp.sensor;
+package si.uni_lj.fri.taskyapp.service;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -11,15 +11,26 @@ import com.google.android.gms.location.LocationResult;
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.ESSensorManager;
 import com.ubhave.sensormanager.config.pull.PullSensorConfig;
+import com.ubhave.sensormanager.data.env.AmbientTemperatureData;
+import com.ubhave.sensormanager.data.env.LightData;
 import com.ubhave.sensormanager.data.pull.AccelerometerData;
 import com.ubhave.sensormanager.data.pull.BluetoothData;
 import com.ubhave.sensormanager.data.pull.ESBluetoothDevice;
+import com.ubhave.sensormanager.data.pull.MicrophoneData;
+import com.ubhave.sensormanager.data.pull.WifiData;
+import com.ubhave.sensormanager.data.pull.WifiScanResult;
+import com.ubhave.sensormanager.data.push.ScreenData;
+import com.ubhave.sensormanager.data.push.SmsData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+
+import si.uni_lj.fri.taskyapp.sensor.Constants;
+import si.uni_lj.fri.taskyapp.sensor.SensorCallableGenerator;
+import si.uni_lj.fri.taskyapp.sensor.SensorThreadsManager;
 
 /**
  * Created by urgas9 on 31. 12. 2015.
@@ -81,6 +92,8 @@ public class SenseDataIntentService extends IntentService {
             sm = ESSensorManager.getSensorManager(getApplicationContext());
             sm.setSensorConfig(SensorUtils.SENSOR_TYPE_ACCELEROMETER,
                     PullSensorConfig.SENSE_WINDOW_LENGTH_MILLIS, Constants.SENSING_WINDOW_LENGTH_MILLIS);
+            sm.setSensorConfig(SensorUtils.SENSOR_TYPE_MICROPHONE, PullSensorConfig.SENSE_WINDOW_LENGTH_MILLIS, Constants.SENSING_WINDOW_LENGTH_MILLIS);
+
         } catch (ESException e) {
             e.printStackTrace();
             Log.e(TAG, "Cannot start sensing due to an exception, message: " + e.getMessage());
@@ -96,18 +109,14 @@ public class SenseDataIntentService extends IntentService {
                 return "Ajga Bidona!";
             }
         });
-        sensorThreadsManager.submit(new Callable<AccelerometerData>() {
-            @Override
-            public AccelerometerData call() throws Exception {
-                return (AccelerometerData) sm.getDataFromSensor(SensorUtils.SENSOR_TYPE_ACCELEROMETER);
-            }
-        });
-        sensorThreadsManager.submit(new Callable<BluetoothData>() {
-            @Override
-            public BluetoothData call() throws Exception {
-                return (BluetoothData) sm.getDataFromSensor(SensorUtils.SENSOR_TYPE_BLUETOOTH);
-            }
-        });
+        sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_ACCELEROMETER));
+        sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_BLUETOOTH));
+        sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_LIGHT));
+        sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_SCREEN));
+        sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_AMBIENT_TEMPERATURE));
+        sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_MICROPHONE));
+        sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_SMS));
+        sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_WIFI));
 
         sensorThreadsManager.submit(new Callable() {
             @Override
@@ -137,7 +146,32 @@ public class SenseDataIntentService extends IntentService {
             } else if (sensingData instanceof AccelerometerData) {
                 float[] meanValues = getMeanAccelerometerValues(((AccelerometerData) sensingData).getSensorReadings());
                 Log.d(TAG, "Got accelerometer data with mean values: " + meanValues[0] + ", " + meanValues[1] + ", " + meanValues[2]);
-            } else {
+            } else if(sensingData instanceof AmbientTemperatureData){
+                float ambientTemperature = ((AmbientTemperatureData) sensingData).getValue();
+                Log.d(TAG, "Got ambient temperature data: " + ambientTemperature);
+            } else if(sensingData instanceof LightData){
+                float ambientTemperature = ((LightData) sensingData).getValue();
+                Log.d(TAG, "Got light data: " + ambientTemperature);
+            } else if(sensingData instanceof ScreenData){
+                boolean isScreenOn = ((ScreenData) sensingData).isOn();
+                Log.d(TAG, "Screen status: " + ((isScreenOn)?"on" : "off"));
+            }
+            else if(sensingData instanceof MicrophoneData){
+                int[] amplitudes = ((MicrophoneData)sensingData).getAmplitudeArray();
+                Log.d(TAG, "Mean amplitude from microphone: " + getMeanValue(amplitudes));
+            }
+            else if(sensingData instanceof SmsData){
+                String address = ((SmsData)sensingData).getAddress();
+                Log.d(TAG, "SMS data: " + address);
+            }
+            else if(sensingData instanceof WifiData){
+                ArrayList<WifiScanResult> wifiScanResults = ((WifiData)sensingData).getWifiScanData();
+                Log.d(TAG, "WiFi data SSIDs nearby:");
+                for (WifiScanResult wsr : wifiScanResults){
+                    Log.d(TAG, wsr.getSsid());
+                }
+            }
+            else {
                 Log.d(TAG, "Retrieved unhandled sensing object: " + sensingData);
             }
         }
@@ -158,6 +192,15 @@ public class SenseDataIntentService extends IntentService {
             }
         }
         return result;
+    }
+
+    private double getMeanValue(int[] array){
+        int size = array.length;
+        double meanValue = 0;
+        for(int val : array){
+            meanValue += val/size;
+        }
+        return meanValue;
     }
 
     //Get the activity name

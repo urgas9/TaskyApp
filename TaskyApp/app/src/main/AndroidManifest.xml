@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".sensor.SenseDataIntentService"/>
+        <service android:name=".service.SenseDataIntentService"/>
     </application>
 
 </manifest>
