@@ -3,6 +3,7 @@ package si.uni_lj.fri.taskyapp.broadcast_receivers;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -27,12 +28,20 @@ public class NewSensorReadingReceiver extends BroadcastReceiver {
         Calendar rightNow = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("h:mm:ss a");
         String strDate = sdf.format(rightNow.getTime());
-        ;
-        String v = strDate + " " +
-                intent.getStringExtra("activity") + " " +
-                "Confidence : " + intent.getExtras().getInt("confidence") + "\n";
+        String policy = intent.getStringExtra("policy");
+        if (policy.equals("activity")) {
 
-        v = mStatusTextView.getText() + v;
-        mStatusTextView.setText(v);
+            String v = strDate + " " +
+                    intent.getStringExtra("activity") + " " +
+                    "Confidence : " + intent.getExtras().getInt("confidence") + "\n";
+
+            v = mStatusTextView.getText() + v;
+            mStatusTextView.setText(v);
+        } else if (policy.equals("location")) {
+            Location loc = intent.getParcelableExtra("location");
+            String v = strDate + " Location : " + loc.getLatitude() + ", " + loc.getLongitude() + "\n";
+            v = mStatusTextView.getText() + v;
+            mStatusTextView.setText(v);
+        }
     }
 }

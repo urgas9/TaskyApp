@@ -5,16 +5,12 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.ActivityRecognition;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
@@ -30,6 +26,8 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     private GoogleApiClient mGoogleApiClient;
     private SensingPolicy mWhichPolicy = SensingPolicy.NONE; // 0 = interval, 1 = activity changed, 2 = location changed
     private boolean mPendingAction;
+
+
     public SensingInitiator(Context context) {
         super();
         this.mContext = context;
@@ -92,7 +90,7 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
 
     private PendingIntent getSensingServicePendingIntent() {
         Intent i = new Intent(mContext, SenseDataIntentService.class);
-        if(mWhichPolicy == SensingPolicy.INTERVAL) {
+        if (mWhichPolicy == SensingPolicy.INTERVAL) {
             i.putExtra("sensing_policy", mWhichPolicy.toString());
         }
         return PendingIntent
@@ -114,8 +112,8 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
         stopAllUpdates();
         Log.d(TAG, "Firing requested location updates.");
         LocationRequest myLocationRequest = new LocationRequest();
-        myLocationRequest.setInterval(Constants.APPROXIMATE_INTERVAL_MILISECS);
-        myLocationRequest.setFastestInterval(Constants.APPROXIMATE_INTERVAL_MILISECS / 2);
+        myLocationRequest.setInterval(Constants.APPROXIMATE_INTERVAL_MILLIS * 2);
+        myLocationRequest.setFastestInterval(Constants.APPROXIMATE_INTERVAL_MILLIS);
         myLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, myLocationRequest, getSensingServicePendingIntent());
     }
@@ -125,8 +123,8 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
         Log.d(TAG, "Firing requested alarm interval updates.");
         AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
         am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                Constants.APPROXIMATE_INTERVAL_MILISECS,
-                Constants.APPROXIMATE_INTERVAL_MILISECS,
+                Constants.APPROXIMATE_INTERVAL_MILLIS,
+                Constants.APPROXIMATE_INTERVAL_MILLIS,
                 getSensingServicePendingIntent());
     }
 
@@ -151,14 +149,15 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     /**
      * Stopping all updates, regardless of sensing policy
      */
-    public void stopAllUpdates(){
-        if(mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+    public void stopAllUpdates() {
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, getSensingServicePendingIntent());
             ActivityRecognition.ActivityRecognitionApi.removeActivityUpdates(mGoogleApiClient, getSensingServicePendingIntent());
         }
         AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
         am.cancel(getSensingServicePendingIntent());
     }
+
     public void dispose() {
         if (mGoogleApiClient != null) {
             mGoogleApiClient.disconnect();
