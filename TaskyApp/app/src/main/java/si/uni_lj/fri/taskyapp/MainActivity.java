@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -17,12 +18,21 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.crashlytics.android.Crashlytics;
+import com.google.gson.Gson;
+
+import java.util.Date;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.fabric.sdk.android.Fabric;
 import si.uni_lj.fri.taskyapp.broadcast_receivers.NewSensorReadingReceiver;
+import si.uni_lj.fri.taskyapp.data.SensorReadingData;
+import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
 import si.uni_lj.fri.taskyapp.global.AppHelper;
 import si.uni_lj.fri.taskyapp.global.PermissionsHelper;
+import si.uni_lj.fri.taskyapp.sensor.Constants;
 import si.uni_lj.fri.taskyapp.sensor.SensingInitiator;
 
 
@@ -40,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
@@ -63,20 +74,22 @@ public class MainActivity extends AppCompatActivity {
 
         */
         /** Requesting permissions for Android Marshmallow and above **/
-        PermissionsHelper.requestLocationsPermissions(this);
+        // TODO: Handle this better
+        PermissionsHelper.requestAllRequiredPermissions(this);
 
-        mStatusTextView.setText("Requesting alarm updates.");
         mSensingInitiator = new SensingInitiator(this);
-        mSensingInitiator.senseOnInterval();
-        //mSensingManager.senseOnActivityRecognition();
-        mSensingInitiator.senseOnLocationChanged();
+        //mSensingInitiator.senseOnInterval();
+        mSensingInitiator.senseWithDefaultSensingConfiguration();
+        //mSensingInitiator.senseOnLocationChanged();
 
         newSensorReadingReceiver = new NewSensorReadingReceiver(mStatusTextView);
 
         //Filter the Intent and register broadcast receiver
         IntentFilter filter = new IntentFilter();
-        filter.addAction("NewSensorReading");
+        filter.addAction(Constants.NEW_SENSOR_READING_ACTION);
         registerReceiver(newSensorReadingReceiver, filter);
+
+        new ReadAllSensorRecords().execute();
     }
 
     @Override
@@ -105,7 +118,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 
-        mSensingInitiator.dispose();
+        if(mSensingInitiator != null) {
+            mSensingInitiator.dispose();
+        }
         //Disconnect and detach the receiver
         unregisterReceiver(newSensorReadingReceiver);
     }
@@ -150,6 +165,31 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
 
+        }
+    }
+
+    class ReadAllSensorRecords extends AsyncTask<Void, Void, String>{
+
+        @Override
+        protected String doInBackground(Void... params) {
+            List<SensorReadingRecord> sensorReadings = SensorReadingRecord.listAll(SensorReadingRecord.class);
+            StringBuilder sb = new StringBuilder();
+            Gson gson = new Gson();
+            SensorReadingData rec;
+            sb.append("All records found: ").append(sensorReadings.size()).append("\n");
+            for(SensorReadingRecord srr : sensorReadings){
+                rec = gson.fromJson(srr.getSensorJsonObject(), SensorReadingData.class);
+                String time = new java.text.SimpleDateFormat("dd/MM HH:mm:ss").format(new Date(rec.getTimestampStarted()));
+                sb.append(time).append(": ").append(rec.getActivityData());
+                sb.append("\n");
+            }
+            return sb.toString();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            mStatusTextView.setText(s);
         }
     }
 

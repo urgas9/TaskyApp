@@ -1,0 +1,65 @@
+package si.uni_lj.fri.taskyapp.data;
+
+import android.location.Location;
+
+/**
+ * Created by urgas9 on 24. 01. 2016.
+ */
+public class LocationData {
+    private double lat;
+    private double lng;
+    private double altitude;
+    private float accuracy;
+
+    public LocationData(Location l){
+        super();
+        if(l != null) {
+            this.lat = l.getLatitude();
+            this.lng = l.getLongitude();
+            this.altitude = l.getAltitude();
+            this.accuracy = l.getAccuracy();
+        }
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
+
+    public double getAltitude() {
+        return altitude;
+    }
+
+    public void setAltitude(double altitude) {
+        this.altitude = altitude;
+    }
+
+    public float getAccuracy() {
+        return accuracy;
+    }
+
+    public void setAccuracy(float accuracy) {
+        this.accuracy = accuracy;
+    }
+
+    @Override
+    public String toString() {
+        return "LocationData{" +
+                "lat=" + lat +
+                ", lng=" + lng +
+                ", altitude=" + altitude +
+                ", accuracy=" + accuracy +
+                '}';
+    }
+}

@@ -1,13 +1,23 @@
 package si.uni_lj.fri.taskyapp.service;
 
+import android.Manifest;
 import android.app.IntentService;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.ActivityRecognition;
 import com.google.android.gms.location.ActivityRecognitionResult;
 import com.google.android.gms.location.DetectedActivity;
 import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.gson.Gson;
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.ESSensorManager;
 import com.ubhave.sensormanager.config.pull.PullSensorConfig;
@@ -24,10 +34,18 @@ import com.ubhave.sensormanager.data.push.SmsData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 import java.util.ArrayList;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
+import si.uni_lj.fri.taskyapp.data.ActivityData;
+import si.uni_lj.fri.taskyapp.data.EnvironmentData;
+import si.uni_lj.fri.taskyapp.data.LocationData;
+import si.uni_lj.fri.taskyapp.data.PhoneStatusData;
+import si.uni_lj.fri.taskyapp.data.SensorReadingData;
+import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
+import si.uni_lj.fri.taskyapp.global.AppHelper;
+import si.uni_lj.fri.taskyapp.global.SensorsHelper;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
 import si.uni_lj.fri.taskyapp.sensor.SensorCallableGenerator;
 import si.uni_lj.fri.taskyapp.sensor.SensorThreadsManager;
@@ -35,35 +53,65 @@ import si.uni_lj.fri.taskyapp.sensor.SensorThreadsManager;
 /**
  * Created by urgas9 on 31. 12. 2015.
  */
-public class SenseDataIntentService extends IntentService {
+public class SenseDataIntentService extends IntentService implements GoogleApiClient.ConnectionCallbacks {
     //LogCat
     private static final String TAG = SenseDataIntentService.class.getSimpleName();
+    private GoogleApiClient mGoogleApiClient;
 
     public SenseDataIntentService() {
         super("SenseDataIntentService");
     }
 
+    private GoogleApiClient buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(getApplicationContext())
+                .addApi(ActivityRecognition.API)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .build();
+        return mGoogleApiClient;
+    }
+
+    private Location getLastLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return null;
+        }
+        return LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+    }
+
     @Override
     protected void onHandleIntent(Intent intent) {
         String policy = intent.getStringExtra("sensing_policy");
+
+        SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        // Blocking connect to Google API, so we will have a connected instance in future
+        if (mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
+            buildGoogleApiClient().blockingConnect(7, TimeUnit.SECONDS);
+        }
+
+        Location sensedLocation = null;
+        DetectedActivity detectedActivity = null;
+        SensorReadingData srd = new SensorReadingData(getApplicationContext());
+        srd.setTimestampStarted(System.currentTimeMillis());
+
         if (ActivityRecognitionResult.hasResult(intent)) {
             //Extract the result from the Response
             ActivityRecognitionResult result = ActivityRecognitionResult.extractResult(intent);
-            DetectedActivity detectedActivity = result.getMostProbableActivity();
+            detectedActivity = result.getMostProbableActivity();
 
             //Get the Confidence and Name of Activity
             int confidence = detectedActivity.getConfidence();
-            String mostProbableName = getActivityName(detectedActivity.getType());
+            String mostProbableName = SensorsHelper.getDetectedActivityName(detectedActivity.getType());
 
             //Fire the intent with activity name & confidence
-            Intent i = new Intent("NewSensorReading");
+            Intent i = new Intent(Constants.NEW_SENSOR_READING_ACTION);
             i.putExtra("policy", "activity");
             i.putExtra("activity", mostProbableName);
             i.putExtra("confidence", confidence);
 
             Log.d(TAG, "Most Probable Name : " + mostProbableName);
             Log.d(TAG, "Confidence : " + confidence);
-
             //Send Broadcast to be listen in MainActivity
             this.sendBroadcast(i);
 
@@ -71,21 +119,56 @@ public class SenseDataIntentService extends IntentService {
             Log.d(TAG, "Got intent from location update.");
 
             LocationResult result = LocationResult.extractResult(intent);
-            Location loc = result.getLastLocation();
-            Intent i = new Intent("NewSensorReading");
+            sensedLocation = result.getLastLocation();
+
+            // Do nothing if we are too close to previously sensed location
+            if (isLocationStillClose(mPreferences, sensedLocation)) {
+                Log.d(TAG, "We are still pretty close to previously sensed location. Returning.");
+
+                float accuracy = mPreferences.getFloat(Constants.PREFS_LAST_LOC_ACCURACY, Float.MAX_VALUE);
+                // Not considering this location, but location is more accurate - save it
+                if (sensedLocation.getAccuracy() > 0 && sensedLocation.getAccuracy() < accuracy) {
+                    saveNewLocationToSharedPreferences(mPreferences, sensedLocation);
+                }
+                return;
+            }
+            Intent i = new Intent(Constants.NEW_SENSOR_READING_ACTION);
+            saveNewLocationToSharedPreferences(mPreferences, sensedLocation);
+
             i.putExtra("policy", "location");
-            i.putExtra("location", loc);
+            i.putExtra("location", sensedLocation);
 
             this.sendBroadcast(i);
 
         } else if (policy != null && policy.equals("INTERVAL")) {
             Log.d(TAG, "Got intent from fired alarm.");
 
-            Intent i = new Intent("NewSensorReading");
+            Intent i = new Intent(Constants.NEW_SENSOR_READING_ACTION);
             i.putExtra("policy", "alarm");
         } else {
             Log.d(TAG, "Policy unresolved: " + policy);
         }
+
+        // We need to get activity and location instance, as one or another may not exist at this point
+        if (sensedLocation == null) {
+            sensedLocation = getLastLocation();
+        }
+        if (detectedActivity == null) {
+            // TODO: Detect current activity
+            /*PendingResult result = ActivityRecognition.
+            ActivityRecognitionApi.requestActivityUpdates(mGoogleApiClient, 0, PendingIntent
+                    .getService(getApplicationContext(), 0, null, PendingIntent.FLAG_UPDATE_CURRENT));
+            Result r = result.await();*/
+        }
+
+
+        if (sensedLocation != null) {
+            srd.setLocationData(new LocationData(sensedLocation));
+        }
+        if (detectedActivity != null) {
+            srd.setActivityData(new ActivityData(detectedActivity));
+        }
+
 
         final ESSensorManager sm;
         try {
@@ -102,13 +185,6 @@ public class SenseDataIntentService extends IntentService {
 
         SensorThreadsManager sensorThreadsManager = new SensorThreadsManager();
 
-        sensorThreadsManager.submit(new Callable() {
-            @Override
-            public Object call() throws Exception {
-                Thread.sleep(1200);
-                return "Ajga Bidona!";
-            }
-        });
         sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_ACCELEROMETER));
         sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_BLUETOOTH));
         sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_LIGHT));
@@ -118,17 +194,12 @@ public class SenseDataIntentService extends IntentService {
         sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_SMS));
         sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_WIFI));
 
-        sensorThreadsManager.submit(new Callable() {
-            @Override
-            public String call() throws Exception {
-                return "dummy";
-            }
-        });
-
         Log.d(TAG, "Threads submitted, trying to get results.");
         Future futureSensedData;
+        EnvironmentData environmentData = new EnvironmentData();
+        PhoneStatusData phoneStatus = new PhoneStatusData();
         while (sensorThreadsManager.moreResultsAvailable()) {
-            Object sensingData = null;
+            Object sensingData;
             try {
                 futureSensedData = sensorThreadsManager.take(); // Blocking call to get the next Future result
                 sensingData = futureSensedData.get();
@@ -143,86 +214,79 @@ public class SenseDataIntentService extends IntentService {
                 for (ESBluetoothDevice esbd : bDevices) {
                     Log.d(TAG, esbd.getBluetoothDeviceName());
                 }
+                environmentData.setnBluetoothDevicesNearby(bDevices.size());
             } else if (sensingData instanceof AccelerometerData) {
-                float[] meanValues = getMeanAccelerometerValues(((AccelerometerData) sensingData).getSensorReadings());
+                float[] meanValues = SensorsHelper.getMeanAccelerometerValues(((AccelerometerData) sensingData).getSensorReadings());
                 Log.d(TAG, "Got accelerometer data with mean values: " + meanValues[0] + ", " + meanValues[1] + ", " + meanValues[2]);
-            } else if(sensingData instanceof AmbientTemperatureData){
+
+                srd.setAccelerometerData(new si.uni_lj.fri.taskyapp.data.AccelerometerData(meanValues));
+            } else if (sensingData instanceof AmbientTemperatureData) {
                 float ambientTemperature = ((AmbientTemperatureData) sensingData).getValue();
                 Log.d(TAG, "Got ambient temperature data: " + ambientTemperature);
-            } else if(sensingData instanceof LightData){
+            } else if (sensingData instanceof LightData) {
                 float ambientTemperature = ((LightData) sensingData).getValue();
                 Log.d(TAG, "Got light data: " + ambientTemperature);
-            } else if(sensingData instanceof ScreenData){
+            } else if (sensingData instanceof ScreenData) {
                 boolean isScreenOn = ((ScreenData) sensingData).isOn();
-                Log.d(TAG, "Screen status: " + ((isScreenOn)?"on" : "off"));
-            }
-            else if(sensingData instanceof MicrophoneData){
-                int[] amplitudes = ((MicrophoneData)sensingData).getAmplitudeArray();
-                Log.d(TAG, "Mean amplitude from microphone: " + getMeanValue(amplitudes));
-            }
-            else if(sensingData instanceof SmsData){
-                String address = ((SmsData)sensingData).getAddress();
+                Log.d(TAG, "Screen status: " + ((isScreenOn) ? "on" : "off"));
+                phoneStatus.setScreenOn(isScreenOn);
+            } else if (sensingData instanceof MicrophoneData) {
+                int[] amplitudes = ((MicrophoneData) sensingData).getAmplitudeArray();
+                Log.d(TAG, "Mean amplitude from microphone: " + SensorsHelper.getMeanValue(amplitudes));
+
+                srd.setMicrophoneData(new si.uni_lj.fri.taskyapp.data.MicrophoneData(amplitudes));
+            } else if (sensingData instanceof SmsData) {
+                String address = ((SmsData) sensingData).getAddress();
                 Log.d(TAG, "SMS data: " + address);
-            }
-            else if(sensingData instanceof WifiData){
-                ArrayList<WifiScanResult> wifiScanResults = ((WifiData)sensingData).getWifiScanData();
+            } else if (sensingData instanceof WifiData) {
+                ArrayList<WifiScanResult> wifiScanResults = ((WifiData) sensingData).getWifiScanData();
                 Log.d(TAG, "WiFi data SSIDs nearby:");
-                for (WifiScanResult wsr : wifiScanResults){
+                for (WifiScanResult wsr : wifiScanResults) {
                     Log.d(TAG, wsr.getSsid());
                 }
-            }
-            else {
+                environmentData.setnWifiDevicesNearby(wifiScanResults.size());
+            } else {
                 Log.d(TAG, "Retrieved unhandled sensing object: " + sensingData);
             }
         }
+        srd.setEnvironmentData(environmentData);
+        srd.setTimestampEnded(System.currentTimeMillis());
+        srd.setPhoneStatusData(phoneStatus);
 
-        Log.d(TAG, "Finishing with method.");
+        Log.d(TAG, "Finishing with SenseDataIntentService method.");
+        Log.d(TAG, "Result: " + new Gson().toJson(srd));
 
+        // Saving sensor readings to database
+        new SensorReadingRecord(srd).save();
 
     }
 
-    private float[] getMeanAccelerometerValues(ArrayList<float[]> readings) {
-        int size = readings.size();
-        float[] result = new float[3];
-        for (float[] axes : readings) {
-            int i = 0;
-            for (float f : axes) {
-                result[i] += f / size;
-                i++;
-            }
-        }
-        return result;
+    private boolean isLocationStillClose(SharedPreferences prefs, Location l) {
+        Location prevLocation = new Location("prevLocation");
+        prevLocation.setLatitude(AppHelper.getDouble(prefs, Constants.PREFS_LAST_LOC_LAT, 0));
+        prevLocation.setLongitude(AppHelper.getDouble(prefs, Constants.PREFS_LAST_LOC_LNG, 0));
+        return l.getAccuracy() <= Constants.LOCATION_ACCURACY_AT_LEAST &&
+                l.distanceTo(prevLocation) < Constants.LOCATION_MIN_DISTANCE_TO_LAST_LOC;
     }
 
-    private double getMeanValue(int[] array){
-        int size = array.length;
-        double meanValue = 0;
-        for(int val : array){
-            meanValue += val/size;
-        }
-        return meanValue;
+    private void saveNewLocationToSharedPreferences(SharedPreferences prefs, Location l) {
+        SharedPreferences.Editor editor = prefs.edit();
+        AppHelper.putDouble(editor, Constants.PREFS_LAST_LOC_LAT, l.getLatitude());
+        AppHelper.putDouble(editor, Constants.PREFS_LAST_LOC_LNG, l.getLongitude());
+        editor.putFloat(Constants.PREFS_LAST_LOC_ACCURACY, l.getAccuracy());
+        editor.commit();
     }
 
-    //Get the activity name
-    private String getActivityName(int type) {
-        switch (type) {
-            case DetectedActivity.IN_VEHICLE:
-                return "In Vehicle";
-            case DetectedActivity.ON_BICYCLE:
-                return "On Bicycle";
-            case DetectedActivity.ON_FOOT:
-                return "On Foot";
-            case DetectedActivity.WALKING:
-                return "Walking";
-            case DetectedActivity.STILL:
-                return "Still";
-            case DetectedActivity.TILTING:
-                return "Tilting";
-            case DetectedActivity.RUNNING:
-                return "Running";
-            case DetectedActivity.UNKNOWN:
-                return "Unknown";
-        }
-        return "N/A";
+    /*
+     * Google API client section
+     */
+    @Override
+    public void onConnected(Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
     }
 }

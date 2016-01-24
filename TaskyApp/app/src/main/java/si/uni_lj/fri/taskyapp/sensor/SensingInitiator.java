@@ -36,6 +36,10 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
         this.mPendingAction = false;
     }
 
+
+    public void senseWithDefaultSensingConfiguration(){
+        senseOnActivityRecognition();
+    }
     public void senseOnActivityRecognition() {
         mWhichPolicy = SensingPolicy.ACTIVITY_UPDATES;
         if (mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {

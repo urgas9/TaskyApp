@@ -6,6 +6,7 @@
     <string name="permission_call_denied">If you want to use this shortcut, you have to grant us permission to call this number.</string>
     <string name="permission_location_denied">This app works best for you if location services are enabled. If you cannot provide us access to location we won\'t be able to serve you accurate data.</string>
     <string name="permission_forever_denied">You denied us access to the permission.</string>
+    <string name="permission_grant_all">Please grant us permissions to get as accurate data as possible.</string>
     <string name="permission_location_forever_denied">Cannot access your location. Please grant us permissions.</string>
     <string name="permission_accounts_denied">We need access to your profile mail address to log you in.</string>
     <string name="ok">Ok</string>

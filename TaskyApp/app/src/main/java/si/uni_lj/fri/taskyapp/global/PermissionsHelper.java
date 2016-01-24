@@ -184,6 +184,21 @@ public class PermissionsHelper {
         ActivityCompat.requestPermissions(a, permissions, REQUEST_LOCATION_PERMISSIONS_CODE);
     }
 
+    public static void requestAllRequiredPermissions(Activity a){
+        String[] permissions = {Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.READ_CALL_LOG,
+                Manifest.permission.CAPTURE_AUDIO_OUTPUT,
+                Manifest.permission.RECORD_AUDIO,
+                Manifest.permission.MODIFY_AUDIO_SETTINGS,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        };
+
+        ActivityCompat.requestPermissions(a, permissions, REQUEST_LOCATION_PERMISSIONS_CODE);
+    }
+
     /**
      * Requesting call permissions for Marshmallow or above (unused after not using G+ login anymore)
      *
