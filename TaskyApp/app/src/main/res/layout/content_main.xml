@@ -17,5 +17,6 @@
         android:id="@+id/app_status_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:scrollbars="vertical"
         android:text="Hello World!"/>
 </RelativeLayout>
