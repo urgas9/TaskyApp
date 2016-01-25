@@ -258,7 +258,11 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
         unsubscribeFromSensors(sm);
 
-        environmentData.setAverageLightValue(sumLightValues / countLightValues);
+        float lightPercentage = sumLightValues / countLightValues;
+        if(Float.isNaN(lightPercentage)){
+            lightPercentage = -1.f;
+        }
+        environmentData.setAverageLightPercentageValue(lightPercentage);
         srd.setEnvironmentData(environmentData);
         srd.setTimestampEnded(System.currentTimeMillis());
         srd.setPhoneStatusData(phoneStatusDataList);
@@ -313,7 +317,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         else if(data instanceof LightData){
             //Log.d(TAG, "LightData, max range: " + ((LightData) data).getValue());
             countLightValues++;
-            sumLightValues += ((LightData) data).getValue();
+            sumLightValues += (((LightData) data).getValue() / ((LightData) data).getMaxRange());
         }
     }
 
