@@ -15,11 +15,14 @@ public class MicrophoneData {
     @SerializedName("mean_amplitude")
     private double meanAmplitude;
 
+    private int[] amplitudes;
+
     public MicrophoneData(int[] amplitudes){
         int[] minMax = SensorsHelper.getMinAndMaxValues(amplitudes);
         this.minAmplitude = minMax[0];
         this.maxAmplitude = minMax[1];
         this.meanAmplitude = SensorsHelper.getMeanValue(amplitudes);
+        this.amplitudes = amplitudes;
 
     }
     public int getMaxAmplitude() {

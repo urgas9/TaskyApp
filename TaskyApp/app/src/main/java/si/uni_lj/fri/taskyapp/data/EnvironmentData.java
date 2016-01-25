@@ -12,6 +12,9 @@ public class EnvironmentData {
     @SerializedName("num_bluetooth_devices_nearby")
     private int nBluetoothDevicesNearby;
 
+    @SerializedName("average_light")
+    private float averageLightValue;
+
     public int getnWifiDevicesNearby() {
         return nWifiDevicesNearby;
     }
@@ -28,11 +31,20 @@ public class EnvironmentData {
         this.nBluetoothDevicesNearby = nBluetoothDevicesNearby;
     }
 
+    public float getAverageLightValue() {
+        return averageLightValue;
+    }
+
+    public void setAverageLightValue(float averageLightValue) {
+        this.averageLightValue = averageLightValue;
+    }
+
     @Override
     public String toString() {
         return "EnvironmentData{" +
                 "nWifiDevicesNearby=" + nWifiDevicesNearby +
                 ", nBluetoothDevicesNearby=" + nBluetoothDevicesNearby +
+                ", averageLightValue=" + averageLightValue +
                 '}';
     }
 }

@@ -20,8 +20,9 @@ import com.google.android.gms.location.LocationServices;
 import com.google.gson.Gson;
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.ESSensorManager;
+import com.ubhave.sensormanager.SensorDataListener;
 import com.ubhave.sensormanager.config.pull.PullSensorConfig;
-import com.ubhave.sensormanager.data.env.AmbientTemperatureData;
+import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.env.LightData;
 import com.ubhave.sensormanager.data.pull.AccelerometerData;
 import com.ubhave.sensormanager.data.pull.BluetoothData;
@@ -30,10 +31,11 @@ import com.ubhave.sensormanager.data.pull.MicrophoneData;
 import com.ubhave.sensormanager.data.pull.WifiData;
 import com.ubhave.sensormanager.data.pull.WifiScanResult;
 import com.ubhave.sensormanager.data.push.ScreenData;
-import com.ubhave.sensormanager.data.push.SmsData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -53,10 +55,20 @@ import si.uni_lj.fri.taskyapp.sensor.SensorThreadsManager;
 /**
  * Created by urgas9 on 31. 12. 2015.
  */
-public class SenseDataIntentService extends IntentService implements GoogleApiClient.ConnectionCallbacks {
+public class SenseDataIntentService extends IntentService implements GoogleApiClient.ConnectionCallbacks, SensorDataListener {
     //LogCat
     private static final String TAG = SenseDataIntentService.class.getSimpleName();
     private GoogleApiClient mGoogleApiClient;
+
+    private static final int[] SENSOR_IDS = {SensorUtils.SENSOR_TYPE_LIGHT, SensorUtils.SENSOR_TYPE_SCREEN};
+    private List<Integer> sensorSubscriptionIds;
+
+    //Data for callbacks
+    private long timeSensingStarted;
+    private List<PhoneStatusData> phoneStatusDataList;
+    private float sumLightValues = 0;
+    private float countLightValues = 0;
+
 
     public SenseDataIntentService() {
         super("SenseDataIntentService");
@@ -93,7 +105,6 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         Location sensedLocation = null;
         DetectedActivity detectedActivity = null;
         SensorReadingData srd = new SensorReadingData(getApplicationContext());
-        srd.setTimestampStarted(System.currentTimeMillis());
 
         if (ActivityRecognitionResult.hasResult(intent)) {
             //Extract the result from the Response
@@ -105,7 +116,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             String mostProbableName = SensorsHelper.getDetectedActivityName(detectedActivity.getType());
 
             //Fire the intent with activity name & confidence
-            Intent i = new Intent(Constants.NEW_SENSOR_READING_ACTION);
+            Intent i = new Intent(Constants.ACTION_NEW_SENSOR_READING);
             i.putExtra("policy", "activity");
             i.putExtra("activity", mostProbableName);
             i.putExtra("confidence", confidence);
@@ -132,7 +143,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
                 }
                 return;
             }
-            Intent i = new Intent(Constants.NEW_SENSOR_READING_ACTION);
+            Intent i = new Intent(Constants.ACTION_NEW_SENSOR_READING);
             saveNewLocationToSharedPreferences(mPreferences, sensedLocation);
 
             i.putExtra("policy", "location");
@@ -143,7 +154,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         } else if (policy != null && policy.equals("INTERVAL")) {
             Log.d(TAG, "Got intent from fired alarm.");
 
-            Intent i = new Intent(Constants.NEW_SENSOR_READING_ACTION);
+            Intent i = new Intent(Constants.ACTION_NEW_SENSOR_READING);
             i.putExtra("policy", "alarm");
         } else {
             Log.d(TAG, "Policy unresolved: " + policy);
@@ -160,6 +171,9 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
                     .getService(getApplicationContext(), 0, null, PendingIntent.FLAG_UPDATE_CURRENT));
             Result r = result.await();*/
         }
+
+        timeSensingStarted = System.currentTimeMillis();
+        srd.setTimestampStarted(timeSensingStarted);
 
 
         if (sensedLocation != null) {
@@ -182,22 +196,27 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             Log.e(TAG, "Cannot start sensing due to an exception, message: " + e.getMessage());
             return;
         }
+        sensorSubscriptionIds = new LinkedList<>();
 
         SensorThreadsManager sensorThreadsManager = new SensorThreadsManager();
 
         sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_ACCELEROMETER));
         sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_BLUETOOTH));
-        sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_LIGHT));
-        sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_SCREEN));
-        sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_AMBIENT_TEMPERATURE));
+        //sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_LIGHT));
+        //sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_SCREEN));
+        //sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_AMBIENT_TEMPERATURE));
         sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_MICROPHONE));
-        sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_SMS));
+        //sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_SMS));
         sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_WIFI));
+        Log.d(TAG, "Threads submitted");
 
-        Log.d(TAG, "Threads submitted, trying to get results.");
+        // Subscribing to push sensors
+        subscribeToSensors(sm);
+        Log.d(TAG, "Subscribed to sensors.");
+        Log.d(TAG, "Now, trying to get sensor results.");
+
         Future futureSensedData;
         EnvironmentData environmentData = new EnvironmentData();
-        PhoneStatusData phoneStatus = new PhoneStatusData();
         while (sensorThreadsManager.moreResultsAvailable()) {
             Object sensingData;
             try {
@@ -219,25 +238,12 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
                 float[] meanValues = SensorsHelper.getMeanAccelerometerValues(((AccelerometerData) sensingData).getSensorReadings());
                 Log.d(TAG, "Got accelerometer data with mean values: " + meanValues[0] + ", " + meanValues[1] + ", " + meanValues[2]);
 
-                srd.setAccelerometerData(new si.uni_lj.fri.taskyapp.data.AccelerometerData(meanValues));
-            } else if (sensingData instanceof AmbientTemperatureData) {
-                float ambientTemperature = ((AmbientTemperatureData) sensingData).getValue();
-                Log.d(TAG, "Got ambient temperature data: " + ambientTemperature);
-            } else if (sensingData instanceof LightData) {
-                float ambientTemperature = ((LightData) sensingData).getValue();
-                Log.d(TAG, "Got light data: " + ambientTemperature);
-            } else if (sensingData instanceof ScreenData) {
-                boolean isScreenOn = ((ScreenData) sensingData).isOn();
-                Log.d(TAG, "Screen status: " + ((isScreenOn) ? "on" : "off"));
-                phoneStatus.setScreenOn(isScreenOn);
+                srd.setAccelerometerData(new si.uni_lj.fri.taskyapp.data.AccelerometerData(meanValues, ((AccelerometerData) sensingData).getSensorReadings()));
             } else if (sensingData instanceof MicrophoneData) {
                 int[] amplitudes = ((MicrophoneData) sensingData).getAmplitudeArray();
                 Log.d(TAG, "Mean amplitude from microphone: " + SensorsHelper.getMeanValue(amplitudes));
 
                 srd.setMicrophoneData(new si.uni_lj.fri.taskyapp.data.MicrophoneData(amplitudes));
-            } else if (sensingData instanceof SmsData) {
-                String address = ((SmsData) sensingData).getAddress();
-                Log.d(TAG, "SMS data: " + address);
             } else if (sensingData instanceof WifiData) {
                 ArrayList<WifiScanResult> wifiScanResults = ((WifiData) sensingData).getWifiScanData();
                 Log.d(TAG, "WiFi data SSIDs nearby:");
@@ -249,9 +255,14 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
                 Log.d(TAG, "Retrieved unhandled sensing object: " + sensingData);
             }
         }
+
+        unsubscribeFromSensors(sm);
+
+        environmentData.setAverageLightValue(sumLightValues / countLightValues);
         srd.setEnvironmentData(environmentData);
         srd.setTimestampEnded(System.currentTimeMillis());
-        srd.setPhoneStatusData(phoneStatus);
+        srd.setPhoneStatusData(phoneStatusDataList);
+
 
         Log.d(TAG, "Finishing with SenseDataIntentService method.");
         Log.d(TAG, "Result: " + new Gson().toJson(srd));
@@ -287,6 +298,47 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
     @Override
     public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onDataSensed(SensorData data) {
+        if(data instanceof ScreenData){
+            //Log.d(TAG, "Screen is: " + ((ScreenData) data).isOn());
+            PhoneStatusData psd = new PhoneStatusData();
+            psd.setScreenOn(((ScreenData) data).isOn());
+            psd.setMillisAfterStart(data.getTimestamp() - timeSensingStarted);
+            phoneStatusDataList.add(psd);
+        }
+        else if(data instanceof LightData){
+            //Log.d(TAG, "LightData, max range: " + ((LightData) data).getValue());
+            countLightValues++;
+            sumLightValues += ((LightData) data).getValue();
+        }
+    }
+
+
+    private void subscribeToSensors(ESSensorManager sensorManager) {
+        for(int sensorType : SENSOR_IDS){
+            try {
+                sensorManager.subscribeToSensorData(sensorType, this);
+            } catch (ESException e) {
+                Log.e(TAG, "Error connecting to server type, int = " + sensorType + ", message = " + e.getMessage());
+            }
+        }
+    }
+
+    private void unsubscribeFromSensors(ESSensorManager sensorManager){
+        for(int subscriptionId : sensorSubscriptionIds){
+            try {
+                sensorManager.unsubscribeFromSensorData(subscriptionId);
+            } catch (ESException e) {
+                Log.e(TAG, "Error unsubscribing from sensor, int = " + subscriptionId + ", message = " + e.getMessage());
+            }
+        }
+    }
+    @Override
+    public void onCrossingLowBatteryThreshold(boolean isBelowThreshold) {
 
     }
 }

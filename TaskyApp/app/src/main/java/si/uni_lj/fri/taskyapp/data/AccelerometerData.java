@@ -1,5 +1,7 @@
 package si.uni_lj.fri.taskyapp.data;
 
+import java.util.ArrayList;
+
 /**
  * Created by urgas9 on 24. 01. 2016.
  */
@@ -8,12 +10,15 @@ public class AccelerometerData {
     private float meanY;
     private float meanZ;
 
+    private ArrayList<float[]> values;
 
-    public AccelerometerData(float[] meanValues){
+
+    public AccelerometerData(float[] meanValues, ArrayList<float[]> values){
         super();
         this.meanX = meanValues[0];
         this.meanY = meanValues[1];
         this.meanZ = meanValues[2];
+        this.values = values;
     }
 
     public float getMeanX() {
@@ -38,6 +43,14 @@ public class AccelerometerData {
 
     public void setMeanZ(float meanZ) {
         this.meanZ = meanZ;
+    }
+
+    public ArrayList<float[]> getValues() {
+        return values;
+    }
+
+    public void setValues(ArrayList<float[]> values) {
+        this.values = values;
     }
 
     @Override

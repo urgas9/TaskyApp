@@ -105,7 +105,7 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     private void requestActivityUpdates() {
         Log.d(TAG, "Starting requested activity recognition updates.");
         stopAllUpdates();
-        ActivityRecognition.ActivityRecognitionApi.requestActivityUpdates(mGoogleApiClient, 0, getSensingServicePendingIntent());
+        ActivityRecognition.ActivityRecognitionApi.requestActivityUpdates(mGoogleApiClient, Constants.APPROXIMATE_INTERVAL_MILLIS, getSensingServicePendingIntent());
     }
 
     private void requestLocationUpdates() {

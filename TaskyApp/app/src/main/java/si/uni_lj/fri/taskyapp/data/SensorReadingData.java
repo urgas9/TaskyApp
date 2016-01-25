@@ -6,6 +6,8 @@ import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by urgas9 on 24. 01. 2016.
  */
@@ -38,8 +40,8 @@ public class SensorReadingData {
     @SerializedName("accelerometer")
     private AccelerometerData accelerometerData;
 
-    @SerializedName("phone_status")
-    private PhoneStatusData phoneStatusData;
+    @SerializedName("phone_status_list")
+    private List<PhoneStatusData> phoneStatusData;
 
     public SensorReadingData(Context context){
         try {
@@ -114,11 +116,11 @@ public class SensorReadingData {
         this.accelerometerData = accelerometerData;
     }
 
-    public PhoneStatusData getPhoneStatusData() {
+    public List<PhoneStatusData> getPhoneStatusData() {
         return phoneStatusData;
     }
 
-    public void setPhoneStatusData(PhoneStatusData phoneStatusData) {
+    public void setPhoneStatusData(List<PhoneStatusData> phoneStatusData) {
         this.phoneStatusData = phoneStatusData;
     }
 

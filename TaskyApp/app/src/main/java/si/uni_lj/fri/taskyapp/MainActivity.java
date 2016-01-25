@@ -2,6 +2,7 @@ package si.uni_lj.fri.taskyapp;
 
 import android.Manifest;
 import android.content.BroadcastReceiver;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
@@ -80,19 +81,23 @@ public class MainActivity extends AppCompatActivity {
         // TODO: Handle this better
         PermissionsHelper.requestAllRequiredPermissions(this);
 
-        mSensingInitiator = new SensingInitiator(this);
-        //mSensingInitiator.senseOnInterval();
-        mSensingInitiator.senseWithDefaultSensingConfiguration();
+        broadcastIntentToStartSensing();
         //mSensingInitiator.senseOnLocationChanged();
 
         newSensorReadingReceiver = new NewSensorReadingReceiver(mStatusTextView);
 
         //Filter the Intent and register broadcast receiver
         IntentFilter filter = new IntentFilter();
-        filter.addAction(Constants.NEW_SENSOR_READING_ACTION);
+        filter.addAction(Constants.ACTION_NEW_SENSOR_READING);
         registerReceiver(newSensorReadingReceiver, filter);
 
         new ReadAllSensorRecords().execute();
+    }
+
+    private void broadcastIntentToStartSensing(){
+        Intent keepAliveBroadcastIntent = new Intent();
+        keepAliveBroadcastIntent.setAction(Constants.ACTION_KEEP_SENSING_ALIVE);
+        sendBroadcast(keepAliveBroadcastIntent);
     }
 
     @Override
@@ -137,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
             case PermissionsHelper.REQUEST_LOCATION_PERMISSIONS_CODE:
                 for (int i = 0; i < permissions.length; i++) {
                     if (permissions[i].equals(Manifest.permission.ACCESS_FINE_LOCATION) && grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                        mSensingInitiator.checkForPendingActions();
+                        broadcastIntentToStartSensing();
                     }
                     PermissionsHelper.markAsAsked(this, permissions[i]);
                 }

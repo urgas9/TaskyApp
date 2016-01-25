@@ -9,6 +9,7 @@ public class PhoneStatusData {
 
     @SerializedName("screen_on")
     private boolean screenOn;
+    private long millisAfterStart;
 
     public boolean isScreenOn() {
         return screenOn;
@@ -22,6 +23,15 @@ public class PhoneStatusData {
     public String toString() {
         return "PhoneStatusData{" +
                 "screenOn=" + screenOn +
+                ", millisAfterStart=" + millisAfterStart +
                 '}';
+    }
+
+    public long getMillisAfterStart() {
+        return millisAfterStart;
+    }
+
+    public void setMillisAfterStart(long millisAfterStart) {
+        this.millisAfterStart = millisAfterStart;
     }
 }

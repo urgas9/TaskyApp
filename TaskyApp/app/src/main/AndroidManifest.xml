@@ -36,7 +36,7 @@
         </activity>
 
         <receiver
-            android:name="AfterStartupReceiver"
+            android:name=".receivers.KeepSensingAliveReceiver"
             android:enabled="true"
             android:exported="false"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED" >
@@ -47,6 +47,7 @@
                 <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
                 <!-- Reboot intent -->
                 <action android:name="android.intent.action.REBOOT" />
+                <action android:name="si.uni_lj.fri.taskyapp.KeepAliveAction" />
             </intent-filter>
         </receiver>
 
