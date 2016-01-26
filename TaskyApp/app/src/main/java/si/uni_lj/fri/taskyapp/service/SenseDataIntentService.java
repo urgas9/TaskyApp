@@ -46,7 +46,7 @@ import si.uni_lj.fri.taskyapp.data.LocationData;
 import si.uni_lj.fri.taskyapp.data.PhoneStatusData;
 import si.uni_lj.fri.taskyapp.data.SensorReadingData;
 import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
-import si.uni_lj.fri.taskyapp.global.AppHelper;
+import si.uni_lj.fri.taskyapp.global.SensingDecisionHelper;
 import si.uni_lj.fri.taskyapp.global.SensorsHelper;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
 import si.uni_lj.fri.taskyapp.sensor.SensorCallableGenerator;
@@ -94,7 +94,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
     @Override
     protected void onHandleIntent(Intent intent) {
         String policy = intent.getStringExtra("sensing_policy");
-
+        Gson gson = new Gson();
         SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         // Blocking connect to Google API, so we will have a connected instance in future
@@ -132,19 +132,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             LocationResult result = LocationResult.extractResult(intent);
             sensedLocation = result.getLastLocation();
 
-            // Do nothing if we are too close to previously sensed location
-            if (isLocationStillClose(mPreferences, sensedLocation)) {
-                Log.d(TAG, "We are still pretty close to previously sensed location. Returning.");
-
-                float accuracy = mPreferences.getFloat(Constants.PREFS_LAST_LOC_ACCURACY, Float.MAX_VALUE);
-                // Not considering this location, but location is more accurate - save it
-                if (sensedLocation.getAccuracy() > 0 && sensedLocation.getAccuracy() < accuracy) {
-                    saveNewLocationToSharedPreferences(mPreferences, sensedLocation);
-                }
-                return;
-            }
             Intent i = new Intent(Constants.ACTION_NEW_SENSOR_READING);
-            saveNewLocationToSharedPreferences(mPreferences, sensedLocation);
 
             i.putExtra("policy", "location");
             i.putExtra("location", sensedLocation);
@@ -175,7 +163,6 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         timeSensingStarted = System.currentTimeMillis();
         srd.setTimestampStarted(timeSensingStarted);
 
-
         if (sensedLocation != null) {
             srd.setLocationData(new LocationData(sensedLocation));
         }
@@ -183,6 +170,13 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             srd.setActivityData(new ActivityData(detectedActivity));
         }
 
+        SensingDecisionHelper sensingHelper = new SensingDecisionHelper(getApplicationContext());
+        if(!sensingHelper.shouldContinueSensing(srd)){
+            Log.d(TAG, "Decided not to sense this time!");
+            return;
+        }
+        Log.d(TAG, "Decided to start sensing.");
+        sensingHelper.saveNewDecisiveSensingData(srd);
 
         final ESSensorManager sm;
         try {
@@ -274,22 +268,6 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         // Saving sensor readings to database
         new SensorReadingRecord(srd).save();
 
-    }
-
-    private boolean isLocationStillClose(SharedPreferences prefs, Location l) {
-        Location prevLocation = new Location("prevLocation");
-        prevLocation.setLatitude(AppHelper.getDouble(prefs, Constants.PREFS_LAST_LOC_LAT, 0));
-        prevLocation.setLongitude(AppHelper.getDouble(prefs, Constants.PREFS_LAST_LOC_LNG, 0));
-        return l.getAccuracy() <= Constants.LOCATION_ACCURACY_AT_LEAST &&
-                l.distanceTo(prevLocation) < Constants.LOCATION_MIN_DISTANCE_TO_LAST_LOC;
-    }
-
-    private void saveNewLocationToSharedPreferences(SharedPreferences prefs, Location l) {
-        SharedPreferences.Editor editor = prefs.edit();
-        AppHelper.putDouble(editor, Constants.PREFS_LAST_LOC_LAT, l.getLatitude());
-        AppHelper.putDouble(editor, Constants.PREFS_LAST_LOC_LNG, l.getLongitude());
-        editor.putFloat(Constants.PREFS_LAST_LOC_ACCURACY, l.getAccuracy());
-        editor.commit();
     }
 
     /*

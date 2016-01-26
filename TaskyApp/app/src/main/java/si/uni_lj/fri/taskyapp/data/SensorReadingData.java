@@ -10,6 +10,9 @@ import java.util.List;
 
 /**
  * Created by urgas9 on 24. 01. 2016.
+ *
+ * Class used to store sensing data
+ *
  */
 public class SensorReadingData {
 

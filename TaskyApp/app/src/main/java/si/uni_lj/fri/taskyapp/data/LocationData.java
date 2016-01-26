@@ -53,6 +53,18 @@ public class LocationData {
         this.accuracy = accuracy;
     }
 
+    public Location getLocationObject(){
+        Location location = new Location("location");
+        location.setLongitude(lng);
+        location.setLatitude(lat);
+        location.setAccuracy(accuracy);
+        location.setAltitude(altitude);
+        return location;
+    }
+    public float getDistanceTo(LocationData ld){
+        return this.getLocationObject().distanceTo(ld.getLocationObject());
+    }
+
     @Override
     public String toString() {
         return "LocationData{" +
