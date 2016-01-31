@@ -5,11 +5,22 @@
     <string name="permission_storage_denied">If you want to add a photo to this spot we need permission to access your external storage.</string>
     <string name="permission_call_denied">If you want to use this shortcut, you have to grant us permission to call this number.</string>
     <string name="permission_location_denied">This app works best for you if location services are enabled. If you cannot provide us access to location we won\'t be able to serve you accurate data.</string>
-    <string name="permission_forever_denied">You denied us access to the permission.</string>
+    <string name="permission_sensor_denied">This app works best for you if required sensors are enabled. If you cannot provide us access to those sensors we won\'t be able to serve you accurate data.</string>
+    <string name="permission_forever_denied">You denied us access to the permissions.</string>
     <string name="permission_grant_all">Please grant us permissions to get as accurate data as possible.</string>
     <string name="permission_location_forever_denied">Cannot access your location. Please grant us permissions.</string>
     <string name="permission_accounts_denied">We need access to your profile mail address to log you in.</string>
     <string name="ok">Ok</string>
-    <string name="title_activity_main">MainActivity</string>
 
+    <string name="complexity_prompt">Choose task complexity</string>
+    <string name="task_complexity_not_selected">Select your task complexity first.</string>
+
+    <string-array name="task_complexities_array">
+        <item></item>
+        <item>Easy peasy</item>
+        <item>Pretty easy</item>
+        <item>Neither easy nor hard</item>
+        <item>Pretty hard</item>
+        <item>Very hard</item>
+    </string-array>
 </resources>

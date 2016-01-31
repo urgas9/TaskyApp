@@ -22,16 +22,18 @@ public class SensingDecisionHelper {
     private SharedPreferences mSharedPreferences;
     private Context mContext;
     private Gson gson;
+    private int userLabel;
 
     private SensorReadingData mOldSensorData;
     private SensorReadingData mNewSensorData;
 
-    public SensingDecisionHelper(Context context){
+    public SensingDecisionHelper(Context context, int userLabel){
         super();
         this.mContext = context;
         this.mSharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         Log.d(TAG, "Object created. Decisions so far: positive = " + getNumDecisionsToSense() + "x, negative = " + getNumDecisionsNotToSense() + "x");
         this.gson = new Gson();
+        this.userLabel = userLabel;
     }
 
     /**
@@ -77,12 +79,17 @@ public class SensingDecisionHelper {
      * @return
      */
     public boolean shouldContinueSensing(SensorReadingData newSensorData){
+        if(userLabel > 0){
+            return true;
+        }
         mOldSensorData = getPreviousDecisiveSensingData();
         mNewSensorData = newSensorData;
 
         boolean continueSensing = true;
         if(mNewSensorData != null && mOldSensorData != null){
-            continueSensing = decideOnActivityData();
+            if(!(continueSensing = decideOnLocationData())) {
+                continueSensing = decideOnActivityData();
+            }
         }
 
         markDecisionToSense(continueSensing);
@@ -137,6 +144,14 @@ public class SensingDecisionHelper {
             return false;
         }
         return true;
+    }
+
+    public boolean decideOnMinimumIntervalTimeDifference(){
+        if(userLabel > 0){
+            return true;
+        }
+        long prevTimestamp = getPreviousDecisiveSensingData().getTimestampStarted();
+        return (System.currentTimeMillis() - prevTimestamp) > Constants.MIN_INTERVAL_MILLIS;
     }
 
     private boolean decideOnTimeDifference(){

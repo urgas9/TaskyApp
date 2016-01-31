@@ -46,6 +46,8 @@ public class SensorReadingData {
     @SerializedName("phone_status_list")
     private List<PhoneStatusData> phoneStatusData;
 
+    private Integer label; // Label on Likert scale 1-5 (easy - hard)
+
     public SensorReadingData(Context context){
         try {
             this.appVersion = context.getPackageManager()
@@ -135,6 +137,14 @@ public class SensorReadingData {
         this.locationData = locationData;
     }
 
+    public Integer getLabel() {
+        return label;
+    }
+
+    public void setLabel(Integer label) {
+        this.label = label;
+    }
+
     @Override
     public String toString() {
         return "SensorReadingData{" +
@@ -148,6 +158,7 @@ public class SensorReadingData {
                 ", microphoneData=" + microphoneData +
                 ", accelerometerData=" + accelerometerData +
                 ", phoneStatusData=" + phoneStatusData +
+                ", label=" + label +
                 '}';
     }
 }

@@ -3,6 +3,7 @@ package si.uni_lj.fri.taskyapp.sensor;
 import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -38,7 +39,9 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
 
 
     public void senseWithDefaultSensingConfiguration(){
+
         senseOnActivityRecognition();
+        senseOnLocationChanged();
     }
     public void senseOnActivityRecognition() {
         mWhichPolicy = SensingPolicy.ACTIVITY_UPDATES;
@@ -63,6 +66,15 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
         requestAlarmIntervalUpdates();
     }
 
+    public void startSensingOnUserRequest(Integer userLabel){
+        Log.d(TAG, "startSensingOnUserRequest");
+        //getSensingServicePendingIntent(userLabel);
+
+        Intent i = new Intent(mContext, SenseDataIntentService.class);
+        i.putExtra("user_label", userLabel);
+        mContext.startService(i);
+    }
+
     private GoogleApiClient buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(mContext)
                 .addApi(ActivityRecognition.API)
@@ -75,13 +87,8 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
 
     @Override
     public void onConnected(Bundle bundle) {
-        if (bundle != null) {
-            Log.d(TAG, "onConnected, : " + bundle.toString());
-        } else {
-            Log.d(TAG, "onConnected, bundle == null");
-        }
-        stopAllUpdates();
-        switch (mWhichPolicy) {
+        //stopAllUpdates();
+        /*switch (mWhichPolicy) {
             case ACTIVITY_UPDATES:
                 requestActivityUpdates();
                 break;
@@ -90,14 +97,20 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
                 break;
             default:
                 Log.e(TAG, "Connected to Google Play services, but requested policy is not handled, code: " + mWhichPolicy);
-        }
+        }*/
+        // Start sensing
+        senseWithDefaultSensingConfiguration();
     }
 
-    private PendingIntent getSensingServicePendingIntent() {
+    private PendingIntent getSensingServicePendingIntent(){
+        return getSensingServicePendingIntent(-1);
+    }
+    private PendingIntent getSensingServicePendingIntent(Integer userLabel) {
         Intent i = new Intent(mContext, SenseDataIntentService.class);
         if (mWhichPolicy == SensingPolicy.INTERVAL) {
             i.putExtra("sensing_policy", mWhichPolicy.toString());
         }
+        i.putExtra("user_label", userLabel);
         return PendingIntent
                 .getService(mContext, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
     }
@@ -117,9 +130,8 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
         stopAllUpdates();
         Log.d(TAG, "Firing requested location updates.");
         LocationRequest myLocationRequest = new LocationRequest();
-        myLocationRequest.setInterval(Constants.APPROXIMATE_INTERVAL_MILLIS * 2);
-        myLocationRequest.setFastestInterval(Constants.APPROXIMATE_INTERVAL_MILLIS);
-        myLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        myLocationRequest.setInterval(Constants.APPROXIMATE_INTERVAL_MILLIS);
+        myLocationRequest.setPriority(LocationRequest.PRIORITY_NO_POWER);
         LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, myLocationRequest, getSensingServicePendingIntent());
     }
 

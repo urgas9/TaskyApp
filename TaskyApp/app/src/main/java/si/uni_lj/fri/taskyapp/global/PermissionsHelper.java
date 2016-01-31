@@ -28,10 +28,20 @@ import si.uni_lj.fri.taskyapp.R;
  */
 public class PermissionsHelper {
 
+    public final static int REQUEST_ALL_PERMISSIONS_CODE = 231;
     public final static int REQUEST_LOCATION_PERMISSIONS_CODE = 232;
     public final static int REQUEST_WRITE_STORAGE_PERMISSIONS_CODE = 233;
     public final static int REQUEST_CALL_PERMISSIONS_CODE = 234;
     public final static int REQUEST_ACCOUNTS_PERMISSIONS_CODE = 235;
+
+    public final static String[] permissions = {Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.READ_PHONE_STATE,
+            Manifest.permission.READ_CALL_LOG,
+            Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
 
     public static boolean hasPermission(Context mContext, String permission) {
         return (ActivityCompat.checkSelfPermission(mContext, permission) == PackageManager.PERMISSION_GRANTED);
@@ -185,18 +195,25 @@ public class PermissionsHelper {
     }
 
     public static void requestAllRequiredPermissions(Activity a){
-        String[] permissions = {Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.READ_PHONE_STATE,
-                Manifest.permission.READ_CALL_LOG,
-                Manifest.permission.CAPTURE_AUDIO_OUTPUT,
-                Manifest.permission.RECORD_AUDIO,
-                Manifest.permission.MODIFY_AUDIO_SETTINGS,
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-        };
+        ActivityCompat.requestPermissions(a, permissions, REQUEST_ALL_PERMISSIONS_CODE);
+    }
 
-        ActivityCompat.requestPermissions(a, permissions, REQUEST_LOCATION_PERMISSIONS_CODE);
+    public static boolean shouldShowAnyPermissionRationale(Activity a){
+        for(String perm : permissions) {
+            if(ActivityCompat.shouldShowRequestPermissionRationale(a, perm)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean hasAllRequiredPermissions(Activity a){
+        for(String perm : permissions){
+            if(!hasPermission(a, perm)){
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

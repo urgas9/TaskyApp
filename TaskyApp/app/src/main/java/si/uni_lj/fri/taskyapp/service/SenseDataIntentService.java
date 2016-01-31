@@ -3,11 +3,9 @@ package si.uni_lj.fri.taskyapp.service;
 import android.Manifest;
 import android.app.IntentService;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
@@ -68,6 +66,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
     private List<PhoneStatusData> phoneStatusDataList;
     private float sumLightValues = 0;
     private float countLightValues = 0;
+    private SensingDecisionHelper sensingHelper;
 
 
     public SenseDataIntentService() {
@@ -94,9 +93,16 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
     @Override
     protected void onHandleIntent(Intent intent) {
         String policy = intent.getStringExtra("sensing_policy");
-        Gson gson = new Gson();
-        SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        int userLabel = intent.getIntExtra("user_label", -2);
+        if(userLabel > 0){
+            Log.d(TAG, "+++++++++++++++ Force sensing set to true!");
+        }
+        sensingHelper = new SensingDecisionHelper(getApplicationContext(), userLabel);
 
+        if(!sensingHelper.decideOnMinimumIntervalTimeDifference()){
+            Log.d(TAG, "decideOnMinimumIntervalTimeDifference decided not to sense");
+            return;
+        }
         // Blocking connect to Google API, so we will have a connected instance in future
         if (mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
             buildGoogleApiClient().blockingConnect(7, TimeUnit.SECONDS);
@@ -156,8 +162,10 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             // TODO: Detect current activity
             /*PendingResult result = ActivityRecognition.
             ActivityRecognitionApi.requestActivityUpdates(mGoogleApiClient, 0, PendingIntent
-                    .getService(getApplicationContext(), 0, null, PendingIntent.FLAG_UPDATE_CURRENT));
-            Result r = result.await();*/
+                    .getService(getApplicationContext(), 0, null, PendingIntent.FLAG_UPDATE_CURRENT)).setResultCallback(this);;
+            Result r = result.await();
+            ActivityRecognitionResult res = ActivityRecognitionResult.extractResult(r.getStatus().get);
+            r.getStatus().getResolution().*/
         }
 
         timeSensingStarted = System.currentTimeMillis();
@@ -170,7 +178,6 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             srd.setActivityData(new ActivityData(detectedActivity));
         }
 
-        SensingDecisionHelper sensingHelper = new SensingDecisionHelper(getApplicationContext());
         if(!sensingHelper.shouldContinueSensing(srd)){
             Log.d(TAG, "Decided not to sense this time!");
             return;
@@ -206,6 +213,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
         // Subscribing to push sensors
         subscribeToSensors(sm);
+        phoneStatusDataList = new ArrayList<>();
         Log.d(TAG, "Subscribed to sensors.");
         Log.d(TAG, "Now, trying to get sensor results.");
 
@@ -264,6 +272,10 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
         Log.d(TAG, "Finishing with SenseDataIntentService method.");
         Log.d(TAG, "Result: " + new Gson().toJson(srd));
+
+        if(mGoogleApiClient != null && mGoogleApiClient.isConnected()){
+            mGoogleApiClient.disconnect();
+        }
 
         // Saving sensor readings to database
         new SensorReadingRecord(srd).save();

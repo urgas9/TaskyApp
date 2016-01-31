@@ -1,7 +1,5 @@
 package si.uni_lj.fri.taskyapp.sensor;
 
-import android.util.Log;
-
 import com.ubhave.sensormanager.ESSensorManager;
 import com.ubhave.sensormanager.data.SensorData;
 
@@ -16,7 +14,6 @@ public class SensorCallableGenerator {
         return new Callable<SensorData>() {
             @Override
             public SensorData call() throws Exception {
-                Log.d("S", "Returning a new callable");
                 return sm.getDataFromSensor(sensorId);
             }
         };
