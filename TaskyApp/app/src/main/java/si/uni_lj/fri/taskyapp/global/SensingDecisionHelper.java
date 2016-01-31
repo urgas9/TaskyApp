@@ -23,6 +23,9 @@ public class SensingDecisionHelper {
     private Context mContext;
     private Gson gson;
 
+    private SensorReadingData mOldSensorData;
+    private SensorReadingData mNewSensorData;
+
     public SensingDecisionHelper(Context context){
         super();
         this.mContext = context;
@@ -74,28 +77,31 @@ public class SensingDecisionHelper {
      * @return
      */
     public boolean shouldContinueSensing(SensorReadingData newSensorData){
-        SensorReadingData oldSensorData = getPreviousDecisiveSensingData();
-        boolean continueSensing = true;
-        if(newSensorData != null && oldSensorData != null){
+        mOldSensorData = getPreviousDecisiveSensingData();
+        mNewSensorData = newSensorData;
 
-            if(!decideOnTimeDifference(newSensorData.getTimestampStarted(), oldSensorData.getTimestampStarted()))
-            {
-                continueSensing = decideOnActivityData(newSensorData.getActivityData(),
-                        oldSensorData.getActivityData());
-            }
+        boolean continueSensing = true;
+        if(mNewSensorData != null && mOldSensorData != null){
+            continueSensing = decideOnActivityData();
         }
 
         markDecisionToSense(continueSensing);
         return continueSensing;
     }
 
-    private boolean decideOnActivityData(ActivityData newActData, ActivityData oldActData){
-        if(newActData == null || oldActData == null){
+    private boolean decideOnActivityData(){
+        if(mOldSensorData == null || mNewSensorData == null || mOldSensorData.getActivityData() == null || mNewSensorData.getActivityData() == null){
             return true;
         }
-        if(newActData.getActivityType().equals(oldActData.getActivityType())){
+        ActivityData newActivityData = mNewSensorData.getActivityData();
+        ActivityData oldActivityData = mOldSensorData.getActivityData();
+
+        if(newActivityData.getActivityType().equals(oldActivityData.getActivityType())){
+            if(isUncertainActivityData(newActivityData)){
+                return decideOnTimeDifference();
+            }
             // We have more (or less certain result for more than 50%, so we should sense)
-            if(Math.abs(newActData.getConfidence() - oldActData.getConfidence()) > 50){
+            if(Math.abs(newActivityData.getConfidence() - oldActivityData.getConfidence()) > 50){
                 return true;
             }
             return false;
@@ -103,7 +109,22 @@ public class SensingDecisionHelper {
         return true;
     }
 
-    private boolean decideOnLocationData(LocationData newLocData, LocationData oldLocData){
+    private boolean isUncertainActivityData(ActivityData activityData){
+        if(activityData == null){
+            return false;
+        }
+        if(activityData.getConfidence() < 95 || activityData.getActivityType().equals("Unknown")){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean decideOnLocationData(){
+        if(mOldSensorData == null || mNewSensorData == null || mOldSensorData.getLocationData() == null || mNewSensorData.getLocationData() == null){
+            return true;
+        }
+        LocationData newLocData = mNewSensorData.getLocationData();
+        LocationData oldLocData = mOldSensorData.getLocationData();
         // Do nothing if we are too close to previously sensed location
         if (newLocData.getAccuracy() <= Constants.LOCATION_ACCURACY_AT_LEAST &&
                 newLocData.getDistanceTo(oldLocData) < Constants.LOCATION_MIN_DISTANCE_TO_LAST_LOC) {
@@ -118,8 +139,11 @@ public class SensingDecisionHelper {
         return true;
     }
 
-    private boolean decideOnTimeDifference(long newTimestamp, long oldTimestamp){
-        if((newTimestamp - oldTimestamp) > Constants.MAX_INTERVAL_WITHOUT_SENSING_DATA_IN_MILLIS){
+    private boolean decideOnTimeDifference(){
+        if(mOldSensorData == null || mNewSensorData == null){
+            return true;
+        }
+        if((mNewSensorData.getTimestampStarted() - mOldSensorData.getTimestampStarted()) > Constants.MAX_INTERVAL_WITHOUT_SENSING_DATA_IN_MILLIS){
             return true;
         }
         return false;

@@ -10,5 +10,6 @@
     <string name="permission_location_forever_denied">Cannot access your location. Please grant us permissions.</string>
     <string name="permission_accounts_denied">We need access to your profile mail address to log you in.</string>
     <string name="ok">Ok</string>
+    <string name="title_activity_main">MainActivity</string>
 
 </resources>

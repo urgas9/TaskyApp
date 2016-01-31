@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="si.uni_lj.fri.taskyapp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest package="si.uni_lj.fri.taskyapp"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION"/>
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -15,23 +14,38 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-
         android:theme="@style/AppTheme">
-
-        <meta-data android:name="DATABASE" android:value="taskyapp.db" />
-        <meta-data android:name="VERSION" android:value="0" />
-        <meta-data android:name="QUERY_LOG" android:value="true" />
-        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="si.uni_lj.fri.taskyapp" />
+        <meta-data
+            android:name="DATABASE"
+            android:value="taskyapp.db"/>
+        <meta-data
+            android:name="VERSION"
+            android:value="0"/>
+        <meta-data
+            android:name="QUERY_LOG"
+            android:value="true"/>
+        <meta-data
+            android:name="DOMAIN_PACKAGE_NAME"
+            android:value="si.uni_lj.fri.taskyapp"/>
 
         <activity
             android:name=".MainActivity"
+            android:label="@string/title_activity_main"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ListDataActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
@@ -39,22 +53,24 @@
             android:name=".receivers.KeepSensingAliveReceiver"
             android:enabled="true"
             android:exported="false"
-            android:permission="android.permission.RECEIVE_BOOT_COMPLETED" >
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
                 <!-- specific for HTC phones -->
-                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON" />
+                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON"/>
                 <!-- Reboot intent -->
-                <action android:name="android.intent.action.REBOOT" />
-                <action android:name="si.uni_lj.fri.taskyapp.KeepAliveAction" />
+                <action android:name="android.intent.action.REBOOT"/>
+                <action android:name="si.uni_lj.fri.taskyapp.KeepAliveAction"/>
             </intent-filter>
         </receiver>
 
         <service android:name=".service.SenseDataIntentService"/>
+
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="13e2f1c1cf34311a349f9ea7132fbad2f1d7405b" />
+            android:value="13e2f1c1cf34311a349f9ea7132fbad2f1d7405b"/>
+
     </application>
 
 </manifest>

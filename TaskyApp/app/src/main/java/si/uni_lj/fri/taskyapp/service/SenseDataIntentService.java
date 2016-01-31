@@ -285,7 +285,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
     @Override
     public void onDataSensed(SensorData data) {
-        if(data instanceof ScreenData){
+        if(data instanceof ScreenData && phoneStatusDataList != null){
             //Log.d(TAG, "Screen is: " + ((ScreenData) data).isOn());
             PhoneStatusData psd = new PhoneStatusData();
             psd.setScreenOn(((ScreenData) data).isOn());
