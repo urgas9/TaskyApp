@@ -11,16 +11,20 @@ import si.uni_lj.fri.taskyapp.data.SensorReadingData;
 public class SensorReadingRecord extends SugarRecord {
 
     private String sensorJsonObject;
+    private boolean startedByUser;
+    private Integer label;
 
     public SensorReadingRecord(){
 
     }
 
-    public SensorReadingRecord(String json){
+    public SensorReadingRecord(String json, boolean startedByUser, int label){
         this.sensorJsonObject = json;
+        this.startedByUser = startedByUser;
+        this.label = label;
     }
-    public SensorReadingRecord(SensorReadingData sensorReadingData){
-        this.sensorJsonObject = new Gson().toJson(sensorReadingData);
+    public SensorReadingRecord(SensorReadingData sensorReadingData, boolean startedByUser, int label){
+        this(new Gson().toJson(sensorReadingData), startedByUser, label);
     }
 
     public String getSensorJsonObject() {
@@ -31,10 +35,28 @@ public class SensorReadingRecord extends SugarRecord {
         this.sensorJsonObject = sensorJsonObject;
     }
 
+    public boolean isStartedByUser() {
+        return startedByUser;
+    }
+
+    public void setStartedByUser(boolean startedByUser) {
+        this.startedByUser = startedByUser;
+    }
+
+    public Integer getLabel() {
+        return label;
+    }
+
+    public void setLabel(Integer label) {
+        this.label = label;
+    }
+
     @Override
     public String toString() {
         return "SensorReadingRecord{" +
                 "sensorJsonObject='" + sensorJsonObject + '\'' +
+                ", startedByUser=" + startedByUser +
+                ", label=" + label +
                 '}';
     }
 }

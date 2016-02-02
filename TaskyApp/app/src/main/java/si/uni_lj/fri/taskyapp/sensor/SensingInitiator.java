@@ -11,6 +11,8 @@ import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.ActivityRecognition;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -21,7 +23,7 @@ import si.uni_lj.fri.taskyapp.service.SenseDataIntentService;
 /**
  * Created by urgas9 on 10. 01. 2016.
  */
-public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, ResultCallback<Status> {
 
     private static final String TAG = "SensingManager";
     private Context mContext;
@@ -41,7 +43,7 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     public void senseWithDefaultSensingConfiguration(){
 
         senseOnActivityRecognition();
-        senseOnLocationChanged();
+        //senseOnLocationChanged();
     }
     public void senseOnActivityRecognition() {
         mWhichPolicy = SensingPolicy.ACTIVITY_UPDATES;
@@ -78,7 +80,7 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     private GoogleApiClient buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(mContext)
                 .addApi(ActivityRecognition.API)
-                .addApi(LocationServices.API)
+                //.addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
@@ -110,7 +112,9 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
         if (mWhichPolicy == SensingPolicy.INTERVAL) {
             i.putExtra("sensing_policy", mWhichPolicy.toString());
         }
-        i.putExtra("user_label", userLabel);
+        if(userLabel > 0) {
+            i.putExtra("user_label", userLabel);
+        }
         return PendingIntent
                 .getService(mContext, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
     }
@@ -118,7 +122,10 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     private void requestActivityUpdates() {
         Log.d(TAG, "Starting requested activity recognition updates.");
         stopAllUpdates();
-        ActivityRecognition.ActivityRecognitionApi.requestActivityUpdates(mGoogleApiClient, Constants.APPROXIMATE_INTERVAL_MILLIS, getSensingServicePendingIntent());
+        ActivityRecognition
+                .ActivityRecognitionApi
+                .requestActivityUpdates(mGoogleApiClient, Constants.APPROXIMATE_INTERVAL_MILLIS, getSensingServicePendingIntent())
+                .setResultCallback(this);
     }
 
     private void requestLocationUpdates() {
@@ -167,8 +174,9 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
      * Stopping all updates, regardless of sensing policy
      */
     public void stopAllUpdates() {
+        Log.d(TAG, "Stopping all updates.");
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, getSensingServicePendingIntent());
+            //LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, getSensingServicePendingIntent());
             ActivityRecognition.ActivityRecognitionApi.removeActivityUpdates(mGoogleApiClient, getSensingServicePendingIntent());
         }
         AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
@@ -183,20 +191,24 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
 
     @Override
     public void onConnectionSuspended(int i) {
-        Log.d(TAG, "Suspended to ActivityRecognition");
+
+        Log.d(TAG, "Connection to Google API client failed for some reason, trying to reconnect.");
+        mGoogleApiClient.connect();
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.d(TAG, "Not connected to ActivityRecognition");
+        Log.d(TAG, "Cannot connect to Google API client :(");
+    }
 
-        /*Dialog errorDialog = GoogleApiAvailability.getInstance().getErrorDialog(
-                mContext,
-                connectionResult.getErrorCode(),
-                1);
-        if(errorDialog != null){
-            errorDialog.show();
-        }*/
+    @Override
+    public void onResult(Status status) {
+        if(status.isSuccess()){
+            Log.d(TAG, "Successfully started or remove updates of Google API client.");
+        }
+        else{
+            Log.e(TAG, "Could not start or remove updates from Google API client.");
+        }
     }
 
     enum SensingPolicy {

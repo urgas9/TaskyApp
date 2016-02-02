@@ -39,6 +39,14 @@ public class ActivityData {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if(o instanceof ActivityData && ((ActivityData)o).getActivityType().equals(this.getActivityType())){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public String toString() {
         return "ActivityData{" +
                 "activityType='" + activityType + '\'' +
