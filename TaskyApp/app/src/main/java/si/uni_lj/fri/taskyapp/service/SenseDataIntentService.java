@@ -118,7 +118,6 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             Log.d(TAG, "Confidence : " + confidence);
             //Send Broadcast to be listen in MainActivity
             this.sendBroadcast(i);
-            srd.setActivityData(new ActivityData(detectedActivity));
 
         } else if (LocationResult.hasResult(intent)) {
             Log.d(TAG, "Got intent from location update.");
@@ -146,7 +145,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         if (sensedLocation == null) {
             sensedLocation = getLastLocation();
         }
-        detectedActivity = new DetectedActivity(DetectedActivity.STILL, 90);
+        //detectedActivity = new DetectedActivity(DetectedActivity.STILL, 90);
         if (detectedActivity == null) {
             mDetectedActivityList = new LinkedList<>();
             if (mGoogleApiClient.isConnected()) {
@@ -165,6 +164,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             }
         }
         srd.setActivityData(new ActivityData(detectedActivity));
+        srd.setLocationData(new LocationData(sensedLocation));
 
         mTimeSensingStarted = System.currentTimeMillis();
         srd.setTimestampStarted(mTimeSensingStarted);
