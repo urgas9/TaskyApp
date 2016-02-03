@@ -87,16 +87,25 @@ public class SensingDecisionHelper {
 
         boolean continueSensing = true;
         if(mNewSensorData != null && mOldSensorData != null){
-            if(!(continueSensing = decideOnLocationData())) {
+            if(newSensorData.getActivityData() != null && newSensorData.getLocationData() != null){
+                if(!(continueSensing = decideOnLocationData())) {
+                    continueSensing = decideOnActivityData();
+                }
+            }
+            else if(newSensorData.getActivityData() != null){
                 continueSensing = decideOnActivityData();
             }
+            else if(newSensorData.getLocationData() != null){
+                continueSensing = decideOnLocationData();
+            }
+
         }
 
         markDecisionToSense(continueSensing);
         return continueSensing;
     }
 
-    private boolean decideOnActivityData(){
+    public boolean decideOnActivityData(){
         if(mOldSensorData == null || mNewSensorData == null || mOldSensorData.getActivityData() == null || mNewSensorData.getActivityData() == null){
             return true;
         }
