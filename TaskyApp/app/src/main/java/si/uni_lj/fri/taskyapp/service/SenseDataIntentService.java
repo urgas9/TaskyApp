@@ -30,6 +30,7 @@ import com.ubhave.sensormanager.data.pull.ESBluetoothDevice;
 import com.ubhave.sensormanager.data.pull.MicrophoneData;
 import com.ubhave.sensormanager.data.pull.WifiData;
 import com.ubhave.sensormanager.data.pull.WifiScanResult;
+import com.ubhave.sensormanager.data.push.ConnectionStrengthData;
 import com.ubhave.sensormanager.data.push.ScreenData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
@@ -58,7 +59,9 @@ import si.uni_lj.fri.taskyapp.sensor.SensorThreadsManager;
 public class SenseDataIntentService extends IntentService implements GoogleApiClient.ConnectionCallbacks, SensorDataListener {
     //LogCat
     private static final String TAG = SenseDataIntentService.class.getSimpleName();
-    private static final int[] SENSOR_IDS = {SensorUtils.SENSOR_TYPE_LIGHT, SensorUtils.SENSOR_TYPE_SCREEN};
+    private static final int[] SENSOR_IDS = {SensorUtils.SENSOR_TYPE_LIGHT,
+            SensorUtils.SENSOR_TYPE_SCREEN,
+            SensorUtils.SENSOR_TYPE_CONNECTION_STRENGTH};
     private GoogleApiClient mGoogleApiClient;
     private List<Integer> sensorSubscriptionIds;
 
@@ -66,8 +69,12 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
     private long mTimeSensingStarted;
     private List<PhoneStatusData> mPhoneStatusDataList;
     private float mSumLightValues = 0;
-    private float mCountLightValues = 0;
+    private long mCountLightValues = 0;
     private SensingDecisionHelper mSensingHelper;
+
+    private float mSumConnectionStrengthValues;
+    private long mCountConnectionStrengthValues;
+
     private List<ActivityData> mDetectedActivityList;
     private PendingIntent mActivityRecognitionIntent;
 
@@ -78,12 +85,18 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
     @Override
     protected void onHandleIntent(Intent intent) {
+
         String policy = intent.getStringExtra("sensing_policy");
         int userLabel = intent.getIntExtra("user_label", -2);
         if (userLabel > 0) {
             Log.d(TAG, "+++++++++++++++ Force sensing set to true!");
         }
         mSensingHelper = new SensingDecisionHelper(getApplicationContext(), userLabel);
+
+        mSumConnectionStrengthValues = 0;
+        mSumLightValues = 0;
+        mCountConnectionStrengthValues = 0;
+        mCountLightValues = 0;
 
         if (!mSensingHelper.decideOnMinimumIntervalTimeDifference()) {
             Log.d(TAG, "decideOnMinimumIntervalTimeDifference decided not to sense");
@@ -164,7 +177,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             }
         }
         srd.setActivityData(new ActivityData(detectedActivity));
-        srd.setLocationData(new LocationData(sensedLocation));
+        srd.setLocationData(new LocationData(getApplicationContext(), sensedLocation));
 
         mTimeSensingStarted = System.currentTimeMillis();
         srd.setTimestampStarted(mTimeSensingStarted);
@@ -210,6 +223,9 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
         Future futureSensedData;
         EnvironmentData environmentData = new EnvironmentData();
+        environmentData.setWifiTurnedOn(SensorsHelper.isWifiEnabled(getBaseContext()));
+        environmentData.setBluetoothTurnedOn(SensorsHelper.isBluetoothEnabled());
+
         while (sensorThreadsManager.moreResultsAvailable()) {
             Object sensingData;
             try {
@@ -256,6 +272,11 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             lightPercentage = -1.f;
         }
         environmentData.setAverageLightPercentageValue(lightPercentage);
+
+        float connectionStrengthPercentage = mSumConnectionStrengthValues / mCountConnectionStrengthValues;
+        if (Float.isNaN(connectionStrengthPercentage)) {
+            connectionStrengthPercentage = -1.f;
+        }
         srd.setEnvironmentData(environmentData);
         srd.setTimestampEnded(System.currentTimeMillis());
         srd.setPhoneStatusData(mPhoneStatusDataList);
@@ -266,7 +287,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         }
 
         if (sensedLocation != null) {
-            srd.setLocationData(new LocationData(sensedLocation));
+            srd.setLocationData(new LocationData(getApplicationContext(), sensedLocation));
         }
 
         Log.d(TAG, "Finishing with SenseDataIntentService method.");
@@ -328,6 +349,10 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             //Log.d(TAG, "LightData, max range: " + ((LightData) data).getValue());
             mCountLightValues++;
             mSumLightValues += (((LightData) data).getValue() / ((LightData) data).getMaxRange());
+        }
+        else if(data instanceof ConnectionStrengthData){
+            mCountConnectionStrengthValues++;
+            mSumConnectionStrengthValues += ((ConnectionStrengthData) data).getStrength();
         }
     }
 

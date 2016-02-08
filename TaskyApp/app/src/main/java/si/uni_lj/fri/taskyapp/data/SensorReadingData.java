@@ -6,7 +6,12 @@ import android.util.Log;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
+import si.uni_lj.fri.taskyapp.sensor.Constants;
 
 /**
  * Created by urgas9 on 24. 01. 2016.
@@ -145,6 +150,15 @@ public class SensorReadingData {
         this.label = label;
     }
 
+    public boolean equalByDayTimestampStarted(SensorReadingData srd){
+        SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_FORMAT_TO_SHOW_DAY, Locale.ENGLISH);
+        String dayThis = format.format(new Date(this.timestampStarted));
+        String daySrd = format.format(new Date(srd.timestampStarted));
+        if(dayThis.equals(daySrd)){
+            return true;
+        }
+        return false;
+    }
     @Override
     public String toString() {
         return "SensorReadingData{" +

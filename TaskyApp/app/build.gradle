@@ -53,6 +53,9 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
     }
+    compile('com.github.afollestad:sectioned-recyclerview:0.2.0') {
+        transitive = true
+    }
 }
 
 // Fixed compile error - GPlay version conflict

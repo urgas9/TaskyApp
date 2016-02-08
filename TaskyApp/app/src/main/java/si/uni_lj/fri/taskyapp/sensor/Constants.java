@@ -18,4 +18,7 @@ public class Constants {
     public static final int LOCATION_MIN_DISTANCE_TO_LAST_LOC = 70;
     public static final String ACTION_NEW_SENSOR_READING = "si.uni_lj.fri.taskyapp.NewSensorReading";
     public static final String ACTION_KEEP_SENSING_ALIVE = "si.uni_lj.fri.taskyapp.KeepAliveAction";
+
+    public static final String DATE_FORMAT_TO_SHOW_DAY = "EEE, MM yyyy ";
+    public static final String DATE_FORMAT_TO_SHOW_FULL = "HH:mm:ss dd/MM/yyyy ";
 }

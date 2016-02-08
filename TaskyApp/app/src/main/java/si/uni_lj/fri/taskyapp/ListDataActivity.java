@@ -5,23 +5,28 @@ import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.method.ScrollingMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import io.fabric.sdk.android.Fabric;
+import si.uni_lj.fri.taskyapp.adapter.DividerItemDecoration;
+import si.uni_lj.fri.taskyapp.adapter.ListDataRecyclerAdapter;
 import si.uni_lj.fri.taskyapp.broadcast_receivers.NewSensorReadingReceiver;
 import si.uni_lj.fri.taskyapp.data.SensorReadingData;
+import si.uni_lj.fri.taskyapp.data.SensorReadingDataWithSections;
 import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
 
@@ -32,25 +37,30 @@ public class ListDataActivity extends AppCompatActivity {
     private static final String TAG = "ListResultsActivity";
     BroadcastReceiver newSensorReadingReceiver;
 
-    @Bind(R.id.app_status_tv)
-    TextView mStatusTextView;
+    @Bind(R.id.list_data_recycler_view)
+    RecyclerView mDataRecyclerView;
+
+    ListDataRecyclerAdapter mAdapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
+
         setContentView(R.layout.activity_list_data);
         ButterKnife.bind(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        mStatusTextView.setMovementMethod(new ScrollingMovementMethod());
-        mStatusTextView.setText("Launching ListResultsActivity.");
-
-        newSensorReadingReceiver = new NewSensorReadingReceiver(mStatusTextView);
-
+        newSensorReadingReceiver = new NewSensorReadingReceiver();
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        mDataRecyclerView.setLayoutManager(llm);
+        mDataRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
+        mAdapter = new ListDataRecyclerAdapter(getBaseContext());
+        mDataRecyclerView.setAdapter(mAdapter);
         //Filter the Intent and register broadcast receiver
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constants.ACTION_NEW_SENSOR_READING);
@@ -89,28 +99,38 @@ public class ListDataActivity extends AppCompatActivity {
         unregisterReceiver(newSensorReadingReceiver);
     }
 
-    class ReadAllSensorRecords extends AsyncTask<Void, Void, String>{
+    class ReadAllSensorRecords extends AsyncTask<Void, Void, SensorReadingDataWithSections>{
 
         @Override
-        protected String doInBackground(Void... params) {
-            List<SensorReadingRecord> sensorReadings = SensorReadingRecord.listAll(SensorReadingRecord.class);
-            StringBuilder sb = new StringBuilder();
+        protected SensorReadingDataWithSections doInBackground(Void... params) {
+            List<SensorReadingRecord> sensorReadings = SensorReadingRecord.listAll(SensorReadingRecord.class, "time_saved ASC");
+            ArrayList<SensorReadingData> dataList = new ArrayList<>();
+            HashSet<String> uniqueDays = new HashSet<>();
+            SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_FORMAT_TO_SHOW_DAY, Locale.ENGLISH);
             Gson gson = new Gson();
-            SensorReadingData rec;
-            sb.append("All records found: ").append(sensorReadings.size()).append("\n");
+            SensorReadingData srd;
+            String previousTimestampDay = null;
             for(SensorReadingRecord srr : sensorReadings){
-                rec = gson.fromJson(srr.getSensorJsonObject(), SensorReadingData.class);
-                String time = new java.text.SimpleDateFormat("dd/MM HH:mm:ss").format(new Date(rec.getTimestampStarted()));
-                sb.append(time).append(": ").append(rec.getActivityData());
-                sb.append("\n");
+                srd = gson.fromJson(srr.getSensorJsonObject(), SensorReadingData.class);
+                String dayTimestamp = format.format(new Date(srd.getTimestampStarted()));
+                if(!dayTimestamp.equals(previousTimestampDay)){
+                    dataList.add(null); // HeaderItem to start a new section
+                }
+                uniqueDays.add(dayTimestamp);
+                previousTimestampDay = dayTimestamp;
+                dataList.add(srd);
             }
-            return sb.toString();
+
+            return new SensorReadingDataWithSections(uniqueDays.size(), dataList);
         }
 
         @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            mStatusTextView.setText(s);
+        protected void onPostExecute(SensorReadingDataWithSections resultData) {
+            super.onPostExecute(resultData);
+
+            mAdapter.setAdapterData(resultData);
+
+            //mStatusTextView.setText(s);
         }
     }
 

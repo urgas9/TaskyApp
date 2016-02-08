@@ -111,7 +111,9 @@ public class SensingDecisionHelper {
         }
         ActivityData newActivityData = mNewSensorData.getActivityData();
         ActivityData oldActivityData = mOldSensorData.getActivityData();
-
+        if(newActivityData.getConfidence() < 90 || newActivityData.equals("Unknown")){
+            return false;
+        }
         if(newActivityData.getActivityType().equals(oldActivityData.getActivityType())){
             if(isUncertainActivityData(newActivityData)){
                 return decideOnTimeDifference();

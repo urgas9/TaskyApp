@@ -14,6 +14,10 @@
 
     <string name="complexity_prompt">Choose task complexity</string>
     <string name="task_complexity_not_selected">Select your task complexity first.</string>
+    <string name="label">Label</string>
+    <string name="discard">Discard</string>
+    <string name="nearby_devices">Nearby devices</string>
+    <string name="detected_phone_activity">Detected phone activity:</string>
 
     <string-array name="task_complexities_array">
         <item></item>

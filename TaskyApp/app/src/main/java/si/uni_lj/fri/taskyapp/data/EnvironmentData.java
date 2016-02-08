@@ -9,11 +9,17 @@ public class EnvironmentData {
 
     @SerializedName("num_wifi_devices_nearby")
     private int nWifiDevicesNearby;
+    @SerializedName("wifi_turned_on")
+    private boolean wifiTurnedOn;
     @SerializedName("num_bluetooth_devices_nearby")
     private int nBluetoothDevicesNearby;
+    @SerializedName("bluetooth_turned_on")
+    private boolean bluetoothTurnedOn;
 
     @SerializedName("average_light")
     private float averageLightPercentageValue;
+    @SerializedName("average_connection_strength")
+    private float averageConnectionStrengthPercentageValue;
 
     public int getnWifiDevicesNearby() {
         return nWifiDevicesNearby;
@@ -39,12 +45,39 @@ public class EnvironmentData {
         this.averageLightPercentageValue = averageLightPercentageValue;
     }
 
+    public boolean isWifiTurnedOn() {
+        return wifiTurnedOn;
+    }
+
+    public void setWifiTurnedOn(boolean wifiTurnedOn) {
+        this.wifiTurnedOn = wifiTurnedOn;
+    }
+
+    public boolean isBluetoothTurnedOn() {
+        return bluetoothTurnedOn;
+    }
+
+    public void setBluetoothTurnedOn(boolean bluetoothTurnedOn) {
+        this.bluetoothTurnedOn = bluetoothTurnedOn;
+    }
+
+    public float getAverageConnectionStrengthPercentageValue() {
+        return averageConnectionStrengthPercentageValue;
+    }
+
+    public void setAverageConnectionStrengthPercentageValue(float averageConnectionStrengthPercentageValue) {
+        this.averageConnectionStrengthPercentageValue = averageConnectionStrengthPercentageValue;
+    }
+
     @Override
     public String toString() {
         return "EnvironmentData{" +
                 "nWifiDevicesNearby=" + nWifiDevicesNearby +
+                ", wifiTurnedOn=" + wifiTurnedOn +
                 ", nBluetoothDevicesNearby=" + nBluetoothDevicesNearby +
+                ", bluetoothTurnedOn=" + bluetoothTurnedOn +
                 ", averageLightPercentageValue=" + averageLightPercentageValue +
+                ", averageConnectionStrengthPercentageValue=" + averageConnectionStrengthPercentageValue +
                 '}';
     }
 }

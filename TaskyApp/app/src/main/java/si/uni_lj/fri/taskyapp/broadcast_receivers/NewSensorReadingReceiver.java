@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
-import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -14,11 +13,9 @@ import java.util.Calendar;
  */
 public class NewSensorReadingReceiver extends BroadcastReceiver {
 
-    private TextView mStatusTextView;
 
-    public NewSensorReadingReceiver(TextView statusTextView) {
+    public NewSensorReadingReceiver() {
         super();
-        mStatusTextView = statusTextView;
     }
 
     //Broadcast receiver
@@ -35,13 +32,13 @@ public class NewSensorReadingReceiver extends BroadcastReceiver {
                     intent.getStringExtra("activity") + " " +
                     "Confidence : " + intent.getExtras().getInt("confidence") + "\n";
 
-            v = mStatusTextView.getText() + v;
-            mStatusTextView.setText(v);
+            //v = mStatusTextView.getText() + v;
+            //mStatusTextView.setText(v);
         } else if (policy.equals("location")) {
             Location loc = intent.getParcelableExtra("location");
             String v = strDate + " Location : " + loc.getLatitude() + ", " + loc.getLongitude() + "\n";
-            v = mStatusTextView.getText() + v;
-            mStatusTextView.setText(v);
+            //v = mStatusTextView.getText() + v;
+            //mStatusTextView.setText(v);
         }
     }
 }

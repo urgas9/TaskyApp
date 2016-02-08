@@ -1,8 +1,17 @@
 package si.uni_lj.fri.taskyapp.global;
 
+import android.bluetooth.BluetoothAdapter;
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
+import android.net.wifi.WifiManager;
+
 import com.google.android.gms.location.DetectedActivity;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by urgas9 on 24. 01. 2016.
@@ -65,6 +74,36 @@ public class SensorsHelper {
         }
         return meanValue;
     }
+
+    /**
+     * Check for Bluetooth.
+     * @return True if Bluetooth is available.
+     */
+    public static boolean isBluetoothEnabled() {
+        final BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        return (bluetoothAdapter != null && bluetoothAdapter.isEnabled());
+    }
+
+    public static boolean isWifiEnabled(Context ctx){
+        WifiManager wifi = (WifiManager)ctx.getSystemService(Context.WIFI_SERVICE);
+        return wifi.isWifiEnabled();
+    }
+
+    public static String getLocationAddress(Context ctx, double lat, double lng){
+        Geocoder geocoder = new Geocoder(ctx, Locale.getDefault());
+        String locationString = null;
+        try {
+            List<Address> listAddresses = geocoder.getFromLocation(lat, lng, 1);
+            if(null != listAddresses && listAddresses.size()>0){
+                locationString = listAddresses.get(0).getAddressLine(0);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return locationString;
+    }
+
+
 
 
 }

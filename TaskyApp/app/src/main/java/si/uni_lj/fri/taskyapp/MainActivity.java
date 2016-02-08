@@ -37,9 +37,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         ButterKnife.bind(this);
 
         if (!AppHelper.isPlayServiceAvailable(this)) {
@@ -56,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "Starting sensing.");
             broadcastIntentToStartSensing();
         }
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
     }
 
