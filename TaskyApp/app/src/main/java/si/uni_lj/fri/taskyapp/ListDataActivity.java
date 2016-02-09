@@ -4,12 +4,13 @@ import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ViewSwitcher;
 
 import com.google.gson.Gson;
 
@@ -39,6 +40,8 @@ public class ListDataActivity extends AppCompatActivity {
 
     @Bind(R.id.list_data_recycler_view)
     RecyclerView mDataRecyclerView;
+    @Bind(R.id.list_data_view_switcher)
+    ViewSwitcher mLoadingViewSwitcher;
 
     ListDataRecyclerAdapter mAdapter;
 
@@ -52,7 +55,8 @@ public class ListDataActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        mLoadingViewSwitcher.setDisplayedChild(0);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         newSensorReadingReceiver = new NewSensorReadingReceiver();
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -70,24 +74,13 @@ public class ListDataActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -117,6 +110,7 @@ public class ListDataActivity extends AppCompatActivity {
                     dataList.add(null); // HeaderItem to start a new section
                 }
                 uniqueDays.add(dayTimestamp);
+                srd.setDatabaseId(srr.getId());
                 previousTimestampDay = dayTimestamp;
                 dataList.add(srd);
             }
@@ -129,7 +123,7 @@ public class ListDataActivity extends AppCompatActivity {
             super.onPostExecute(resultData);
 
             mAdapter.setAdapterData(resultData);
-
+            mLoadingViewSwitcher.setDisplayedChild(1);
             //mStatusTextView.setText(s);
         }
     }

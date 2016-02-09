@@ -27,7 +27,6 @@
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="si.uni_lj.fri.taskyapp"/>
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyA2EHFaZ0JhQWSzeKThVHtDx_Kp82Agg_k"/>
@@ -46,6 +45,7 @@
         <activity
             android:name=".ListDataActivity"
             android:label="@string/app_name"
+            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -75,7 +75,11 @@
             android:name="io.fabric.ApiKey"
             android:value="13e2f1c1cf34311a349f9ea7132fbad2f1d7405b"/>
 
-        <activity android:name=".LabelTaskActivity">
+        <activity android:name=".LabelTaskActivity"
+                  android:parentActivityName=".ListDataActivity">
+        </activity>
+        <activity android:name=".AboutActivity"
+                  android:parentActivityName=".MainActivity">
         </activity>
     </application>
 

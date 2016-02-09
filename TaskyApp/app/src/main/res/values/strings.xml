@@ -18,6 +18,12 @@
     <string name="discard">Discard</string>
     <string name="nearby_devices">Nearby devices</string>
     <string name="detected_phone_activity">Detected phone activity:</string>
+    <string name="no_data">no data</string>
+    <string name="action_about">About</string>
+    <string name="about_app_body">TaskyApp is developed solely for research purpose and is part of master thesis <b>Mobile Sensing for Task Engagement Inferences</b>. \nWith use of this app you are helping us out to collect data, which will be later used for machine learning on server. The goal of the research is trying to classify complexity of users\' tasks only with phone\'s built-in sensors.</string>
+    <string name="about_app_title">About TaskyApp</string>
+    <string name="author_title">Author</string>
+    <string name="author_description">App was developed by <b>Gašper Urh</b>, student at Faculty of Computer and Information Science, University of Ljubljana, as part of his master thesis, supervised by <b>doc. dr. Veljko Pejović</b>.</string>
 
     <string-array name="task_complexities_array">
         <item></item>

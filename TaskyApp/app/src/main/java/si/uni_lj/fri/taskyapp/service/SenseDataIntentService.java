@@ -289,7 +289,9 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         if (sensedLocation != null) {
             srd.setLocationData(new LocationData(getApplicationContext(), sensedLocation));
         }
-
+        if(userLabel > 0){
+            srd.setLabel(userLabel);
+        }
         Log.d(TAG, "Finishing with SenseDataIntentService method.");
         Log.d(TAG, "Result: " + new Gson().toJson(srd));
         // Persisting sensor readings to database

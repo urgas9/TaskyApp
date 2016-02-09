@@ -8,6 +8,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -62,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
     public void startLabelDataActivity(View v){
         Intent intent = new Intent(this, ListDataActivity.class);
         startActivity(intent);
-        Toast.makeText(this, "Started LabelDataActivity.", Toast.LENGTH_LONG).show();
-
     }
 
     @OnClick(R.id.btn_start_sensing)
@@ -71,12 +71,36 @@ public class MainActivity extends AppCompatActivity {
         if(mTaskComplexitySpinner.getSelectedItemPosition() > 0) {
             new SensingInitiator(this).startSensingOnUserRequest(mTaskComplexitySpinner.getSelectedItemPosition());
             //broadcastIntentToStartSensing(mTaskComplexitySpinner.getSelectedItemPosition());
-            Toast.makeText(this, "Started labeled (" + mTaskComplexitySpinner.getSelectedItem() + ")sensing.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Started labeled (" + mTaskComplexitySpinner.getSelectedItem() + ") sensing.", Toast.LENGTH_LONG).show();
         }
         else{
             Toast.makeText(this, R.string.task_complexity_not_selected, Toast.LENGTH_LONG).show();
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_about:
+                Intent intent = new Intent(this, AboutActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.action_settings:
+                Toast.makeText(this, "TODO: Open settings.", Toast.LENGTH_LONG).show();
+                break;
+            default:
+                Log.d(TAG, "Menu click not handled.");
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, final String[] permissions, int[] grantResults) {
         Log.d(TAG, "onRequestPermissionsResult reached");

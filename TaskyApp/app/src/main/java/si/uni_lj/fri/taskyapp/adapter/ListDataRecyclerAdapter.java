@@ -1,7 +1,10 @@
 package si.uni_lj.fri.taskyapp.adapter;
 
+import android.animation.ArgbEvaluator;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -84,6 +87,18 @@ public class ListDataRecyclerAdapter extends RecyclerView.Adapter {
             if(srd.getLocationData() != null) {
                 ((NormalItemViewHolder) holder).mLocationTv.setText(srd.getLocationData().getPrettyLocationString());
             }
+
+
+            if(srd.getLabel() != null && srd.getLabel()>0) {
+                ((GradientDrawable) ((NormalItemViewHolder) holder).mLabelCircle.getBackground())
+                        .setColor((Integer) new ArgbEvaluator()
+                                .evaluate(srd.getLabel() / 7.f, Color.GREEN, Color.RED));
+                ((NormalItemViewHolder) holder).mLabelCircle.setVisibility(View.VISIBLE);
+            }
+            else{
+                ((NormalItemViewHolder) holder).mLabelCircle.setVisibility(View.GONE);
+            }
+
         } else if(holder instanceof SectionHeaderViewHolder){
             ((SectionHeaderViewHolder) holder).mHeader.setText(formatDailyDate.format(dataList.get(position+1).getTimestampStarted()));
         }
@@ -115,6 +130,8 @@ public class ListDataRecyclerAdapter extends RecyclerView.Adapter {
         TextView mLocationTv;
         @Bind(R.id.item_activity_tv)
         TextView mActivityTv;
+        @Bind(R.id.label_circle)
+        View mLabelCircle;
 
         View contentView;
 

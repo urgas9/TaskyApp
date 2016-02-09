@@ -1,6 +1,7 @@
 package si.uni_lj.fri.taskyapp.adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -15,10 +16,12 @@ import si.uni_lj.fri.taskyapp.R;
 public class SimpleTextArrayAdapter extends ArrayAdapter<String> {
 
     String[] texts;
+    Context mContext;
 
     public SimpleTextArrayAdapter(Context context, int resource, String[] objects) {
         super(context, resource, objects);
-        texts = objects;
+        this.texts = objects;
+        this.mContext = context;
     }
 
     @Override
@@ -33,7 +36,10 @@ public class SimpleTextArrayAdapter extends ArrayAdapter<String> {
         View v = super.getDropDownView(position, convertView, parent);
         //v.setBackgroundResource(R.drawable.spinner_bg);
 
-        ((TextView)v.findViewById(R.id.text_item)).setText(texts[position]);
+        TextView textView = (TextView)v.findViewById(R.id.text_item);
+        textView.setText(texts[position]);
+        textView.setTextColor(ContextCompat.getColor(mContext, R.color.black));
+
         return v;
     }
 }

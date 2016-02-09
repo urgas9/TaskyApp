@@ -1,8 +1,11 @@
 package si.uni_lj.fri.taskyapp;
 
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -18,9 +21,11 @@ import com.google.gson.Gson;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import si.uni_lj.fri.taskyapp.adapter.SimpleTextArrayAdapter;
 import si.uni_lj.fri.taskyapp.data.EnvironmentData;
 import si.uni_lj.fri.taskyapp.data.SensorReadingData;
+import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
 
 public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCallback{
 
@@ -48,12 +53,18 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
         mSensorReadingData = new Gson().fromJson(getIntent().getStringExtra("task"), SensorReadingData.class);
 
         ButterKnife.bind(this);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map_fragment);
         mapFragment.getMapAsync(this);
 
-        mDetectedActivityTv.setText(mSensorReadingData.getActivityData().getActivityType());
+        if(mSensorReadingData.getActivityData() != null) {
+            mDetectedActivityTv.setText(mSensorReadingData.getActivityData().getActivityType());
+        }
+        else{
+            mDetectedActivityTv.setText(R.string.no_data);
+        }
 
         EnvironmentData environmentData = mSensorReadingData.getEnvironmentData();
         if(environmentData.isBluetoothTurnedOn()){
@@ -76,8 +87,43 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
         arrayOfComplexities[0] = getResources().getString(R.string.complexity_prompt);
         SimpleTextArrayAdapter adapter = new SimpleTextArrayAdapter(this, R.layout.spinner_task_complexity_item, arrayOfComplexities);
         mLabelTaskSpinner.setAdapter(adapter);
+        if(mSensorReadingData.getLabel() != null && mSensorReadingData.getLabel() > 0) {
+            mLabelTaskSpinner.setSelection(mSensorReadingData.getLabel());
+        }
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Integer label = mLabelTaskSpinner.getSelectedItemPosition();
+        if(label > 0) {
+            Log.d(TAG, "Updating record in database, setting label to: " + label);
+            SensorReadingRecord srr = SensorReadingRecord.findById(SensorReadingRecord.class, mSensorReadingData.getDatabaseId());
+            srr.setLabel(label);
+            mSensorReadingData.setLabel(label);
+            srr.setSensorJsonObject(new Gson().toJson(mSensorReadingData));
+            srr.save();
+        }
+    }
+
+    @OnClick(R.id.btn_discard_task)
+    public void discardTask(View v){
+        Log.d(TAG, "Discarding task with id " + mSensorReadingData.getDatabaseId());
+        SensorReadingRecord.findById(SensorReadingRecord.class, mSensorReadingData.getDatabaseId()).delete();
+        finish();
     }
 
     @Override

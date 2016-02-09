@@ -53,6 +53,8 @@ public class SensorReadingData {
 
     private Integer label; // Label on Likert scale 1-5 (easy - hard)
 
+    private Long databaseId;
+
     public SensorReadingData(Context context){
         try {
             this.appVersion = context.getPackageManager()
@@ -159,6 +161,7 @@ public class SensorReadingData {
         }
         return false;
     }
+
     @Override
     public String toString() {
         return "SensorReadingData{" +
@@ -173,7 +176,16 @@ public class SensorReadingData {
                 ", accelerometerData=" + accelerometerData +
                 ", phoneStatusData=" + phoneStatusData +
                 ", label=" + label +
+                ", databaseId=" + databaseId +
                 '}';
+    }
+
+    public Long getDatabaseId() {
+        return databaseId;
+    }
+
+    public void setDatabaseId(Long databaseId) {
+        this.databaseId = databaseId;
     }
 }
 
