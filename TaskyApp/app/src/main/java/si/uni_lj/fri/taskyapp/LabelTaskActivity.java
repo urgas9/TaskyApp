@@ -69,7 +69,7 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
         EnvironmentData environmentData = mSensorReadingData.getEnvironmentData();
         if(environmentData.isBluetoothTurnedOn()){
             mBtIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_bluetooth_black_18dp));
-            mNumBtDevicesTv.setText(environmentData.getnBluetoothDevicesNearby());
+            mNumBtDevicesTv.setText(Integer.toString(environmentData.getnBluetoothDevicesNearby()));
         }
         else{
             mBtIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_bluetooth_disabled_black_18dp));
@@ -77,7 +77,7 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
         }
         if(environmentData.isWifiTurnedOn()){
             mWifiIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_network_wifi_black_18dp));
-            mNumWifiDevicesTv.setText(environmentData.getnWifiDevicesNearby()+"");
+            mNumWifiDevicesTv.setText(Integer.toString(environmentData.getnWifiDevicesNearby()));
         }
         else{
             mWifiIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_signal_wifi_off_black_18dp));
