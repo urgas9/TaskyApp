@@ -2,14 +2,16 @@ package si.uni_lj.fri.taskyapp.data;
 
 import java.util.ArrayList;
 
+import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
+
 /**
  * Created by urgas9 on 7. 02. 2016.
  */
 public class SensorReadingDataWithSections {
     private int numSections;
-    private ArrayList<SensorReadingData> dataList;
+    private ArrayList<SensorReadingRecord> dataList;
 
-    public SensorReadingDataWithSections(int numSections, ArrayList<SensorReadingData> data){
+    public SensorReadingDataWithSections(int numSections, ArrayList<SensorReadingRecord> data){
         super();
         this.numSections = numSections;
         this.dataList = data;
@@ -23,11 +25,11 @@ public class SensorReadingDataWithSections {
         this.numSections = numSections;
     }
 
-    public ArrayList<SensorReadingData> getDataList() {
+    public ArrayList<SensorReadingRecord> getDataList() {
         return dataList;
     }
 
-    public void setDataList(ArrayList<SensorReadingData> dataList) {
+    public void setDataList(ArrayList<SensorReadingRecord> dataList) {
         this.dataList = dataList;
     }
 

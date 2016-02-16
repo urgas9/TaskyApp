@@ -70,16 +70,19 @@
         </receiver>
 
         <service android:name=".service.SenseDataIntentService"/>
+        <service android:name=".service.ScreenStateService"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="13e2f1c1cf34311a349f9ea7132fbad2f1d7405b"/>
 
-        <activity android:name=".LabelTaskActivity"
-                  android:parentActivityName=".ListDataActivity">
+        <activity
+            android:name=".LabelTaskActivity"
+            android:parentActivityName=".ListDataActivity">
         </activity>
-        <activity android:name=".AboutActivity"
-                  android:parentActivityName=".MainActivity">
+        <activity
+            android:name=".AboutActivity"
+            android:parentActivityName=".MainActivity">
         </activity>
     </application>
 

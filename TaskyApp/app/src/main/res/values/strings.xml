@@ -33,4 +33,5 @@
         <item>Pretty hard</item>
         <item>Very hard</item>
     </string-array>
+    <string name="title_activity_sensing">SensingActivity</string>
 </resources>

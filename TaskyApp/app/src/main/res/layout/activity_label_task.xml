@@ -97,7 +97,18 @@
         android:layout_height="0dp"
         android:orientation="horizontal"
         android:layout_weight="1">
-        <Button
+
+        <com.github.channguyen.rsv.RangeSliderView
+            android:id="@+id/rsv_small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:filledColor="@color/primary"
+            app:emptyColor="@color/divider"
+            app:rangeCount="5"
+            app:barHeightPercent="0.05"
+            />
+
+        <!--<Button
             android:id="@+id/btn_discard_task"
             android:layout_width="0dp"
             android:background="@color/red"
@@ -115,6 +126,6 @@
             android:layout_height="match_parent"
             android:entries="@array/task_complexities_array"
             android:prompt="@string/complexity_prompt"
-            android:layout_weight="1"/>
+            android:layout_weight="1"/>-->
     </LinearLayout>
 </LinearLayout>

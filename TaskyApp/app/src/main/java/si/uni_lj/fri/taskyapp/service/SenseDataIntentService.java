@@ -4,9 +4,11 @@ import android.Manifest;
 import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
@@ -59,9 +61,10 @@ import si.uni_lj.fri.taskyapp.sensor.SensorThreadsManager;
 public class SenseDataIntentService extends IntentService implements GoogleApiClient.ConnectionCallbacks, SensorDataListener {
     //LogCat
     private static final String TAG = SenseDataIntentService.class.getSimpleName();
-    private static final int[] SENSOR_IDS = {SensorUtils.SENSOR_TYPE_LIGHT,
-            SensorUtils.SENSOR_TYPE_SCREEN,
-            SensorUtils.SENSOR_TYPE_CONNECTION_STRENGTH};
+    private static final int[] SENSOR_IDS = {
+            SensorUtils.SENSOR_TYPE_LIGHT,
+            SensorUtils.SENSOR_TYPE_SCREEN};
+
     private GoogleApiClient mGoogleApiClient;
     private List<Integer> sensorSubscriptionIds;
 
@@ -76,7 +79,8 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
     private long mCountConnectionStrengthValues;
 
     private List<ActivityData> mDetectedActivityList;
-    private PendingIntent mActivityRecognitionIntent;
+
+    private SharedPreferences mDefaultPrefs;
 
 
     public SenseDataIntentService() {
@@ -86,6 +90,10 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
     @Override
     protected void onHandleIntent(Intent intent) {
 
+        if(intent == null){
+            return;
+        }
+        mDefaultPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         String policy = intent.getStringExtra("sensing_policy");
         int userLabel = intent.getIntExtra("user_label", -2);
         if (userLabel > 0) {
@@ -179,13 +187,22 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         srd.setActivityData(new ActivityData(detectedActivity));
         srd.setLocationData(new LocationData(getApplicationContext(), sensedLocation));
 
-        mTimeSensingStarted = System.currentTimeMillis();
-        srd.setTimestampStarted(mTimeSensingStarted);
-
         if (!mSensingHelper.shouldContinueSensing(srd)) {
             Log.d(TAG, "Decided not to sense this time!");
             return;
         }
+
+        mTimeSensingStarted = System.currentTimeMillis();
+        srd.setTimestampStarted(mTimeSensingStarted);
+
+        mPhoneStatusDataList = new ArrayList<>();
+        if(mDefaultPrefs.contains(Constants.PREFS_LAST_SCREEN_STATE)) {
+            PhoneStatusData psd = new PhoneStatusData();
+            psd.setScreenOn(mDefaultPrefs.getBoolean(Constants.PREFS_LAST_SCREEN_STATE, false));
+            psd.setMillisAfterStart(0);
+            mPhoneStatusDataList.add(psd);
+        }
+
         Log.d(TAG, "Decided to start sensing.");
         mSensingHelper.saveNewDecisiveSensingData(srd);
 
@@ -207,17 +224,12 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
         sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_ACCELEROMETER));
         sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_BLUETOOTH));
-        //sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_LIGHT));
-        //sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_SCREEN));
-        //sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_AMBIENT_TEMPERATURE));
         sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_MICROPHONE));
-        //sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_SMS));
         sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_WIFI));
         Log.d(TAG, "Threads submitted");
 
         // Subscribing to push sensors
         subscribeToSensors(sm);
-        mPhoneStatusDataList = new ArrayList<>();
         Log.d(TAG, "Subscribed to sensors.");
         Log.d(TAG, "Now, trying to get sensor results.");
 
@@ -240,7 +252,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
                 ArrayList<ESBluetoothDevice> bDevices = ((BluetoothData) sensingData).getBluetoothDevices();
                 Log.d(TAG, "Got nearby bluetooth devices.");
                 for (ESBluetoothDevice esbd : bDevices) {
-                    Log.d(TAG, esbd.getBluetoothDeviceName());
+                    Log.d(TAG, "BT device: " + esbd.getBluetoothDeviceName());
                 }
                 environmentData.setnBluetoothDevicesNearby(bDevices.size());
             } else if (sensingData instanceof AccelerometerData) {
@@ -295,7 +307,12 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         Log.d(TAG, "Finishing with SenseDataIntentService method.");
         Log.d(TAG, "Result: " + new Gson().toJson(srd));
         // Persisting sensor readings to database
-        new SensorReadingRecord(srd, userLabel > 0, userLabel).save();
+        long id = new SensorReadingRecord(getBaseContext(), srd, userLabel > 0, userLabel).save();
+
+        Intent i = new Intent(Constants.ACTION_NEW_SENSOR_READING_RECORD);
+        i.putExtra("id", id);
+        //Send Broadcast to be listen in MainActivity
+        this.sendBroadcast(i);
 
         // Shutting down everything
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {

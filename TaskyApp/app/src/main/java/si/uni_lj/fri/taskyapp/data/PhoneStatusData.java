@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 public class PhoneStatusData {
 
     @SerializedName("screen_on")
-    private boolean screenOn;
+    private Boolean screenOn;
     private long millisAfterStart;
 
     public boolean isScreenOn() {

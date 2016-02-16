@@ -90,6 +90,9 @@ public class SensorsHelper {
     }
 
     public static String getLocationAddress(Context ctx, double lat, double lng){
+        if(!AppHelper.isNetworkAvailable(ctx)){
+            return null;
+        }
         Geocoder geocoder = new Geocoder(ctx, Locale.getDefault());
         String locationString = null;
         try {

@@ -1,8 +1,12 @@
 package si.uni_lj.fri.taskyapp;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -11,11 +15,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.github.lzyzsd.circleprogress.DonutProgress;
+import com.google.gson.Gson;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,6 +32,8 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import si.uni_lj.fri.taskyapp.data.SensorReadingData;
+import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
 import si.uni_lj.fri.taskyapp.global.AppHelper;
 import si.uni_lj.fri.taskyapp.global.PermissionsHelper;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
@@ -32,8 +43,18 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
+    private BroadcastReceiver mNewSensorRecordReceiver;
     @Bind(R.id.spinner_task_complexity)
     Spinner mTaskComplexitySpinner;
+
+    @Bind(R.id.start_sensing_view_switcher)
+    ViewSwitcher mStartSensingViewSwitcher;
+    @Bind(R.id.status_tv)
+    TextView mCountDownStatusTv;
+    @Bind(R.id.circle_countdown_progress)
+    DonutProgress mCountdownProgress;
+    @Bind(R.id.btn_finished_sensing)
+    Button mFinishedSensingBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,20 +79,58 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constants.ACTION_NEW_SENSOR_READING_RECORD);
+        mNewSensorRecordReceiver = new SensorRecordReceiver();
+        registerReceiver(new SensorRecordReceiver(), filter);
+
     }
 
     @OnClick(R.id.btn_label_data)
-    public void startLabelDataActivity(View v){
+    public void startListDataActivity(View v){
         Intent intent = new Intent(this, ListDataActivity.class);
         startActivity(intent);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try{
+            unregisterReceiver(mNewSensorRecordReceiver);
+        } catch(IllegalArgumentException e){}
+    }
+
+    @OnClick(R.id.btn_finished_sensing)
+    public void onFinishedSensingBtn(){
+        mStartSensingViewSwitcher.setDisplayedChild(0);
+    }
+
     @OnClick(R.id.btn_start_sensing)
-    public void startLabeledSensing(View v){
+    public void startCountDownForSensing(View v){
         if(mTaskComplexitySpinner.getSelectedItemPosition() > 0) {
-            new SensingInitiator(this).startSensingOnUserRequest(mTaskComplexitySpinner.getSelectedItemPosition());
-            //broadcastIntentToStartSensing(mTaskComplexitySpinner.getSelectedItemPosition());
-            Toast.makeText(this, "Started labeled (" + mTaskComplexitySpinner.getSelectedItem() + ") sensing.", Toast.LENGTH_LONG).show();
+            mFinishedSensingBtn.setVisibility(View.INVISIBLE);
+            mStartSensingViewSwitcher.setDisplayedChild(1);
+
+            final int countdownSeconds = 15;
+
+            mCountdownProgress.setProgress(countdownSeconds);
+            mCountdownProgress.setMax(countdownSeconds);
+            new CountDownTimer(countdownSeconds * 1000 + 200, 1000) {
+
+                public void onTick(long millisUntilFinished) {
+                    int value = Math.round(millisUntilFinished / 1000.f);
+                    Log.d(TAG, "OnTick: " + value + " millisUntilFinished " + millisUntilFinished);
+                    mCountdownProgress.setProgress(value);
+                }
+
+                public void onFinish() {
+                    mCountdownProgress.setProgress(0);
+                    mFinishedSensingBtn.setVisibility(View.VISIBLE);
+                    new SensingInitiator(getBaseContext()).startSensingOnUserRequest(mTaskComplexitySpinner.getSelectedItemPosition());
+                    Toast.makeText(getBaseContext(), "Started labeled (" + mTaskComplexitySpinner.getSelectedItem() + ") sensing.", Toast.LENGTH_LONG).show();
+                }
+            }.start();
+
         }
         else{
             Toast.makeText(this, R.string.task_complexity_not_selected, Toast.LENGTH_LONG).show();
@@ -99,6 +158,17 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "Menu click not handled.");
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    class SensorRecordReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            long recordId = intent.getLongExtra("id", 0);
+            Log.d(TAG, "Received new sensor reading record with id: " + recordId);
+            SensorReadingRecord srr = SensorReadingRecord.findById(SensorReadingRecord.class, recordId);
+            SensorReadingData mSensorReadingData = new Gson().fromJson(srr.getSensorJsonObject(), SensorReadingData.class);
+        }
     }
 
     @Override

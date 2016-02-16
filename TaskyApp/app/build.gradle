@@ -42,9 +42,13 @@ dependencies {
     compile 'com.google.android.gms:play-services-auth:8.4.0'
     compile 'com.google.android.gms:play-services-location:8.4.0'
     compile 'com.google.android.gms:play-services-maps:8.4.0'
-    compile 'com.google.code.gson:gson:2.5'
+    compile 'com.google.code.gson:gson:2.6.1'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.github.satyan:sugar:1.4'
+    compile 'com.github.channguyen:rsv:1.0.1'
+    compile 'com.github.lzyzsd:circleprogress:1.1.0@aar'
+    //compile 'com.github.ademar111190:android-phased-seek-bar:0.1.1'
+    //compile 'org.adw.library:discrete-seekbar:1.0.1'
     compile('com.github.afollestad.material-dialogs:core:0.8.5.3@aar') {
         // For material design dialogs https://github.com/afollestad/material-dialogs
         transitive = true
@@ -52,9 +56,6 @@ dependencies {
     compile project(':SensorManager')
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
-    }
-    compile('com.github.afollestad:sectioned-recyclerview:0.2.0') {
-        transitive = true
     }
 }
 

@@ -18,6 +18,7 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import si.uni_lj.fri.taskyapp.global.PermissionsHelper;
+import si.uni_lj.fri.taskyapp.service.ScreenStateService;
 import si.uni_lj.fri.taskyapp.service.SenseDataIntentService;
 
 /**
@@ -37,6 +38,8 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
         this.mContext = context;
         this.mWhichPolicy = SensingPolicy.NONE;
         this.mPendingAction = false;
+        // Starting service to monitor screen state
+        context.startService(new Intent(context, ScreenStateService.class));
     }
 
 

@@ -8,9 +8,9 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.github.channguyen.rsv.RangeSliderView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -21,7 +21,6 @@ import com.google.gson.Gson;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import si.uni_lj.fri.taskyapp.adapter.SimpleTextArrayAdapter;
 import si.uni_lj.fri.taskyapp.data.EnvironmentData;
 import si.uni_lj.fri.taskyapp.data.SensorReadingData;
@@ -31,6 +30,7 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
 
     private final String TAG = "LabelTaskActivity";
     private SensorReadingData mSensorReadingData;
+    private long mDbRecordId;
 
     @Bind(R.id.tv_num_bt_devices)
     TextView mNumBtDevicesTv;
@@ -42,15 +42,21 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
     TextView mNumWifiDevicesTv;
     @Bind(R.id.tv_detected_activity)
     TextView mDetectedActivityTv;
-    @Bind(R.id.spinner_label_task)
-    Spinner mLabelTaskSpinner;
+    //@Bind(R.id.spinner_label_task)
+    //Spinner mLabelTaskSpinner;
+    @Bind(R.id.rsv_small)
+    RangeSliderView mRangeSliderView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_label_task);
 
-        mSensorReadingData = new Gson().fromJson(getIntent().getStringExtra("task"), SensorReadingData.class);
+        //mSensorReadingData = new Gson().fromJson(getIntent().getStringExtra("task"), SensorReadingData.class);
+
+        mDbRecordId = getIntent().getLongExtra("db_record_id", 0);
+        SensorReadingRecord srr = SensorReadingRecord.findById(SensorReadingRecord.class, mDbRecordId);
+        mSensorReadingData = new Gson().fromJson(srr.getSensorJsonObject(), SensorReadingData.class);
 
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -86,11 +92,17 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
         String[] arrayOfComplexities = getResources().getStringArray(R.array.task_complexities_array);
         arrayOfComplexities[0] = getResources().getString(R.string.complexity_prompt);
         SimpleTextArrayAdapter adapter = new SimpleTextArrayAdapter(this, R.layout.spinner_task_complexity_item, arrayOfComplexities);
-        mLabelTaskSpinner.setAdapter(adapter);
+        /*mLabelTaskSpinner.setAdapter(adapter);
         if(mSensorReadingData.getLabel() != null && mSensorReadingData.getLabel() > 0) {
             mLabelTaskSpinner.setSelection(mSensorReadingData.getLabel());
-        }
+        }*/
 
+        mRangeSliderView.setOnSlideListener(new RangeSliderView.OnSlideListener() {
+            @Override
+            public void onSlide(int index) {
+
+            }
+        });
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
@@ -108,7 +120,7 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
     @Override
     protected void onPause() {
         super.onPause();
-        Integer label = mLabelTaskSpinner.getSelectedItemPosition();
+        /*Integer label = mLabelTaskSpinner.getSelectedItemPosition();
         if(label > 0) {
             Log.d(TAG, "Updating record in database, setting label to: " + label);
             SensorReadingRecord srr = SensorReadingRecord.findById(SensorReadingRecord.class, mSensorReadingData.getDatabaseId());
@@ -116,10 +128,10 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
             mSensorReadingData.setLabel(label);
             srr.setSensorJsonObject(new Gson().toJson(mSensorReadingData));
             srr.save();
-        }
+        }*/
     }
 
-    @OnClick(R.id.btn_discard_task)
+    //@OnClick(R.id.btn_discard_task)
     public void discardTask(View v){
         Log.d(TAG, "Discarding task with id " + mSensorReadingData.getDatabaseId());
         SensorReadingRecord.findById(SensorReadingRecord.class, mSensorReadingData.getDatabaseId()).delete();

@@ -12,8 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,12 +20,13 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import si.uni_lj.fri.taskyapp.LabelTaskActivity;
 import si.uni_lj.fri.taskyapp.R;
-import si.uni_lj.fri.taskyapp.data.SensorReadingData;
 import si.uni_lj.fri.taskyapp.data.SensorReadingDataWithSections;
+import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
 
 /**
  * Created by urgas9 on 7. 02. 2016.
+ *
  */
 public class ListDataRecyclerAdapter extends RecyclerView.Adapter {
 
@@ -35,7 +34,7 @@ public class ListDataRecyclerAdapter extends RecyclerView.Adapter {
     private final static int SECTION_HEADER_ITEM = -1;
     private final static int NORMAL_ITEM = 0;
     // Must be ordered by timestamp!!
-    ArrayList<SensorReadingData> dataList;
+    ArrayList<SensorReadingRecord> dataList;
     int numDays;
     Context mContext;
 
@@ -69,30 +68,36 @@ public class ListDataRecyclerAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        final SensorReadingData srd = dataList.get(position);
+        final SensorReadingRecord srr = dataList.get(position);
         if(holder instanceof NormalItemViewHolder){
             ((NormalItemViewHolder) holder).contentView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, LabelTaskActivity.class);
-                    intent.putExtra("task", new Gson().toJson(srd));
+                    intent.putExtra("db_record_id", srr.getId());
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(intent);
                 }
             });
-            if(srd.getActivityData() != null) {
-                ((NormalItemViewHolder) holder).mActivityTv.setText(srd.getActivityData().getActivityType());
+            if(srr.getDetectedActivity() != null) {
+                ((NormalItemViewHolder) holder).mActivityTv.setText(srr.getDetectedActivity());
             }
-            ((NormalItemViewHolder) holder).mDateTv.setText(formatFullDate.format(new Date(srd.getTimestampStarted())));
-            if(srd.getLocationData() != null) {
-                ((NormalItemViewHolder) holder).mLocationTv.setText(srd.getLocationData().getPrettyLocationString());
+            ((NormalItemViewHolder) holder).mDateTv.setText(formatFullDate.format(new Date(srr.getTimeStartedSensing())));
+
+            if(srr.getLocationLat() > 0 && srr.getLocationLng() > 0) {
+                if(srr.getAddress() != null) {
+                    ((NormalItemViewHolder) holder).mLocationTv.setText(srr.getAddress());
+                }
+                else{
+                    ((NormalItemViewHolder) holder).mLocationTv.setText(String.format("%.3f, %.3f", srr.getLocationLat(), srr.getLocationLng()));
+                }
             }
 
 
-            if(srd.getLabel() != null && srd.getLabel()>0) {
+            if(srr.getLabel() != null && srr.getLabel()>0) {
                 ((GradientDrawable) ((NormalItemViewHolder) holder).mLabelCircle.getBackground())
                         .setColor((Integer) new ArgbEvaluator()
-                                .evaluate(srd.getLabel() / 7.f, Color.GREEN, Color.RED));
+                                .evaluate(srr.getLabel() / 7.f, Color.GREEN, Color.RED));
                 ((NormalItemViewHolder) holder).mLabelCircle.setVisibility(View.VISIBLE);
             }
             else{
@@ -100,7 +105,7 @@ public class ListDataRecyclerAdapter extends RecyclerView.Adapter {
             }
 
         } else if(holder instanceof SectionHeaderViewHolder){
-            ((SectionHeaderViewHolder) holder).mHeader.setText(formatDailyDate.format(dataList.get(position+1).getTimestampStarted()));
+            ((SectionHeaderViewHolder) holder).mHeader.setText(formatDailyDate.format(dataList.get(position+1).getTimeStartedSensing()));
         }
         else{
             Log.e(TAG, "Holder was instance of " + holder.getClass().getSimpleName());

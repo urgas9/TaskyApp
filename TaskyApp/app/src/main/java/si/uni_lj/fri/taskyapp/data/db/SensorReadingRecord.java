@@ -1,14 +1,12 @@
 package si.uni_lj.fri.taskyapp.data.db;
 
+import android.content.Context;
+
 import com.google.gson.Gson;
 import com.orm.SugarRecord;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import si.uni_lj.fri.taskyapp.data.SensorReadingData;
-import si.uni_lj.fri.taskyapp.sensor.Constants;
+import si.uni_lj.fri.taskyapp.global.SensorsHelper;
 
 /**
  * Created by urgas9 on 24. 01. 2016.
@@ -16,23 +14,32 @@ import si.uni_lj.fri.taskyapp.sensor.Constants;
  */
 public class SensorReadingRecord extends SugarRecord {
 
-    private String sensorJsonObject;
     private boolean startedByUser;
     private Integer label;
-    private long timeSaved;
-    private String daySensed;
+    private long timeStartedSensing;
+    private String detectedActivity;
+    private double locationLat;
+    private double locationLng;
+    private String address; // Pretty printed lat and lng
+    private String sensorJsonObject;
 
     public SensorReadingRecord(){
 
     }
 
-    public SensorReadingRecord(SensorReadingData sensorReadingData, boolean startedByUser, int label){
+    public SensorReadingRecord(Context ctx, SensorReadingData sensorReadingData, boolean startedByUser, int label){
         this.sensorJsonObject = new Gson().toJson(sensorReadingData);
         this.startedByUser = startedByUser;
         this.label = label;
-        SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_FORMAT_TO_SHOW_DAY, Locale.ENGLISH);
-        this.daySensed = format.format(new Date(sensorReadingData.getTimestampStarted()));
-        this.timeSaved = System.currentTimeMillis();
+        if(sensorReadingData.getActivityData() != null) {
+            this.detectedActivity = sensorReadingData.getActivityData().getActivityType();
+        }
+        if(sensorReadingData.getLocationData() != null){
+            this.locationLat = sensorReadingData.getLocationData().getLat();
+            this.locationLng = sensorReadingData.getLocationData().getLng();
+            this.address = SensorsHelper.getLocationAddress(ctx, locationLat, locationLng);
+        }
+        timeStartedSensing = sensorReadingData.getTimestampStarted();
     }
 
     public String getSensorJsonObject() {
@@ -41,6 +48,14 @@ public class SensorReadingRecord extends SugarRecord {
 
     public void setSensorJsonObject(String sensorJsonObject) {
         this.sensorJsonObject = sensorJsonObject;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public boolean isStartedByUser() {
@@ -59,30 +74,49 @@ public class SensorReadingRecord extends SugarRecord {
         this.label = label;
     }
 
-    public long getTimeSaved() {
-        return timeSaved;
+    public long getTimeStartedSensing() {
+        return timeStartedSensing;
     }
 
-    public void setTimeSaved(long timeSaved) {
-        this.timeSaved = timeSaved;
+    public void setTimeStartedSensing(long timeStartedSensing) {
+        this.timeStartedSensing = timeStartedSensing;
     }
 
-    public String getDaySensed() {
-        return daySensed;
+    public String getDetectedActivity() {
+        return detectedActivity;
     }
 
-    public void setDaySensed(String daySensed) {
-        this.daySensed = daySensed;
+    public void setDetectedActivity(String detectedActivity) {
+        this.detectedActivity = detectedActivity;
+    }
+
+    public double getLocationLat() {
+        return locationLat;
+    }
+
+    public void setLocationLat(double locationLat) {
+        this.locationLat = locationLat;
+    }
+
+    public double getLocationLng() {
+        return locationLng;
+    }
+
+    public void setLocationLng(double locationLng) {
+        this.locationLng = locationLng;
     }
 
     @Override
     public String toString() {
         return "SensorReadingRecord{" +
-                "sensorJsonObject='" + sensorJsonObject + '\'' +
-                ", startedByUser=" + startedByUser +
+                "startedByUser=" + startedByUser +
                 ", label=" + label +
-                ", timeSaved=" + timeSaved +
-                ", daySensed='" + daySensed + '\'' +
+                ", timeStartedSensing=" + timeStartedSensing +
+                ", detectedActivity='" + detectedActivity + '\'' +
+                ", locationLat=" + locationLat +
+                ", locationLng=" + locationLng +
+                ", address='" + address + '\'' +
+                ", sensorJsonObject='" + sensorJsonObject + '\'' +
                 '}';
     }
 }

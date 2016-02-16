@@ -18,8 +18,6 @@ public class EnvironmentData {
 
     @SerializedName("average_light")
     private float averageLightPercentageValue;
-    @SerializedName("average_connection_strength")
-    private float averageConnectionStrengthPercentageValue;
 
     public int getnWifiDevicesNearby() {
         return nWifiDevicesNearby;
@@ -61,14 +59,6 @@ public class EnvironmentData {
         this.bluetoothTurnedOn = bluetoothTurnedOn;
     }
 
-    public float getAverageConnectionStrengthPercentageValue() {
-        return averageConnectionStrengthPercentageValue;
-    }
-
-    public void setAverageConnectionStrengthPercentageValue(float averageConnectionStrengthPercentageValue) {
-        this.averageConnectionStrengthPercentageValue = averageConnectionStrengthPercentageValue;
-    }
-
     @Override
     public String toString() {
         return "EnvironmentData{" +
@@ -77,7 +67,6 @@ public class EnvironmentData {
                 ", nBluetoothDevicesNearby=" + nBluetoothDevicesNearby +
                 ", bluetoothTurnedOn=" + bluetoothTurnedOn +
                 ", averageLightPercentageValue=" + averageLightPercentageValue +
-                ", averageConnectionStrengthPercentageValue=" + averageConnectionStrengthPercentageValue +
                 '}';
     }
 }
