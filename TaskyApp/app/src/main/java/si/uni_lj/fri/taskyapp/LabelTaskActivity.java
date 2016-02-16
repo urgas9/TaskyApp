@@ -2,12 +2,10 @@ package si.uni_lj.fri.taskyapp;
 
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.channguyen.rsv.RangeSliderView;
@@ -19,12 +17,16 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import si.uni_lj.fri.taskyapp.adapter.SimpleTextArrayAdapter;
 import si.uni_lj.fri.taskyapp.data.EnvironmentData;
 import si.uni_lj.fri.taskyapp.data.SensorReadingData;
 import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
+import si.uni_lj.fri.taskyapp.sensor.Constants;
 
 public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCallback{
 
@@ -32,18 +34,14 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
     private SensorReadingData mSensorReadingData;
     private long mDbRecordId;
 
-    @Bind(R.id.tv_num_bt_devices)
-    TextView mNumBtDevicesTv;
-    @Bind(R.id.iv_bt_icon)
-    ImageView mBtIcon;
-    @Bind(R.id.iv_wifi_icon)
-    ImageView mWifiIcon;
-    @Bind(R.id.tv_num_wifi_devices)
-    TextView mNumWifiDevicesTv;
+    @Bind(R.id.tv_detected_ambient_sound_level)
+    TextView mDetectedAmbientSoundLevel;
+    @Bind(R.id.tv_task_time_sensed)
+    TextView mTimeSensedTv;
     @Bind(R.id.tv_detected_activity)
     TextView mDetectedActivityTv;
-    //@Bind(R.id.spinner_label_task)
-    //Spinner mLabelTaskSpinner;
+    @Bind(R.id.tv_detected_ambient_light_level)
+    TextView mDetectedAmbientLightTv;
     @Bind(R.id.rsv_small)
     RangeSliderView mRangeSliderView;
 
@@ -72,23 +70,12 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
             mDetectedActivityTv.setText(R.string.no_data);
         }
 
+        SimpleDateFormat formatFullDate = new SimpleDateFormat(Constants.DATE_FORMAT_TO_SHOW_FULL);
+        mTimeSensedTv.setText(formatFullDate.format(new Date(srr.getTimeStartedSensing())));
         EnvironmentData environmentData = mSensorReadingData.getEnvironmentData();
-        if(environmentData.isBluetoothTurnedOn()){
-            mBtIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_bluetooth_black_18dp));
-            mNumBtDevicesTv.setText(Integer.toString(environmentData.getnBluetoothDevicesNearby()));
-        }
-        else{
-            mBtIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_bluetooth_disabled_black_18dp));
-            mNumBtDevicesTv.setVisibility(View.GONE);
-        }
-        if(environmentData.isWifiTurnedOn()){
-            mWifiIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_network_wifi_black_18dp));
-            mNumWifiDevicesTv.setText(Integer.toString(environmentData.getnWifiDevicesNearby()));
-        }
-        else{
-            mWifiIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_signal_wifi_off_black_18dp));
-            mNumWifiDevicesTv.setVisibility(View.GONE);
-        }
+        mDetectedAmbientLightTv.setText("" + environmentData.getAverageLightPercentageValue());
+        mDetectedAmbientSoundLevel.setText("" + mSensorReadingData.getMicrophoneData().getMeanAmplitude());
+
         String[] arrayOfComplexities = getResources().getStringArray(R.array.task_complexities_array);
         arrayOfComplexities[0] = getResources().getString(R.string.complexity_prompt);
         SimpleTextArrayAdapter adapter = new SimpleTextArrayAdapter(this, R.layout.spinner_task_complexity_item, arrayOfComplexities);

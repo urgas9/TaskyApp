@@ -23,8 +23,8 @@ import android.widget.ViewSwitcher;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.google.gson.Gson;
+import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
 import java.util.Arrays;
 import java.util.List;
@@ -51,10 +51,15 @@ public class MainActivity extends AppCompatActivity {
     ViewSwitcher mStartSensingViewSwitcher;
     @Bind(R.id.status_tv)
     TextView mCountDownStatusTv;
-    @Bind(R.id.circle_countdown_progress)
-    DonutProgress mCountdownProgress;
+    @Bind(R.id.countdown_progressbar)
+    CircularProgressBar mCountdownProgress;
+    @Bind(R.id.countdown_text)
+    TextView mProgressTv;
     @Bind(R.id.btn_finished_sensing)
     Button mFinishedSensingBtn;
+
+    private CountDownTimer mCountdownTimer;
+    boolean isCountDownRunning = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,30 +107,45 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_finished_sensing)
     public void onFinishedSensingBtn(){
-        mStartSensingViewSwitcher.setDisplayedChild(0);
+
+        if(isCountDownRunning) {
+            mCountdownTimer.cancel();
+            mFinishedSensingBtn.setText(R.string.back);
+        }
+        else{
+            mStartSensingViewSwitcher.setDisplayedChild(0);
+        }
     }
 
     @OnClick(R.id.btn_start_sensing)
     public void startCountDownForSensing(View v){
         if(mTaskComplexitySpinner.getSelectedItemPosition() > 0) {
-            mFinishedSensingBtn.setVisibility(View.INVISIBLE);
+            mFinishedSensingBtn.setText(R.string.cancel);
             mStartSensingViewSwitcher.setDisplayedChild(1);
 
             final int countdownSeconds = 15;
 
+            isCountDownRunning = true;
             mCountdownProgress.setProgress(countdownSeconds);
-            mCountdownProgress.setMax(countdownSeconds);
-            new CountDownTimer(countdownSeconds * 1000 + 200, 1000) {
+
+            final int MAX_VALUE = countdownSeconds;
+            mProgressTv.setText(countdownSeconds + "s");
+            mCountdownTimer = new CountDownTimer(countdownSeconds * 1000 + 200, 1000) {
 
                 public void onTick(long millisUntilFinished) {
-                    int value = Math.round(millisUntilFinished / 1000.f);
+                    int valueInSecs = Math.round(millisUntilFinished / 1000.f);
+                    int value = (int)((valueInSecs*100)/(float)MAX_VALUE);
                     Log.d(TAG, "OnTick: " + value + " millisUntilFinished " + millisUntilFinished);
-                    mCountdownProgress.setProgress(value);
+                    mProgressTv.setText(valueInSecs + "s");
+                    mCountdownProgress.setProgressWithAnimation(value, 1000);
                 }
 
                 public void onFinish() {
-                    mCountdownProgress.setProgress(0);
+                    mCountdownProgress.setProgressWithAnimation(0, 1000);
+                    mProgressTv.setText("0s");
+                    mFinishedSensingBtn.setText(R.string.back);
                     mFinishedSensingBtn.setVisibility(View.VISIBLE);
+                    isCountDownRunning = false;
                     new SensingInitiator(getBaseContext()).startSensingOnUserRequest(mTaskComplexitySpinner.getSelectedItemPosition());
                     Toast.makeText(getBaseContext(), "Started labeled (" + mTaskComplexitySpinner.getSelectedItem() + ") sensing.", Toast.LENGTH_LONG).show();
                 }

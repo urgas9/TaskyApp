@@ -34,4 +34,9 @@
         <item>Very hard</item>
     </string-array>
     <string name="title_activity_sensing">SensingActivity</string>
+    <string name="detected_ambient_sound">Detected ambient sound:</string>
+    <string name="time_sensed">Time sensed:</string>
+    <string name="detected_light_level">Light level:</string>
+    <string name="cancel">Cancel</string>
+    <string name="back">Back</string>
 </resources>
