@@ -16,7 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Spinner;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
@@ -25,6 +26,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
+import com.rey.material.widget.Slider;
 
 import java.util.Arrays;
 import java.util.List;
@@ -43,9 +45,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-    private BroadcastReceiver mNewSensorRecordReceiver;
-    @Bind(R.id.spinner_task_complexity)
-    Spinner mTaskComplexitySpinner;
 
     @Bind(R.id.start_sensing_view_switcher)
     ViewSwitcher mStartSensingViewSwitcher;
@@ -57,9 +56,16 @@ public class MainActivity extends AppCompatActivity {
     TextView mProgressTv;
     @Bind(R.id.btn_finished_sensing)
     Button mFinishedSensingBtn;
+    @Bind(R.id.task_complexity_slider)
+    Slider mTaskComplexitySlider;
+    @Bind(R.id.radio_group_time)
+    RadioGroup mSelectTimeRadioGroup;
 
+    private BroadcastReceiver mNewSensorRecordReceiver;
     private CountDownTimer mCountdownTimer;
+    Integer selectedComplexity = null;
     boolean isCountDownRunning = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +95,14 @@ public class MainActivity extends AppCompatActivity {
         mNewSensorRecordReceiver = new SensorRecordReceiver();
         registerReceiver(new SensorRecordReceiver(), filter);
 
+        mTaskComplexitySlider.setOnPositionChangeListener(new Slider.OnPositionChangeListener() {
+            @Override
+            public void onPositionChanged(Slider view, boolean fromUser, float oldPos, float newPos, int oldValue, int newValue) {
+                view.setAlwaysFillThumb(true);
+                selectedComplexity = newValue;
+            }
+        });
+
     }
 
     @OnClick(R.id.btn_label_data)
@@ -111,19 +125,29 @@ public class MainActivity extends AppCompatActivity {
         if(isCountDownRunning) {
             mCountdownTimer.cancel();
             mFinishedSensingBtn.setText(R.string.back);
+            isCountDownRunning = false;
         }
         else{
             mStartSensingViewSwitcher.setDisplayedChild(0);
         }
     }
 
+    private int getTimeInSecondsFromRadioGroup(){
+        String timeString = ((RadioButton)mSelectTimeRadioGroup.findViewById(mSelectTimeRadioGroup.getCheckedRadioButtonId())).getText().toString();
+        timeString = timeString.replaceAll("[^\\d.]", "");
+        return Integer.parseInt(timeString);
+    }
     @OnClick(R.id.btn_start_sensing)
     public void startCountDownForSensing(View v){
-        if(mTaskComplexitySpinner.getSelectedItemPosition() > 0) {
+        if(selectedComplexity != null) {
+
+
+
+
             mFinishedSensingBtn.setText(R.string.cancel);
             mStartSensingViewSwitcher.setDisplayedChild(1);
 
-            final int countdownSeconds = 15;
+            final int countdownSeconds = getTimeInSecondsFromRadioGroup();
 
             isCountDownRunning = true;
             mCountdownProgress.setProgress(countdownSeconds);
@@ -146,8 +170,8 @@ public class MainActivity extends AppCompatActivity {
                     mFinishedSensingBtn.setText(R.string.back);
                     mFinishedSensingBtn.setVisibility(View.VISIBLE);
                     isCountDownRunning = false;
-                    new SensingInitiator(getBaseContext()).startSensingOnUserRequest(mTaskComplexitySpinner.getSelectedItemPosition());
-                    Toast.makeText(getBaseContext(), "Started labeled (" + mTaskComplexitySpinner.getSelectedItem() + ") sensing.", Toast.LENGTH_LONG).show();
+                    new SensingInitiator(getBaseContext()).startSensingOnUserRequest(selectedComplexity);
+                    Toast.makeText(getBaseContext(), "Started labeled (" + selectedComplexity + ") sensing.", Toast.LENGTH_LONG).show();
                 }
             }.start();
 

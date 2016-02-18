@@ -53,6 +53,7 @@ dependencies {
         // For material design dialogs https://github.com/afollestad/material-dialogs
         transitive = true
     }
+    compile 'com.github.rey5137:material:1.2.2'
     compile project(':SensorManager')
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;

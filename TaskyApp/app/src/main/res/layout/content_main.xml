@@ -29,20 +29,128 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Choose complexity of your activity during the next 10 seconds."/>
+
+            <RelativeLayout
+                android:id="@+id/task_complexity_frame"
+                android:layout_below="@id/tv_complexity_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp">
+                <com.rey.material.widget.Slider
+                    android:id="@+id/task_complexity_slider"
+                    style="@style/Material.Widget.Slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    app:sl_minValue="1"
+                    app:sl_stepValue="1"
+                    app:sl_discreteMode="true"
+                    app:sl_textSize="20sp"
+                    app:sl_maxValue="5"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:weightSum="5"
+                    android:orientation="horizontal">
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+                        <View
+                            android:layout_width="5dp"
+                            android:layout_height="5dp"
+                            android:background="@drawable/circle_shape" />
+                    </FrameLayout>
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+                        <View
+                            android:layout_width="5dp"
+                            android:layout_height="5dp"
+                            android:background="@drawable/circle_shape" />
+                    </FrameLayout>
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+                        <View
+                            android:layout_width="5dp"
+                            android:layout_height="5dp"
+                            android:background="@drawable/circle_shape" />
+                    </FrameLayout>
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+                        <View
+                            android:layout_width="5dp"
+                            android:layout_height="5dp"
+                            android:background="@drawable/circle_shape" />
+                    </FrameLayout>
+                    <FrameLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
+                        <View
+                            android:layout_width="5dp"
+                            android:layout_height="5dp"
+                            android:background="@drawable/circle_shape" />
+                    </FrameLayout>
+
+                </LinearLayout>
+            </RelativeLayout>
+            <TextView
+                android:layout_below="@id/task_complexity_frame"
+                android:id="@+id/start_sensing_after_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Start sensing after:"/>
+            <RadioGroup
+                android:id="@+id/radio_group_time"
+                android:layout_below="@id/start_sensing_after_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <RadioButton
+                    android:id="@+id/radio1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5s"
+                    android:checked="true" />
+
+                <RadioButton
+                    android:id="@+id/radio2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="15s" />
+
+                <RadioButton
+                    android:id="@+id/radio3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="30s" />
+                <RadioButton
+                    android:id="@+id/radio4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="60s" />
+
+            </RadioGroup>
             <LinearLayout
                 android:id="@+id/layout_start_sensing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="5dp"
-                android:layout_below="@id/tv_complexity_description">
-                <Spinner
-                    android:id="@+id/spinner_task_complexity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:entries="@array/task_complexities_array"
-                    android:prompt="@string/complexity_prompt"
-                    android:layout_marginRight="10dp"/>
+                android:layout_below="@id/radio_group_time">
                 <Button
                     android:id="@+id/btn_start_sensing"
                     android:layout_width="match_parent"
