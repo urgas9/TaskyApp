@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
@@ -26,7 +27,6 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
-import com.rey.material.widget.Slider;
 
 import java.util.Arrays;
 import java.util.List;
@@ -56,10 +56,12 @@ public class MainActivity extends AppCompatActivity {
     TextView mProgressTv;
     @Bind(R.id.btn_finished_sensing)
     Button mFinishedSensingBtn;
-    @Bind(R.id.task_complexity_slider)
-    Slider mTaskComplexitySlider;
+    @Bind(R.id.task_complexity_seekbar)
+    SeekBar mTaskComplexitySeekBar;
     @Bind(R.id.radio_group_time)
     RadioGroup mSelectTimeRadioGroup;
+    @Bind(R.id.seekbar_value_text)
+    TextView mSeekbarValueTv;
 
     private BroadcastReceiver mNewSensorRecordReceiver;
     private CountDownTimer mCountdownTimer;
@@ -95,11 +97,23 @@ public class MainActivity extends AppCompatActivity {
         mNewSensorRecordReceiver = new SensorRecordReceiver();
         registerReceiver(new SensorRecordReceiver(), filter);
 
-        mTaskComplexitySlider.setOnPositionChangeListener(new Slider.OnPositionChangeListener() {
+        final String[] arrayOfComplexities = getResources().getStringArray(R.array.task_complexities_array);
+
+        mTaskComplexitySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onPositionChanged(Slider view, boolean fromUser, float oldPos, float newPos, int oldValue, int newValue) {
-                view.setAlwaysFillThumb(true);
-                selectedComplexity = newValue;
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                selectedComplexity = progress;
+                mSeekbarValueTv.setText(arrayOfComplexities[progress+1]);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
             }
         });
 
