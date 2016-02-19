@@ -11,7 +11,7 @@ public class SensorReadingDataWithSections {
     private int numSections;
     private ArrayList<SensorReadingRecord> dataList;
 
-    public SensorReadingDataWithSections(int numSections, ArrayList<SensorReadingRecord> data){
+    public SensorReadingDataWithSections(int numSections, ArrayList<SensorReadingRecord> data) {
         super();
         this.numSections = numSections;
         this.dataList = data;

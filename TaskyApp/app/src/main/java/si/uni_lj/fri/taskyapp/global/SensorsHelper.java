@@ -54,29 +54,30 @@ public class SensorsHelper {
         return result;
     }
 
-    public static int[] getMinAndMaxValues(int[] array){
+    public static int[] getMinAndMaxValues(int[] array) {
         int min = Integer.MAX_VALUE;
         int max = Integer.MIN_VALUE;
 
-        for(int i  : array){
-            min = (i<min)?i:min;
-            max = (i>max)?i:max;
+        for (int i : array) {
+            min = (i < min) ? i : min;
+            max = (i > max) ? i : max;
         }
         int[] result = {min, max};
         return result;
     }
 
-    public static double getMeanValue(int[] array){
+    public static double getMeanValue(int[] array) {
         int size = array.length;
         double meanValue = 0;
-        for(int val : array){
-            meanValue += val/size;
+        for (int val : array) {
+            meanValue += val / size;
         }
         return meanValue;
     }
 
     /**
      * Check for Bluetooth.
+     *
      * @return True if Bluetooth is available.
      */
     public static boolean isBluetoothEnabled() {
@@ -84,20 +85,20 @@ public class SensorsHelper {
         return (bluetoothAdapter != null && bluetoothAdapter.isEnabled());
     }
 
-    public static boolean isWifiEnabled(Context ctx){
-        WifiManager wifi = (WifiManager)ctx.getSystemService(Context.WIFI_SERVICE);
+    public static boolean isWifiEnabled(Context ctx) {
+        WifiManager wifi = (WifiManager) ctx.getSystemService(Context.WIFI_SERVICE);
         return wifi.isWifiEnabled();
     }
 
-    public static String getLocationAddress(Context ctx, double lat, double lng){
-        if(!AppHelper.isNetworkAvailable(ctx)){
+    public static String getLocationAddress(Context ctx, double lat, double lng) {
+        if (!AppHelper.isNetworkAvailable(ctx)) {
             return null;
         }
         Geocoder geocoder = new Geocoder(ctx, Locale.getDefault());
         String locationString = null;
         try {
             List<Address> listAddresses = geocoder.getFromLocation(lat, lng, 1);
-            if(null != listAddresses && listAddresses.size()>0){
+            if (null != listAddresses && listAddresses.size() > 0) {
                 locationString = listAddresses.get(0).getAddressLine(0);
             }
         } catch (IOException e) {
@@ -105,8 +106,6 @@ public class SensorsHelper {
         }
         return locationString;
     }
-
-
 
 
 }

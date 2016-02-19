@@ -15,9 +15,8 @@ import si.uni_lj.fri.taskyapp.sensor.Constants;
 
 /**
  * Created by urgas9 on 24. 01. 2016.
- *
+ * <p/>
  * Class used to store sensing data
- *
  */
 public class SensorReadingData {
 
@@ -53,9 +52,7 @@ public class SensorReadingData {
 
     private Integer label; // Label on Likert scale 1-5 (easy - hard)
 
-    private Long databaseId;
-
-    public SensorReadingData(Context context){
+    public SensorReadingData(Context context) {
         try {
             this.appVersion = context.getPackageManager()
                     .getPackageInfo(context.getPackageName(), 0).versionCode;
@@ -152,11 +149,11 @@ public class SensorReadingData {
         this.label = label;
     }
 
-    public boolean equalByDayTimestampStarted(SensorReadingData srd){
+    public boolean equalByDayTimestampStarted(SensorReadingData srd) {
         SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_FORMAT_TO_SHOW_DAY, Locale.ENGLISH);
         String dayThis = format.format(new Date(this.timestampStarted));
         String daySrd = format.format(new Date(srd.timestampStarted));
-        if(dayThis.equals(daySrd)){
+        if (dayThis.equals(daySrd)) {
             return true;
         }
         return false;
@@ -176,16 +173,8 @@ public class SensorReadingData {
                 ", accelerometerData=" + accelerometerData +
                 ", phoneStatusData=" + phoneStatusData +
                 ", label=" + label +
-                ", databaseId=" + databaseId +
                 '}';
     }
 
-    public Long getDatabaseId() {
-        return databaseId;
-    }
-
-    public void setDatabaseId(Long databaseId) {
-        this.databaseId = databaseId;
-    }
 }
 

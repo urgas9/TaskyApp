@@ -15,9 +15,9 @@ public class LocationData {
     private float accuracy;
     private String address;
 
-    public LocationData(Context ctx, Location l){
+    public LocationData(Context ctx, Location l) {
         super();
-        if(l != null) {
+        if (l != null) {
             this.lat = l.getLatitude();
             this.lng = l.getLongitude();
             this.altitude = l.getAltitude();
@@ -58,7 +58,7 @@ public class LocationData {
         this.accuracy = accuracy;
     }
 
-    public Location getLocationObject(){
+    public Location getLocationObject() {
         Location location = new Location("location");
         location.setLongitude(lng);
         location.setLatitude(lat);
@@ -66,15 +66,15 @@ public class LocationData {
         location.setAltitude(altitude);
         return location;
     }
-    public float getDistanceTo(LocationData ld){
+
+    public float getDistanceTo(LocationData ld) {
         return this.getLocationObject().distanceTo(ld.getLocationObject());
     }
 
-    public String getPrettyLocationString(){
-        if(address != null){
+    public String getPrettyLocationString() {
+        if (address != null) {
             return address;
-        }
-        else{
+        } else {
             return String.format("%.3f, %.3f", lat, lng);
         }
     }

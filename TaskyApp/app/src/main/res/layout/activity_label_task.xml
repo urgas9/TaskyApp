@@ -1,142 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
     tools:context="si.uni_lj.fri.taskyapp.LabelTaskActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight=".8">
 
         <TextView
-            android:text="@string/time_sensed"
             android:layout_width="0dp"
-            android:gravity="center_vertical|start"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:gravity="center_vertical|start"
+            android:text="@string/time_sensed"/>
 
         <TextView
             android:id="@+id/tv_task_time_sensed"
             android:layout_width="0dp"
-            android:gravity="center_vertical|end"
             android:layout_height="match_parent"
-            android:textStyle="bold"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:gravity="center_vertical|end"
+            android:textStyle="bold"/>
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight=".8">
+
         <TextView
-            android:text="@string/detected_phone_activity"
             android:layout_width="0dp"
-            android:gravity="center_vertical|start"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:gravity="center_vertical|start"
+            android:text="@string/detected_phone_activity"/>
 
         <TextView
             android:id="@+id/tv_detected_activity"
             android:layout_width="0dp"
-            android:gravity="center_vertical|end"
             android:layout_height="match_parent"
-            android:textStyle="bold"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:gravity="center_vertical|end"
+            android:textStyle="bold"/>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight=".8">
 
         <TextView
-            android:text="@string/detected_ambient_sound"
             android:layout_width="0dp"
-            android:gravity="center_vertical|start"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:gravity="center_vertical|start"
+            android:text="@string/detected_ambient_sound"/>
 
         <TextView
             android:id="@+id/tv_detected_ambient_sound_level"
             android:layout_width="0dp"
-            android:gravity="center_vertical|end"
             android:layout_height="match_parent"
-            android:textStyle="bold"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:gravity="center_vertical|end"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight=".8">
 
         <TextView
-            android:text="@string/detected_light_level"
             android:layout_width="0dp"
-            android:gravity="center_vertical|start"
             android:layout_height="match_parent"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:gravity="center_vertical|start"
+            android:text="@string/detected_light_level"/>
 
         <TextView
             android:id="@+id/tv_detected_ambient_light_level"
             android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:gravity="center_vertical|end"
-            android:layout_height="match_parent"
-            android:textStyle="bold"
-            android:layout_weight="1"/>
+            android:textStyle="bold"/>
 
     </LinearLayout>
+
     <fragment
-        class="com.google.android.gms.maps.MapFragment"
-        android:name="si.uni_lj.fri.taskyapp.LabelTaskActivity"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
         android:id="@+id/map_fragment"
-        app:cameraZoom="13.5"
-        android:layout_weight="7"/>
-    <LinearLayout
+        android:name="si.uni_lj.fri.taskyapp.LabelTaskActivity"
+        class="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:layout_weight="2">
+        android:layout_weight="6.2"
+        app:cameraZoom="13.5"/>
 
-        <com.github.channguyen.rsv.RangeSliderView
-            android:id="@+id/rsv_small"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:filledColor="@color/primary"
-            app:emptyColor="@color/divider"
-            app:rangeCount="5"
-            app:barHeightPercent="0.05"
-            />
+    <include
+        layout="@layout/seekbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_weight="2"/>
 
-        <!--<Button
-            android:id="@+id/btn_discard_task"
-            android:layout_width="0dp"
-            android:background="@color/red"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="bottom"
+
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_label_task_confirm"
+            android:layout_width="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:gravity="center"
+            android:text="@string/ok"
+            style="@style/RaisedButton"/>
+
+        <Button
+            android:id="@+id/btn_label_task_discard"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_toLeftOf="@id/btn_label_task_confirm"
+            android:layout_toStartOf="@id/btn_label_task_confirm"
             android:text="@string/discard"
-            android:layout_height="match_parent"
-            android:textColor="@color/white"
-            android:layout_weight="1"/>
+            style="@style/FlatButton"/>
 
-        <Spinner
-            android:id="@+id/spinner_label_task"
-            android:layout_width="0dp"
-            android:text="@string/label"
-            android:background="@color/green"
-            android:textColor="@color/white"
-            android:layout_height="match_parent"
-            android:entries="@array/task_complexities_array"
-            android:prompt="@string/complexity_prompt"
-            android:layout_weight="1"/>-->
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

@@ -5,170 +5,170 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/activity_horizontal_margin_small"
+    android:background="@color/grey_background"
     android:orientation="vertical"
+    android:padding="@dimen/activity_horizontal_margin_small"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="si.uni_lj.fri.taskyapp.MainActivity"
-    android:background="@color/grey_background"
     tools:showIn="@layout/activity_main">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:background="@color/white"
-        android:layout_margin="2dp">
-        <ViewSwitcher
-            android:id="@+id/start_sensing_view_switcher"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@color/white">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:padding="10dp"
-            android:layout_height="match_parent"
-            android:inAnimation="@android:anim/slide_in_left"
-            android:outAnimation="@android:anim/slide_out_right">
-            <RelativeLayout
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_horizontal_margin">
+
+            <TextView
+                android:id="@+id/sensing_title_tv"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <TextView
-                    android:id="@+id/tv_complexity_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Choose complexity of your activity during the next 10 seconds."/>
+                android:layout_height="wrap_content"
+                android:text="Sensing"
+                android:textSize="@dimen/text_title_size"/>
 
-                <TextView
-                    android:id="@+id/seekbar_value_text"
-                    android:layout_below="@id/tv_complexity_description"
-                    android:layout_centerHorizontal="true"
-                    android:layout_width="wrap_content"
-                    android:text="No value chosen yet."
-                    android:layout_height="wrap_content"/>
-                <SeekBar
-                    android:id="@+id/task_complexity_seekbar"
-                    android:layout_below="@id/seekbar_value_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:max="4"/>
-                <TextView
-                    android:layout_below="@id/task_complexity_seekbar"
-                    android:id="@+id/start_sensing_after_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Start sensing after:"/>
-                <RadioGroup
-                    android:id="@+id/radio_group_time"
-                    android:layout_below="@id/start_sensing_after_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/radio1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="5s"
-                        android:checked="true" />
-
-                    <RadioButton
-                        android:id="@+id/radio2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="15s" />
-
-                    <RadioButton
-                        android:id="@+id/radio3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="30s" />
-                    <RadioButton
-                        android:id="@+id/radio4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="60s" />
-
-                </RadioGroup>
+            <ViewSwitcher
+                android:id="@+id/start_sensing_view_switcher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inAnimation="@android:anim/slide_in_left"
+                android:outAnimation="@android:anim/slide_out_right">
 
                 <LinearLayout
-                    android:id="@+id/layout_start_sensing"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="5dp"
-                    android:layout_below="@id/radio_group_time">
-                    <Button
-                        android:id="@+id/btn_start_sensing"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:text="Start sensing"/>
-                </LinearLayout>
-            </RelativeLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Sensing will start after countdown completes. Sensing will last for 10 seconds." />
-
-                <FrameLayout
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/countdown_text"
+                        android:id="@+id/tv_complexity_description"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:textAlignment="center"
-                        android:textSize="27sp"
-                        android:textStyle="bold"
-                        android:gravity="center"/>
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:text="Choose complexity of your activity and time of the countdown, before sensing will be initiated."
+                        android:textSize="@dimen/text_subtitle_size"/>
 
-                    <com.mikhaellopez.circularprogressbar.CircularProgressBar
-                        android:id="@+id/countdown_progressbar"
+                    <include
+                        android:id="@+id/seekbar_layout"
+                        layout="@layout/seekbar_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:cpb_background_progressbar_color="@color/divider"
-                        app:cpb_background_progressbar_width="5dp"
-                        app:cpb_progressbar_color="@color/accent"
-                        app:cpb_progressbar_width="12dp" />
+                        android:layout_height="wrap_content"/>
 
-                </FrameLayout>
+                    <RadioGroup
+                        android:id="@+id/radio_group_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="9">
 
-                <TextView
-                    android:id="@+id/status_tv"
+                        <RadioButton
+                            android:id="@+id/radio1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:checked="true"
+                            android:text="5s"/>
+
+                        <RadioButton
+                            android:id="@+id/radio2"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:text="15s"/>
+
+                        <RadioButton
+                            android:id="@+id/radio3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:text="30s"/>
+
+                        <RadioButton
+                            android:id="@+id/radio4"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="2"
+                            android:text="60s"/>
+
+                    </RadioGroup>
+
+                    <Button
+                        android:id="@+id/btn_start_sensing"
+                        android:layout_gravity="right|end|bottom"
+                        android:layout_marginTop="10dp"
+                        android:text="Start sensing"
+                        style="@style/FlatButton"/>
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Sensing will start after countdown completes." />
-
-                <Button
-                    android:id="@+id/btn_finished_sensing"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="44dp"
                     android:layout_gravity="center"
-                    android:text="@string/back"/>
-            </LinearLayout>
-        </ViewSwitcher>
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Wait for the countdown to complete."/>
+
+                    <FrameLayout
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginTop="20dp">
+
+                        <TextView
+                            android:id="@+id/countdown_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:textAlignment="center"
+                            android:textSize="27sp"
+                            android:textStyle="bold"/>
+
+                        <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                            android:id="@+id/countdown_progressbar"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:cpb_background_progressbar_color="@color/divider"
+                            app:cpb_background_progressbar_width="5dp"
+                            app:cpb_progressbar_color="@color/accent"
+                            app:cpb_progressbar_width="12dp"/>
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/status_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+
+                    <Button
+                        android:id="@+id/btn_finished_sensing"
+                        android:layout_gravity="right|end|bottom"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/back"
+                        style="@style/FlatButton"/>
+                </LinearLayout>
+            </ViewSwitcher>
+        </LinearLayout>
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/white"
-        android:layout_margin="2dp"
-        >
-        <FrameLayout
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@color/white">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="10dp"
-            android:layout_marginBottom="20dp">
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_horizontal_margin">
             <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -176,12 +176,16 @@
                 android:layout_gravity="top|center_horizontal"/>-->
             <Button
                 android:id="@+id/btn_label_data"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
                 android:layout_gravity="center"
                 android:text="Label sensed data"
-                android:layout_alignParentBottom="true"/>
-        </FrameLayout>
+                style="@style/RaisedButton"/>
+
+            <Button
+                android:id="@+id/btn_statistics"
+                android:layout_gravity="center"
+                android:text="Check statistics"
+                style="@style/RaisedButton"/>
+        </LinearLayout>
     </android.support.v7.widget.CardView>
 
 

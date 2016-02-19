@@ -11,7 +11,6 @@ import si.uni_lj.fri.taskyapp.R;
 
 /**
  * Created by urgas9 on 8. 02. 2016.
- *
  */
 public class SimpleTextArrayAdapter extends ArrayAdapter<String> {
 
@@ -27,7 +26,7 @@ public class SimpleTextArrayAdapter extends ArrayAdapter<String> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v = super.getView(position, convertView, parent);
-        ((TextView)v.findViewById(R.id.text_item)).setText(texts[position]);
+        ((TextView) v.findViewById(R.id.text_item)).setText(texts[position]);
         return v;
     }
 
@@ -36,7 +35,7 @@ public class SimpleTextArrayAdapter extends ArrayAdapter<String> {
         View v = super.getDropDownView(position, convertView, parent);
         //v.setBackgroundResource(R.drawable.spinner_bg);
 
-        TextView textView = (TextView)v.findViewById(R.id.text_item);
+        TextView textView = (TextView) v.findViewById(R.id.text_item);
         textView.setText(texts[position]);
         textView.setTextColor(ContextCompat.getColor(mContext, R.color.black));
 

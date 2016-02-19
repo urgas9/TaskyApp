@@ -16,11 +16,11 @@ public class ListDataAdapterSectionItem {
     private String textDate;
     private ArrayList<SensorReadingData> dataList;
 
-    public ListDataAdapterSectionItem(long timestamp, ArrayList<SensorReadingData> list){
+    public ListDataAdapterSectionItem(long timestamp, ArrayList<SensorReadingData> list) {
         super();
         Date date = new Date(timestamp);
         Format format = new SimpleDateFormat(Constants.DATE_FORMAT_TO_SHOW_DAY, Locale.ENGLISH);
-        this.textDate =  format.format(date);
+        this.textDate = format.format(date);
         this.dataList = list;
     }
 

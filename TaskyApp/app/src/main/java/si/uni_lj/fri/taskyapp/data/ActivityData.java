@@ -14,14 +14,15 @@ public class ActivityData {
     private String activityType;
     private int confidence;
 
-    public ActivityData(DetectedActivity detectedActivity){
+    public ActivityData(DetectedActivity detectedActivity) {
         super();
-        if(detectedActivity != null){
+        if (detectedActivity != null) {
             this.activityType = SensorsHelper.getDetectedActivityName(detectedActivity.getType());
             this.confidence = detectedActivity.getConfidence();
         }
 
     }
+
     public String getActivityType() {
         return activityType;
     }
@@ -40,7 +41,7 @@ public class ActivityData {
 
     @Override
     public boolean equals(Object o) {
-        if(o instanceof ActivityData && ((ActivityData)o).getActivityType().equals(this.getActivityType())){
+        if (o instanceof ActivityData && ((ActivityData) o).getActivityType().equals(this.getActivityType())) {
             return true;
         }
         return false;

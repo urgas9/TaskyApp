@@ -13,7 +13,7 @@ public class AccelerometerData {
     private ArrayList<float[]> values;
 
 
-    public AccelerometerData(float[] meanValues, ArrayList<float[]> values){
+    public AccelerometerData(float[] meanValues, ArrayList<float[]> values) {
         super();
         this.meanX = meanValues[0];
         this.meanY = meanValues[1];

@@ -17,7 +17,7 @@ public class MicrophoneData {
 
     private int[] amplitudes;
 
-    public MicrophoneData(int[] amplitudes){
+    public MicrophoneData(int[] amplitudes) {
         int[] minMax = SensorsHelper.getMinAndMaxValues(amplitudes);
         this.minAmplitude = minMax[0];
         this.maxAmplitude = minMax[1];
@@ -25,6 +25,7 @@ public class MicrophoneData {
         this.amplitudes = amplitudes;
 
     }
+
     public int getMaxAmplitude() {
         return maxAmplitude;
     }

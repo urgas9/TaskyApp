@@ -1,14 +1,18 @@
 package si.uni_lj.fri.taskyapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.github.channguyen.rsv.RangeSliderView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -22,18 +26,15 @@ import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import si.uni_lj.fri.taskyapp.adapter.SimpleTextArrayAdapter;
+import butterknife.OnClick;
 import si.uni_lj.fri.taskyapp.data.EnvironmentData;
 import si.uni_lj.fri.taskyapp.data.SensorReadingData;
 import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
 
-public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCallback{
+public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private final String TAG = "LabelTaskActivity";
-    private SensorReadingData mSensorReadingData;
-    private long mDbRecordId;
-
     @Bind(R.id.tv_detected_ambient_sound_level)
     TextView mDetectedAmbientSoundLevel;
     @Bind(R.id.tv_task_time_sensed)
@@ -42,8 +43,14 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
     TextView mDetectedActivityTv;
     @Bind(R.id.tv_detected_ambient_light_level)
     TextView mDetectedAmbientLightTv;
-    @Bind(R.id.rsv_small)
-    RangeSliderView mRangeSliderView;
+    @Bind(R.id.task_complexity_seekbar)
+    SeekBar mTaskComplexitySeekBar;
+    @Bind(R.id.seekbar_value_text)
+    TextView mSeekbarValueTv;
+    Integer selectedTaskLabel = null;
+    String[] arrayOfComplexities;
+    private SensorReadingData mSensorReadingData;
+    private long mDbRecordId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +63,7 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
         SensorReadingRecord srr = SensorReadingRecord.findById(SensorReadingRecord.class, mDbRecordId);
         mSensorReadingData = new Gson().fromJson(srr.getSensorJsonObject(), SensorReadingData.class);
 
+        arrayOfComplexities = getResources().getStringArray(R.array.task_complexities_array);
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -63,10 +71,9 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
                 .findFragmentById(R.id.map_fragment);
         mapFragment.getMapAsync(this);
 
-        if(mSensorReadingData.getActivityData() != null) {
+        if (mSensorReadingData.getActivityData() != null) {
             mDetectedActivityTv.setText(mSensorReadingData.getActivityData().getActivityType());
-        }
-        else{
+        } else {
             mDetectedActivityTv.setText(R.string.no_data);
         }
 
@@ -76,21 +83,53 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
         mDetectedAmbientLightTv.setText("" + environmentData.getAverageLightPercentageValue());
         mDetectedAmbientSoundLevel.setText("" + mSensorReadingData.getMicrophoneData().getMeanAmplitude());
 
-        String[] arrayOfComplexities = getResources().getStringArray(R.array.task_complexities_array);
-        arrayOfComplexities[0] = getResources().getString(R.string.complexity_prompt);
-        SimpleTextArrayAdapter adapter = new SimpleTextArrayAdapter(this, R.layout.spinner_task_complexity_item, arrayOfComplexities);
-        /*mLabelTaskSpinner.setAdapter(adapter);
-        if(mSensorReadingData.getLabel() != null && mSensorReadingData.getLabel() > 0) {
-            mLabelTaskSpinner.setSelection(mSensorReadingData.getLabel());
-        }*/
+        mSeekbarValueTv.setText(R.string.no_value_chosen);
+        resetSeekBar();
+        if (srr.getLabel() != null && srr.getLabel() > 0 && srr.getLabel() <= 5) {
+            setSeekBarValueText(srr.getLabel());
+        }
 
-        mRangeSliderView.setOnSlideListener(new RangeSliderView.OnSlideListener() {
+        mTaskComplexitySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onSlide(int index) {
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                setSeekBarValueText(progress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
 
             }
         });
+        mTaskComplexitySeekBar.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                setSeekBarValueText(mTaskComplexitySeekBar.getProgress());
+                mSeekbarValueTv.setText(arrayOfComplexities[mTaskComplexitySeekBar.getProgress() + 1]);
+                selectedTaskLabel = mTaskComplexitySeekBar.getProgress();
+                return false;
+            }
+        });
+
+
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+    private void setSeekBarValueText(int progress) {
+        selectedTaskLabel = progress;
+        mTaskComplexitySeekBar.setProgress(progress);
+        mSeekbarValueTv.setText(arrayOfComplexities[progress + 1]);
+        mSeekbarValueTv.setTextColor(ContextCompat.getColor(this, R.color.secondary_text));
+    }
+
+    private void resetSeekBar() {
+        mSeekbarValueTv.setText(R.string.no_value_chosen);
+        mTaskComplexitySeekBar.setProgress(0);
+        selectedTaskLabel = null;
     }
 
     @Override
@@ -118,10 +157,36 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
         }*/
     }
 
-    //@OnClick(R.id.btn_discard_task)
-    public void discardTask(View v){
-        Log.d(TAG, "Discarding task with id " + mSensorReadingData.getDatabaseId());
-        SensorReadingRecord.findById(SensorReadingRecord.class, mSensorReadingData.getDatabaseId()).delete();
+
+    @OnClick(R.id.btn_label_task_confirm)
+    public void confirmTaskLabel(View v) {
+
+        if (selectedTaskLabel != null && selectedTaskLabel > 0) {
+            Log.d(TAG, "Updating record in database, setting label to: " + selectedTaskLabel);
+            SensorReadingRecord srr = SensorReadingRecord.findById(SensorReadingRecord.class, mDbRecordId);
+            srr.setLabel(selectedTaskLabel);
+            mSensorReadingData.setLabel(selectedTaskLabel);
+            srr.setSensorJsonObject(new Gson().toJson(mSensorReadingData));
+            srr.save();
+            Intent resultData = new Intent();
+            resultData.putExtra("label", selectedTaskLabel);
+            resultData.putExtra("db_record_id", mDbRecordId);
+            resultData.putExtra("action", 1);
+            setResult(RESULT_OK, resultData);
+            finish();
+        } else {
+            Toast.makeText(this, "Please choose task label first.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @OnClick(R.id.btn_label_task_discard)
+    public void discardTask(View v) {
+        Log.d(TAG, "Discarding task with id " + mDbRecordId);
+        SensorReadingRecord.findById(SensorReadingRecord.class, mDbRecordId).delete();
+        Intent data = new Intent();
+        data.putExtra("action", 0);
+        data.putExtra("db_record_id", mDbRecordId);
+        setResult(RESULT_OK, data);
         finish();
     }
 

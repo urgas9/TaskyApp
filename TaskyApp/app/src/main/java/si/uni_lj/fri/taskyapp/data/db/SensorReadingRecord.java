@@ -10,7 +10,6 @@ import si.uni_lj.fri.taskyapp.global.SensorsHelper;
 
 /**
  * Created by urgas9 on 24. 01. 2016.
- *
  */
 public class SensorReadingRecord extends SugarRecord {
 
@@ -23,18 +22,18 @@ public class SensorReadingRecord extends SugarRecord {
     private String address; // Pretty printed lat and lng
     private String sensorJsonObject;
 
-    public SensorReadingRecord(){
+    public SensorReadingRecord() {
 
     }
 
-    public SensorReadingRecord(Context ctx, SensorReadingData sensorReadingData, boolean startedByUser, int label){
+    public SensorReadingRecord(Context ctx, SensorReadingData sensorReadingData, boolean startedByUser, int label) {
         this.sensorJsonObject = new Gson().toJson(sensorReadingData);
         this.startedByUser = startedByUser;
         this.label = label;
-        if(sensorReadingData.getActivityData() != null) {
+        if (sensorReadingData.getActivityData() != null) {
             this.detectedActivity = sensorReadingData.getActivityData().getActivityType();
         }
-        if(sensorReadingData.getLocationData() != null){
+        if (sensorReadingData.getLocationData() != null) {
             this.locationLat = sensorReadingData.getLocationData().getLat();
             this.locationLng = sensorReadingData.getLocationData().getLng();
             this.address = SensorsHelper.getLocationAddress(ctx, locationLat, locationLng);
@@ -118,5 +117,13 @@ public class SensorReadingRecord extends SugarRecord {
                 ", address='" + address + '\'' +
                 ", sensorJsonObject='" + sensorJsonObject + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof SensorReadingRecord) {
+            return ((SensorReadingRecord) o).getId() == this.getId();
+        }
+        return super.equals(o);
     }
 }

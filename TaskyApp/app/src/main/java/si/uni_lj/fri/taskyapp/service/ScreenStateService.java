@@ -31,7 +31,7 @@ public class ScreenStateService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("ScreenStateService", "onStartCommand");
-        if(intent.hasExtra("screen_state")) {
+        if (intent != null && intent.hasExtra("screen_state")) {
             boolean screenOn = intent.getBooleanExtra("screen_state", false);
             Log.d("ScreenStateService", "Saving screen state to: " + screenOn);
             SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());

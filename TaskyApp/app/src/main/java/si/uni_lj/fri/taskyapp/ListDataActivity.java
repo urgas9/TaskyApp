@@ -13,9 +13,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 import android.widget.ViewSwitcher;
-
-import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,7 +27,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import si.uni_lj.fri.taskyapp.adapter.DividerItemDecoration;
 import si.uni_lj.fri.taskyapp.adapter.ListDataRecyclerAdapter;
-import si.uni_lj.fri.taskyapp.data.SensorReadingData;
 import si.uni_lj.fri.taskyapp.data.SensorReadingDataWithSections;
 import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
 import si.uni_lj.fri.taskyapp.global.SensorsHelper;
@@ -39,6 +37,7 @@ import si.uni_lj.fri.taskyapp.sensor.Constants;
 public class ListDataActivity extends AppCompatActivity {
 
     private static final String TAG = "ListResultsActivity";
+
     BroadcastReceiver mNewSensorRecordReceiver;
 
     @Bind(R.id.list_data_recycler_view)
@@ -65,7 +64,7 @@ public class ListDataActivity extends AppCompatActivity {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mDataRecyclerView.setLayoutManager(llm);
         mDataRecyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
-        mAdapter = new ListDataRecyclerAdapter(getBaseContext());
+        mAdapter = new ListDataRecyclerAdapter(this);
         mDataRecyclerView.setAdapter(mAdapter);
         //Filter the Intent and register broadcast receiver
         IntentFilter filter = new IntentFilter();
@@ -94,10 +93,26 @@ public class ListDataActivity extends AppCompatActivity {
         //Disconnect and detach the receiver
         try {
             unregisterReceiver(mNewSensorRecordReceiver);
-        }catch (IllegalArgumentException e){}
+        } catch (IllegalArgumentException e) {
+        }
     }
 
-    class ReadAllSensorRecords extends AsyncTask<Void, Void, SensorReadingDataWithSections>{
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.LABEL_TASK_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                int label = data.getIntExtra("label", -1);
+                long taskDbId = data.getLongExtra("db_record_id", -1);
+                int action = data.getIntExtra("action", -1);
+                mAdapter.updateDatabaseRecord(taskDbId, action);
+            } else {
+                Toast.makeText(this, "Returned but result not ok.", Toast.LENGTH_LONG).show();
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    class ReadAllSensorRecords extends AsyncTask<Void, Void, SensorReadingDataWithSections> {
 
         @Override
         protected SensorReadingDataWithSections doInBackground(Void... params) {
@@ -106,16 +121,16 @@ public class ListDataActivity extends AppCompatActivity {
             HashSet<String> uniqueDays = new HashSet<>();
             SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_FORMAT_TO_SHOW_DAY, Locale.ENGLISH);
             String previousTimestampDay = null;
-            for(SensorReadingRecord srr : sensorReadings){
+            for (SensorReadingRecord srr : sensorReadings) {
                 String dayTimestamp = format.format(new Date(srr.getTimeStartedSensing()));
-                if(!dayTimestamp.equals(previousTimestampDay)){
+                if (!dayTimestamp.equals(previousTimestampDay)) {
                     resultList.add(null); // HeaderItem to start a new section
                 }
                 uniqueDays.add(dayTimestamp);
 
-                if(srr.getAddress() == null){
+                if (srr.getAddress() == null) {
                     srr.setAddress(SensorsHelper.getLocationAddress(getBaseContext(), srr.getLocationLat(), srr.getLocationLng()));
-                    if(srr.getAddress() != null){
+                    if (srr.getAddress() != null) {
                         long prevId = srr.getId();
                         long id = srr.save();
                         Log.d(TAG, "Prev id: " + prevId + " new id: " + id);
@@ -138,14 +153,16 @@ public class ListDataActivity extends AppCompatActivity {
             //mStatusTextView.setText(s);
         }
     }
-    class SensorRecordReceiver extends BroadcastReceiver{
+
+    class SensorRecordReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
             long recordId = intent.getLongExtra("id", 0);
             Log.d(TAG, "Received new sensor reading record with id: " + recordId);
             SensorReadingRecord srr = SensorReadingRecord.findById(SensorReadingRecord.class, recordId);
-            SensorReadingData mSensorReadingData = new Gson().fromJson(srr.getSensorJsonObject(), SensorReadingData.class);
+            //SensorReadingData mSensorReadingData = new Gson().fromJson(srr.getSensorJsonObject(), SensorReadingData.class);
+            mAdapter.addNewSensorReadingRecord(srr);
         }
     }
 

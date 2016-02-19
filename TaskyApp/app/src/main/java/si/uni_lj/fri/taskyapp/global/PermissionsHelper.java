@@ -194,22 +194,22 @@ public class PermissionsHelper {
         ActivityCompat.requestPermissions(a, permissions, REQUEST_LOCATION_PERMISSIONS_CODE);
     }
 
-    public static void requestAllRequiredPermissions(Activity a){
+    public static void requestAllRequiredPermissions(Activity a) {
         ActivityCompat.requestPermissions(a, permissions, REQUEST_ALL_PERMISSIONS_CODE);
     }
 
-    public static boolean shouldShowAnyPermissionRationale(Activity a){
-        for(String perm : permissions) {
-            if(ActivityCompat.shouldShowRequestPermissionRationale(a, perm)){
+    public static boolean shouldShowAnyPermissionRationale(Activity a) {
+        for (String perm : permissions) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(a, perm)) {
                 return true;
             }
         }
         return false;
     }
 
-    public static boolean hasAllRequiredPermissions(Activity a){
-        for(String perm : permissions){
-            if(!hasPermission(a, perm)){
+    public static boolean hasAllRequiredPermissions(Activity a) {
+        for (String perm : permissions) {
+            if (!hasPermission(a, perm)) {
                 return false;
             }
         }

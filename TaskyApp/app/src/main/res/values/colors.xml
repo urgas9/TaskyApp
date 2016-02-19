@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="primary">#03A9F4</color>
     <color name="primary_dark">#0288D1</color>
     <color name="primary_light">#B3E5FC</color>
@@ -16,4 +17,9 @@
     <color name="green">#388E3C</color>
     <color name="red">#FF5252</color>
     <color name="black">#000</color>
+
+    <color name="flat_pressed">@color/primary_light</color>
+    <color name="flat_disabled_text">@color/divider</color>
+    <color name="flat_normal_text">@color/primary</color>
+
 </resources>

@@ -10,7 +10,7 @@ import java.util.concurrent.Callable;
  */
 public class SensorCallableGenerator {
 
-    public static Callable<SensorData> getSensorDataCallable(final ESSensorManager sm, final int sensorId){
+    public static Callable<SensorData> getSensorDataCallable(final ESSensorManager sm, final int sensorId) {
         return new Callable<SensorData>() {
             @Override
             public SensorData call() throws Exception {

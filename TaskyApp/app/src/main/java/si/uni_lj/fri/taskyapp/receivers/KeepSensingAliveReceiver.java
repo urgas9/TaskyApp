@@ -13,16 +13,16 @@ import si.uni_lj.fri.taskyapp.sensor.SensingInitiator;
 /**
  * Created by urgas9 on 24. 01. 2016.
  */
-public class KeepSensingAliveReceiver extends BroadcastReceiver{
+public class KeepSensingAliveReceiver extends BroadcastReceiver {
 
     private static final String TAG = "AfterStartupReceiver";
-    private SensingInitiator mSensingInitiator;
     Object o = new Object();
+    private SensingInitiator mSensingInitiator;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.d(TAG, "TaskyApp onReceive, system started");
-        if(mSensingInitiator == null) {
+        if (mSensingInitiator == null) {
             mSensingInitiator = new SensingInitiator(context);
         }
         mSensingInitiator.senseWithDefaultSensingConfiguration();

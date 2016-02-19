@@ -90,7 +90,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        if(intent == null){
+        if (intent == null) {
             return;
         }
         mDefaultPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
@@ -196,7 +196,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         srd.setTimestampStarted(mTimeSensingStarted);
 
         mPhoneStatusDataList = new ArrayList<>();
-        if(mDefaultPrefs.contains(Constants.PREFS_LAST_SCREEN_STATE)) {
+        if (mDefaultPrefs.contains(Constants.PREFS_LAST_SCREEN_STATE)) {
             PhoneStatusData psd = new PhoneStatusData();
             psd.setScreenOn(mDefaultPrefs.getBoolean(Constants.PREFS_LAST_SCREEN_STATE, false));
             psd.setMillisAfterStart(0);
@@ -301,7 +301,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         if (sensedLocation != null) {
             srd.setLocationData(new LocationData(getApplicationContext(), sensedLocation));
         }
-        if(userLabel > 0){
+        if (userLabel > 0) {
             srd.setLabel(userLabel);
         }
         Log.d(TAG, "Finishing with SenseDataIntentService method.");
@@ -324,7 +324,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
     private ActivityData extractMostProbableActivity() {
         ActivityData mostProbableActivity = null;
         boolean inDoubt = false;
-        if(mDetectedActivityList == null){
+        if (mDetectedActivityList == null) {
             return null;
         }
         for (ActivityData ad : mDetectedActivityList) {
@@ -368,8 +368,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             //Log.d(TAG, "LightData, max range: " + ((LightData) data).getValue());
             mCountLightValues++;
             mSumLightValues += (((LightData) data).getValue() / ((LightData) data).getMaxRange());
-        }
-        else if(data instanceof ConnectionStrengthData){
+        } else if (data instanceof ConnectionStrengthData) {
             mCountConnectionStrengthValues++;
             mSumConnectionStrengthValues += ((ConnectionStrengthData) data).getStrength();
         }

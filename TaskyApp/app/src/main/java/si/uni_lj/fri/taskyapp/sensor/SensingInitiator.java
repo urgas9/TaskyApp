@@ -3,7 +3,6 @@ package si.uni_lj.fri.taskyapp.sensor;
 import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,11 +42,12 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     }
 
 
-    public void senseWithDefaultSensingConfiguration(){
+    public void senseWithDefaultSensingConfiguration() {
 
         senseOnActivityRecognition();
         //senseOnLocationChanged();
     }
+
     public void senseOnActivityRecognition() {
         mWhichPolicy = SensingPolicy.ACTIVITY_UPDATES;
         if (mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
@@ -71,7 +71,7 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
         requestAlarmIntervalUpdates();
     }
 
-    public void startSensingOnUserRequest(Integer userLabel){
+    public void startSensingOnUserRequest(Integer userLabel) {
         Log.d(TAG, "startSensingOnUserRequest");
         //getSensingServicePendingIntent(userLabel);
 
@@ -83,7 +83,7 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     private GoogleApiClient buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(mContext)
                 .addApi(ActivityRecognition.API)
-                //.addApi(LocationServices.API)
+                        //.addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
@@ -107,15 +107,16 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
         senseWithDefaultSensingConfiguration();
     }
 
-    private PendingIntent getSensingServicePendingIntent(){
+    private PendingIntent getSensingServicePendingIntent() {
         return getSensingServicePendingIntent(-1);
     }
+
     private PendingIntent getSensingServicePendingIntent(Integer userLabel) {
         Intent i = new Intent(mContext, SenseDataIntentService.class);
         if (mWhichPolicy == SensingPolicy.INTERVAL) {
             i.putExtra("sensing_policy", mWhichPolicy.toString());
         }
-        if(userLabel > 0) {
+        if (userLabel > 0) {
             i.putExtra("user_label", userLabel);
         }
         return PendingIntent
@@ -206,10 +207,9 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
 
     @Override
     public void onResult(Status status) {
-        if(status.isSuccess()){
+        if (status.isSuccess()) {
             Log.d(TAG, "Successfully started or remove updates of Google API client.");
-        }
-        else{
+        } else {
             Log.e(TAG, "Could not start or remove updates from Google API client.");
         }
     }

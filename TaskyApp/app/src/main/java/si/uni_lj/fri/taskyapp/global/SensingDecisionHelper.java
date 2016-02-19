@@ -27,7 +27,7 @@ public class SensingDecisionHelper {
     private SensorReadingData mOldSensorData;
     private SensorReadingData mNewSensorData;
 
-    public SensingDecisionHelper(Context context, int userLabel){
+    public SensingDecisionHelper(Context context, int userLabel) {
         super();
         this.mContext = context;
         this.mSharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
@@ -39,63 +39,62 @@ public class SensingDecisionHelper {
     /**
      * Saving newly sensed decisive sensing data (decisive = limited data on which we will decide
      * if we continue sensing additional data)
+     *
      * @param srd
      */
-    public void saveNewDecisiveSensingData(SensorReadingData srd){
+    public void saveNewDecisiveSensingData(SensorReadingData srd) {
         mSharedPreferences.edit()
                 .putString("previous_sensing_data", gson.toJson(srd))
                 .commit();
     }
 
-    public SensorReadingData getPreviousDecisiveSensingData(){
-        return  gson.fromJson(
+    public SensorReadingData getPreviousDecisiveSensingData() {
+        return gson.fromJson(
                 mSharedPreferences.getString("previous_sensing_data", "{}"),
                 SensorReadingData.class);
     }
 
-    private void markDecisionToSense(boolean decision){
+    private void markDecisionToSense(boolean decision) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
-        if(decision){
+        if (decision) {
             editor.putInt("count_decisions_to_sense", (getNumDecisionsToSense() + 1));
-        }
-        else {
+        } else {
             editor.putInt("count_decisions_not_to_sense", (getNumDecisionsNotToSense() + 1));
         }
         editor.commit();
     }
 
-    private int getNumDecisionsToSense(){
+    private int getNumDecisionsToSense() {
         return mSharedPreferences.getInt("count_decisions_to_sense", 0);
     }
 
-    private int getNumDecisionsNotToSense(){
+    private int getNumDecisionsNotToSense() {
         return mSharedPreferences.getInt("count_decisions_not_to_sense", 0);
     }
 
     /**
      * Logic to determine if we continue sensing or not to preserve battery energy
      * (we might still be at the same location, or activity is still the same)
+     *
      * @param newSensorData
      * @return
      */
-    public boolean shouldContinueSensing(SensorReadingData newSensorData){
-        if(userLabel > 0){
+    public boolean shouldContinueSensing(SensorReadingData newSensorData) {
+        if (userLabel > 0) {
             return true;
         }
         mOldSensorData = getPreviousDecisiveSensingData();
         mNewSensorData = newSensorData;
 
         boolean continueSensing = true;
-        if(mNewSensorData != null && mOldSensorData != null){
-            if(newSensorData.getActivityData() != null && newSensorData.getLocationData() != null){
-                if(!(continueSensing = decideOnLocationData())) {
+        if (mNewSensorData != null && mOldSensorData != null) {
+            if (newSensorData.getActivityData() != null && newSensorData.getLocationData() != null) {
+                if (!(continueSensing = decideOnLocationData())) {
                     continueSensing = decideOnActivityData();
                 }
-            }
-            else if(newSensorData.getActivityData() != null){
+            } else if (newSensorData.getActivityData() != null) {
                 continueSensing = decideOnActivityData();
-            }
-            else if(newSensorData.getLocationData() != null){
+            } else if (newSensorData.getLocationData() != null) {
                 continueSensing = decideOnLocationData();
             }
 
@@ -105,21 +104,21 @@ public class SensingDecisionHelper {
         return continueSensing;
     }
 
-    public boolean decideOnActivityData(){
-        if(mOldSensorData == null || mNewSensorData == null || mOldSensorData.getActivityData() == null || mNewSensorData.getActivityData() == null){
+    public boolean decideOnActivityData() {
+        if (mOldSensorData == null || mNewSensorData == null || mOldSensorData.getActivityData() == null || mNewSensorData.getActivityData() == null) {
             return true;
         }
         ActivityData newActivityData = mNewSensorData.getActivityData();
         ActivityData oldActivityData = mOldSensorData.getActivityData();
-        if(newActivityData.getConfidence() < 90 || newActivityData.equals("Unknown")){
+        if (newActivityData.getConfidence() < 90 || newActivityData.equals("Unknown")) {
             return false;
         }
-        if(newActivityData.getActivityType().equals(oldActivityData.getActivityType())){
-            if(isUncertainActivityData(newActivityData)){
+        if (newActivityData.getActivityType().equals(oldActivityData.getActivityType())) {
+            if (isUncertainActivityData(newActivityData)) {
                 return decideOnTimeDifference();
             }
             // We have more (or less certain result for more than 50%, so we should sense)
-            if(Math.abs(newActivityData.getConfidence() - oldActivityData.getConfidence()) > 50){
+            if (Math.abs(newActivityData.getConfidence() - oldActivityData.getConfidence()) > 50) {
                 return true;
             }
             return false;
@@ -127,18 +126,18 @@ public class SensingDecisionHelper {
         return true;
     }
 
-    private boolean isUncertainActivityData(ActivityData activityData){
-        if(activityData == null){
+    private boolean isUncertainActivityData(ActivityData activityData) {
+        if (activityData == null) {
             return false;
         }
-        if(activityData.getConfidence() < 95 || activityData.getActivityType().equals("Unknown")){
+        if (activityData.getConfidence() < 95 || activityData.getActivityType().equals("Unknown")) {
             return true;
         }
         return false;
     }
 
-    private boolean decideOnLocationData(){
-        if(mOldSensorData == null || mNewSensorData == null || mOldSensorData.getLocationData() == null || mNewSensorData.getLocationData() == null){
+    private boolean decideOnLocationData() {
+        if (mOldSensorData == null || mNewSensorData == null || mOldSensorData.getLocationData() == null || mNewSensorData.getLocationData() == null) {
             return true;
         }
         LocationData newLocData = mNewSensorData.getLocationData();
@@ -157,19 +156,19 @@ public class SensingDecisionHelper {
         return true;
     }
 
-    public boolean decideOnMinimumIntervalTimeDifference(){
-        if(userLabel > 0){
+    public boolean decideOnMinimumIntervalTimeDifference() {
+        if (userLabel > 0) {
             return true;
         }
         long prevTimestamp = getPreviousDecisiveSensingData().getTimestampStarted();
         return (System.currentTimeMillis() - prevTimestamp) > Constants.MIN_INTERVAL_MILLIS;
     }
 
-    private boolean decideOnTimeDifference(){
-        if(mOldSensorData == null || mNewSensorData == null){
+    private boolean decideOnTimeDifference() {
+        if (mOldSensorData == null || mNewSensorData == null) {
             return true;
         }
-        if((mNewSensorData.getTimestampStarted() - mOldSensorData.getTimestampStarted()) > Constants.MAX_INTERVAL_WITHOUT_SENSING_DATA_IN_MILLIS){
+        if ((mNewSensorData.getTimestampStarted() - mOldSensorData.getTimestampStarted()) > Constants.MAX_INTERVAL_WITHOUT_SENSING_DATA_IN_MILLIS) {
             return true;
         }
         return false;
