@@ -28,4 +28,5 @@ public class Constants {
 
 
     public static final int LABEL_TASK_REQUEST_CODE = 1000;
+    public static final int SHOW_NOTIFICATION_REQUEST_CODE = 900;
 }

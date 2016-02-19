@@ -16,6 +16,7 @@ import com.google.android.gms.location.ActivityRecognition;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
+import si.uni_lj.fri.taskyapp.global.AppHelper;
 import si.uni_lj.fri.taskyapp.global.PermissionsHelper;
 import si.uni_lj.fri.taskyapp.service.ScreenStateService;
 import si.uni_lj.fri.taskyapp.service.SenseDataIntentService;
@@ -45,6 +46,9 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     public void senseWithDefaultSensingConfiguration() {
 
         senseOnActivityRecognition();
+
+        AppHelper.setRepeatedNotification(mContext, 0, 0, 22, 22);
+
         //senseOnLocationChanged();
     }
 

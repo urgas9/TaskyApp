@@ -70,6 +70,8 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".broadcast_receivers.ShowNotificationToUserReceiver" />
+
         <service android:name=".service.SenseDataIntentService"/>
         <service android:name=".service.ScreenStateService"/>
 
