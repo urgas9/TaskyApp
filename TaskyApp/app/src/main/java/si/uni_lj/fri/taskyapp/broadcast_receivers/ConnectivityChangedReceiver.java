@@ -14,6 +14,7 @@ import si.uni_lj.fri.taskyapp.service.SendDataToServerService;
  */
 public class ConnectivityChangedReceiver extends BroadcastReceiver {
     private static final String TAG = "ConnectivityChangedRece";
+    private static boolean firstEvent = true;
 
     @Override
     public void onReceive(Context context, Intent intent) {

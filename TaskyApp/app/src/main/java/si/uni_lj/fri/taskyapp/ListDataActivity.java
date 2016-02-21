@@ -13,7 +13,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import java.text.SimpleDateFormat;
@@ -98,15 +97,11 @@ public class ListDataActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constants.LABEL_TASK_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                int label = data.getIntExtra("label", -1);
-                long taskDbId = data.getLongExtra("db_record_id", -1);
-                int action = data.getIntExtra("action", -1);
-                mAdapter.updateDatabaseRecord(taskDbId, action);
-            } else {
-                Toast.makeText(this, "Returned but result not ok.", Toast.LENGTH_LONG).show();
-            }
+        if (requestCode == Constants.LABEL_TASK_REQUEST_CODE && resultCode == RESULT_OK) {
+            int label = data.getIntExtra("label", -1);
+            long taskDbId = data.getLongExtra("db_record_id", -1);
+            int action = data.getIntExtra("action", -1);
+            mAdapter.updateDatabaseRecord(taskDbId, action);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

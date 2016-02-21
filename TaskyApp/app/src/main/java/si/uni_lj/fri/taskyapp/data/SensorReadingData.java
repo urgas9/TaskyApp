@@ -51,6 +51,8 @@ public class SensorReadingData {
     private List<PhoneStatusData> phoneStatusData;
 
     private Integer label; // Label on Likert scale 1-5 (easy - hard)
+    @SerializedName("database_id")
+    private Long dbRecordId;
 
     public SensorReadingData(Context context) {
         try {
@@ -157,6 +159,14 @@ public class SensorReadingData {
             return true;
         }
         return false;
+    }
+
+    public Long getDbRecordId() {
+        return dbRecordId;
+    }
+
+    public void setDbRecordId(Long dbRecordId) {
+        this.dbRecordId = dbRecordId;
     }
 
     @Override

@@ -8,12 +8,9 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.TimeZone;
 
 import si.uni_lj.fri.taskyapp.data.SensorReadingData;
 import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
@@ -56,12 +53,13 @@ public class SendDataToServerService extends IntentService {
         }
 
         long lastTimestamp = mPrefs.getLong(Constants.PREFS_LAST_TIME_SENT_TO_SERVER, 0);
-        if ((lastTimestamp + Constants.MAX_INTERVAL_BETWEEN_TWO_SERVER_POSTS) > System.currentTimeMillis()) {
+        //TODO: Uncomment
+        /*if ((lastTimestamp + Constants.MAX_INTERVAL_BETWEEN_TWO_SERVER_POSTS) > System.currentTimeMillis()) {
             SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
             format.setTimeZone(TimeZone.getTimeZone("GMT"));
             Log.d(TAG, "Won't post to server as the task executed " + format.format(new Date(System.currentTimeMillis() - lastTimestamp)) + " ago.");
             return;
-        }
+        }*/
 
         mPrefs.edit().putLong(Constants.PREFS_LAST_TIME_SENT_TO_SERVER, System.currentTimeMillis()).apply();
 
@@ -77,13 +75,16 @@ public class SendDataToServerService extends IntentService {
         List<SensorReadingData> sensorReadingDataList = new LinkedList<>();
 
         Gson gson = new Gson();
+        int countDeleted = 0;
         for (SensorReadingRecord srr : sensorReadings) {
             if (srr.getLabel() == null || srr.getLabel() <= 0) {
-                srr.delete();
+                //TODO: Remove after testing
+                //countDeleted += srr.delete();
                 continue;
             }
             SensorReadingData srd = gson.fromJson(srr.getSensorJsonObject(), SensorReadingData.class);
             srd.setLabel(srr.getLabel());
+            srd.setDbRecordId(srr.getId());
             sensorReadingDataList.add(srd);
         }
         // Post data to server using exponential backoff
@@ -112,11 +113,23 @@ public class SendDataToServerService extends IntentService {
         } while (count < MAX_TRIES);
 
         if (result.isSuccess()) {
-            Log.d(TAG, "Data posted to server successfully");
-            Log.d(TAG, "Response content:");
-            Log.d(TAG, result.getContent().toString());
+            if(result.getContent().isSuccess()) {
+                Log.d(TAG, "Data posted to server successfully");
+                for (Long confirmedId : result.getContent().getConfirmedIds()) {
+                    //TODO: Change this to delete!
+                    SensorReadingRecord srr = SensorReadingRecord.findById(SensorReadingRecord.class, confirmedId);
+                    if(srr != null) {
+                        Log.d(TAG, "DELETE: " + srr.getAddress());
+                    }
+                    else{
+                        Log.d(TAG, "Not found any items for: " + confirmedId);
+                    }
+                }
+            }
+            else{
+                Log.e(TAG, "Post was made to server, but server returned false.");
+            }
 
-            //TODO: Do something with result
         } else {
             Log.e(TAG, "Cannot post data to server, code: " + result.getResponseCode());
         }

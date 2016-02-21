@@ -2,7 +2,6 @@ package si.uni_lj.fri.taskyapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -109,18 +108,15 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 setSeekBarValueText(mTaskComplexitySeekBar.getProgress());
-                mSeekbarValueTv.setText(arrayOfComplexities[mTaskComplexitySeekBar.getProgress() + 1]);
-                selectedTaskLabel = mTaskComplexitySeekBar.getProgress();
                 return false;
             }
         });
-
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     private void setSeekBarValueText(int progress) {
-        selectedTaskLabel = progress;
+        selectedTaskLabel = progress + 1;
         mTaskComplexitySeekBar.setProgress(progress);
         mSeekbarValueTv.setText(arrayOfComplexities[progress + 1]);
         mSeekbarValueTv.setTextColor(ContextCompat.getColor(this, R.color.secondary_text));
@@ -137,7 +133,7 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                onBackPressed();
                 return true;
         }
         return super.onOptionsItemSelected(item);

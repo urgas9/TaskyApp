@@ -49,6 +49,7 @@ import si.uni_lj.fri.taskyapp.data.LocationData;
 import si.uni_lj.fri.taskyapp.data.PhoneStatusData;
 import si.uni_lj.fri.taskyapp.data.SensorReadingData;
 import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
+import si.uni_lj.fri.taskyapp.global.AppHelper;
 import si.uni_lj.fri.taskyapp.global.SensingDecisionHelper;
 import si.uni_lj.fri.taskyapp.global.SensorsHelper;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
@@ -309,6 +310,9 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         // Persisting sensor readings to database
         long id = new SensorReadingRecord(getBaseContext(), srd, userLabel > 0, userLabel).save();
 
+        if(mDefaultPrefs.getString("notifications_preference", "").equals("2")){
+            AppHelper.showNotification(getBaseContext(), id);
+        }
         Intent i = new Intent(Constants.ACTION_NEW_SENSOR_READING_RECORD);
         i.putExtra("id", id);
         //Send Broadcast to be listen in MainActivity

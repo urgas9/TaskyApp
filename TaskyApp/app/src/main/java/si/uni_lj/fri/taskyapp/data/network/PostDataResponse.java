@@ -10,7 +10,7 @@ import java.util.List;
 public class PostDataResponse {
 
     private boolean success;
-    @SerializedName("confirmed_ids")
+    @SerializedName("confirm_ids")
     private List<Long> confirmedIds;
 
     public boolean isSuccess() {

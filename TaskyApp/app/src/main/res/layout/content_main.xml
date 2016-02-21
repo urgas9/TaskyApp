@@ -28,7 +28,7 @@
                 android:id="@+id/sensing_title_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Sensing"
+                android:text="@string/sensing"
                 android:textSize="@dimen/text_title_size"/>
 
             <ViewSwitcher
@@ -183,8 +183,9 @@
             <Button
                 android:id="@+id/btn_statistics"
                 android:layout_gravity="center"
+                android:layout_width="match_parent"
                 android:text="Check statistics"
-                style="@style/RaisedButton"/>
+                style="@style/FlatButton"/>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 

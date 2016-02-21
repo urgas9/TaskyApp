@@ -1,12 +1,18 @@
 package si.uni_lj.fri.taskyapp.global;
 
 import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -17,10 +23,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import si.uni_lj.fri.taskyapp.BuildConfig;
+import si.uni_lj.fri.taskyapp.ListDataActivity;
+import si.uni_lj.fri.taskyapp.R;
 import si.uni_lj.fri.taskyapp.broadcast_receivers.ShowNotificationToUserReceiver;
+import si.uni_lj.fri.taskyapp.sensor.Constants;
 
 /**
  * Created by urgas9 on 31. 12. 2015.
@@ -106,11 +117,19 @@ public class AppHelper {
 
         //check whether the time is earlier than current time. If so, set it to tomorrow. Otherwise, all alarms for earlier time will fire
         //TODO: Uncomment
-        /*if(calendar.before(now)){
-            calendar.add(Calendar.DATE, 1);
-        }*/
+        if(calendar.before(now)){
+            calendar.add(Calendar.HOUR, 12);
+            if(calendar.before(now)){
+                calendar.add(Calendar.HOUR, 12);
+            }
+        }
 
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
+        SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(ctx);
+        long interval = AlarmManager.INTERVAL_DAY;
+        if(mPrefs.getString("notifications_preference", "").equals("1")) {
+            interval = AlarmManager.INTERVAL_HALF_DAY;
+        }
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), interval, pendingIntent);
 
     }
 
@@ -123,4 +142,39 @@ public class AppHelper {
         return false;
     }
 
+    public static void showNotification(Context context){
+        showNotification(context, null);
+    }
+    public static void showNotification(Context context, Long dataBaseId) {
+        SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        Intent intent = new Intent(context, ListDataActivity.class);
+        PendingIntent pi = PendingIntent.getActivity(context, Constants.SHOW_NOTIFICATION_REQUEST_CODE, intent, 0);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
+                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                .setContentTitle(context.getString(R.string.app_name));
+        if(dataBaseId == null){
+            mBuilder.setContentText("Would you mind labelling your daily tasks?");
+        }
+        else{
+            SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_FORMAT_TO_SHOW_FULL);
+            mBuilder.setContentText(String.format("Last sensing at: %s", format.format(new Date())));
+        }
+        mBuilder.setContentIntent(pi);
+        if (mPrefs.getBoolean("notifications_new_message_vibrate", false)) {
+            mBuilder.setVibrate(new long[]{100, 500, 100});
+        }
+        mBuilder.setLights(Color.RED, 2000, 2000);
+        String notifSound = mPrefs.getString("notifications_new_message_ringtone", null);
+        if (notifSound != null) {
+            mBuilder.setSound(Uri.parse(notifSound));
+        }
+        mBuilder.setDefaults(Notification.DEFAULT_LIGHTS);
+        mBuilder.setAutoCancel(true);
+        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        int id = Constants.SHOW_NOTIFICATION_REMINDER_ID;
+        if(dataBaseId != null){
+            id = Constants.SHOW_NOTIFICATION_JUST_SENSED_ID;
+        }
+        mNotificationManager.notify(id, mBuilder.build());
+    }
 }

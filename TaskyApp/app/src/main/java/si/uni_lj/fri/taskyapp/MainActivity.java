@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_statistics)
     public void checkStatisticsBtn(View v) {
-        Toast.makeText(this, "Check statistics!!", Toast.LENGTH_LONG).show();
+        startActivity(new Intent(this, StatisticsActivity.class));
     }
 
     @OnClick(R.id.btn_start_sensing)

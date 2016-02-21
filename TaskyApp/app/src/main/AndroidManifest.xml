@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="si.uni_lj.fri.taskyapp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest package="si.uni_lj.fri.taskyapp"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION"/>
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -69,11 +68,9 @@
                 <action android:name="si.uni_lj.fri.taskyapp.KeepAliveAction"/>
             </intent-filter>
         </receiver>
-
         <receiver android:name=".broadcast_receivers.ShowNotificationToUserReceiver"/>
         <receiver android:name=".broadcast_receivers.ConnectivityChangedReceiver">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
                 <action android:name="android.net.wifi.STATE_CHANGE"/>
             </intent-filter>
         </receiver>
@@ -101,6 +98,10 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="si.uni_lj.fri.taskyapp.MainActivity"/>
+        </activity>
+        <activity
+            android:name=".StatisticsActivity"
+            android:parentActivityName=".MainActivity">>
         </activity>
     </application>
 
