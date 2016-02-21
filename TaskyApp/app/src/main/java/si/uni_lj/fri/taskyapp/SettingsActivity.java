@@ -35,6 +35,7 @@ import si.uni_lj.fri.taskyapp.global.AppHelper;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
+    private static Context mContext;
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
@@ -81,14 +82,13 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             } else {
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
-                if(stringValue.isEmpty()){
-                    if(mContext != null) {
+                if (stringValue.isEmpty()) {
+                    if (mContext != null) {
                         Toast.makeText(mContext, "Value cannot be empty!", Toast.LENGTH_LONG).show();
                     }
                     return false;
-                }
-                else if(preference.getKey().equals("profile_email_text") && !AppHelper.isValidEmail(stringValue)){
-                    if(mContext != null) {
+                } else if (preference.getKey().equals("profile_email_text") && !AppHelper.isValidEmail(stringValue)) {
+                    if (mContext != null) {
                         Toast.makeText(mContext, "Please enter a valid email address!", Toast.LENGTH_LONG).show();
                     }
                     return false;
@@ -100,7 +100,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         }
     };
 
-    private static Context mContext;
     /**
      * Binds a preference's summary to its value. More specifically, when the
      * preference's value is changed, its summary (line of text below the

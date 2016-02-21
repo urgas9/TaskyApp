@@ -70,10 +70,17 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".broadcast_receivers.ShowNotificationToUserReceiver" />
+        <receiver android:name=".broadcast_receivers.ShowNotificationToUserReceiver"/>
+        <receiver android:name=".broadcast_receivers.ConnectivityChangedReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <action android:name="android.net.wifi.STATE_CHANGE"/>
+            </intent-filter>
+        </receiver>
 
         <service android:name=".service.SenseDataIntentService"/>
         <service android:name=".service.ScreenStateService"/>
+        <service android:name=".service.SendDataToServerService"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"

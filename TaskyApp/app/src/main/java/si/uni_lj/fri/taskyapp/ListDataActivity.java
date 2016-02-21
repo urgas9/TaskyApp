@@ -18,6 +18,7 @@ import android.widget.ViewSwitcher;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -87,10 +88,8 @@ public class ListDataActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        //Disconnect and detach the receiver
+    protected void onStop() {
+        super.onStop();
         try {
             unregisterReceiver(mNewSensorRecordReceiver);
         } catch (IllegalArgumentException e) {
@@ -116,7 +115,16 @@ public class ListDataActivity extends AppCompatActivity {
 
         @Override
         protected SensorReadingDataWithSections doInBackground(Void... params) {
-            List<SensorReadingRecord> sensorReadings = SensorReadingRecord.listAll(SensorReadingRecord.class, "time_started_sensing ASC");
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.add(Calendar.DAY_OF_YEAR, -1);
+
+            List<SensorReadingRecord> sensorReadings = SensorReadingRecord.find(SensorReadingRecord.class,
+                    "time_started_sensing > ?", new String[]{"" + calendar.getTimeInMillis()}, null, "time_started_sensing ASC", null);
+
             ArrayList<SensorReadingRecord> resultList = new ArrayList<>();
             HashSet<String> uniqueDays = new HashSet<>();
             SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_FORMAT_TO_SHOW_DAY, Locale.ENGLISH);

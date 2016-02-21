@@ -47,7 +47,7 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
 
         senseOnActivityRecognition();
 
-        AppHelper.setRepeatedNotification(mContext, 0, 0, 22, 22);
+        AppHelper.setRepeatedNotification(mContext, 0, 13, 20, 22);
 
         //senseOnLocationChanged();
     }

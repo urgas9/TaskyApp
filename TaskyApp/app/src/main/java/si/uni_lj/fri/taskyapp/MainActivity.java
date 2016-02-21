@@ -145,8 +145,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
         try {
             unregisterReceiver(mNewSensorRecordReceiver);
         } catch (IllegalArgumentException e) {
