@@ -1,6 +1,7 @@
 package si.uni_lj.fri.taskyapp.service;
 
 import android.Manifest;
+import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -37,6 +38,7 @@ import com.ubhave.sensormanager.data.push.ScreenData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -286,10 +288,6 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         }
         environmentData.setAverageLightPercentageValue(lightPercentage);
 
-        float connectionStrengthPercentage = mSumConnectionStrengthValues / mCountConnectionStrengthValues;
-        if (Float.isNaN(connectionStrengthPercentage)) {
-            connectionStrengthPercentage = -1.f;
-        }
         srd.setEnvironmentData(environmentData);
         srd.setTimestampEnded(System.currentTimeMillis());
         srd.setPhoneStatusData(mPhoneStatusDataList);
@@ -310,9 +308,8 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         // Persisting sensor readings to database
         long id = new SensorReadingRecord(getBaseContext(), srd, userLabel > 0, userLabel).save();
 
-        if(mDefaultPrefs.getString("notifications_preference", "").equals("2")){
-            AppHelper.showNotification(getBaseContext(), id);
-        }
+        showNotification(id);
+
         Intent i = new Intent(Constants.ACTION_NEW_SENSOR_READING_RECORD);
         i.putExtra("id", id);
         //Send Broadcast to be listen in MainActivity
@@ -323,6 +320,36 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             ActivityRecognition.ActivityRecognitionApi.removeActivityUpdates(mGoogleApiClient, getPendingIntentForActivityRecognition());
             mGoogleApiClient.disconnect();
         }
+    }
+
+    private void showNotification(long id){
+        Calendar calendar = Calendar.getInstance();
+        String notificationsFrequency = mDefaultPrefs.getString("notifications_preference", "");
+        Long lastTimeNotificationSent = mDefaultPrefs.getLong("last_time_user_notified_to_label", 0);
+        long nowMillis = calendar.getTimeInMillis();
+        int hoursSinceLastNotification = (int)((nowMillis - lastTimeNotificationSent) / (AlarmManager.INTERVAL_HOUR));
+
+
+        switch (notificationsFrequency) {
+            case "1":
+                if ((calendar.get(Calendar.HOUR_OF_DAY) >= Constants.HOUR_SEND_NOTIFICATION_LATE ||
+                        calendar.get(Calendar.HOUR_OF_DAY) >= Constants.HOUR_SEND_NOTIFICATION_EARLY) &&
+                        hoursSinceLastNotification >= 7) {
+                    AppHelper.showNotification(getBaseContext());
+                }
+                break;
+            case "2":
+                AppHelper.showNotification(getBaseContext(), id);
+                break;
+            default:
+                if (calendar.get(Calendar.HOUR_OF_DAY) >= Constants.HOUR_SEND_NOTIFICATION_LATE &&
+                        hoursSinceLastNotification >= 7) {
+                    AppHelper.showNotification(getBaseContext());
+                }
+                break;
+        }
+        mDefaultPrefs.edit().putLong("last_time_user_notified_to_label", nowMillis).apply();
+
     }
 
     private ActivityData extractMostProbableActivity() {

@@ -33,4 +33,9 @@ public class Constants {
     public static final int SHOW_NOTIFICATION_REMINDER_ID= 901;
     public static final int SHOW_NOTIFICATION_JUST_SENSED_ID= 902;
     public static final int SHOW_NOTIFICATION_REQUEST_CODE = 900;
+
+    public static final int HOUR_SEND_NOTIFICATION_EARLY = 13;
+    public static final int HOUR_SEND_NOTIFICATION_LATE = 20;
+
+
 }

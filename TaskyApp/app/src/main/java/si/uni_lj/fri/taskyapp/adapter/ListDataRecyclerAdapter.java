@@ -110,6 +110,9 @@ public class ListDataRecyclerAdapter extends RecyclerView.Adapter {
             if (srr.getDetectedActivity() != null) {
                 ((NormalItemViewHolder) holder).mActivityTv.setText(srr.getDetectedActivity());
             }
+            else{
+                ((NormalItemViewHolder) holder).mActivityTv.setText(mActivity.getText(R.string.no_data));
+            }
             ((NormalItemViewHolder) holder).mDateTv.setText(formatFullDate.format(new Date(srr.getTimeStartedSensing())));
 
             if (srr.getLocationLat() > 0 && srr.getLocationLng() > 0) {

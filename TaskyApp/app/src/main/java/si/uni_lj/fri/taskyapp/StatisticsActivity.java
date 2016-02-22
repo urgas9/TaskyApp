@@ -55,10 +55,12 @@ public class StatisticsActivity extends AppCompatActivity {
         @Override
         protected DailyAggregatedData doInBackground(Void... params) {
             Calendar calendar = Calendar.getInstance();
+            if(calendar.get(Calendar.HOUR_OF_DAY) < 2){
+                calendar.set(Calendar.DAY_OF_YEAR, -1);
+            }
             calendar.set(Calendar.HOUR_OF_DAY, 0);
             calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.SECOND, 0);
-            calendar.set(Calendar.DAY_OF_YEAR, -1);
 
             List<SensorReadingRecord> sensorReadings = SensorReadingRecord.find(SensorReadingRecord.class,
                     "time_started_sensing > ?", new String[]{"" + calendar.getTimeInMillis()}, null, "time_started_sensing ASC", null);
