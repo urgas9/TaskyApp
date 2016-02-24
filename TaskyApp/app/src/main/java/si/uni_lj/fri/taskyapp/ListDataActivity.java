@@ -118,7 +118,7 @@ public class ListDataActivity extends AppCompatActivity {
             calendar.add(Calendar.DAY_OF_YEAR, -1);
 
             List<SensorReadingRecord> sensorReadings = SensorReadingRecord.find(SensorReadingRecord.class,
-                    "time_started_sensing > ?", new String[]{"" + calendar.getTimeInMillis()}, null, "time_started_sensing ASC", null);
+                    "time_started_sensing > ? AND label <= 0", new String[]{"" + calendar.getTimeInMillis()}, null, "time_started_sensing ASC", null);
 
             ArrayList<SensorReadingRecord> resultList = new ArrayList<>();
             HashSet<String> uniqueDays = new HashSet<>();

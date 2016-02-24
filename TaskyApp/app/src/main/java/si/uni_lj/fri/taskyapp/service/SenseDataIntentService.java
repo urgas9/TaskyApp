@@ -336,6 +336,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
                         calendar.get(Calendar.HOUR_OF_DAY) >= Constants.HOUR_SEND_NOTIFICATION_EARLY) &&
                         hoursSinceLastNotification >= 7) {
                     AppHelper.showNotification(getBaseContext());
+                    mDefaultPrefs.edit().putLong("last_time_user_notified_to_label", nowMillis).apply();
                 }
                 break;
             case "2":
@@ -345,10 +346,10 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
                 if (calendar.get(Calendar.HOUR_OF_DAY) >= Constants.HOUR_SEND_NOTIFICATION_LATE &&
                         hoursSinceLastNotification >= 7) {
                     AppHelper.showNotification(getBaseContext());
+                    mDefaultPrefs.edit().putLong("last_time_user_notified_to_label", nowMillis).apply();
                 }
                 break;
         }
-        mDefaultPrefs.edit().putLong("last_time_user_notified_to_label", nowMillis).apply();
 
     }
 

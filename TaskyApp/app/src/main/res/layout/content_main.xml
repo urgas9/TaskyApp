@@ -29,7 +29,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/sensing"
-                android:textSize="@dimen/text_title_size"/>
+                android:textSize="@dimen/text_title_size"
+                android:layout_marginBottom="@dimen/activity_vertical_margin_small"/>
 
             <ViewSwitcher
                 android:id="@+id/start_sensing_view_switcher"
@@ -48,7 +49,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:text="Choose complexity of your activity and time of the countdown, before sensing will be initiated."
+                        android:text="I will be doing a:"
                         android:textSize="@dimen/text_subtitle_size"/>
 
                     <include
@@ -57,11 +58,19 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
 
+                    <TextView
+                        android:id="@+id/tv_time_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/activity_vertical_margin"
+                        android:text="task, starting after:"
+                        android:textSize="@dimen/text_subtitle_size"/>
                     <RadioGroup
                         android:id="@+id/radio_group_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
+                        android:layout_marginTop="@dimen/activity_vertical_margin_small"
                         android:weightSum="9">
 
                         <RadioButton
@@ -177,7 +186,7 @@
             <Button
                 android:id="@+id/btn_label_data"
                 android:layout_gravity="center"
-                android:text="Label sensed data"
+                android:text="Label tasks"
                 style="@style/RaisedButton"/>
 
             <Button

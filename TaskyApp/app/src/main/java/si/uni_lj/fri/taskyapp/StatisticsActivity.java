@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.ViewSwitcher;
 
 import java.util.Calendar;
 import java.util.List;
@@ -24,6 +25,9 @@ public class StatisticsActivity extends AppCompatActivity {
     private static final String TAG = "StatisticsActivity";
     @Bind(R.id.daily_statistics_body_tv)
     TextView mDailyStatisticsBodyTv;
+
+    @Bind(R.id.cardview_1_view_switcher)
+    ViewSwitcher mCardViewSwitcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +93,7 @@ public class StatisticsActivity extends AppCompatActivity {
                 dailyBodyString += String.format(getString(R.string.daily_statistics_body_2), dailyAggregatedData.getAverageLabelTaskText(getBaseContext()));
             }
             mDailyStatisticsBodyTv.setText(Html.fromHtml(dailyBodyString));
+            mCardViewSwitcher.setDisplayedChild(1);
         }
     }
 }

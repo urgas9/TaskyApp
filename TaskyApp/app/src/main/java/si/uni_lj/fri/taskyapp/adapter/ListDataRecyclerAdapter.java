@@ -127,7 +127,7 @@ public class ListDataRecyclerAdapter extends RecyclerView.Adapter {
             if (srr.getLabel() != null && srr.getLabel() > 0) {
                 ((GradientDrawable) ((NormalItemViewHolder) holder).mLabelCircle.getBackground())
                         .setColor((Integer) new ArgbEvaluator()
-                                .evaluate(srr.getLabel() / 7.f, Color.GREEN, Color.RED));
+                                .evaluate(srr.getLabel() / 5.f, Color.GREEN, Color.RED));
                 ((NormalItemViewHolder) holder).mLabelCircle.setVisibility(View.VISIBLE);
             } else {
                 ((NormalItemViewHolder) holder).mLabelCircle.setVisibility(View.GONE);

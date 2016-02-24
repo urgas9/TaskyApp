@@ -101,8 +101,14 @@
         </activity>
         <activity
             android:name=".StatisticsActivity"
-            android:parentActivityName=".MainActivity">>
+            android:parentActivityName=".MainActivity">
+            >
         </activity>
+
+        <service
+            android:name=".service.AggregateDataDailyService"
+            android:exported="false">
+        </service>
     </application>
 
 </manifest>
