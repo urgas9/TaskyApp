@@ -42,6 +42,7 @@ import si.uni_lj.fri.taskyapp.global.AppHelper;
 import si.uni_lj.fri.taskyapp.global.PermissionsHelper;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
 import si.uni_lj.fri.taskyapp.sensor.SensingInitiator;
+import si.uni_lj.fri.taskyapp.service.AggregateDataDailyService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -98,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         mNewSensorRecordReceiver = new SensorRecordReceiver();
         registerReceiver(new SensorRecordReceiver(), filter);
 
+        AggregateDataDailyService.startService(this.getBaseContext());
         resetSeekBar();
         mTaskComplexitySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override

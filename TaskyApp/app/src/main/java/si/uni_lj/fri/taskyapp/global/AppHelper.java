@@ -18,6 +18,7 @@ import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.orm.SugarRecord;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,11 +27,15 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import si.uni_lj.fri.taskyapp.BuildConfig;
 import si.uni_lj.fri.taskyapp.ListDataActivity;
 import si.uni_lj.fri.taskyapp.R;
 import si.uni_lj.fri.taskyapp.broadcast_receivers.ShowNotificationToUserReceiver;
+import si.uni_lj.fri.taskyapp.data.db.DailyAggregatedData;
+import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
 
 /**
@@ -140,6 +145,61 @@ public class AppHelper {
             return true;
         }
         return false;
+    }
+
+    public static Calendar getCalendarAtMidnight(int relativeDayToToday){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.add(Calendar.DAY_OF_YEAR, relativeDayToToday);
+        return calendar;
+    }
+    public static void aggregateDailyData(){
+        final String TAG = "aggregateDailyData";
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.add(Calendar.DAY_OF_YEAR, -1);
+
+        List<SensorReadingRecord> sensorReadings = SensorReadingRecord.find(SensorReadingRecord.class,
+                "time_started_sensing < ?", new String[]{"" + calendar.getTimeInMillis()}, null, "time_started_sensing ASC", null);
+
+        List<DailyAggregatedData> resultsList = new LinkedList<>();
+
+        SugarRecord.deleteAll(DailyAggregatedData.class);
+
+        int sumLabels = 0, countDailyTasks = 0, countLabels = 0, lastDay = -1;
+        for (SensorReadingRecord srr : sensorReadings){
+            calendar.setTimeInMillis(srr.getTimeStartedSensing());
+            if(calendar.get(Calendar.DAY_OF_YEAR) != lastDay){
+                if(lastDay > 0 &&
+                        SugarRecord.count(DailyAggregatedData.class, " day_of_year = ?", new String[]{"" + calendar.get(Calendar.DAY_OF_YEAR)})==0) {
+                    DailyAggregatedData dad = new DailyAggregatedData();
+                    dad.setDayOfYear(calendar.get(Calendar.DAY_OF_YEAR));
+                    dad.setAllReadings(countDailyTasks);
+                    dad.setCountLabeled(countLabels);
+                    dad.setAverageLabel((sumLabels / (double) countLabels));
+                    Log.d(TAG, "Saving");
+                    resultsList.add(dad);
+                    SugarRecord.save(dad);
+                }
+                else{
+                    Log.d(TAG, "First iteration or record already exists.");
+                }
+                lastDay = calendar.get(Calendar.DAY_OF_YEAR);
+                sumLabels = countLabels = countDailyTasks = 0;
+            }
+            if(srr.getLabel() != null && srr.getLabel() > 0){
+                sumLabels += srr.getLabel();
+                countLabels++;
+            }
+            countDailyTasks++;
+        }
+
+        Log.d(TAG, "Finished with daily data aggregation.");
     }
 
     public static void showNotification(Context context){

@@ -1,13 +1,10 @@
 package si.uni_lj.fri.taskyapp.service;
 
 import android.app.IntentService;
-import android.content.Intent;
 import android.content.Context;
+import android.content.Intent;
 
-import java.util.Calendar;
-import java.util.List;
-
-import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
+import si.uni_lj.fri.taskyapp.global.AppHelper;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -21,10 +18,6 @@ public class AggregateDataDailyService extends IntentService {
     // IntentService can perform, e.g. ACTION_FETCH_NEW_ITEMS
     private static final String TAG = "AggregateDataDaily";
 
-    // TODO: Rename parameters
-    private static final String EXTRA_PARAM1 = "si.uni_lj.fri.taskyapp.service.extra.PARAM1";
-    private static final String EXTRA_PARAM2 = "si.uni_lj.fri.taskyapp.service.extra.PARAM2";
-
     public AggregateDataDailyService() {
         super("AggregateDataDailyService");
     }
@@ -35,24 +28,15 @@ public class AggregateDataDailyService extends IntentService {
      *
      * @see IntentService
      */
-    public static void startService(Context context, String param1, String param2) {
+    public static void startService(Context context) {
         Intent intent = new Intent(context, AggregateDataDailyService.class);
-        intent.putExtra(EXTRA_PARAM1, param1);
-        intent.putExtra(EXTRA_PARAM2, param2);
         context.startService(intent);
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.HOUR_OF_DAY, 0);
-            calendar.set(Calendar.MINUTE, 0);
-            calendar.set(Calendar.SECOND, 0);
-            calendar.add(Calendar.DAY_OF_YEAR, -1);
-
-            List<SensorReadingRecord> sensorReadings = SensorReadingRecord.find(SensorReadingRecord.class,
-                    "time_started_sensing < ?", new String[]{"" + calendar.getTimeInMillis()}, null, "time_started_sensing ASC", null);
+            AppHelper.aggregateDailyData();
         }
     }
 

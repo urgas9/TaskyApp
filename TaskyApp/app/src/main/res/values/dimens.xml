@@ -7,7 +7,7 @@
     <dimen name="list_item_vertical_margin">6dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
-    <dimen name="text_title_size">24sp</dimen>
+    <dimen name="text_title_size">22sp</dimen>
     <dimen name="text_subtitle_size">16sp</dimen>
     <dimen name="text_body_size">14sp</dimen>
 

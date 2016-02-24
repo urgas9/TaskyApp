@@ -1,18 +1,38 @@
-package si.uni_lj.fri.taskyapp.data;
+package si.uni_lj.fri.taskyapp.data.db;
 
 import android.content.Context;
 import android.util.Log;
+
+import com.orm.dsl.NotNull;
+import com.orm.dsl.Table;
+import com.orm.dsl.Unique;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import si.uni_lj.fri.taskyapp.R;
 
 /**
  * Created by urgas9 on 21-Feb-16, OpenHours.com
  */
+@Table
 public class DailyAggregatedData {
+    @Unique
+    @NotNull
+    private Long id;
+
+    @Unique
+    private int dayOfYear;
     private long allReadings;
     private long countLabeled;
     private double averageLabel;
 
+    public DailyAggregatedData(){
+    }
+    public Long getId(){
+        return id;
+    }
     public long getAllReadings() {
         return allReadings;
     }
@@ -35,6 +55,21 @@ public class DailyAggregatedData {
 
     public void setAverageLabel(double averageLabel) {
         this.averageLabel = averageLabel;
+    }
+
+    public int getDayOfYear() {
+        return dayOfYear;
+    }
+
+    public void setDayOfYear(int dayOfYear) {
+        this.dayOfYear = dayOfYear;
+    }
+
+    public String getStringDay(){
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.DAY_OF_YEAR, dayOfYear);
+        SimpleDateFormat format = new SimpleDateFormat("EEE");
+        return format.format(new Date(c.getTimeInMillis()));
     }
 
     public String getAverageLabelTaskText(Context ctx){

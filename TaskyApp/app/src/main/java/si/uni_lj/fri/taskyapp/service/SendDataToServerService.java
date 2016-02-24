@@ -61,6 +61,8 @@ public class SendDataToServerService extends IntentService {
             return;
         }*/
 
+        AppHelper.aggregateDailyData();
+
         mPrefs.edit().putLong(Constants.PREFS_LAST_TIME_SENT_TO_SERVER, System.currentTimeMillis()).apply();
 
         Calendar calendar = Calendar.getInstance();
