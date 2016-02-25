@@ -38,8 +38,6 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
         this.mContext = context;
         this.mWhichPolicy = SensingPolicy.NONE;
         this.mPendingAction = false;
-        // Starting service to monitor screen state
-        context.startService(new Intent(context, ScreenStateService.class));
     }
 
 

@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -19,9 +20,12 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ViewPortHandler;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.android.gms.maps.model.TileProvider;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
@@ -59,6 +63,10 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
         setContentView(R.layout.activity_statistics);
         ButterKnife.bind(this);
 
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map_fragment);
+        mapFragment.getMapAsync(this);
+
         mDailyChart.animateY(2500);
         new GetAndShowStatistics().execute();
 
@@ -83,6 +91,7 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        Log.d(TAG, "onMayReady");
         new GetAndShowHeatMapForLast2Days(googleMap).execute();
     }
 
@@ -130,8 +139,11 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
     }
 
     class GetAndShowHeatMapForLast2Days extends AsyncTask<Void, Void, List<LatLng>> {
+
         GoogleMap mMap;
+
         public GetAndShowHeatMapForLast2Days(GoogleMap mMap){
+            super();
             this.mMap = mMap;
         }
         @Override
@@ -150,6 +162,18 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
         @Override
         protected void onPostExecute(List<LatLng> latLngs) {
             super.onPostExecute(latLngs);
+            LatLngBounds.Builder bounds = new LatLngBounds.Builder();
+            for (LatLng latLng : latLngs) {
+                if(latLng.latitude != 0 && latLng.longitude != 0) {
+                    bounds.include(latLng);
+                    //mMap.addMarker(new MarkerOptions().position(latLng));
+                }
+            }
+
+            Log.d("LatLngBounds", "Number: " + latLngs.size());
+
+            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 120));
+
             TileProvider mProvider = new HeatmapTileProvider.Builder()
                     .data(latLngs)
                     .build();

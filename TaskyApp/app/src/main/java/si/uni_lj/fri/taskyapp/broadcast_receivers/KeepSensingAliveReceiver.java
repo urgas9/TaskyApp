@@ -1,4 +1,4 @@
-package si.uni_lj.fri.taskyapp.receivers;
+package si.uni_lj.fri.taskyapp.broadcast_receivers;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
