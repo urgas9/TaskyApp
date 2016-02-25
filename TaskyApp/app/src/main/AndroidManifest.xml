@@ -109,6 +109,9 @@
             android:name=".service.AggregateDataDailyService"
             android:exported="false">
         </service>
+
+        <activity android:name=".GoogleMapFullScreenActivity">
+        </activity>
     </application>
 
 </manifest>
