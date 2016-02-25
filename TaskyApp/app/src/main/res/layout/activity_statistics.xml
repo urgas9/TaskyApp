@@ -111,7 +111,6 @@
                   android:layout_height="300dp"
                   android:id="@+id/map_fragment"
                   tools:context=".MapsActivity"
-                  app:liteMode="true"
                   android:name="com.google.android.gms.maps.SupportMapFragment" />
 
         </android.support.v7.widget.CardView>
