@@ -21,8 +21,11 @@ import android.widget.ViewSwitcher;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
-import java.util.HashSet;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
@@ -145,16 +148,17 @@ public class ListDataActivity extends AppCompatActivity {
             List<SensorReadingRecord> sensorReadings = SensorReadingRecord.find(SensorReadingRecord.class,
                     "time_started_sensing > ? AND label <= 0", new String[]{"" + calendar.getTimeInMillis()}, null, "time_started_sensing ASC", null);
 
-            ArrayList<SensorReadingRecord> resultList = new ArrayList<>();
-            HashSet<String> uniqueDays = new HashSet<>();
+            HashMap<String, List<SensorReadingRecord>> dailyReadingsMap = new HashMap<>();
+            LinkedList<String> dayKeyValues = new LinkedList<>();
+
             SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_FORMAT_TO_SHOW_DAY, Locale.ENGLISH);
             String previousTimestampDay = null;
             for (SensorReadingRecord srr : sensorReadings) {
                 String dayTimestamp = format.format(new Date(srr.getTimeStartedSensing()));
+                addToMap(dailyReadingsMap, dayTimestamp, srr);
                 if (!dayTimestamp.equals(previousTimestampDay)) {
-                    resultList.add(null); // HeaderItem to start a new section
+                    dayKeyValues.add(dayTimestamp);
                 }
-                uniqueDays.add(dayTimestamp);
 
                 if (srr.getAddress() == null) {
                     srr.setAddress(SensorsHelper.getLocationAddress(getBaseContext(), srr.getLocationLat(), srr.getLocationLng()));
@@ -166,12 +170,37 @@ public class ListDataActivity extends AppCompatActivity {
                 }
                 //srd.setDatabaseId(srr.getId());
                 previousTimestampDay = dayTimestamp;
-                resultList.add(srr);
+            }
+            ArrayList<SensorReadingRecord> resultList = new ArrayList<>();
+            int MAX_VALUES = 3;
+            // Filter values
+            int listSize = dayKeyValues.size();
+            for(String s : dayKeyValues){
+                resultList.add(null);
+                LinkedList<SensorReadingRecord> srrNewList = new LinkedList<>(dailyReadingsMap.get(s));
+                int toIndex = Math.min(srrNewList.size(), MAX_VALUES);
+                Collections.shuffle(srrNewList);
+                List<SensorReadingRecord> orderedSublist = srrNewList.subList(0, Math.max(toIndex, 0));
+                Collections.sort(orderedSublist, new Comparator<SensorReadingRecord>() {
+                    @Override
+                    public int compare(SensorReadingRecord lhs, SensorReadingRecord rhs) {
+                        return (lhs.getTimeStartedSensing()<rhs.getTimeStartedSensing())?-1:1;
+                    }
+                });
+                resultList.addAll(orderedSublist);
             }
 
-            return new SensorReadingDataWithSections(uniqueDays.size(), resultList);
+            return new SensorReadingDataWithSections(dailyReadingsMap.size(), resultList);
         }
 
+        private void addToMap(HashMap<String, List<SensorReadingRecord>> hashMap, String key, SensorReadingRecord value){
+            List<SensorReadingRecord> list = new LinkedList<>();
+            if(hashMap.get(key) != null){
+                list = hashMap.get(key);
+            }
+            hashMap.put(key, list);
+            list.add(value);
+        }
         @Override
         protected void onPostExecute(SensorReadingDataWithSections resultData) {
             super.onPostExecute(resultData);
