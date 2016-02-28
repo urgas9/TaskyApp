@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ViewSwitcher
+<ViewFlipper
     android:id="@+id/list_data_view_switcher"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,21 +7,100 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:inAnimation="@android:anim/slide_in_left"
+    android:outAnimation="@android:anim/slide_out_right"
     tools:context=".ListDataActivity"
     tools:showIn="@layout/activity_list_data">
 
-    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
-        android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="50dp"
-        android:indeterminate="true"
-        app:mpb_progressStyle="circular"
-        style="@style/Widget.MaterialProgressBar.ProgressBar"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/list_data_recycler_view"
+    <ViewSwitcher
+        android:id="@+id/list_data_status_viewswitcher"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginTop="50dp"
+            android:indeterminate="true"
+            app:mpb_progressStyle="circular"
+            style="@style/Widget.MaterialProgressBar.ProgressBar"/>
 
-</ViewSwitcher>
+        <TextView
+            android:id="@+id/no_tasks_to_label_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:visibility="gone"
+            android:textSize="16sp"
+            android:text="There are no tasks to label! \n Check again later."/>
+    </ViewSwitcher>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:id="@+id/btn_show_map_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:background="@color/half_white"
+            android:paddingTop="@dimen/activity_horizontal_margin_small"
+            android:paddingBottom="@dimen/activity_horizontal_margin_small"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin">
+            <Button
+                android:id="@+id/btn_show_map"
+                android:layout_gravity="right|end|center_vertical"
+                android:text="@string/show_on_map"
+                style="@style/FlatButton"/>
+
+        </FrameLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"
+            android:layout_alignBottom="@+id/list_data_recycler_view"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@id/list_data_recycler_view"
+            android:layout_above="@id/btn_show_map_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:id="@+id/btn_show_list_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:background="@color/half_white"
+            android:paddingTop="@dimen/activity_horizontal_margin_small"
+            android:paddingBottom="@dimen/activity_horizontal_margin_small"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin">
+            <Button
+                android:id="@+id/btn_show_list"
+                android:layout_gravity="right|end|center_vertical"
+                android:text="@string/show_in_list"
+                style="@style/FlatButton"/>
+
+        </FrameLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"
+            android:layout_alignBottom="@+id/full_map_fragment_frame"/>
+        <FrameLayout
+            android:id="@id/full_map_fragment_frame"
+            android:layout_above="@id/btn_show_list_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+
+</ViewFlipper>

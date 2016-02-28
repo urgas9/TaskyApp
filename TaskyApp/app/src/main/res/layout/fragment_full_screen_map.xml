@@ -1,0 +1,25 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="si.uni_lj.fri.taskyapp.FullScreenMapFragment">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/map_content_frame" />
+
+    <LinearLayout
+        android:id="@+id/legend_ll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="bottom|start"
+        android:layout_margin="@dimen/activity_horizontal_margin_small"
+        android:padding="@dimen/activity_horizontal_margin_small"
+        android:visibility="invisible"
+        android:background="@color/half_white">
+
+    </LinearLayout>
+
+</FrameLayout>

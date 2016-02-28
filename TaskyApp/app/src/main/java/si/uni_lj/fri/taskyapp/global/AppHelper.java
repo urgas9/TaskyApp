@@ -1,5 +1,6 @@
 package si.uni_lj.fri.taskyapp.global;
 
+import android.animation.ArgbEvaluator;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -13,11 +14,15 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.TypedValue;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.orm.SugarRecord;
 
 import java.io.BufferedReader;
@@ -147,6 +152,27 @@ public class AppHelper {
         return false;
     }
 
+    public static float dpToPx(Context ctx, float dp){
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, ctx.getResources().getDisplayMetrics());
+
+    }
+
+    public static int getTaskColor(Context ctx, int label){
+        if(label > 0) {
+            return (Integer) new ArgbEvaluator()
+                    .evaluate(label / 5.f, Color.GREEN, Color.RED);
+        }
+        else{
+            return ContextCompat.getColor(ctx, R.color.primary);
+        }
+    }
+
+    public static BitmapDescriptor getMarkerIcon(int color) {
+        float[] hsv = new float[3];
+        Color.colorToHSV(color, hsv);
+        return BitmapDescriptorFactory.defaultMarker(hsv[0]);
+    }
+
     public static Calendar getCalendarAtMidnight(int relativeDayToToday){
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -155,6 +181,7 @@ public class AppHelper {
         calendar.add(Calendar.DAY_OF_YEAR, relativeDayToToday);
         return calendar;
     }
+
     public static void aggregateDailyData(){
         final String TAG = "aggregateDailyData";
 

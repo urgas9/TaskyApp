@@ -5,6 +5,7 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.orm.SugarRecord;
 
+import si.uni_lj.fri.taskyapp.data.MarkerDataHolder;
 import si.uni_lj.fri.taskyapp.data.SensorReadingData;
 import si.uni_lj.fri.taskyapp.global.SensorsHelper;
 
@@ -39,6 +40,10 @@ public class SensorReadingRecord extends SugarRecord {
             this.address = SensorsHelper.getLocationAddress(ctx, locationLat, locationLng);
         }
         timeStartedSensing = sensorReadingData.getTimestampStarted();
+    }
+
+    public MarkerDataHolder getMarkerDataHolder(){
+        return new MarkerDataHolder(getId(), timeStartedSensing, label, locationLat, locationLng);
     }
 
     public String getSensorJsonObject() {

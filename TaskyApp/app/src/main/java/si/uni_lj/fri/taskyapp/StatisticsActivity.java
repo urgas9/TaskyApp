@@ -20,15 +20,8 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ViewPortHandler;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.TileOverlayOptions;
-import com.google.android.gms.maps.model.TileProvider;
-import com.google.maps.android.heatmaps.HeatmapTileProvider;
 import com.orm.SugarRecord;
 
 import java.text.DecimalFormat;
@@ -39,6 +32,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import si.uni_lj.fri.taskyapp.data.MarkerDataHolder;
 import si.uni_lj.fri.taskyapp.data.db.DailyAggregatedData;
 import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
 import si.uni_lj.fri.taskyapp.global.AppHelper;
@@ -53,6 +47,8 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
     ViewSwitcher mCard1ViewSwitcher;
     @Bind(R.id.cardview_2_view_switcher)
     ViewSwitcher mCard2ViewSwitcher;
+    @Bind(R.id.cardview_3_view_switcher)
+    ViewSwitcher mCard3ViewSwitcher;
     @Bind(R.id.chart1)
     BarChart mDailyChart;
 
@@ -62,13 +58,12 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
         setContentView(R.layout.activity_statistics);
         ButterKnife.bind(this);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map_fragment);
-        mapFragment.getMapAsync(this);
         mDailyChart.animateY(2500);
         new GetAndShowStatistics().execute();
 
         new GetAndShowGraphStatistics().execute();
+
+        new GetAndShowHeatMapForLast2Days().execute();
     }
 
     @Override
@@ -91,7 +86,6 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
     public void onMapReady(GoogleMap googleMap) {
         Log.d(TAG, "onMayReady");
 
-        new GetAndShowHeatMapForLast2Days(googleMap).execute();
     }
 
     class GetAndShowStatistics extends AsyncTask<Void, Void, DailyAggregatedData>{
@@ -132,59 +126,43 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
 
             mCard2ViewSwitcher.setDisplayedChild(1);
             mDailyChart.setData(data);
-            mDailyChart.setMaxVisibleValueCount(2);
+            mDailyChart.setMaxVisibleValueCount(7);
             mDailyChart.setDescription("Your tasks over past few days.");
             mDailyChart.invalidate();
         }
     }
 
-    class GetAndShowHeatMapForLast2Days extends AsyncTask<Void, Void, ArrayList<LatLng>> {
+    class GetAndShowHeatMapForLast2Days extends AsyncTask<Void, Void, ArrayList<MarkerDataHolder>> {
 
-        GoogleMap mMap;
-
-        public GetAndShowHeatMapForLast2Days(GoogleMap mMap){
-            super();
-            this.mMap = mMap;
-        }
         @Override
-        protected ArrayList<LatLng> doInBackground(Void... params) {
+        protected ArrayList<MarkerDataHolder> doInBackground(Void... params) {
             Calendar calendarFrom = AppHelper.getCalendarAtMidnight(-1);
             List<SensorReadingRecord> sensorReadings = SensorReadingRecord.find(SensorReadingRecord.class,
                     "time_started_sensing > ?", new String[]{"" + calendarFrom.getTimeInMillis()}, null, "time_started_sensing ASC", null);
 
-            ArrayList<LatLng> resultList = new ArrayList<>();
+            ArrayList<MarkerDataHolder> resultList = new ArrayList<>();
             for(SensorReadingRecord srr : sensorReadings){
-                resultList.add(new LatLng(srr.getLocationLat(), srr.getLocationLng()));
+                resultList.add(srr.getMarkerDataHolder());
             }
             return resultList;
         }
 
         @Override
-        protected void onPostExecute(final ArrayList<LatLng> latLngs) {
-            super.onPostExecute(latLngs);
-            LatLngBounds.Builder bounds = new LatLngBounds.Builder();
-            for (LatLng latLng : latLngs) {
-                if(latLng.latitude != 0 && latLng.longitude != 0) {
-                    bounds.include(latLng);
-                    //mMap.addMarker(new MarkerOptions().position(latLng));
-                }
+        protected void onPostExecute(final ArrayList<MarkerDataHolder> resultArray) {
+            super.onPostExecute(resultArray);
+            if(resultArray == null || resultArray.isEmpty()){
+                return;
             }
 
-            Log.d("LatLngBounds", "Number: " + latLngs.size());
+            FullScreenMapFragment fragment  = FullScreenMapFragment.newInstance(FullScreenMapFragment.VIEW_HEATMAP, resultArray, false);
+            getSupportFragmentManager().beginTransaction().replace(R.id.map_content_frame, fragment).commit();
+            mCard3ViewSwitcher.setDisplayedChild(1);
 
-            mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 120));
-
-            TileProvider mProvider = new HeatmapTileProvider.Builder()
-                    .data(latLngs)
-                    .build();
-            // Add a tile overlay to the map, using the heat map tile provider.
-            mMap.addTileOverlay(new TileOverlayOptions().tileProvider(mProvider));
-
-            mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            findViewById(R.id.map_click_interceptor).setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onMapClick(LatLng latLng) {
+                public void onClick(View v) {
                     Intent mapIntent = new Intent(StatisticsActivity.this, GoogleMapFullScreenActivity.class);
-                    mapIntent.putParcelableArrayListExtra("latLngs", latLngs);
+                    mapIntent.putParcelableArrayListExtra("markerDataArray", resultArray);
                     startActivity(mapIntent);
                 }
             });
@@ -236,7 +214,7 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
         // ColorTemplate.FRESH_COLORS));
 
         set1.setColors(new int[]{ContextCompat.getColor(this, R.color.accent), ContextCompat.getColor(this, R.color.primary_light)});
-        set1.setStackLabels(new String[]{"# labeled tasks", "# not labeled tasks"});
+        set1.setStackLabels(new String[]{getString(R.string.legend_num_labeled), getString(R.string.legend_num_non_labeled)});
 
         ArrayList<IBarDataSet> dataSets = new ArrayList<>();
         dataSets.add(set1);

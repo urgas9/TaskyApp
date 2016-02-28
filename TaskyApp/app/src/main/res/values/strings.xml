@@ -23,7 +23,7 @@
     <string name="about_app_body">TaskyApp is developed solely for research purpose and is part of master thesis <b>Mobile Sensing for Task Engagement Inferences</b>. \nWith use of this app you are helping us out to collect data, which will be later used for machine learning on server. The goal of the research is trying to classify complexity of users\' tasks only with phone\'s built-in sensors.</string>
     <string name="about_app_title">About TaskyApp</string>
     <string name="author_title">Author</string>
-    <string name="author_description">App was developed by <b>Gašper Urh</b>, student at Faculty of Computer and Information Science, University of Ljubljana, as part of his master thesis, supervised by <b>doc. dr. Veljko Pejović</b>.</string>
+    <string name="author_description">App was developed by <b>Gašper Urh</b>, student at Faculty of Computer and Information Science, University of Ljubljana, supervised by <b>doc. dr. Veljko Pejović</b>.</string>
 
     <string-array name="task_complexities_array">
         <item></item>
@@ -84,4 +84,14 @@
     <string name="daily_statistics_body">We have <b>%d</b> sensor readings of your activity during the day, of which you have labeled <b>%d</b>.</string>
     <string name="daily_statistics_body_2">Your average task complexity for today is <b>%s</b>.</string>
     <string name="statistics_today_title">Statistics for today</string>
+    <string name="not_labeled">Not labeled</string>
+    <string name="heat_map">Heat map</string>
+    <string name="task_markers">Task markers</string>
+    <string name="legend_num_non_labeled"># non labeled tasks</string>
+    <string name="legend_num_labeled"># labeled tasks</string>
+    <string name="show_on_map">Show on map</string>
+    <string name="show_in_list">Show in list</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

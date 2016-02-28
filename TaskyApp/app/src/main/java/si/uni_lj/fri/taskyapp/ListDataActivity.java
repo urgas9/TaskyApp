@@ -13,6 +13,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ViewFlipper;
 import android.widget.ViewSwitcher;
 
 import java.text.SimpleDateFormat;
@@ -25,10 +28,13 @@ import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import si.uni_lj.fri.taskyapp.adapter.DividerItemDecoration;
 import si.uni_lj.fri.taskyapp.adapter.ListDataRecyclerAdapter;
+import si.uni_lj.fri.taskyapp.data.MarkerDataHolder;
 import si.uni_lj.fri.taskyapp.data.SensorReadingDataWithSections;
 import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
+import si.uni_lj.fri.taskyapp.global.AppHelper;
 import si.uni_lj.fri.taskyapp.global.SensorsHelper;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
 
@@ -43,10 +49,15 @@ public class ListDataActivity extends AppCompatActivity {
     @Bind(R.id.list_data_recycler_view)
     RecyclerView mDataRecyclerView;
     @Bind(R.id.list_data_view_switcher)
-    ViewSwitcher mLoadingViewSwitcher;
+    ViewFlipper mLoadingViewSwitcher;
+    @Bind(R.id.list_data_status_viewswitcher)
+    ViewSwitcher mListDataStatusViewSwitcher;
+    @Bind(R.id.btn_show_map)
+    Button mShowMapBtn;
 
     ListDataRecyclerAdapter mAdapter;
 
+    FullScreenMapFragment mFullScreenMapFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +71,15 @@ public class ListDataActivity extends AppCompatActivity {
         mLoadingViewSwitcher.setDisplayedChild(0);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        if (savedInstanceState != null) {
+            //Restore the fragment's instance
+            mFullScreenMapFragment = (FullScreenMapFragment)getSupportFragmentManager().getFragment(savedInstanceState, "mFullScreenMapContent");
+        }
+        mFullScreenMapFragment = (FullScreenMapFragment)getSupportFragmentManager().findFragmentById(R.id.full_map_fragment_frame);
+        if(mFullScreenMapFragment == null){
+            mFullScreenMapFragment = FullScreenMapFragment.newInstance(FullScreenMapFragment.VIEW_MARKERS, false);
+            getSupportFragmentManager().beginTransaction().replace(R.id.full_map_fragment_frame, mFullScreenMapFragment).commit();
+        }
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         mDataRecyclerView.setLayoutManager(llm);
@@ -96,12 +116,21 @@ public class ListDataActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        //Save the fragment's instance
+        getSupportFragmentManager().putFragment(outState, "mFullScreenMapContent", mFullScreenMapFragment);
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.LABEL_TASK_REQUEST_CODE && resultCode == RESULT_OK) {
             int label = data.getIntExtra("label", -1);
             long taskDbId = data.getLongExtra("db_record_id", -1);
             int action = data.getIntExtra("action", -1);
-            mAdapter.updateDatabaseRecord(taskDbId, action);
+            mAdapter.updateDatabaseRecord(taskDbId, 0);
+            mFullScreenMapFragment.dataWasUpdated(taskDbId);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -111,11 +140,7 @@ public class ListDataActivity extends AppCompatActivity {
         @Override
         protected SensorReadingDataWithSections doInBackground(Void... params) {
 
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.HOUR_OF_DAY, 0);
-            calendar.set(Calendar.MINUTE, 0);
-            calendar.set(Calendar.SECOND, 0);
-            calendar.add(Calendar.DAY_OF_YEAR, -1);
+            Calendar calendar = AppHelper.getCalendarAtMidnight(-1);
 
             List<SensorReadingRecord> sensorReadings = SensorReadingRecord.find(SensorReadingRecord.class,
                     "time_started_sensing > ? AND label <= 0", new String[]{"" + calendar.getTimeInMillis()}, null, "time_started_sensing ASC", null);
@@ -151,10 +176,36 @@ public class ListDataActivity extends AppCompatActivity {
         protected void onPostExecute(SensorReadingDataWithSections resultData) {
             super.onPostExecute(resultData);
 
+            if(resultData == null || resultData.getDataList() == null || resultData.getDataList().size()<=1){
+                mLoadingViewSwitcher.setDisplayedChild(0);
+                mListDataStatusViewSwitcher.setDisplayedChild(1);
+                return;
+            }
+            else {
+                mLoadingViewSwitcher.setDisplayedChild(1);
+            }
+
+            ArrayList<MarkerDataHolder> markerDataHolderArrayList = new ArrayList<>();
+            for(SensorReadingRecord srr : resultData.getDataList()){
+                if(srr != null) {
+                    markerDataHolderArrayList.add(srr.getMarkerDataHolder());
+                }
+            }
+
+            mFullScreenMapFragment.setDataList(markerDataHolderArrayList);
             mAdapter.setAdapterData(resultData);
-            mLoadingViewSwitcher.setDisplayedChild(1);
             //mStatusTextView.setText(s);
         }
+    }
+
+    @OnClick(R.id.btn_show_list)
+    public void showListBtnClicked(View v){
+        mLoadingViewSwitcher.setDisplayedChild(1);
+    }
+
+    @OnClick(R.id.btn_show_map)
+    public void showMapBtnClicked(View v){
+        mLoadingViewSwitcher.setDisplayedChild(2);
     }
 
     class SensorRecordReceiver extends BroadcastReceiver {
@@ -166,6 +217,7 @@ public class ListDataActivity extends AppCompatActivity {
             SensorReadingRecord srr = SensorReadingRecord.findById(SensorReadingRecord.class, recordId);
             //SensorReadingData mSensorReadingData = new Gson().fromJson(srr.getSensorJsonObject(), SensorReadingData.class);
             mAdapter.addNewSensorReadingRecord(srr);
+            mLoadingViewSwitcher.setDisplayedChild(1);
         }
     }
 
