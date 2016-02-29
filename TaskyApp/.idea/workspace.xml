@@ -6,32 +6,32 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="conn" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
     <option name="TOOL_WINDOW_REGEXP_FILTER" value="false" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="080f3e08-f11e-457d-b30a-4cdb2f1feb18" name="Default" comment="filtering tasks">
+    <list default="true" id="080f3e08-f11e-457d-b30a-4cdb2f1feb18" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/QueryGoogleFitSleepDataService.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/animated_vector_drawable_23_2_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_fitness_8_4_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/support_vector_drawable_23_2_0.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/db/DailyAggregatedData.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/db/DailyAggregatedData.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/FullScreenMapFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/FullScreenMapFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/GoogleMapFullScreenActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/GoogleMapFullScreenActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/ListDataActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/ListDataActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/adapter/ListDataRecyclerAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/adapter/ListDataRecyclerAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/MarkerDataHolder.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/MarkerDataHolder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SendDataToServerService.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SendDataToServerService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/SensingInitiator.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/SensingInitiator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/db/SensorReadingRecord.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/db/SensorReadingRecord.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/StatisticsActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/StatisticsActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_google_map_full_screen.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_google_map_full_screen.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_statistics.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_statistics.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_list_data.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/content_list_data.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/content_main.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_full_screen_map.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_full_screen_map.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/legend_task_item.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/legend_task_item.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/list_data_header.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/list_data_header.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/list_data_item.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/list_data_item.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MOVED" beforePath="D:\Dropbox\FRI\2.stopnja\2.letnik\magisterij\app\TaskyApp\.idea\libraries\appcompat_v7_23_1_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_23_2_0.xml" />
+      <change type="MOVED" beforePath="D:\Dropbox\FRI\2.stopnja\2.letnik\magisterij\app\TaskyApp\.idea\libraries\cardview_v7_23_1_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/cardview_v7_23_2_0.xml" />
+      <change type="MOVED" beforePath="D:\Dropbox\FRI\2.stopnja\2.letnik\magisterij\app\TaskyApp\.idea\libraries\core_0_8_5_4.xml" afterPath="$PROJECT_DIR$/.idea/libraries/core_0_8_5_6.xml" />
+      <change type="MOVED" beforePath="D:\Dropbox\FRI\2.stopnja\2.letnik\magisterij\app\TaskyApp\.idea\libraries\design_23_1_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/design_23_2_0.xml" />
+      <change type="MOVED" beforePath="D:\Dropbox\FRI\2.stopnja\2.letnik\magisterij\app\TaskyApp\.idea\libraries\recyclerview_v7_23_1_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/recyclerview_v7_23_2_0.xml" />
+      <change type="MOVED" beforePath="D:\Dropbox\FRI\2.stopnja\2.letnik\magisterij\app\TaskyApp\.idea\libraries\support_annotations_23_1_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_annotations_23_2_0.xml" />
+      <change type="MOVED" beforePath="D:\Dropbox\FRI\2.stopnja\2.letnik\magisterij\app\TaskyApp\.idea\libraries\support_v4_23_1_1.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_v4_23_2_0.xml" />
     </list>
     <ignored path="TaskyApp.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -61,50 +61,37 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="GoogleMapFullScreenActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/GoogleMapFullScreenActivity.java">
+      <file leaf-file-name="QueryGoogleFitSleepDataService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/QueryGoogleFitSleepDataService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.810345">
-              <caret line="89" column="28" selection-start-line="89" selection-start-column="28" selection-end-line="89" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="65" column="73" selection-start-line="65" selection-start-column="73" selection-end-line="65" selection-end-column="73" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DateFormat.java" pinned="false" current-in-tab="false">
+        <entry file="file://D:/AndroidSDK/sources/android-23/java/text/DateFormat.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="467" column="35" selection-start-line="467" selection-start-column="35" selection-end-line="467" selection-end-column="35" />
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#16891#16892#0" expanded="true" />
+                <element signature="e#16947#16948#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="activity_statistics.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_statistics.xml">
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.2220339">
-              <caret line="98" column="10" selection-start-line="98" selection-start-column="10" selection-end-line="98" selection-end-column="10" />
+            <state vertical-scroll-proportion="-4.965517">
+              <caret line="204" column="40" selection-start-line="204" selection-start-column="40" selection-end-line="204" selection-end-column="40" />
               <folding>
-                <element signature="e#616#657#0" expanded="true" />
-                <element signature="e#1827#1862#0" expanded="true" />
-                <element signature="e#2053#2085#0" expanded="true" />
-                <element signature="e#2127#2151#0" expanded="true" />
-                <element signature="e#2465#2496#0" expanded="true" />
-                <element signature="e#2538#2565#0" expanded="true" />
-                <element signature="e#3960#3995#0" expanded="true" />
-                <element signature="e#4195#4228#0" expanded="true" />
-                <element signature="e#4320#4344#0" expanded="true" />
-                <element signature="e#5695#5730#0" expanded="true" />
-                <element signature="e#5949#5973#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FullScreenMapFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/FullScreenMapFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.9827585">
-              <caret line="224" column="40" selection-start-line="224" selection-start-column="40" selection-end-line="224" selection-end-column="40" />
-              <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#8437#9174#0" expanded="true" />
+                <element signature="e#9173#9174#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -113,24 +100,9 @@
       <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
+            <state vertical-scroll-proportion="-7.185185">
+              <caret line="42" column="18" selection-start-line="42" selection-start-column="18" selection-end-line="42" selection-end-column="18" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MarkerDataHolder.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/MarkerDataHolder.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="63" column="33" selection-start-line="63" selection-start-column="33" selection-end-line="63" selection-end-column="33" />
-              <folding>
-                <element signature="e#537#538#0" expanded="false" />
-                <element signature="e#592#593#0" expanded="false" />
-                <element signature="e#666#667#0" expanded="false" />
-                <element signature="e#723#724#0" expanded="false" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -138,42 +110,12 @@
       <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="98" column="34" selection-start-line="98" selection-start-column="28" selection-end-line="98" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LabelTaskActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/LabelTaskActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="130" column="4" selection-start-line="130" selection-start-column="4" selection-end-line="139" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ListDataActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/ListDataActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.224138">
-              <caret line="72" column="23" selection-start-line="72" selection-start-column="22" selection-end-line="72" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ListDataRecyclerAdapter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/adapter/ListDataRecyclerAdapter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="135" column="0" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
+            <state vertical-scroll-proportion="-3.189655">
+              <caret line="101" column="62" selection-start-line="101" selection-start-column="62" selection-end-line="101" selection-end-column="62" />
               <folding>
-                <element signature="e#6177#6178#0" expanded="false" />
-                <element signature="e#6215#6216#0" expanded="false" />
-                <marker date="1456735146549" expanded="true" signature="48:796" placeholder="..." />
+                <element signature="e#1849#1883#0" expanded="true" />
+                <element signature="e#4102#4135#0" expanded="true" />
+                <element signature="e#4508#4543#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -185,8 +127,59 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-3.4597702">
+              <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+              <folding>
+                <element signature="e#2448#2469#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="legend_task_item.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/legend_task_item.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-11.724138">
+              <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="list_data_item.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_data_item.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-7.034483">
+              <caret line="12" column="44" selection-start-line="12" selection-start-column="44" selection-end-line="12" selection-end-column="44" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="list_data_header.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_data_header.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.49097472">
+              <caret line="16" column="31" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="colors.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
+          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="57" column="44" selection-start-line="57" selection-start-column="44" selection-end-line="57" selection-end-column="44" />
+              <caret line="16" column="35" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -880,29 +873,39 @@
                 <option name="name" value="prePackageMarkerForRelease" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Prepare com.android.support:appcompat-v7:23.1.1" />
+                <option name="description" value="Prepare com.android.support:animated-vector-drawable:23.2.0" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="prepareComAndroidSupportAppcompatV72311Library" />
+                <option name="name" value="prepareComAndroidSupportAnimatedVectorDrawable2320Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Prepare com.android.support:cardview-v7:23.1.1" />
+                <option name="description" value="Prepare com.android.support:appcompat-v7:23.2.0" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="prepareComAndroidSupportCardviewV72311Library" />
+                <option name="name" value="prepareComAndroidSupportAppcompatV72320Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Prepare com.android.support:design:23.1.1" />
+                <option name="description" value="Prepare com.android.support:cardview-v7:23.2.0" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="prepareComAndroidSupportDesign2311Library" />
+                <option name="name" value="prepareComAndroidSupportCardviewV72320Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Prepare com.android.support:recyclerview-v7:23.1.1" />
+                <option name="description" value="Prepare com.android.support:design:23.2.0" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="prepareComAndroidSupportRecyclerviewV72311Library" />
+                <option name="name" value="prepareComAndroidSupportDesign2320Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Prepare com.android.support:support-v4:23.1.1" />
+                <option name="description" value="Prepare com.android.support:recyclerview-v7:23.2.0" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="prepareComAndroidSupportSupportV42311Library" />
+                <option name="name" value="prepareComAndroidSupportRecyclerviewV72320Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Prepare com.android.support:support-v4:23.2.0" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="prepareComAndroidSupportSupportV42320Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Prepare com.android.support:support-vector-drawable:23.2.0" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="prepareComAndroidSupportSupportVectorDrawable2320Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Prepare com.crashlytics.sdk.android:answers:1.3.6" />
@@ -925,9 +928,9 @@
                 <option name="name" value="prepareComCrashlyticsSdkAndroidCrashlyticsCore238Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Prepare com.github.afollestad.material-dialogs:core:0.8.5.4" />
+                <option name="description" value="Prepare com.github.afollestad.material-dialogs:core:0.8.5.6" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="prepareComGithubAfollestadMaterialDialogsCore0854Library" />
+                <option name="name" value="prepareComGithubAfollestadMaterialDialogsCore0856Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Prepare com.github.channguyen:rsv:1.0.1" />
@@ -958,6 +961,11 @@
                 <option name="description" value="Prepare com.google.android.gms:play-services-basement:8.4.0" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
                 <option name="name" value="prepareComGoogleAndroidGmsPlayServicesBasement840Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Prepare com.google.android.gms:play-services-fitness:8.4.0" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
+                <option name="name" value="prepareComGoogleAndroidGmsPlayServicesFitness840Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Prepare com.google.android.gms:play-services-location:8.4.0" />
@@ -2069,29 +2077,39 @@
                 <option name="name" value="preReleaseUnitTestBuild" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Prepare com.android.support:appcompat-v7:23.1.1" />
+                <option name="description" value="Prepare com.android.support:animated-vector-drawable:23.2.0" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
-                <option name="name" value="prepareComAndroidSupportAppcompatV72311Library" />
+                <option name="name" value="prepareComAndroidSupportAnimatedVectorDrawable2320Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Prepare com.android.support:cardview-v7:23.1.1" />
+                <option name="description" value="Prepare com.android.support:appcompat-v7:23.2.0" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
-                <option name="name" value="prepareComAndroidSupportCardviewV72311Library" />
+                <option name="name" value="prepareComAndroidSupportAppcompatV72320Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Prepare com.android.support:design:23.1.1" />
+                <option name="description" value="Prepare com.android.support:cardview-v7:23.2.0" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
-                <option name="name" value="prepareComAndroidSupportDesign2311Library" />
+                <option name="name" value="prepareComAndroidSupportCardviewV72320Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Prepare com.android.support:recyclerview-v7:23.1.1" />
+                <option name="description" value="Prepare com.android.support:design:23.2.0" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
-                <option name="name" value="prepareComAndroidSupportRecyclerviewV72311Library" />
+                <option name="name" value="prepareComAndroidSupportDesign2320Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Prepare com.android.support:support-v4:23.1.1" />
+                <option name="description" value="Prepare com.android.support:recyclerview-v7:23.2.0" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
-                <option name="name" value="prepareComAndroidSupportSupportV42311Library" />
+                <option name="name" value="prepareComAndroidSupportRecyclerviewV72320Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Prepare com.android.support:support-v4:23.2.0" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="prepareComAndroidSupportSupportV42320Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Prepare com.android.support:support-vector-drawable:23.2.0" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="prepareComAndroidSupportSupportVectorDrawable2320Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Prepare com.crashlytics.sdk.android:answers:1.3.6" />
@@ -2114,9 +2132,9 @@
                 <option name="name" value="prepareComCrashlyticsSdkAndroidCrashlyticsCore238Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Prepare com.github.afollestad.material-dialogs:core:0.8.5.4" />
+                <option name="description" value="Prepare com.github.afollestad.material-dialogs:core:0.8.5.6" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
-                <option name="name" value="prepareComGithubAfollestadMaterialDialogsCore0854Library" />
+                <option name="name" value="prepareComGithubAfollestadMaterialDialogsCore0856Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Prepare com.github.channguyen:rsv:1.0.1" />
@@ -2147,6 +2165,11 @@
                 <option name="description" value="Prepare com.google.android.gms:play-services-basement:8.4.0" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
                 <option name="name" value="prepareComGoogleAndroidGmsPlayServicesBasement840Library" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="description" value="Prepare com.google.android.gms:play-services-fitness:8.4.0" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/app" />
+                <option name="name" value="prepareComGoogleAndroidGmsPlayServicesFitness840Library" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Prepare com.google.android.gms:play-services-location:8.4.0" />
@@ -2380,7 +2403,7 @@
     <option name="modificationStamps">
       <map>
         <entry key="$PROJECT_DIR$" value="5813402844688" />
-        <entry key="D:\Dropbox\FRI\2.stopnja\2.letnik\magisterij\app\TaskyApp" value="5824181213467" />
+        <entry key="D:\Dropbox\FRI\2.stopnja\2.letnik\magisterij\app\TaskyApp" value="5824560516115" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -2874,15 +2897,16 @@
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/com/android/tools/external/lombok/lombok-ast/0.2.3/lombok-ast-0.2.3-sources.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/com/android/tools/external/lombok/lombok-ast/0.2.3/lombok-ast-0.2.3.jar" />
                             <option value="$APPLICATION_HOME_DIR$/gradle/m2repository/org/abego/treelayout/org.abego.treelayout.core/1.0.1/org.abego.treelayout.core-1.0.1.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.afollestad.material-dialogs/core/0.8.5.4/71755f062f82008ae56633c5d111d83bea2d54e9/core-0.8.5.4.aar" />
+                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.afollestad.material-dialogs/core/0.8.5.6/8a99c829d5bad729c2646289428737795b25967d/core-0.8.5.6.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.crashlytics.sdk.android/crashlytics/2.5.5/b11db11c8bce3eb1f3c15e85002a5b658d93dd57/crashlytics-2.5.5.aar" />
-                            <option value="D:/AndroidSDK/extras/android/m2repository/com/android/support/appcompat-v7/23.1.1/appcompat-v7-23.1.1.aar" />
-                            <option value="D:/AndroidSDK/extras/android/m2repository/com/android/support/design/23.1.1/design-23.1.1.aar" />
-                            <option value="D:/AndroidSDK/extras/android/m2repository/com/android/support/cardview-v7/23.1.1/cardview-v7-23.1.1.aar" />
-                            <option value="D:/AndroidSDK/extras/android/m2repository/com/android/support/support-v4/23.1.1/support-v4-23.1.1.aar" />
+                            <option value="D:/AndroidSDK/extras/android/m2repository/com/android/support/appcompat-v7/23.2.0/appcompat-v7-23.2.0.aar" />
+                            <option value="D:/AndroidSDK/extras/android/m2repository/com/android/support/design/23.2.0/design-23.2.0.aar" />
+                            <option value="D:/AndroidSDK/extras/android/m2repository/com/android/support/cardview-v7/23.2.0/cardview-v7-23.2.0.aar" />
+                            <option value="D:/AndroidSDK/extras/android/m2repository/com/android/support/support-v4/23.2.0/support-v4-23.2.0.aar" />
                             <option value="D:/AndroidSDK/extras/google/m2repository/com/google/android/gms/play-services-auth/8.4.0/play-services-auth-8.4.0.aar" />
                             <option value="D:/AndroidSDK/extras/google/m2repository/com/google/android/gms/play-services-location/8.4.0/play-services-location-8.4.0.aar" />
                             <option value="D:/AndroidSDK/extras/google/m2repository/com/google/android/gms/play-services-maps/8.4.0/play-services-maps-8.4.0.aar" />
+                            <option value="D:/AndroidSDK/extras/google/m2repository/com/google/android/gms/play-services-fitness/8.4.0/play-services-fitness-8.4.0.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.maps.android/android-maps-utils/0.4.2/3d54b9054c208bc3eb73c6aa863a7b9c6cd0d36e/android-maps-utils-0.4.2.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.6.1/b9d63507329a7178e026fc334f87587ee5070ac5/gson-2.6.1.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife/7.0.1/d5d13ea991eab0252e3710e5df3d6a9d4b21d461/butterknife-7.0.1.jar" />
@@ -2892,13 +2916,15 @@
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.rey5137/material/1.2.2/febd2d94a6309e3eb337231577abd3eadd5226b8/material-1.2.2.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.PhilJay/MPAndroidChart/v2.2.2/52bb5e2c528180a3d670d5f9daeb2018f1a7c899/MPAndroidChart-v2.2.2.jar" />
                             <option value="D:/AndroidSDK/extras/google/m2repository/com/google/android/gms/play-services-measurement/8.4.0/play-services-measurement-8.4.0.aar" />
-                            <option value="D:/AndroidSDK/extras/android/m2repository/com/android/support/support-annotations/23.1.1/support-annotations-23.1.1.jar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/me.zhanghai.android.materialprogressbar/library/1.1.4/b57a5a1b64cad2464b850258d9cb0401b41b4e01/library-1.1.4.aar" />
-                            <option value="D:/AndroidSDK/extras/android/m2repository/com/android/support/recyclerview-v7/23.1.1/recyclerview-v7-23.1.1.aar" />
+                            <option value="D:/AndroidSDK/extras/android/m2repository/com/android/support/support-annotations/23.2.0/support-annotations-23.2.0.jar" />
+                            <option value="D:/AndroidSDK/extras/android/m2repository/com/android/support/recyclerview-v7/23.2.0/recyclerview-v7-23.2.0.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.crashlytics.sdk.android/answers/1.3.6/b8b2495ff950f3c398405491076a9aec3a00fc4d/answers-1.3.6.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.crashlytics.sdk.android/crashlytics-core/2.3.8/5de330a1237da4092eb1f20a90b3717a863fbea7/crashlytics-core-2.3.8.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.fabric.sdk.android/fabric/1.3.10/1b21763b56a1b35afb40f4883a7afb66a80d69d8/fabric-1.3.10.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.crashlytics.sdk.android/beta/1.1.4/fa742a9b181b172fea820723307030da927d4e5/beta-1.1.4.aar" />
+                            <option value="D:/AndroidSDK/extras/android/m2repository/com/android/support/animated-vector-drawable/23.2.0/animated-vector-drawable-23.2.0.aar" />
+                            <option value="D:/AndroidSDK/extras/android/m2repository/com/android/support/support-vector-drawable/23.2.0/support-vector-drawable-23.2.0.aar" />
                             <option value="D:/AndroidSDK/extras/google/m2repository/com/google/android/gms/play-services-base/8.4.0/play-services-base-8.4.0.aar" />
                             <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/18.0/cce0823396aa693798f8882e64213b1772032b09/guava-18.0.jar" />
                             <option value="D:/AndroidSDK/extras/google/m2repository/com/google/android/gms/play-services-basement/8.4.0/play-services-basement-8.4.0.aar" />
@@ -3043,10 +3069,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/drawable/btn_flat_pressed.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/xml/pref_headers.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/SettingsActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/TaskyAppApplication.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/networking/NetworkingHelper.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/networking/NetworkConnectionResponse.java" />
@@ -3064,7 +3086,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/LabelTaskActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/DailyAggregatedData.java" />
         <option value="$PROJECT_DIR$/app/src/main/assets/sugar_upgrades/1.sql" />
         <option value="$PROJECT_DIR$/app/src/main/assets/sugar_upgrades/3.sql" />
@@ -3074,7 +3095,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
         <option value="$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.afollestad.material-dialogs/core/0.8.5.3/res/values-v11/values-v11.xml" />
         <option value="$PROJECT_DIR$/build.gradle" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/SensingInitiator.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/ScreenStateReceiver.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
@@ -3087,13 +3107,19 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_google_map_full_screen.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/StatisticsActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/MarkerDataHolder.java" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/content_list_data.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/ListDataActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/FullScreenMapFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/GoogleMapFullScreenActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_statistics.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/QueryGoogleFitSleedDataService.java" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/QueryGoogleFitSleepDataService.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/content_list_data.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/list_data_item.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/list_data_header.xml" />
       </list>
     </option>
   </component>
@@ -3108,10 +3134,10 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
+    <option name="x" value="1912" />
     <option name="y" value="-8" />
-    <option name="width" value="1858" />
-    <option name="height" value="1092" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -3136,8 +3162,7 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -3176,7 +3201,7 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -3365,7 +3390,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="data" />
+              <option name="myItemId" value="service" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -3401,6 +3426,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -3415,12 +3441,12 @@
     <property name="FullScreen" value="false" />
     <property name="android.project.structure.last.selected" value="app" />
     <property name="android.project.structure.proportion" value="0.15" />
-    <property name="SearchEverywhereHistoryKey" value="stati&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/layout/activity_statistics.xml&#10;label&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/LabelTaskActivity.java&#10;list&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/layout/content_list_data.xml&#10;strings&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/values/strings.xml&#10;listda&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/ListDataActivity.java&#10;listDataA&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/ListDataActivity.java&#10;acti&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/GoogleMapFullScreenActivity.java&#10;activi&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/GoogleMapFullScreenActivity.java&#10;content_&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/layout/content_main.xml&#10;listData&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/ListDataActivity.java&#10;activity_ma&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/layout/activity_main.xml&#10;listdata&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/layout/activity_list_data.xml&#10;statis&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/StatisticsActivity.java&#10;app&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java&#10;recy&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/adapter/ListDataRecyclerAdapter.java&#10;MainA&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java&#10;main&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/layout/content_main.xml&#10;activity_li&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/layout/activity_list_data.xml&#10;appG&#9;PSI&#9;JAVA://jdk.management.resource.internal.ApproverGroup&#10;appHel&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java&#10;mainA&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java&#10;conte&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/layout/content_main.xml&#10;sensi&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/SensingInitiator.java&#10;Cons&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java&#10;consta&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java&#10;send&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/SendDataToServerService.java&#10;style&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/values-v21/styles.xml&#10;col&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/values/colors.xml&#10;apiu&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/networking/ApiUrls.java&#10;appH&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java&#10;string&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/values/strings.xml&#10;apphel&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java&#10;const&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java&#10;manife&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/AndroidManifest.xml&#10;sensin&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/SensingInitiator.java&#10;appHe&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java&#10;sensinIni&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/SensingInitiator.java&#10;onst&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java&#10;lab&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/LabelTaskActivity.java&#10;serv&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java&#10;maina&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java&#10;apphelp&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java&#10;styles&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/values-v21/styles.xml&#10;labelta&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/LabelTaskActivity.java&#10;service&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java&#10;color&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/values/colors.xml&#10;sens&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java&#10;scre&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/ScreenStateService.java&#10;scree&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/ScreenStateReceiver.java&#10;content&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/layout/content_main.xml" />
+    <property name="SearchEverywhereHistoryKey" value="color&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/values/colors.xml&#10;manife&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/AndroidManifest.xml&#10;header&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/layout/list_data_header.xml&#10;item&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/layout/list_data_item.xml&#10;list&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/layout/content_list_data.xml&#10;mainA&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java&#10;stati&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/layout/activity_statistics.xml&#10;label&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/LabelTaskActivity.java&#10;strings&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/values/strings.xml&#10;listda&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/ListDataActivity.java&#10;listDataA&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/ListDataActivity.java&#10;acti&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/GoogleMapFullScreenActivity.java&#10;activi&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/GoogleMapFullScreenActivity.java&#10;content_&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/layout/content_main.xml&#10;listData&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/ListDataActivity.java&#10;activity_ma&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/layout/activity_main.xml&#10;listdata&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/layout/activity_list_data.xml&#10;statis&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/StatisticsActivity.java&#10;app&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java&#10;recy&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/adapter/ListDataRecyclerAdapter.java&#10;MainA&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java&#10;main&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/layout/content_main.xml&#10;activity_li&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/layout/activity_list_data.xml&#10;appG&#9;PSI&#9;JAVA://jdk.management.resource.internal.ApproverGroup&#10;appHel&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java&#10;conte&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/layout/content_main.xml&#10;sensi&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/SensingInitiator.java&#10;Cons&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java&#10;consta&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java&#10;send&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/SendDataToServerService.java&#10;style&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/values-v21/styles.xml&#10;col&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/values/colors.xml&#10;apiu&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/networking/ApiUrls.java&#10;appH&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java&#10;string&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/values/strings.xml&#10;apphel&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java&#10;const&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java&#10;sensin&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/SensingInitiator.java&#10;appHe&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java&#10;sensinIni&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/SensingInitiator.java&#10;onst&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java&#10;lab&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/LabelTaskActivity.java&#10;serv&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java&#10;maina&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java&#10;apphelp&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java&#10;styles&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/values-v21/styles.xml&#10;labelta&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/LabelTaskActivity.java&#10;service&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java&#10;sens&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java&#10;scre&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/ScreenStateService.java" />
   </component>
   <component name="RecentsManager">
     <key name="android.template.packageName">
-      <recent name="si.uni_lj.fri.taskyapp" />
       <recent name="si.uni_lj.fri.taskyapp.service" />
+      <recent name="si.uni_lj.fri.taskyapp" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Dropbox\FRI\2.stopnja\2.letnik\magisterij\app\TaskyApp\app\src\main" />
@@ -3845,7 +3871,13 @@
       <option name="project" value="LOCAL" />
       <updated>1456697898446</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="code refactored, FullScreenMapActivity updating markers after labeling">
+      <created>1456736319566</created>
+      <option name="number" value="00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1456736319566</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="TodoView">
@@ -3858,34 +3890,33 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1858" height="1092" extended-state="0" />
+    <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="false" />
     <layout>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290735" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35372636" sideWeight="0.44048944" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23359288" sideWeight="0.34508076" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2747604" sideWeight="0.32035595" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3080214" sideWeight="0.67964405" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24972437" sideWeight="0.4918033" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38764644" sideWeight="0.5483871" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290735" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3546326" sideWeight="0.44048944" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32035595" sideWeight="0.67964405" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290735" sideWeight="0.49779493" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290735" sideWeight="0.4955506" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290735" sideWeight="0.49558985" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23359288" sideWeight="0.6549192" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32694355" sideWeight="0.46440488" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2238806" sideWeight="0.6549192" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296582" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24972437" sideWeight="0.4918033" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Fabric" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19625138" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38764644" sideWeight="0.5483871" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -3893,6 +3924,7 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" x="92" y="92" width="1674" height="896" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32694355" sideWeight="0.46440488" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -3944,7 +3976,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="updates" />
     <MESSAGE value="some more adaptive sensing" />
     <MESSAGE value="small bug fix" />
     <MESSAGE value="device material icons added, activity for task labeling, recycler view for listing tasks" />
@@ -3969,20 +4000,21 @@
     <MESSAGE value="updated bar chart, started work on fullscreen map activity" />
     <MESSAGE value="map fragment unified, map views added" />
     <MESSAGE value="filtering tasks" />
-    <option name="LAST_COMMIT_MESSAGE" value="filtering tasks" />
+    <MESSAGE value="code refactored, FullScreenMapActivity updating markers after labeling" />
+    <option name="LAST_COMMIT_MESSAGE" value="code refactored, FullScreenMapActivity updating markers after labeling" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java</url>
-          <line>252</line>
+          <line>311</line>
           <properties />
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java</url>
-          <line>250</line>
+          <line>309</line>
           <properties />
           <option name="timeStamp" value="6" />
         </line-breakpoint>
@@ -4045,31 +4077,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_list_data.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="54" column="44" selection-start-line="54" selection-start-column="44" selection-end-line="54" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/PhoneStatusData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="19" selection-start-line="17" selection-start-column="19" selection-end-line="17" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/SensorReadingData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/ConnectivityChangedReceiver.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -4144,10 +4151,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="71" column="60" selection-start-line="71" selection-start-column="60" selection-end-line="71" selection-end-column="60" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#644#645#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -4181,24 +4184,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.afollestad.material-dialogs/core/0.8.5.4/res/values-v11/values-v11.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="11" column="61" selection-start-line="11" selection-start-column="61" selection-end-line="11" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -4220,6 +4209,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="40" column="5" selection-start-line="40" selection-start-column="5" selection-end-line="40" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -4241,33 +4233,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.7777777">
           <caret line="16" column="19" selection-start-line="16" selection-start-column="19" selection-end-line="16" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="171" column="28" selection-start-line="171" selection-start-column="28" selection-end-line="171" selection-end-column="149" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_data_item.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.068966">
-          <caret line="36" column="4" selection-start-line="36" selection-start-column="4" selection-end-line="42" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="35" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4328,22 +4293,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/legend_task_item.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.724138">
-          <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/db/SensorReadingRecord.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="45" column="43" selection-start-line="45" selection-start-column="43" selection-end-line="45" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4386,38 +4339,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="63" column="33" selection-start-line="63" selection-start-column="33" selection-end-line="63" selection-end-column="33" />
-          <folding>
-            <element signature="e#537#538#0" expanded="false" />
-            <element signature="e#592#593#0" expanded="false" />
-            <element signature="e#666#667#0" expanded="false" />
-            <element signature="e#723#724#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="98" column="34" selection-start-line="98" selection-start-column="28" selection-end-line="98" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_list_data.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="57" column="44" selection-start-line="57" selection-start-column="44" selection-end-line="57" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="93" column="0" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -4427,16 +4348,14 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="135" column="0" selection-start-line="135" selection-start-column="0" selection-end-line="135" selection-end-column="0" />
           <folding>
-            <element signature="e#6177#6178#0" expanded="false" />
-            <element signature="e#6215#6216#0" expanded="false" />
-            <marker date="1456735146549" expanded="true" signature="48:796" placeholder="..." />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/FullScreenMapFragment.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.9827585">
+        <state vertical-scroll-proportion="0.0">
           <caret line="224" column="40" selection-start-line="224" selection-start-column="40" selection-end-line="224" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -4446,7 +4365,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/ListDataActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.224138">
+        <state vertical-scroll-proportion="0.0">
           <caret line="72" column="23" selection-start-line="72" selection-start-column="22" selection-end-line="72" selection-end-column="23" />
           <folding />
         </state>
@@ -4462,7 +4381,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/GoogleMapFullScreenActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.810345">
+        <state vertical-scroll-proportion="0.0">
           <caret line="89" column="28" selection-start-line="89" selection-start-column="28" selection-end-line="89" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -4475,21 +4394,131 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2220339">
-          <caret line="98" column="10" selection-start-line="98" selection-start-column="10" selection-end-line="98" selection-end-column="10" />
+        <state vertical-scroll-proportion="-7.034483">
+          <caret line="110" column="21" selection-start-line="110" selection-start-column="21" selection-end-line="110" selection-end-column="21" />
           <folding>
-            <element signature="e#616#657#0" expanded="true" />
-            <element signature="e#1827#1862#0" expanded="true" />
-            <element signature="e#2053#2085#0" expanded="true" />
-            <element signature="e#2127#2151#0" expanded="true" />
-            <element signature="e#2465#2496#0" expanded="true" />
-            <element signature="e#2538#2565#0" expanded="true" />
-            <element signature="e#3960#3995#0" expanded="true" />
-            <element signature="e#4195#4228#0" expanded="true" />
             <element signature="e#4320#4344#0" expanded="true" />
-            <element signature="e#5695#5730#0" expanded="true" />
-            <element signature="e#5949#5973#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.github.afollestad.material-dialogs/core/0.8.5.4/res/values-v11/values-v11.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.6296296">
+          <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="41" column="64" selection-start-line="41" selection-start-column="64" selection-end-line="41" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/AndroidSDK/sources/android-23/java/text/DateFormat.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="467" column="35" selection-start-line="467" selection-start-column="35" selection-end-line="467" selection-end-column="35" />
+          <folding>
+            <element signature="e#16891#16892#0" expanded="true" />
+            <element signature="e#16947#16948#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/QueryGoogleFitSleepDataService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="65" column="73" selection-start-line="65" selection-start-column="73" selection-end-line="65" selection-end-column="73" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.965517">
+          <caret line="204" column="40" selection-start-line="204" selection-start-column="40" selection-end-line="204" selection-end-column="40" />
+          <folding>
+            <element signature="e#8437#9174#0" expanded="true" />
+            <element signature="e#9173#9174#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_list_data.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.4597702">
+          <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+          <folding>
+            <element signature="e#2448#2469#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/legend_task_item.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.724138">
+          <caret line="20" column="30" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.185185">
+          <caret line="42" column="18" selection-start-line="42" selection-start-column="18" selection-end-line="42" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.189655">
+          <caret line="101" column="62" selection-start-line="101" selection-start-column="62" selection-end-line="101" selection-end-column="62" />
+          <folding>
+            <element signature="e#1849#1883#0" expanded="true" />
+            <element signature="e#4102#4135#0" expanded="true" />
+            <element signature="e#4508#4543#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_data_item.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.034483">
+          <caret line="12" column="44" selection-start-line="12" selection-start-column="44" selection-end-line="12" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="16" column="35" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_data_header.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.49097472">
+          <caret line="16" column="31" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
+          <folding />
         </state>
       </provider>
     </entry>

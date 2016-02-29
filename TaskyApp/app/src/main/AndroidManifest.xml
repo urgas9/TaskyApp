@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="si.uni_lj.fri.taskyapp"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest package="si.uni_lj.fri.taskyapp"
+          xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION"/>
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -45,7 +44,7 @@
         </activity>
         <activity
             android:name=".ListDataActivity"
-            android:label="@string/app_name"
+            android:label="@string/title_activity_list_data"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -105,6 +104,7 @@
         </activity>
         <activity
             android:name=".StatisticsActivity"
+            android:label="@string/title_activity_statistics"
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait">
             >
@@ -117,9 +117,15 @@
 
         <activity
             android:name=".GoogleMapFullScreenActivity"
+            android:label=""
             android:parentActivityName=".StatisticsActivity"
             android:screenOrientation="portrait">
         </activity>
+
+        <service
+            android:name=".service.QueryGoogleFitSleepDataService"
+            android:exported="false">
+        </service>
     </application>
 
 </manifest>

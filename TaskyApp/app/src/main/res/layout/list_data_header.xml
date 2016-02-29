@@ -13,7 +13,7 @@
         android:id="@+id/list_section_header"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textColor="@color/primary_text"
+        android:textColor="@color/primary_dark"
         android:textSize="20sp"
         />
 
