@@ -16,9 +16,7 @@ import com.google.android.gms.location.ActivityRecognition;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
-import si.uni_lj.fri.taskyapp.global.AppHelper;
 import si.uni_lj.fri.taskyapp.global.PermissionsHelper;
-import si.uni_lj.fri.taskyapp.service.ScreenStateService;
 import si.uni_lj.fri.taskyapp.service.SenseDataIntentService;
 
 /**

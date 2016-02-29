@@ -322,12 +322,12 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         }
     }
 
-    private void showNotification(long id){
+    private void showNotification(long id) {
         Calendar calendar = Calendar.getInstance();
         String notificationsFrequency = mDefaultPrefs.getString("notifications_preference", "");
         Long lastTimeNotificationSent = mDefaultPrefs.getLong("last_time_user_notified_to_label", 0);
         long nowMillis = calendar.getTimeInMillis();
-        int hoursSinceLastNotification = (int)((nowMillis - lastTimeNotificationSent) / (AlarmManager.INTERVAL_HOUR));
+        int hoursSinceLastNotification = (int) ((nowMillis - lastTimeNotificationSent) / (AlarmManager.INTERVAL_HOUR));
 
 
         switch (notificationsFrequency) {

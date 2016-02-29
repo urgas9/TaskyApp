@@ -42,7 +42,7 @@ public class SensorReadingRecord extends SugarRecord {
         timeStartedSensing = sensorReadingData.getTimestampStarted();
     }
 
-    public MarkerDataHolder getMarkerDataHolder(){
+    public MarkerDataHolder getMarkerDataHolder() {
         return new MarkerDataHolder(getId(), timeStartedSensing, label, locationLat, locationLng);
     }
 

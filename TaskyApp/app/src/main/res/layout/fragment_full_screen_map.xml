@@ -5,20 +5,20 @@
              tools:context="si.uni_lj.fri.taskyapp.FullScreenMapFragment">
 
     <FrameLayout
+        android:id="@+id/map_content_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/map_content_frame" />
+        android:layout_height="match_parent"/>
 
     <LinearLayout
         android:id="@+id/legend_ll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_gravity="bottom|start"
         android:layout_margin="@dimen/activity_horizontal_margin_small"
+        android:background="@color/half_white"
+        android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin_small"
-        android:visibility="invisible"
-        android:background="@color/half_white">
+        android:visibility="invisible">
 
     </LinearLayout>
 

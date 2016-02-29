@@ -109,8 +109,7 @@ public class ListDataRecyclerAdapter extends RecyclerView.Adapter {
             });
             if (srr.getDetectedActivity() != null) {
                 ((NormalItemViewHolder) holder).mActivityTv.setText(srr.getDetectedActivity());
-            }
-            else{
+            } else {
                 ((NormalItemViewHolder) holder).mActivityTv.setText(mActivity.getText(R.string.no_data));
             }
             ((NormalItemViewHolder) holder).mDateTv.setText(formatFullDate.format(new Date(srr.getTimeStartedSensing())));
@@ -133,10 +132,9 @@ public class ListDataRecyclerAdapter extends RecyclerView.Adapter {
             }
 
         } else if (holder instanceof SectionHeaderViewHolder) {
-            if(dataList.size() > 1) { // there is at least a null object
+            if (dataList.size() > 1) { // there is at least a null object
                 ((SectionHeaderViewHolder) holder).mHeader.setText(formatDailyDate.format(dataList.get(position + 1).getTimeStartedSensing()));
-            }
-            else{
+            } else {
                 //TODO: No data to show!
                 Log.d(TAG, "There is no data to show in recycler adapter!");
             }

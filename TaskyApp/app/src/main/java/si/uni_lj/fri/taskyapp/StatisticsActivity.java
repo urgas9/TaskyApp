@@ -78,7 +78,7 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
     }
 
     @OnClick(R.id.btn_label_tasks)
-    public void labelTasks(View v){
+    public void labelTasks(View v) {
         startActivity(new Intent(this, ListDataActivity.class));
     }
 
@@ -88,7 +88,62 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
 
     }
 
-    class GetAndShowStatistics extends AsyncTask<Void, Void, DailyAggregatedData>{
+    private DailyAggregatedData getDailyAggregatedData(int relativeDay, boolean showFromPreviousDayIfTill3) {
+        Calendar calendarFrom = AppHelper.getCalendarAtMidnight(relativeDay);
+        if (showFromPreviousDayIfTill3 && Calendar.getInstance().get(Calendar.HOUR_OF_DAY) < 3) {
+            calendarFrom = AppHelper.getCalendarAtMidnight(relativeDay - 1);
+        }
+        long millisFrom = calendarFrom.getTimeInMillis();
+        Calendar calendarTo = AppHelper.getCalendarAtMidnight(relativeDay + 1);
+        long millisTo = calendarTo.getTimeInMillis();
+        if (showFromPreviousDayIfTill3) {
+            millisTo = Calendar.getInstance().getTimeInMillis();
+        }
+
+        List<SensorReadingRecord> sensorReadings = SensorReadingRecord.find(SensorReadingRecord.class,
+                "time_started_sensing > ? AND time_started_sensing < ?", new String[]{"" + millisFrom, "" + millisTo}, null, "time_started_sensing ASC", null);
+
+        int sumLabels = 0, countLabels = 0;
+        for (SensorReadingRecord srr : sensorReadings) {
+            if (srr.getLabel() != null && srr.getLabel() > 0) {
+                sumLabels += srr.getLabel();
+                countLabels++;
+            }
+        }
+        DailyAggregatedData dad = new DailyAggregatedData();
+        dad.setAllReadings(sensorReadings.size());
+        dad.setDayOfYear(calendarFrom.get(Calendar.DAY_OF_YEAR));
+        dad.setCountLabeled(countLabels);
+        dad.setAverageLabel((sumLabels / (double) countLabels));
+        return dad;
+    }
+
+    private BarData getDailyCharBarData(List<DailyAggregatedData> dailyDataList) {
+        ArrayList<String> xVals = new ArrayList<>();
+        ArrayList<BarEntry> yVals1 = new ArrayList<>();
+
+        int i = 0;
+        for (DailyAggregatedData dad : dailyDataList) {
+            xVals.add(dad.getStringDay());
+            yVals1.add(new BarEntry(new float[]{dad.getCountLabeled(), dad.getAllReadings() - dad.getCountLabeled()}, i));
+            i++;
+        }
+        BarDataSet set1 = new BarDataSet(yVals1, "");
+        // set1.setColors(ColorTemplate.createColors(getApplicationContext(),
+        // ColorTemplate.FRESH_COLORS));
+
+        set1.setColors(new int[]{ContextCompat.getColor(this, R.color.accent), ContextCompat.getColor(this, R.color.primary_light)});
+        set1.setStackLabels(new String[]{getString(R.string.legend_num_labeled), getString(R.string.legend_num_non_labeled)});
+
+        ArrayList<IBarDataSet> dataSets = new ArrayList<>();
+        dataSets.add(set1);
+
+        BarData data = new BarData(xVals, dataSets);
+        data.setValueFormatter(new MyValueFormatter());
+        return data;
+    }
+
+    class GetAndShowStatistics extends AsyncTask<Void, Void, DailyAggregatedData> {
 
         @Override
         protected DailyAggregatedData doInBackground(Void... params) {
@@ -100,7 +155,7 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
             super.onPostExecute(dailyAggregatedData);
 
             String dailyBodyString = String.format(getString(R.string.daily_statistics_body), dailyAggregatedData.getAllReadings(), dailyAggregatedData.getCountLabeled());
-            if(dailyAggregatedData.getCountLabeled() > 0){
+            if (dailyAggregatedData.getCountLabeled() > 0) {
                 dailyBodyString += String.format(getString(R.string.daily_statistics_body_2), dailyAggregatedData.getAverageLabelTaskText(getBaseContext()));
             }
             mDailyStatisticsBodyTv.setText(Html.fromHtml(dailyBodyString));
@@ -108,10 +163,10 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
         }
     }
 
-    class GetAndShowGraphStatistics extends AsyncTask<Void,Void,BarData>{
+    class GetAndShowGraphStatistics extends AsyncTask<Void, Void, BarData> {
 
         @Override
-        protected BarData  doInBackground(Void... params) {
+        protected BarData doInBackground(Void... params) {
             List<DailyAggregatedData> resultList = SugarRecord.listAll(DailyAggregatedData.class);
             resultList.add(getDailyAggregatedData(-1, false));
             resultList.add(getDailyAggregatedData(0, false));
@@ -141,7 +196,7 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
                     "time_started_sensing > ?", new String[]{"" + calendarFrom.getTimeInMillis()}, null, "time_started_sensing ASC", null);
 
             ArrayList<MarkerDataHolder> resultList = new ArrayList<>();
-            for(SensorReadingRecord srr : sensorReadings){
+            for (SensorReadingRecord srr : sensorReadings) {
                 resultList.add(srr.getMarkerDataHolder());
             }
             return resultList;
@@ -150,11 +205,11 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
         @Override
         protected void onPostExecute(final ArrayList<MarkerDataHolder> resultArray) {
             super.onPostExecute(resultArray);
-            if(resultArray == null || resultArray.isEmpty()){
+            if (resultArray == null || resultArray.isEmpty()) {
                 return;
             }
 
-            FullScreenMapFragment fragment  = FullScreenMapFragment.newInstance(FullScreenMapFragment.VIEW_HEATMAP, resultArray, false);
+            FullScreenMapFragment fragment = FullScreenMapFragment.newInstance(FullScreenMapFragment.VIEW_HEATMAP, resultArray, false);
             getSupportFragmentManager().beginTransaction().replace(R.id.map_content_frame, fragment).commit();
             mCard3ViewSwitcher.setDisplayedChild(1);
 
@@ -167,61 +222,6 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
                 }
             });
         }
-    }
-
-    private DailyAggregatedData getDailyAggregatedData(int relativeDay, boolean showFromPreviousDayIfTill3){
-        Calendar calendarFrom = AppHelper.getCalendarAtMidnight(relativeDay);
-        if(showFromPreviousDayIfTill3 && Calendar.getInstance().get(Calendar.HOUR_OF_DAY) < 3){
-            calendarFrom = AppHelper.getCalendarAtMidnight(relativeDay - 1);
-        }
-        long millisFrom = calendarFrom.getTimeInMillis();
-        Calendar calendarTo = AppHelper.getCalendarAtMidnight(relativeDay + 1);
-        long millisTo = calendarTo.getTimeInMillis();
-        if(showFromPreviousDayIfTill3){
-            millisTo = Calendar.getInstance().getTimeInMillis();
-        }
-
-        List<SensorReadingRecord> sensorReadings = SensorReadingRecord.find(SensorReadingRecord.class,
-                "time_started_sensing > ? AND time_started_sensing < ?", new String[]{"" + millisFrom, "" + millisTo}, null, "time_started_sensing ASC", null);
-
-        int sumLabels = 0, countLabels = 0;
-        for (SensorReadingRecord srr : sensorReadings){
-            if(srr.getLabel() != null && srr.getLabel() > 0){
-                sumLabels += srr.getLabel();
-                countLabels++;
-            }
-        }
-        DailyAggregatedData dad = new DailyAggregatedData();
-        dad.setAllReadings(sensorReadings.size());
-        dad.setDayOfYear(calendarFrom.get(Calendar.DAY_OF_YEAR));
-        dad.setCountLabeled(countLabels);
-        dad.setAverageLabel((sumLabels / (double) countLabels));
-        return dad;
-    }
-
-    private BarData getDailyCharBarData(List<DailyAggregatedData> dailyDataList){
-        ArrayList<String> xVals = new ArrayList<>();
-        ArrayList<BarEntry> yVals1 = new ArrayList<>();
-
-        int i = 0;
-        for(DailyAggregatedData dad : dailyDataList){
-            xVals.add(dad.getStringDay());
-            yVals1.add(new BarEntry(new float[]{dad.getCountLabeled(), dad.getAllReadings()-dad.getCountLabeled()}, i));
-            i++;
-        }
-        BarDataSet set1 = new BarDataSet(yVals1, "");
-        // set1.setColors(ColorTemplate.createColors(getApplicationContext(),
-        // ColorTemplate.FRESH_COLORS));
-
-        set1.setColors(new int[]{ContextCompat.getColor(this, R.color.accent), ContextCompat.getColor(this, R.color.primary_light)});
-        set1.setStackLabels(new String[]{getString(R.string.legend_num_labeled), getString(R.string.legend_num_non_labeled)});
-
-        ArrayList<IBarDataSet> dataSets = new ArrayList<>();
-        dataSets.add(set1);
-
-        BarData data = new BarData(xVals, dataSets);
-        data.setValueFormatter(new MyValueFormatter());
-        return data;
     }
 
     class MyValueFormatter implements ValueFormatter {

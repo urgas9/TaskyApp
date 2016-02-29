@@ -28,11 +28,13 @@ public class DailyAggregatedData {
     private long countLabeled;
     private double averageLabel;
 
-    public DailyAggregatedData(){
+    public DailyAggregatedData() {
     }
-    public Long getId(){
+
+    public Long getId() {
         return id;
     }
+
     public long getAllReadings() {
         return allReadings;
     }
@@ -65,31 +67,30 @@ public class DailyAggregatedData {
         this.dayOfYear = dayOfYear;
     }
 
-    public String getStringDay(){
+    public String getStringDay() {
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_YEAR, dayOfYear);
         SimpleDateFormat format = new SimpleDateFormat("EEE");
         return format.format(new Date(c.getTimeInMillis()));
     }
 
-    public String getAverageLabelTaskText(Context ctx){
+    public String getAverageLabelTaskText(Context ctx) {
         String[] complexitiesArray = ctx.getResources().getStringArray(R.array.task_complexities_array);
 
         int base = (int) averageLabel;
         double decimal = averageLabel - base;
 
         Log.d("DailyAggregatedData", "Base: " + base + ", decimal part: " + decimal);
-        if(decimal > 0.5){
-            if(base == 4){
+        if (decimal > 0.5) {
+            if (base == 4) {
                 return "almost " + complexitiesArray[base];
             }
-            return "closer to " + complexitiesArray[base+1] + " than " + complexitiesArray[base];
-        }
-        else{
-            if(base == 1){
+            return "closer to " + complexitiesArray[base + 1] + " than " + complexitiesArray[base];
+        } else {
+            if (base == 1) {
                 return "close to " + complexitiesArray[base];
             }
-            return "closer to " + complexitiesArray[base] + " than " + complexitiesArray[base+1];
+            return "closer to " + complexitiesArray[base] + " than " + complexitiesArray[base + 1];
         }
     }
 }

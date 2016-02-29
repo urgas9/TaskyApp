@@ -115,20 +115,18 @@ public class SendDataToServerService extends IntentService {
         } while (count < MAX_TRIES);
 
         if (result.isSuccess()) {
-            if(result.getContent().isSuccess()) {
+            if (result.getContent().isSuccess()) {
                 Log.d(TAG, "Data posted to server successfully");
                 for (Long confirmedId : result.getContent().getConfirmedIds()) {
                     //TODO: Change this to delete!
                     SensorReadingRecord srr = SensorReadingRecord.findById(SensorReadingRecord.class, confirmedId);
-                    if(srr != null) {
+                    if (srr != null) {
                         Log.d(TAG, "DELETE: " + srr.getAddress());
-                    }
-                    else{
+                    } else {
                         Log.d(TAG, "Not found any items for: " + confirmedId);
                     }
                 }
-            }
-            else{
+            } else {
                 Log.e(TAG, "Post was made to server, but server returned false.");
             }
 

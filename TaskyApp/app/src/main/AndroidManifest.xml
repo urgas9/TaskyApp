@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="si.uni_lj.fri.taskyapp"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest
+    package="si.uni_lj.fri.taskyapp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION"/>
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -85,27 +86,27 @@
 
         <activity
             android:name=".LabelTaskActivity"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".ListDataActivity">
+            android:parentActivityName=".ListDataActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".AboutActivity"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="si.uni_lj.fri.taskyapp.MainActivity"/>
         </activity>
         <activity
             android:name=".StatisticsActivity"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait">
             >
         </activity>
 
@@ -114,9 +115,10 @@
             android:exported="false">
         </service>
 
-        <activity android:name=".GoogleMapFullScreenActivity"
-                  android:screenOrientation="portrait"
-                  android:parentActivityName=".StatisticsActivity">
+        <activity
+            android:name=".GoogleMapFullScreenActivity"
+            android:parentActivityName=".StatisticsActivity"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

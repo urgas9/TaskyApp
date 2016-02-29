@@ -39,33 +39,25 @@ import si.uni_lj.fri.taskyapp.sensor.Constants;
 
 public class FullScreenMapFragment extends Fragment implements OnMapReadyCallback {
 
+    public static final String VIEW_HEATMAP = "heatmap";
+    public static final String VIEW_MARKERS = "markers";
     private static final String TAG = "FullScreenMapFragment";
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String PARAM_DEFAULT_VIEW = "default_view";
     private static final String PARAM_SHOW_LEGEND = "show_legend";
     private static final String PARAM_DATA_LIST = "data_list";
-
-    public static final String VIEW_HEATMAP = "heatmap";
-    public static final String VIEW_MARKERS = "markers";
-
+    @Bind(R.id.legend_ll)
+    LinearLayout mLegendLl;
+    @Bind(R.id.map_content_frame)
+    FrameLayout mMapFrame;
+    GoogleMap mMap;
+    String[] mArrayOfComplexities;
+    SupportMapFragment mMapFragment;
+    HashMap<Marker, MarkerDataHolder> mMarkerHashMap = new HashMap<>();
     private String mDefaultView;
-
     private boolean mShowLegend;
     private ArrayList<MarkerDataHolder> mDataList;
     private ArrayList<LatLng> mLatLngArray;
-
-    @Bind(R.id.legend_ll)
-    LinearLayout mLegendLl;
-
-    @Bind(R.id.map_content_frame)
-    FrameLayout mMapFrame;
-
-    GoogleMap mMap;
-    String[] mArrayOfComplexities;
-
-    SupportMapFragment mMapFragment;
-    HashMap<Marker, MarkerDataHolder> mMarkerHashMap = new HashMap<>();
-
     private OnFragmentInteractionListener mListener;
 
     public FullScreenMapFragment() {
@@ -89,12 +81,13 @@ public class FullScreenMapFragment extends Fragment implements OnMapReadyCallbac
         fragment.setArguments(args);
         return fragment;
     }
+
     public static FullScreenMapFragment newInstance(String defaultView, boolean showLegend) {
         return newInstance(defaultView, null, showLegend);
     }
 
-    public void setDataList(ArrayList<MarkerDataHolder> dataList){
-        if(dataList != null) {
+    public void setDataList(ArrayList<MarkerDataHolder> dataList) {
+        if (dataList != null) {
             mDataList = dataList;
             if (mMap != null) {
                 showDefaultView(true);
@@ -102,17 +95,19 @@ public class FullScreenMapFragment extends Fragment implements OnMapReadyCallbac
         }
     }
 
-    public void dataWasUpdated(long dbRecordId){
+    public void dataWasUpdated(long dbRecordId, int label) {
         Log.d(TAG, "dataWasUpdated called.");
-        int indexToRemove = -1, count = 0;
-        for (MarkerDataHolder mdh : mDataList){
-            if(mdh.dbRecordId == dbRecordId){
-                indexToRemove = count;
+        int index = -1, count = 0;
+        for (MarkerDataHolder mdh : mDataList) {
+            if (mdh.dbRecordId == dbRecordId) {
+                index = count;
             }
             count++;
         }
-        if(indexToRemove >= 0){
-            mDataList.remove(indexToRemove);
+        if (label > 0 && index >= 0) {
+            mDataList.get(index).label = label;
+        } else if (index >= 0) {
+            mDataList.remove(index);
         }
         showDefaultView(false);
     }
@@ -125,7 +120,7 @@ public class FullScreenMapFragment extends Fragment implements OnMapReadyCallbac
         Log.d(TAG, "onCreate called");
         if (getArguments() != null) {
             mDefaultView = getArguments().getString(PARAM_DEFAULT_VIEW);
-            if(getArguments().get(PARAM_DATA_LIST) != null) {
+            if (getArguments().get(PARAM_DATA_LIST) != null) {
                 mDataList = getArguments().getParcelableArrayList(PARAM_DATA_LIST);
             }
             mShowLegend = getArguments().getBoolean(PARAM_SHOW_LEGEND);
@@ -142,12 +137,12 @@ public class FullScreenMapFragment extends Fragment implements OnMapReadyCallbac
 
     }
 
-    private void showLegend(){
-        if(!mShowLegend){
+    private void showLegend() {
+        if (!mShowLegend) {
             return;
         }
         mLegendLl.removeAllViews();
-        for(int i = 0; i < mArrayOfComplexities.length; i++) {
+        for (int i = 0; i < mArrayOfComplexities.length; i++) {
             View root = LayoutInflater.from(getContext()).inflate(R.layout.legend_task_item, mLegendLl, false);
             ((TextView) root.findViewById(R.id.task_label_tv)).setText(getLabelText(i));
             root.findViewById(R.id.task_label_colorview).setBackgroundColor(AppHelper.getTaskColor(getContext(), i));
@@ -155,18 +150,19 @@ public class FullScreenMapFragment extends Fragment implements OnMapReadyCallbac
         }
     }
 
-    private String getLabelText(int label){
-        if(label > 0 && label < mArrayOfComplexities.length) {
+    private String getLabelText(int label) {
+        if (label > 0 && label < mArrayOfComplexities.length) {
             return mArrayOfComplexities[label];
         }
         return getString(R.string.not_labeled);
     }
-    public void showHeatMap(boolean updateCamera){
-        if(mMap == null || mDataList == null){
+
+    public void showHeatMap(boolean updateCamera) {
+        if (mMap == null || mDataList == null) {
             return;
         }
         mMap.clear();
-
+        mDefaultView = VIEW_HEATMAP;
         mLegendLl.setVisibility(View.INVISIBLE);
         ArrayList<LatLng> latLngArray = getLatLngArray();
 
@@ -175,14 +171,14 @@ public class FullScreenMapFragment extends Fragment implements OnMapReadyCallbac
                 .build();
         // Add a tile overlay to the map, using the heat map tile provider.
         mMap.addTileOverlay(new TileOverlayOptions().tileProvider(mProvider));
-        if(updateCamera) {
+        if (updateCamera) {
             moveCameraToFitData(latLngArray);
         }
     }
 
-    private ArrayList<LatLng> getLatLngArray(){
+    private ArrayList<LatLng> getLatLngArray() {
 
-        if(mLatLngArray == null || mLatLngArray.isEmpty() || mLatLngArray.size() != mDataList.size()) {
+        if (mLatLngArray == null || mLatLngArray.isEmpty() || mLatLngArray.size() != mDataList.size()) {
             ArrayList<LatLng> latLngArray = new ArrayList<>();
             for (MarkerDataHolder mdh : mDataList) {
                 if (mdh.latLng.latitude != 0 && mdh.latLng.longitude != 0) {
@@ -191,16 +187,16 @@ public class FullScreenMapFragment extends Fragment implements OnMapReadyCallbac
             }
             mLatLngArray = latLngArray;
             return latLngArray;
-        }
-        else{
+        } else {
             return mLatLngArray;
         }
 
     }
-    private void moveCameraToFitData(ArrayList<LatLng> latLngArray){
+
+    private void moveCameraToFitData(ArrayList<LatLng> latLngArray) {
         LatLngBounds.Builder bounds = new LatLngBounds.Builder();
         for (LatLng latLng : latLngArray) {
-            if(latLng.latitude != 0 && latLng.longitude != 0) {
+            if (latLng.latitude != 0 && latLng.longitude != 0) {
                 bounds.include(latLng);
                 //mMap.addMarker(new MarkerOptions().position(latLng));
             }
@@ -209,24 +205,25 @@ public class FullScreenMapFragment extends Fragment implements OnMapReadyCallbac
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), mMapFrame.getMeasuredWidth(), mMapFrame.getMeasuredHeight(), 120));
     }
 
-    private void showDefaultView(boolean updateCamera){
+    private void showDefaultView(boolean updateCamera) {
         Log.d(TAG, "DEFAULT VIEW: " + mDefaultView);
-        if(mDefaultView == null || mDefaultView.equals(VIEW_HEATMAP)){
+        if (mDefaultView == null || mDefaultView.equals(VIEW_HEATMAP)) {
             showHeatMap(updateCamera);
-        }
-        else{
+        } else {
             showLabelMarkers(updateCamera);
         }
     }
 
-    public void showLabelMarkers(boolean updateCamera){
-        if(mMap == null || mDataList == null){
+    public void showLabelMarkers(boolean updateCamera) {
+        if (mMap == null || mDataList == null) {
             return;
         }
         mMap.clear();
+
+        mDefaultView = VIEW_MARKERS;
         showLegend();
         mLegendLl.setVisibility(View.VISIBLE);
-        for (MarkerDataHolder mdh : mDataList){
+        for (MarkerDataHolder mdh : mDataList) {
             Marker m = mMap.addMarker(new MarkerOptions()
                     .icon(AppHelper.getMarkerIcon(AppHelper.getTaskColor(getContext(), mdh.label)))
                     .title(getLabelText(mdh.label))
@@ -235,7 +232,7 @@ public class FullScreenMapFragment extends Fragment implements OnMapReadyCallbac
             mMarkerHashMap.put(m, mdh);
         }
 
-        if(updateCamera) {
+        if (updateCamera) {
             moveCameraToFitData(getLatLngArray());
         }
     }
@@ -247,8 +244,8 @@ public class FullScreenMapFragment extends Fragment implements OnMapReadyCallbac
         View root = inflater.inflate(R.layout.fragment_full_screen_map, container, false);
         ButterKnife.bind(this, root);
         mMapFragment.getMapAsync(this);
-        if(savedInstanceState != null &&
-                savedInstanceState.get(PARAM_DATA_LIST) != null){
+        if (savedInstanceState != null &&
+                savedInstanceState.get(PARAM_DATA_LIST) != null) {
             mDataList = savedInstanceState.getParcelableArrayList(PARAM_DATA_LIST);
             mShowLegend = savedInstanceState.getBoolean(PARAM_SHOW_LEGEND);
             mDefaultView = savedInstanceState.getString(PARAM_DEFAULT_VIEW);
@@ -298,13 +295,12 @@ public class FullScreenMapFragment extends Fragment implements OnMapReadyCallbac
             @Override
             public void onInfoWindowClick(Marker marker) {
                 MarkerDataHolder mdh = mMarkerHashMap.get(marker);
-                if(mdh != null && mdh.label <= 0) {
+                if (mdh != null && mdh.label <= 0) {
                     Intent labelTaskIntent = new Intent(getActivity(), LabelTaskActivity.class);
                     labelTaskIntent.putExtra("db_record_id", mdh.dbRecordId);
                     getActivity().startActivityForResult(labelTaskIntent, Constants.LABEL_TASK_REQUEST_CODE);
-                }
-                else{
-                    if(mdh != null && mdh.label > 0 && mdh.label <=5){
+                } else {
+                    if (mdh != null && mdh.label > 0 && mdh.label <= 5) {
                         Toast.makeText(getContext(), "This task has already been labeled!", Toast.LENGTH_LONG).show();
                     }
                     Log.d(TAG, "Cannot get appropriate data for desired marker.");

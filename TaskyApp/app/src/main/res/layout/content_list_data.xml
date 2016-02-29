@@ -6,9 +6,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:inAnimation="@android:anim/slide_in_left"
     android:outAnimation="@android:anim/slide_out_right"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ListDataActivity"
     tools:showIn="@layout/activity_list_data">
 
@@ -16,6 +16,7 @@
         android:id="@+id/list_data_status_viewswitcher"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <me.zhanghai.android.materialprogressbar.MaterialProgressBar
             android:layout_width="wrap_content"
             android:layout_height="60dp"
@@ -30,25 +31,27 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:visibility="gone"
+            android:text="There are no tasks to label! \n Check again later."
             android:textSize="16sp"
-            android:text="There are no tasks to label! \n Check again later."/>
+            android:visibility="gone"/>
     </ViewSwitcher>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <FrameLayout
             android:id="@+id/btn_show_map_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_alignParentBottom="true"
             android:background="@color/half_white"
-            android:paddingTop="@dimen/activity_horizontal_margin_small"
+            android:orientation="horizontal"
             android:paddingBottom="@dimen/activity_horizontal_margin_small"
             android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin">
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_horizontal_margin_small">
+
             <Button
                 android:id="@+id/btn_show_map"
                 android:layout_gravity="right|end|center_vertical"
@@ -56,34 +59,37 @@
                 style="@style/FlatButton"/>
 
         </FrameLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/divider"
-            android:layout_alignBottom="@+id/list_data_recycler_view"/>
+            android:layout_alignBottom="@+id/list_data_recycler_view"
+            android:background="@color/divider"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@id/list_data_recycler_view"
-            android:layout_above="@id/btn_show_map_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:layout_above="@id/btn_show_map_layout"/>
 
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <FrameLayout
             android:id="@+id/btn_show_list_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_alignParentBottom="true"
             android:background="@color/half_white"
-            android:paddingTop="@dimen/activity_horizontal_margin_small"
+            android:orientation="horizontal"
             android:paddingBottom="@dimen/activity_horizontal_margin_small"
             android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin">
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_horizontal_margin_small">
+
             <Button
                 android:id="@+id/btn_show_list"
                 android:layout_gravity="right|end|center_vertical"
@@ -91,16 +97,18 @@
                 style="@style/FlatButton"/>
 
         </FrameLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/divider"
-            android:layout_alignBottom="@+id/full_map_fragment_frame"/>
+            android:layout_alignBottom="@+id/full_map_fragment_frame"
+            android:background="@color/divider"/>
+
         <FrameLayout
             android:id="@id/full_map_fragment_frame"
-            android:layout_above="@id/btn_show_list_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_above="@id/btn_show_list_layout"/>
     </RelativeLayout>
 
 </ViewFlipper>

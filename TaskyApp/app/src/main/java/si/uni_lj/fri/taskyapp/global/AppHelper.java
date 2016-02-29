@@ -127,16 +127,16 @@ public class AppHelper {
 
         //check whether the time is earlier than current time. If so, set it to tomorrow. Otherwise, all alarms for earlier time will fire
         //TODO: Uncomment
-        if(calendar.before(now)){
+        if (calendar.before(now)) {
             calendar.add(Calendar.HOUR, 12);
-            if(calendar.before(now)){
+            if (calendar.before(now)) {
                 calendar.add(Calendar.HOUR, 12);
             }
         }
 
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(ctx);
         long interval = AlarmManager.INTERVAL_DAY;
-        if(mPrefs.getString("notifications_preference", "").equals("1")) {
+        if (mPrefs.getString("notifications_preference", "").equals("1")) {
             interval = AlarmManager.INTERVAL_HALF_DAY;
         }
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), interval, pendingIntent);
@@ -152,17 +152,16 @@ public class AppHelper {
         return false;
     }
 
-    public static float dpToPx(Context ctx, float dp){
+    public static float dpToPx(Context ctx, float dp) {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, ctx.getResources().getDisplayMetrics());
 
     }
 
-    public static int getTaskColor(Context ctx, int label){
-        if(label > 0) {
+    public static int getTaskColor(Context ctx, int label) {
+        if (label > 0) {
             return (Integer) new ArgbEvaluator()
                     .evaluate(label / 5.f, Color.GREEN, Color.RED);
-        }
-        else{
+        } else {
             return ContextCompat.getColor(ctx, R.color.primary);
         }
     }
@@ -173,7 +172,7 @@ public class AppHelper {
         return BitmapDescriptorFactory.defaultMarker(hsv[0]);
     }
 
-    public static Calendar getCalendarAtMidnight(int relativeDayToToday){
+    public static Calendar getCalendarAtMidnight(int relativeDayToToday) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
         calendar.set(Calendar.MINUTE, 0);
@@ -182,7 +181,7 @@ public class AppHelper {
         return calendar;
     }
 
-    public static void aggregateDailyData(){
+    public static void aggregateDailyData() {
         final String TAG = "aggregateDailyData";
 
         Calendar calendar = Calendar.getInstance();
@@ -199,11 +198,11 @@ public class AppHelper {
         SugarRecord.deleteAll(DailyAggregatedData.class);
 
         int sumLabels = 0, countDailyTasks = 0, countLabels = 0, lastDay = -1;
-        for (SensorReadingRecord srr : sensorReadings){
+        for (SensorReadingRecord srr : sensorReadings) {
             calendar.setTimeInMillis(srr.getTimeStartedSensing());
-            if(calendar.get(Calendar.DAY_OF_YEAR) != lastDay){
-                if(lastDay > 0 &&
-                        SugarRecord.count(DailyAggregatedData.class, " day_of_year = ?", new String[]{"" + calendar.get(Calendar.DAY_OF_YEAR)})==0) {
+            if (calendar.get(Calendar.DAY_OF_YEAR) != lastDay) {
+                if (lastDay > 0 &&
+                        SugarRecord.count(DailyAggregatedData.class, " day_of_year = ?", new String[]{"" + calendar.get(Calendar.DAY_OF_YEAR)}) == 0) {
                     DailyAggregatedData dad = new DailyAggregatedData();
                     dad.setDayOfYear(calendar.get(Calendar.DAY_OF_YEAR));
                     dad.setAllReadings(countDailyTasks);
@@ -212,14 +211,13 @@ public class AppHelper {
                     Log.d(TAG, "Saving");
                     resultsList.add(dad);
                     SugarRecord.save(dad);
-                }
-                else{
+                } else {
                     Log.d(TAG, "First iteration or record already exists.");
                 }
                 lastDay = calendar.get(Calendar.DAY_OF_YEAR);
                 sumLabels = countLabels = countDailyTasks = 0;
             }
-            if(srr.getLabel() != null && srr.getLabel() > 0){
+            if (srr.getLabel() != null && srr.getLabel() > 0) {
                 sumLabels += srr.getLabel();
                 countLabels++;
             }
@@ -229,9 +227,10 @@ public class AppHelper {
         Log.d(TAG, "Finished with daily data aggregation.");
     }
 
-    public static void showNotification(Context context){
+    public static void showNotification(Context context) {
         showNotification(context, null);
     }
+
     public static void showNotification(Context context, Long dataBaseId) {
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         Intent intent = new Intent(context, ListDataActivity.class);
@@ -239,10 +238,9 @@ public class AppHelper {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_notifications_black_24dp)
                 .setContentTitle(context.getString(R.string.app_name));
-        if(dataBaseId == null){
+        if (dataBaseId == null) {
             mBuilder.setContentText("Would you mind labelling your daily tasks?");
-        }
-        else{
+        } else {
             SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_FORMAT_TO_SHOW_FULL);
             mBuilder.setContentText(String.format("Last sensing at: %s", format.format(new Date())));
         }
@@ -259,7 +257,7 @@ public class AppHelper {
         mBuilder.setAutoCancel(true);
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         int id = Constants.SHOW_NOTIFICATION_REMINDER_ID;
-        if(dataBaseId != null){
+        if (dataBaseId != null) {
             id = Constants.SHOW_NOTIFICATION_JUST_SENSED_ID;
         }
         mNotificationManager.notify(id, mBuilder.build());

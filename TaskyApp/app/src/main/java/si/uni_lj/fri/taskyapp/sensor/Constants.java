@@ -30,8 +30,8 @@ public class Constants {
     public static final int MAX_INTERVAL_BETWEEN_TWO_SERVER_POSTS = 1000 * 60 * 60 * 4;
 
     public static final int LABEL_TASK_REQUEST_CODE = 1000;
-    public static final int SHOW_NOTIFICATION_REMINDER_ID= 901;
-    public static final int SHOW_NOTIFICATION_JUST_SENSED_ID= 902;
+    public static final int SHOW_NOTIFICATION_REMINDER_ID = 901;
+    public static final int SHOW_NOTIFICATION_JUST_SENSED_ID = 902;
     public static final int SHOW_NOTIFICATION_REQUEST_CODE = 900;
 
     public static final int HOUR_SEND_NOTIFICATION_EARLY = 13;

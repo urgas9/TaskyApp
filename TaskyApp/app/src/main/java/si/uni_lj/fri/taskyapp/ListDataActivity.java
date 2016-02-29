@@ -76,10 +76,10 @@ public class ListDataActivity extends AppCompatActivity {
 
         if (savedInstanceState != null) {
             //Restore the fragment's instance
-            mFullScreenMapFragment = (FullScreenMapFragment)getSupportFragmentManager().getFragment(savedInstanceState, "mFullScreenMapContent");
+            mFullScreenMapFragment = (FullScreenMapFragment) getSupportFragmentManager().getFragment(savedInstanceState, "mFullScreenMapContent");
         }
-        mFullScreenMapFragment = (FullScreenMapFragment)getSupportFragmentManager().findFragmentById(R.id.full_map_fragment_frame);
-        if(mFullScreenMapFragment == null){
+        mFullScreenMapFragment = (FullScreenMapFragment) getSupportFragmentManager().findFragmentById(R.id.full_map_fragment_frame);
+        if (mFullScreenMapFragment == null) {
             mFullScreenMapFragment = FullScreenMapFragment.newInstance(FullScreenMapFragment.VIEW_MARKERS, false);
             getSupportFragmentManager().beginTransaction().replace(R.id.full_map_fragment_frame, mFullScreenMapFragment).commit();
         }
@@ -133,9 +133,19 @@ public class ListDataActivity extends AppCompatActivity {
             long taskDbId = data.getLongExtra("db_record_id", -1);
             int action = data.getIntExtra("action", -1);
             mAdapter.updateDatabaseRecord(taskDbId, 0);
-            mFullScreenMapFragment.dataWasUpdated(taskDbId);
+            mFullScreenMapFragment.dataWasUpdated(taskDbId, -1);
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @OnClick(R.id.btn_show_list)
+    public void showListBtnClicked(View v) {
+        mLoadingViewSwitcher.setDisplayedChild(1);
+    }
+
+    @OnClick(R.id.btn_show_map)
+    public void showMapBtnClicked(View v) {
+        mLoadingViewSwitcher.setDisplayedChild(2);
     }
 
     class ReadAllSensorRecords extends AsyncTask<Void, Void, SensorReadingDataWithSections> {
@@ -172,10 +182,10 @@ public class ListDataActivity extends AppCompatActivity {
                 previousTimestampDay = dayTimestamp;
             }
             ArrayList<SensorReadingRecord> resultList = new ArrayList<>();
-            int MAX_VALUES = 3;
+            int MAX_VALUES = 10;
             // Filter values
             int listSize = dayKeyValues.size();
-            for(String s : dayKeyValues){
+            for (String s : dayKeyValues) {
                 resultList.add(null);
                 LinkedList<SensorReadingRecord> srrNewList = new LinkedList<>(dailyReadingsMap.get(s));
                 int toIndex = Math.min(srrNewList.size(), MAX_VALUES);
@@ -184,7 +194,7 @@ public class ListDataActivity extends AppCompatActivity {
                 Collections.sort(orderedSublist, new Comparator<SensorReadingRecord>() {
                     @Override
                     public int compare(SensorReadingRecord lhs, SensorReadingRecord rhs) {
-                        return (lhs.getTimeStartedSensing()<rhs.getTimeStartedSensing())?-1:1;
+                        return (lhs.getTimeStartedSensing() < rhs.getTimeStartedSensing()) ? -1 : 1;
                     }
                 });
                 resultList.addAll(orderedSublist);
@@ -193,30 +203,30 @@ public class ListDataActivity extends AppCompatActivity {
             return new SensorReadingDataWithSections(dailyReadingsMap.size(), resultList);
         }
 
-        private void addToMap(HashMap<String, List<SensorReadingRecord>> hashMap, String key, SensorReadingRecord value){
+        private void addToMap(HashMap<String, List<SensorReadingRecord>> hashMap, String key, SensorReadingRecord value) {
             List<SensorReadingRecord> list = new LinkedList<>();
-            if(hashMap.get(key) != null){
+            if (hashMap.get(key) != null) {
                 list = hashMap.get(key);
             }
             hashMap.put(key, list);
             list.add(value);
         }
+
         @Override
         protected void onPostExecute(SensorReadingDataWithSections resultData) {
             super.onPostExecute(resultData);
 
-            if(resultData == null || resultData.getDataList() == null || resultData.getDataList().size()<=1){
+            if (resultData == null || resultData.getDataList() == null || resultData.getDataList().size() <= 1) {
                 mLoadingViewSwitcher.setDisplayedChild(0);
                 mListDataStatusViewSwitcher.setDisplayedChild(1);
                 return;
-            }
-            else {
+            } else {
                 mLoadingViewSwitcher.setDisplayedChild(1);
             }
 
             ArrayList<MarkerDataHolder> markerDataHolderArrayList = new ArrayList<>();
-            for(SensorReadingRecord srr : resultData.getDataList()){
-                if(srr != null) {
+            for (SensorReadingRecord srr : resultData.getDataList()) {
+                if (srr != null) {
                     markerDataHolderArrayList.add(srr.getMarkerDataHolder());
                 }
             }
@@ -225,16 +235,6 @@ public class ListDataActivity extends AppCompatActivity {
             mAdapter.setAdapterData(resultData);
             //mStatusTextView.setText(s);
         }
-    }
-
-    @OnClick(R.id.btn_show_list)
-    public void showListBtnClicked(View v){
-        mLoadingViewSwitcher.setDisplayedChild(1);
-    }
-
-    @OnClick(R.id.btn_show_map)
-    public void showMapBtnClicked(View v){
-        mLoadingViewSwitcher.setDisplayedChild(2);
     }
 
     class SensorRecordReceiver extends BroadcastReceiver {

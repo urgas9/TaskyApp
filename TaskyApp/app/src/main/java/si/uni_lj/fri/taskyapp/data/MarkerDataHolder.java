@@ -13,26 +13,7 @@ import si.uni_lj.fri.taskyapp.sensor.Constants;
 /**
  * Created by urgas9 on 28/02/2016, OpenHours.com
  */
-public class MarkerDataHolder implements Parcelable{
-    public String time;
-    public int label;
-    public LatLng latLng;
-    public long dbRecordId;
-
-    public MarkerDataHolder(long dbRecordId, long timeMillis, int label, double lat, double lng){
-        super();
-        this.dbRecordId = dbRecordId;
-        setTime(timeMillis);
-        this.label = label;
-        this.latLng = new LatLng(lat, lng);;
-    }
-    protected MarkerDataHolder(Parcel in) {
-        time = in.readString();
-        label = in.readInt();
-        latLng = in.readParcelable(LatLng.class.getClassLoader());
-        dbRecordId = in.readLong();
-    }
-
+public class MarkerDataHolder implements Parcelable {
     public static final Creator<MarkerDataHolder> CREATOR = new Creator<MarkerDataHolder>() {
         @Override
         public MarkerDataHolder createFromParcel(Parcel in) {
@@ -44,8 +25,28 @@ public class MarkerDataHolder implements Parcelable{
             return new MarkerDataHolder[size];
         }
     };
+    public String time;
+    public int label;
+    public LatLng latLng;
+    public long dbRecordId;
 
-    public void setTime(long timeMillis){
+    public MarkerDataHolder(long dbRecordId, long timeMillis, int label, double lat, double lng) {
+        super();
+        this.dbRecordId = dbRecordId;
+        setTime(timeMillis);
+        this.label = label;
+        this.latLng = new LatLng(lat, lng);
+        ;
+    }
+
+    protected MarkerDataHolder(Parcel in) {
+        time = in.readString();
+        label = in.readInt();
+        latLng = in.readParcelable(LatLng.class.getClassLoader());
+        dbRecordId = in.readLong();
+    }
+
+    public void setTime(long timeMillis) {
         SimpleDateFormat formatFullDate = new SimpleDateFormat(Constants.DATE_FORMAT_TO_SHOW_FULL);
         time = formatFullDate.format(new Date(timeMillis));
     }

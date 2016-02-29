@@ -28,9 +28,9 @@
                 android:id="@+id/sensing_title_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_vertical_margin_small"
                 android:text="@string/sensing"
-                android:textSize="@dimen/text_title_size"
-                android:layout_marginBottom="@dimen/activity_vertical_margin_small"/>
+                android:textSize="@dimen/text_title_size"/>
 
             <ViewSwitcher
                 android:id="@+id/start_sensing_view_switcher"
@@ -65,12 +65,13 @@
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
                         android:text="starting after:"
                         android:textSize="@dimen/text_subtitle_size"/>
+
                     <RadioGroup
                         android:id="@+id/radio_group_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:layout_marginTop="@dimen/activity_vertical_margin_small"
+                        android:orientation="horizontal"
                         android:weightSum="9">
 
                         <RadioButton
@@ -191,8 +192,8 @@
 
             <Button
                 android:id="@+id/btn_statistics"
-                android:layout_gravity="center"
                 android:layout_width="match_parent"
+                android:layout_gravity="center"
                 android:text="Check statistics"
                 style="@style/FlatButton"/>
         </LinearLayout>
