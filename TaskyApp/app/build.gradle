@@ -11,6 +11,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 
 repositories {
+    maven { url 'http://dl.bintray.com/populov/maven' } // Used for viewpagerindicator
+    mavenCentral()
     maven { url 'https://maven.fabric.io/public' }
 }
 
@@ -56,13 +58,15 @@ dependencies {
     compile 'com.google.android.gms:play-services-maps:8.4.0'
     compile 'com.google.android.gms:play-services-fitness:8.4.0'
     compile 'com.google.maps.android:android-maps-utils:0.4+'
-    compile 'com.google.code.gson:gson:2.6.1'
+    compile 'com.google.code.gson:gson:2.6.2'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.github.satyan:sugar:1.4'
     compile 'com.github.channguyen:rsv:1.0.1'
     compile 'com.mikhaellopez:circularprogressbar:1.1.0'
     compile 'com.github.rey5137:material:1.2.2'
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.2'
+    compile 'com.viewpagerindicator:library:2.4.1@aar'
+
 }
 
 // Fixed compile error - GPlay version conflict

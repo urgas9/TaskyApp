@@ -40,4 +40,12 @@
         <item name="android:layout_marginLeft">@dimen/btn_flat_margin</item>
         <item name="android:layout_marginRight">@dimen/btn_flat_margin</item>
     </style>
+
+    <style name="CustomCirclePageIndicator">
+        <item name="fillColor">@color/primary</item>
+        <item name="pageColor">@color/grey_background</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="radius">7dp</item>
+        <item name="centered">true</item>
+    </style>
 </resources>
