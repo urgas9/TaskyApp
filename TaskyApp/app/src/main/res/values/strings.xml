@@ -98,4 +98,6 @@
     <string name="next">Next</string>
     <string name="finish">Finish</string>
     <string name="anonymous_mail">anonymous@anonymous.com</string>
+    <string name="not_vaid_email">Email is not valid.</string>
+    <string name="press_once_more_to_exit">Press once more to exit app!</string>
 </resources>

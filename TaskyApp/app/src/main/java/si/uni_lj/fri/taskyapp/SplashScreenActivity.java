@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import si.uni_lj.fri.taskyapp.splash.SplashScreenFragment;
 
-public class SplashScreenActivity extends AppCompatActivity {
+public class SplashScreenActivity extends AppCompatActivity implements SplashScreenFragment.OnSplashScreenFragmentActionListener {
 
     public static final int ALL_PAGES = 3;
     @Bind(R.id.pager)
@@ -65,14 +65,27 @@ public class SplashScreenActivity extends AppCompatActivity {
         });
     }
 
+    private SplashScreenFragment getCurrentlyVisibleFragment(){
+        Fragment pageFragment = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.pager + ":" + mPager.getCurrentItem());
+        // based on the current position you can then cast the page to the correct
+        // class and call the method:
+        if (pageFragment != null && pageFragment instanceof SplashScreenFragment) {
+            return (SplashScreenFragment)pageFragment;
+        }
+        return null;
+    }
     @OnClick(R.id.btn_splash_next)
     public void onNextClick(View v){
         if(mPager.getCurrentItem() < (mPager.getChildCount()-1)) {
             mPager.setCurrentItem(mPager.getCurrentItem() + 1);
         }
         else{
-            Intent startAppIntent = new Intent(this, MainActivity.class);
-            startActivity(startAppIntent);
+            SplashScreenFragment curFragment = getCurrentlyVisibleFragment();
+            if(curFragment != null && curFragment.canGoNext()) {
+                Intent startAppIntent = new Intent(this, MainActivity.class);
+                startActivity(startAppIntent);
+                finish();
+            }
         }
 
     }
@@ -82,6 +95,11 @@ public class SplashScreenActivity extends AppCompatActivity {
         if(mPager.getCurrentItem() > 0){
             mPager.setCurrentItem(mPager.getCurrentItem()-1);
         }
+    }
+
+    @Override
+    public void onEmailInput() {
+        onNextClick(null);
     }
 
     class SplashViewPagerAdapter extends FragmentPagerAdapter {

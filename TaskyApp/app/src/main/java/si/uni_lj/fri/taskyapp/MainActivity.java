@@ -48,8 +48,9 @@ import si.uni_lj.fri.taskyapp.global.PermissionsHelper;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
 import si.uni_lj.fri.taskyapp.sensor.SensingInitiator;
 import si.uni_lj.fri.taskyapp.service.AggregateDataDailyService;
+import si.uni_lj.fri.taskyapp.splash.SplashScreenFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     private static final String TAG = "MainActivity";
 
@@ -76,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
     private BroadcastReceiver mNewSensorRecordReceiver;
     private CountDownTimer mCountdownTimer;
     private GoogleApiClient mGoogleApiClient;
+    private int mNumsPressesToExitApp = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,6 +134,26 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mNumsPressesToExitApp = 2;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mNumsPressesToExitApp > 1){
+            mNumsPressesToExitApp--;
+            Snackbar.make(this.findViewById(R.id.main_coordinator_layout), R.string.press_once_more_to_exit, Snackbar.LENGTH_LONG).show();
+            return;
+        }
+        else{
+            finish();
+        }
+        super.onBackPressed();
 
     }
 
