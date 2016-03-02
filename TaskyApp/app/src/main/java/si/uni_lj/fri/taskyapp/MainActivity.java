@@ -48,7 +48,6 @@ import si.uni_lj.fri.taskyapp.global.PermissionsHelper;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
 import si.uni_lj.fri.taskyapp.sensor.SensingInitiator;
 import si.uni_lj.fri.taskyapp.service.AggregateDataDailyService;
-import si.uni_lj.fri.taskyapp.splash.SplashScreenFragment;
 
 public class MainActivity extends AppCompatActivity{
 
@@ -125,7 +124,7 @@ public class MainActivity extends AppCompatActivity{
 
             }
         });
-        buildFitnessClient();
+        //TODO: buildFitnessClient();
         mTaskComplexitySeekBar.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -176,8 +175,8 @@ public class MainActivity extends AppCompatActivity{
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
+        super.onPause();
         try {
             unregisterReceiver(mNewSensorRecordReceiver);
         } catch (IllegalArgumentException e) {
@@ -294,7 +293,7 @@ public class MainActivity extends AppCompatActivity{
                     mFinishedSensingBtn.setVisibility(View.VISIBLE);
                     isCountDownRunning = false;
                     new SensingInitiator(getBaseContext()).startSensingOnUserRequest(selectedComplexity);
-                    Toast.makeText(getBaseContext(), "Started labeled (" + selectedComplexity + ") sensing.", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getBaseContext(), "Started labeled (" + selectedComplexity + ") sensing.", Toast.LENGTH_LONG).show();
                 }
             }.start();
 

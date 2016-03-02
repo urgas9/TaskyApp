@@ -15,10 +15,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -194,15 +196,42 @@ public class FullScreenMapFragment extends Fragment implements OnMapReadyCallbac
     }
 
     private void moveCameraToFitData(ArrayList<LatLng> latLngArray) {
-        LatLngBounds.Builder bounds = new LatLngBounds.Builder();
+        final LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
         for (LatLng latLng : latLngArray) {
             if (latLng.latitude != 0 && latLng.longitude != 0) {
-                bounds.include(latLng);
+                boundsBuilder.include(latLng);
                 //mMap.addMarker(new MarkerOptions().position(latLng));
             }
         }
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), mMapFrame.getMeasuredWidth(), mMapFrame.getMeasuredHeight(), 120));
+        mMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+            @Override
+            public void onCameraChange(CameraPosition cameraPosition) {
+                // Setting bounds to not exceed max zoom
+                LatLngBounds bounds = boundsBuilder.build();
+                double maxZoom = 0.002;
+                LatLng sw = bounds.southwest;
+                LatLng ne = bounds.northeast;
+                double deltaLat = Math.abs(sw.latitude - ne.latitude);
+                double deltaLon = Math.abs(sw.longitude - ne.longitude);
+
+                if (deltaLat < maxZoom) {
+                    sw = new LatLng(sw.latitude - (maxZoom - deltaLat / 2), sw.longitude);
+                    ne = new LatLng(ne.latitude + (maxZoom - deltaLat / 2), ne.longitude);
+                    bounds = new LatLngBounds(sw, ne);
+                } else if (deltaLon < maxZoom) {
+                    sw = new LatLng(sw.latitude, sw.longitude - (maxZoom - deltaLon / 2));
+                    ne = new LatLng(ne.latitude, ne.longitude + (maxZoom - deltaLon / 2));
+                    bounds = new LatLngBounds(sw, ne);
+                }
+
+                CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, AppHelper.dpToPx(getContext(), 60));
+                mMap.animateCamera(cu);
+
+                mMap.setOnCameraChangeListener(null);
+            }
+        });
+        //mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(boundsBuilder.build(), mMapFrame.getMeasuredWidth(), mMapFrame.getMeasuredHeight(), 70));
     }
 
     private void showDefaultView(boolean updateCamera) {

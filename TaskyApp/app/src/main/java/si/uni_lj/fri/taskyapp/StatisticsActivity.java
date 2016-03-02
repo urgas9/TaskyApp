@@ -154,11 +154,24 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
         protected void onPostExecute(DailyAggregatedData dailyAggregatedData) {
             super.onPostExecute(dailyAggregatedData);
 
-            String dailyBodyString = String.format(getString(R.string.daily_statistics_body), dailyAggregatedData.getAllReadings(), dailyAggregatedData.getCountLabeled());
+            StringBuilder sb = new StringBuilder("<html>");
+            sb.append(getString(R.string.daily_statistics_body_1));
+            sb.append(" <b>");
+            sb.append(dailyAggregatedData.getAllReadings());
+            sb.append("</b> ");
+            sb.append(getString(R.string.daily_statistics_body_2));
+            sb.append(" <b>");
+            sb.append(dailyAggregatedData.getCountLabeled());
+            sb.append(".</b> ");
             if (dailyAggregatedData.getCountLabeled() > 0) {
-                dailyBodyString += String.format(getString(R.string.daily_statistics_body_2), dailyAggregatedData.getAverageLabelTaskText(getBaseContext()));
+                sb.append(getString(R.string.daily_statistics_body_3));
+                sb.append(" <b>");
+                sb.append(dailyAggregatedData.getAverageLabelTaskText(getBaseContext()));
+                sb.append("</b>.");
             }
-            mDailyStatisticsBodyTv.setText(Html.fromHtml(dailyBodyString));
+            sb.append("</html>");
+            Log.d(TAG, "dailyBodyString: " + sb.toString());
+            mDailyStatisticsBodyTv.setText(Html.fromHtml(sb.toString()));
             mCard1ViewSwitcher.setDisplayedChild(1);
         }
     }

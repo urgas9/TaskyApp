@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import si.uni_lj.fri.taskyapp.R;
 import si.uni_lj.fri.taskyapp.SplashScreenActivity;
 import si.uni_lj.fri.taskyapp.global.AppHelper;
@@ -32,6 +34,16 @@ public class SplashScreenFragment extends Fragment {
 
     private EditText mEmailEditText;
     SharedPreferences mPrefs;
+
+
+    @Bind(R.id.icon_splash)
+    ImageView mIconView;
+    @Bind(R.id.title)
+    TextView mTitleText;
+    @Bind(R.id.content1)
+    TextView mText1;
+    @Bind(R.id.content2)
+    TextView mText2;
 
     public SplashScreenFragment() {
         // Required empty public constructor
@@ -83,25 +95,31 @@ public class SplashScreenFragment extends Fragment {
         }
         else{
             root = inflater.inflate(R.layout.fragment_splash_info, container, false);
-            if(mCurrentPage == 0){
-                setupFirstFragment(root);
-            }
-            else{
-                setupSecondFragment(root);
+            ButterKnife.bind(this, root);
+            switch (mCurrentPage){
+                case 0:
+                    setupWelcomeFragment();
+                    break;
+                case 1:
+                    setupCollectFragment();
+                    break;
+                case 2:
+                    setupNeedYouFragment();
+                    break;
+                case 3:
+                    setupSafeFragment();
+                    break;
             }
         }
 
         return root;
     }
 
-    private void setupFirstFragment(View root){
-        ImageView iconIv = (ImageView)root.findViewById(R.id.icon_splash);
-        iconIv.setImageResource(R.drawable.ic_school_white_48dp);
-
-    }
-
     public boolean canGoNext(){
         if(mEmailFragment){
+            if(mEmailEditText.getText().toString().isEmpty()){
+                return true;
+            }
             if(AppHelper.isValidEmail(mEmailEditText.getText().toString())){
                 mPrefs.edit().putString("profile_email_text", mEmailEditText.getText().toString()).apply();
                 return true;
@@ -112,10 +130,36 @@ public class SplashScreenFragment extends Fragment {
         return true;
     }
 
-    private void setupSecondFragment(View root){
-        ImageView iconIv = (ImageView)root.findViewById(R.id.icon_splash);
-        iconIv.setImageResource(R.drawable.ic_lock_white_48dp);
+    private void setupWelcomeFragment(){
+        mIconView.setImageResource(R.drawable.ic_school_white_48dp);
+        mTitleText.setText("Welcome!");
+        mText1.setText("Thanks for installing TaskyApp!");
+        mText2.setText("This app is part of a research project for a master thesis at Faculty of Computer and Information Science, University of Ljubljana.");
     }
+
+    private void setupCollectFragment() {
+        mIconView.setImageResource(R.drawable.ic_developer_board_white_48dp);
+        mTitleText.setText("Collecting data...");
+        mText1.setText("App will collect data from your phone's sensors periodically, trying to detect your daily tasks.");
+        mText2.setText("We will sense you accelerometer, location, nearby bluetooth and WiFi devices and environment noise loudness.");
+    }
+
+    private void setupNeedYouFragment(){
+        mIconView.setImageResource(R.drawable.ic_sentiment_very_satisfied_white_48dp);
+        mTitleText.setText("...but we need you!");
+        mText1.setText("We will kindly ask you to label detected tasks on scale from very easy to very hard.");
+        mText2.setText("Very easy means that you are still able to interact with phone (play games for instance) " +
+                "whereas hard means you are very busy - you don't have time even to turn your screen on.");
+    }
+
+    private void setupSafeFragment() {
+        mIconView.setImageResource(R.drawable.ic_vpn_lock_white_48dp);
+        mTitleText.setText("Safety first!");
+        mText1.setText("We need to send your data to server to learn from it...");
+        mText2.setText("... but don't worry! Your data is anonymous and will be stored safely on a faculty server.");
+    }
+
+
 
     // Container Activity must implement this interface
     public interface OnSplashScreenFragmentActionListener {

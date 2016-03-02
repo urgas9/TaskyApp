@@ -17,6 +17,7 @@ import java.util.Date;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import si.uni_lj.fri.taskyapp.LabelTaskActivity;
+import si.uni_lj.fri.taskyapp.ListDataActivity;
 import si.uni_lj.fri.taskyapp.R;
 import si.uni_lj.fri.taskyapp.data.SensorReadingDataWithSections;
 import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
@@ -66,6 +67,9 @@ public class ListDataRecyclerAdapter extends RecyclerView.Adapter {
             if (action == 0) {
                 dataList.remove(index);
                 notifyItemRemoved(index);
+                if(mActivity instanceof ListDataActivity){
+                    ((ListDataActivity) mActivity).noDataCallback();
+                }
             } else if (action == 1) {
                 SensorReadingRecord srr = SensorReadingRecord.findById(SensorReadingRecord.class, dbId);
                 dataList.set(index, srr);

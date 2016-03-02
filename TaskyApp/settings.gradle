@@ -1,1 +1,1 @@
-include ':app', ':SensorManager', ':SeekBarHint'
+include ':app', ':SensorManager'

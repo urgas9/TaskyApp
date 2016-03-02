@@ -126,6 +126,11 @@ public class ListDataActivity extends AppCompatActivity {
         getSupportFragmentManager().putFragment(outState, "mFullScreenMapContent", mFullScreenMapFragment);
     }
 
+    public void noDataCallback(){
+        mLoadingViewSwitcher.setDisplayedChild(0);
+        mListDataStatusViewSwitcher.setDisplayedChild(1);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.LABEL_TASK_REQUEST_CODE && resultCode == RESULT_OK) {

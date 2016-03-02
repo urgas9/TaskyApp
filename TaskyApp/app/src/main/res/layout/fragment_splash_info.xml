@@ -17,32 +17,31 @@
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:padding="@dimen/activity_horizontal_margin"
-            android:textColor="@color/primary"
-            android:text="Welcome!"/>
+            android:textColor="@color/primary"/>
+
+        <TextView
+            android:id="@+id/content1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="@dimen/activity_horizontal_margin"/>
 
         <ImageView
             android:id="@+id/icon_splash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:padding="@dimen/activity_horizontal_margin"
+            android:padding="20dp"
+            android:layout_margin="10dp"
             android:background="@drawable/circle_shape"
             android:src="@drawable/ic_school_white_48dp"/>
-        <TextView
-            android:id="@+id/content1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:padding="@dimen/activity_horizontal_margin"
-            android:text="This app is part of a research project for a master thesis at Faculty of Computer and Information Science."/>
 
         <TextView
             android:id="@+id/content2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="@dimen/activity_horizontal_margin"
-            android:textSize="18sp"
-            android:text="This app is part of a research project for a master thesis at Faculty of Computer and Information Science."/>
+            android:textSize="16sp"/>
 
     </LinearLayout>
 </FrameLayout>

@@ -19,7 +19,8 @@ import si.uni_lj.fri.taskyapp.splash.SplashScreenFragment;
 
 public class SplashScreenActivity extends AppCompatActivity implements SplashScreenFragment.OnSplashScreenFragmentActionListener {
 
-    public static final int ALL_PAGES = 3;
+    private static final String TAG = "SplashScreenActivity";
+    public static final int ALL_PAGES = 5;
     @Bind(R.id.pager)
     ViewPager mPager;
     @Bind(R.id.splash_circle_indicator)
@@ -36,7 +37,7 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
         ButterKnife.bind(this);
         mPager.setAdapter(new SplashViewPagerAdapter(getSupportFragmentManager()));
         mPageIndicator.setViewPager(mPager);
-        mPageIndicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -44,7 +45,7 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
 
             @Override
             public void onPageSelected(int position) {
-                if(position == (mPager.getChildCount() - 1)){
+                if(position == (ALL_PAGES - 1)){
                     mNextButton.setText(R.string.finish);
                 }
                 else{
@@ -76,7 +77,7 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
     }
     @OnClick(R.id.btn_splash_next)
     public void onNextClick(View v){
-        if(mPager.getCurrentItem() < (mPager.getChildCount()-1)) {
+        if(mPager.getCurrentItem() < (ALL_PAGES-1)) {
             mPager.setCurrentItem(mPager.getCurrentItem() + 1);
         }
         else{

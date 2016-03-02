@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:padding="@dimen/activity_horizontal_margin"
-            android:text="We will be glad if you can provide us an email so we can send you research's end results."/>
+            android:text="We will be glad if you can provide us an email so we can send you end research results."/>
 
         <EditText
             android:id="@+id/splash_edit_email"

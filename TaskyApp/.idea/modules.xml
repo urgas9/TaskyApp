@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SeekBarHint/SeekBarHint.iml" filepath="$PROJECT_DIR$/SeekBarHint/SeekBarHint.iml" />
       <module fileurl="file://$PROJECT_DIR$/SensorManager/SensorManager.iml" filepath="$PROJECT_DIR$/SensorManager/SensorManager.iml" />
       <module fileurl="file://$PROJECT_DIR$/TaskyApp.iml" filepath="$PROJECT_DIR$/TaskyApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />

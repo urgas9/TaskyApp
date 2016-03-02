@@ -81,8 +81,9 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="server_url">http://sc-rudno.si/test_api/</string>
     <string name="sensing">New task</string>
-    <string name="daily_statistics_body">We have <b>%d</b> sensor readings of your activity during the day, of which you have labeled <b>%d</b>.</string>
-    <string name="daily_statistics_body_2">Your average task complexity for today is <b>%s</b>.</string>
+    <string name="daily_statistics_body_1">We have</string>
+    <string name="daily_statistics_body_2">sensor readings of your activity during the day, of which you have labeled</string>
+    <string name="daily_statistics_body_3">Your average task complexity for today is</string>
     <string name="statistics_today_title">Statistics for today</string>
     <string name="not_labeled">Not labeled</string>
     <string name="heat_map">Heat map</string>
