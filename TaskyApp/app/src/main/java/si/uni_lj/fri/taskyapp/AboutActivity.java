@@ -15,7 +15,7 @@ public class AboutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        TextView tv = (TextView)findViewById(R.id.version_tv);
+        TextView tv = (TextView) findViewById(R.id.version_tv);
         String versionText = "<strong>" + getResources().getString(R.string.app_name) + "</strong>" +
                 "<br />v" + BuildConfig.VERSION_NAME;
         versionText += " (" + BuildConfig.VERSION_CODE + ")";

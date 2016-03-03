@@ -26,16 +26,7 @@ public class SplashScreenFragment extends Fragment {
     private static final String ARG_CURRENT_PAGE = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String TAG = "SplashScreenFragment";
-
-    // TODO: Rename and change types of parameters
-    private int mCurrentPage;
-    private boolean mEmailFragment;
-    private OnSplashScreenFragmentActionListener mCallback;
-
-    private EditText mEmailEditText;
     SharedPreferences mPrefs;
-
-
     @Bind(R.id.icon_splash)
     ImageView mIconView;
     @Bind(R.id.title)
@@ -44,6 +35,11 @@ public class SplashScreenFragment extends Fragment {
     TextView mText1;
     @Bind(R.id.content2)
     TextView mText2;
+    // TODO: Rename and change types of parameters
+    private int mCurrentPage;
+    private boolean mEmailFragment;
+    private OnSplashScreenFragmentActionListener mCallback;
+    private EditText mEmailEditText;
 
     public SplashScreenFragment() {
         // Required empty public constructor
@@ -79,7 +75,7 @@ public class SplashScreenFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root;
-        if(mCurrentPage == (SplashScreenActivity.ALL_PAGES - 1)) {
+        if (mCurrentPage == (SplashScreenActivity.ALL_PAGES - 1)) {
             mEmailFragment = true;
             root = inflater.inflate(R.layout.fragment_provide_info, container, false);
             mEmailEditText = (EditText) root.findViewById(R.id.splash_edit_email);
@@ -92,11 +88,10 @@ public class SplashScreenFragment extends Fragment {
                     return false;
                 }
             });
-        }
-        else{
+        } else {
             root = inflater.inflate(R.layout.fragment_splash_info, container, false);
             ButterKnife.bind(this, root);
-            switch (mCurrentPage){
+            switch (mCurrentPage) {
                 case 0:
                     setupWelcomeFragment();
                     break;
@@ -115,12 +110,12 @@ public class SplashScreenFragment extends Fragment {
         return root;
     }
 
-    public boolean canGoNext(){
-        if(mEmailFragment){
-            if(mEmailEditText.getText().toString().isEmpty()){
+    public boolean canGoNext() {
+        if (mEmailFragment) {
+            if (mEmailEditText.getText().toString().isEmpty()) {
                 return true;
             }
-            if(AppHelper.isValidEmail(mEmailEditText.getText().toString())){
+            if (AppHelper.isValidEmail(mEmailEditText.getText().toString())) {
                 mPrefs.edit().putString("profile_email_text", mEmailEditText.getText().toString()).apply();
                 return true;
             }
@@ -130,7 +125,7 @@ public class SplashScreenFragment extends Fragment {
         return true;
     }
 
-    private void setupWelcomeFragment(){
+    private void setupWelcomeFragment() {
         mIconView.setImageResource(R.drawable.ic_school_white_48dp);
         mTitleText.setText("Welcome!");
         mText1.setText("Thanks for installing TaskyApp!");
@@ -144,7 +139,7 @@ public class SplashScreenFragment extends Fragment {
         mText2.setText("We will sense you accelerometer, location, nearby bluetooth and WiFi devices and environment noise loudness.");
     }
 
-    private void setupNeedYouFragment(){
+    private void setupNeedYouFragment() {
         mIconView.setImageResource(R.drawable.ic_sentiment_very_satisfied_white_48dp);
         mTitleText.setText("...but we need you!");
         mText1.setText("We will kindly ask you to label detected tasks on scale from very easy to very hard.");
@@ -159,13 +154,6 @@ public class SplashScreenFragment extends Fragment {
         mText2.setText("... but don't worry! Your data is anonymous and will be stored safely on a faculty server.");
     }
 
-
-
-    // Container Activity must implement this interface
-    public interface OnSplashScreenFragmentActionListener {
-        void onEmailInput();
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -178,5 +166,10 @@ public class SplashScreenFragment extends Fragment {
             throw new ClassCastException(context.toString()
                     + " must implement OnSplashScreenFragmentActionListener");
         }
+    }
+
+    // Container Activity must implement this interface
+    public interface OnSplashScreenFragmentActionListener {
+        void onEmailInput();
     }
 }

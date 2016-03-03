@@ -67,7 +67,7 @@ public class ListDataRecyclerAdapter extends RecyclerView.Adapter {
             if (action == 0) {
                 dataList.remove(index);
                 notifyItemRemoved(index);
-                if(mActivity instanceof ListDataActivity){
+                if (mActivity instanceof ListDataActivity) {
                     ((ListDataActivity) mActivity).noDataCallback();
                 }
             } else if (action == 1) {

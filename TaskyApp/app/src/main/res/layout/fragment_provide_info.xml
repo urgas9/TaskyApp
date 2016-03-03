@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".splash.SplashScreenFragment" >
+    tools:context=".splash.SplashScreenFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,28 +15,28 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
             android:padding="@dimen/activity_horizontal_margin"
+            android:text="Almost done!"
             android:textColor="@color/primary"
-            android:text="Almost done!"/>
+            android:textSize="30sp"/>
 
         <TextView
             android:id="@+id/content1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
             android:padding="@dimen/activity_horizontal_margin"
-            android:text="We will be glad if you can provide us an email so we can send you end research results."/>
+            android:text="We will be glad if you can provide us an email so we can send you end research results."
+            android:textSize="18sp"/>
 
         <EditText
             android:id="@+id/splash_edit_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:singleLine="true"
+            android:layout_margin="@dimen/activity_horizontal_margin"
+            android:hint="@string/anonymous_mail"
             android:imeOptions="actionNext"
             android:inputType="textEmailAddress"
-            android:hint="@string/anonymous_mail"
-            android:layout_margin="@dimen/activity_horizontal_margin"/>
+            android:singleLine="true"/>
 
 
         <!--<TextView

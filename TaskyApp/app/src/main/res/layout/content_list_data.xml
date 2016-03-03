@@ -71,8 +71,8 @@
             android:id="@id/list_data_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_above="@id/btn_show_map_layout"/>
+            android:layout_above="@id/btn_show_map_layout"
+            android:layout_alignParentTop="true"/>
 
     </RelativeLayout>
 

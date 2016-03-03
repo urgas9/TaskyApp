@@ -156,12 +156,12 @@ public class AppHelper {
         return false;
     }
 
-    public static void showExplainNotificationsDialog(Activity activity){
+    public static void showExplainNotificationsDialog(Activity activity) {
         String[] taskComplexities = activity.getResources().getStringArray(R.array.task_complexities_array);
         String[] taskDescriptions = activity.getResources().getStringArray(R.array.task_complexities_description_array);
 
         String resultString = "<html>";
-        for(int i = 1; i < taskComplexities.length; i++){
+        for (int i = 1; i < taskComplexities.length; i++) {
             resultString += "<b>&#8226; " + taskComplexities[i] + "</b>: " + taskDescriptions[i] + "<br />";
         }
         resultString += "</html>";
@@ -176,6 +176,7 @@ public class AppHelper {
                     }
                 }).show();
     }
+
     public static int dpToPx(Context mContext, int dp) {
         DisplayMetrics displayMetrics = mContext.getResources().getDisplayMetrics();
         int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));

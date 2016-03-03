@@ -49,7 +49,7 @@ import si.uni_lj.fri.taskyapp.sensor.Constants;
 import si.uni_lj.fri.taskyapp.sensor.SensingInitiator;
 import si.uni_lj.fri.taskyapp.service.AggregateDataDailyService;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
@@ -144,12 +144,11 @@ public class MainActivity extends AppCompatActivity{
 
     @Override
     public void onBackPressed() {
-        if(mNumsPressesToExitApp > 1){
+        if (mNumsPressesToExitApp > 1) {
             mNumsPressesToExitApp--;
             Snackbar.make(this.findViewById(R.id.main_coordinator_layout), R.string.press_once_more_to_exit, Snackbar.LENGTH_LONG).show();
             return;
-        }
-        else{
+        } else {
             finish();
         }
         super.onBackPressed();
@@ -184,12 +183,12 @@ public class MainActivity extends AppCompatActivity{
     }
 
     /**
-     *  Build a {@link GoogleApiClient} that will authenticate the user and allow the application
-     *  to connect to Fitness APIs. The scopes included should match the scopes your app needs
-     *  (see documentation for details). Authentication will occasionally fail intentionally,
-     *  and in those cases, there will be a known resolution, which the OnConnectionFailedListener()
-     *  can address. Examples of this include the user never having signed in before, or having
-     *  multiple accounts on the device and needing to specify which account to use, etc.
+     * Build a {@link GoogleApiClient} that will authenticate the user and allow the application
+     * to connect to Fitness APIs. The scopes included should match the scopes your app needs
+     * (see documentation for details). Authentication will occasionally fail intentionally,
+     * and in those cases, there will be a known resolution, which the OnConnectionFailedListener()
+     * can address. Examples of this include the user never having signed in before, or having
+     * multiple accounts on the device and needing to specify which account to use, etc.
      */
     private void buildFitnessClient() {
         if (mGoogleApiClient == null && PermissionsHelper.hasAllRequiredPermissions(this)) {
@@ -304,7 +303,7 @@ public class MainActivity extends AppCompatActivity{
     }
 
     @OnClick({R.id.task_complexity_info_iv, R.id.seekbar_value_text})
-    public void showInfoDialog(View v){
+    public void showInfoDialog(View v) {
         AppHelper.showExplainNotificationsDialog(this);
     }
 

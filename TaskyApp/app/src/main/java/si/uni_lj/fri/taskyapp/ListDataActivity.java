@@ -124,7 +124,7 @@ public class ListDataActivity extends AppCompatActivity {
         getSupportFragmentManager().putFragment(outState, "mFullScreenMapContent", mFullScreenMapFragment);
     }
 
-    public void noDataCallback(){
+    public void noDataCallback() {
         mLoadingViewSwitcher.setDisplayedChild(0);
         mListDataStatusViewSwitcher.setDisplayedChild(1);
     }

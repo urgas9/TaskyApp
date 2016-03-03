@@ -141,7 +141,7 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
     }
 
     @OnClick({R.id.task_complexity_info_iv, R.id.seekbar_value_text})
-    public void showInfoDialog(View v){
+    public void showInfoDialog(View v) {
         AppHelper.showExplainNotificationsDialog(this);
     }
 

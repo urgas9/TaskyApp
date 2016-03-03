@@ -19,8 +19,8 @@ import si.uni_lj.fri.taskyapp.splash.SplashScreenFragment;
 
 public class SplashScreenActivity extends AppCompatActivity implements SplashScreenFragment.OnSplashScreenFragmentActionListener {
 
-    private static final String TAG = "SplashScreenActivity";
     public static final int ALL_PAGES = 5;
+    private static final String TAG = "SplashScreenActivity";
     @Bind(R.id.pager)
     ViewPager mPager;
     @Bind(R.id.splash_circle_indicator)
@@ -29,6 +29,7 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
     Button mNextButton;
     @Bind(R.id.btn_splash_back)
     Button mBackButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,16 +46,14 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
 
             @Override
             public void onPageSelected(int position) {
-                if(position == (ALL_PAGES - 1)){
+                if (position == (ALL_PAGES - 1)) {
                     mNextButton.setText(R.string.finish);
-                }
-                else{
+                } else {
                     mNextButton.setText(R.string.next);
                 }
-                if(position == 0){
+                if (position == 0) {
                     mBackButton.setVisibility(View.INVISIBLE);
-                }
-                else{
+                } else {
                     mBackButton.setVisibility(View.VISIBLE);
                 }
             }
@@ -66,23 +65,23 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
         });
     }
 
-    private SplashScreenFragment getCurrentlyVisibleFragment(){
+    private SplashScreenFragment getCurrentlyVisibleFragment() {
         Fragment pageFragment = getSupportFragmentManager().findFragmentByTag("android:switcher:" + R.id.pager + ":" + mPager.getCurrentItem());
         // based on the current position you can then cast the page to the correct
         // class and call the method:
         if (pageFragment != null && pageFragment instanceof SplashScreenFragment) {
-            return (SplashScreenFragment)pageFragment;
+            return (SplashScreenFragment) pageFragment;
         }
         return null;
     }
+
     @OnClick(R.id.btn_splash_next)
-    public void onNextClick(View v){
-        if(mPager.getCurrentItem() < (ALL_PAGES-1)) {
+    public void onNextClick(View v) {
+        if (mPager.getCurrentItem() < (ALL_PAGES - 1)) {
             mPager.setCurrentItem(mPager.getCurrentItem() + 1);
-        }
-        else{
+        } else {
             SplashScreenFragment curFragment = getCurrentlyVisibleFragment();
-            if(curFragment != null && curFragment.canGoNext()) {
+            if (curFragment != null && curFragment.canGoNext()) {
                 Intent startAppIntent = new Intent(this, MainActivity.class);
                 startActivity(startAppIntent);
                 finish();
@@ -92,9 +91,9 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
     }
 
     @OnClick(R.id.btn_splash_back)
-    public void onBackClicked(View v){
-        if(mPager.getCurrentItem() > 0){
-            mPager.setCurrentItem(mPager.getCurrentItem()-1);
+    public void onBackClicked(View v) {
+        if (mPager.getCurrentItem() > 0) {
+            mPager.setCurrentItem(mPager.getCurrentItem() - 1);
         }
     }
 

@@ -2,10 +2,11 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="match_parent"
              android:layout_height="match_parent">
+
     <LinearLayout
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/seekbar_value_text"
@@ -33,6 +34,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|top"
         android:padding="6dp"
-        android:tint="@color/accent"
-        android:src="@drawable/ic_info_outline_white_18dp"/>
+        android:src="@drawable/ic_info_outline_white_18dp"
+        android:tint="@color/accent"/>
 </FrameLayout>
