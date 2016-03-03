@@ -45,7 +45,7 @@
             android:layout_height="match_parent"
             android:padding="@dimen/activity_horizontal_margin"
             android:textSize="18sp"
-            android:text="Do you agree that your collected data will be send to our server located at faculty and used for research."/>-->
+            android:text="You can provide an e"/>-->
 
     </LinearLayout>
 </FrameLayout>

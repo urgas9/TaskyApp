@@ -303,6 +303,11 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
+    @OnClick(R.id.task_complexity_info_iv)
+    public void showInfoDialog(View v){
+        AppHelper.showExplainNotificationsDialog(this);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

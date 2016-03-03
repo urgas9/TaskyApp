@@ -33,6 +33,14 @@
         <item>Pretty hard</item>
         <item>Very hard</item>
     </string-array>
+    <string-array name="task_complexities_description_array">
+        <item></item>
+        <item>Boring, I can still play games.</item>
+        <item>I am available to open a notification.</item>
+        <item>Notification will interrupt me, but I can read it.</item>
+        <item>I need to concentrate on the task.</item>
+        <item>Very busy, please don\'t interrupt!</item>
+    </string-array>
     <string name="title_activity_sensing">SensingActivity</string>
     <string name="detected_ambient_sound">Detected ambient sound:</string>
     <string name="time_sensed">Time sensed:</string>
@@ -101,4 +109,6 @@
     <string name="anonymous_mail">anonymous@anonymous.com</string>
     <string name="not_vaid_email">Email is not valid.</string>
     <string name="press_once_more_to_exit">Press once more to exit app!</string>
+    <string name="help">Help</string>
+    <string name="task_descriptions">Task descriptions</string>
 </resources>

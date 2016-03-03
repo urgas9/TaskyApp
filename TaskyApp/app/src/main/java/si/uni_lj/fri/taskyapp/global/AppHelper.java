@@ -1,6 +1,7 @@
 package si.uni_lj.fri.taskyapp.global;
 
 import android.animation.ArgbEvaluator;
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -15,10 +16,13 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.maps.model.BitmapDescriptor;
@@ -152,6 +156,26 @@ public class AppHelper {
         return false;
     }
 
+    public static void showExplainNotificationsDialog(Activity activity){
+        String[] taskComplexities = activity.getResources().getStringArray(R.array.task_complexities_array);
+        String[] taskDescriptions = activity.getResources().getStringArray(R.array.task_complexities_description_array);
+
+        String resultString = "<html>";
+        for(int i = 1; i < taskComplexities.length; i++){
+            resultString += "<b>&#8226; " + taskComplexities[i] + "</b>: " + taskDescriptions[i] + "<br />";
+        }
+        resultString += "</html>";
+        new MaterialDialog.Builder(activity)
+                .content(Html.fromHtml(resultString))
+                .title(R.string.task_descriptions)
+                .positiveText(R.string.ok)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(MaterialDialog dialog, DialogAction which) {
+                        dialog.dismiss();
+                    }
+                }).show();
+    }
     public static int dpToPx(Context mContext, int dp) {
         DisplayMetrics displayMetrics = mContext.getResources().getDisplayMetrics();
         int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));

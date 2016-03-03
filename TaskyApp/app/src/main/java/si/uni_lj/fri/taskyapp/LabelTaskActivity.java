@@ -29,6 +29,7 @@ import butterknife.OnClick;
 import si.uni_lj.fri.taskyapp.data.EnvironmentData;
 import si.uni_lj.fri.taskyapp.data.SensorReadingData;
 import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
+import si.uni_lj.fri.taskyapp.global.AppHelper;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
 
 public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -137,6 +138,11 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick(R.id.task_complexity_info_iv)
+    public void showInfoDialog(View v){
+        AppHelper.showExplainNotificationsDialog(this);
     }
 
     @Override
