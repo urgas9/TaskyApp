@@ -303,7 +303,7 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    @OnClick(R.id.task_complexity_info_iv)
+    @OnClick({R.id.task_complexity_info_iv, R.id.seekbar_value_text})
     public void showInfoDialog(View v){
         AppHelper.showExplainNotificationsDialog(this);
     }

@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.widget.RadioGroup;
 
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -132,10 +131,6 @@ public class GoogleMapFullScreenActivity extends AppCompatActivity {
         protected void onPostExecute(ArrayList<MarkerDataHolder> result) {
             super.onPostExecute(result);
             mMarkerDataHolderList = result;
-            ArrayList<LatLng> latLngs = new ArrayList<>();
-            for (MarkerDataHolder mdh : result) {
-                latLngs.add(mdh.latLng);
-            }
         }
     }
 }

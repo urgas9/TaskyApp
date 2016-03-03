@@ -110,7 +110,7 @@ public class SensingDecisionHelper {
         }
         ActivityData newActivityData = mNewSensorData.getActivityData();
         ActivityData oldActivityData = mOldSensorData.getActivityData();
-        if (newActivityData.getConfidence() < 90 || newActivityData.equals("Unknown")) {
+        if (newActivityData.getConfidence() < 90 || newActivityData.getActivityType().equals("Unknown")) {
             return false;
         }
         if (newActivityData.getActivityType().equals(oldActivityData.getActivityType())) {

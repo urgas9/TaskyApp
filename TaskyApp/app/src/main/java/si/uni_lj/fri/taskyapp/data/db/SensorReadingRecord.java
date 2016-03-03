@@ -127,7 +127,8 @@ public class SensorReadingRecord extends SugarRecord {
     @Override
     public boolean equals(Object o) {
         if (o instanceof SensorReadingRecord) {
-            return ((SensorReadingRecord) o).getId() == this.getId();
+            return ((SensorReadingRecord) o).getId() != null
+                    &&((SensorReadingRecord) o).getId().equals(this.getId());
         }
         return super.equals(o);
     }

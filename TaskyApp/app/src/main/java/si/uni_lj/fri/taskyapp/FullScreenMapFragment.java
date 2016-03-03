@@ -305,6 +305,7 @@ public class FullScreenMapFragment extends Fragment implements OnMapReadyCallbac
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
+            Log.e(TAG, context.toString() + " must implement OnFragmentInteractionListener");
             //TODO:
             /*throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");*/

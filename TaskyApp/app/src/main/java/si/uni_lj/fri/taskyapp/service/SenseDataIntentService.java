@@ -360,7 +360,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             return null;
         }
         for (ActivityData ad : mDetectedActivityList) {
-            if (mostProbableActivity == null || mostProbableActivity.getActivityType().equals(ad) && mostProbableActivity.getConfidence() > ad.getConfidence()) {
+            if (mostProbableActivity == null || mostProbableActivity.getActivityType().equals(ad.getActivityType()) && mostProbableActivity.getConfidence() > ad.getConfidence()) {
                 mostProbableActivity = ad;
             } else if (mostProbableActivity.equals(ad) && ad.getConfidence() > mostProbableActivity.getConfidence()) {
                 mostProbableActivity = ad;

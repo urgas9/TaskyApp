@@ -72,7 +72,7 @@ public class AppHelper {
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
-    public final static boolean isValidEmail(String target) {
+    public static boolean isValidEmail(String target) {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 
@@ -89,7 +89,7 @@ public class AppHelper {
         String line = null;
         try {
             while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
+                sb.append(line).append("\n");
             }
         } catch (IOException e) {
             e.printStackTrace();

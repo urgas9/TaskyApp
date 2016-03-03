@@ -36,7 +36,6 @@ public class MarkerDataHolder implements Parcelable {
         setTime(timeMillis);
         this.label = label;
         this.latLng = new LatLng(lat, lng);
-        ;
     }
 
     protected MarkerDataHolder(Parcel in) {
