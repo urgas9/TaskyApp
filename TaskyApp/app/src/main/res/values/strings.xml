@@ -35,9 +35,9 @@
     </string-array>
     <string-array name="task_complexities_description_array">
         <item></item>
-        <item>Boring, I can still play games.</item>
-        <item>I am available to open a notification.</item>
-        <item>Notification will interrupt me, but I can read it.</item>
+        <item>Boring, I could still actively use my phone.</item>
+        <item>I have enough time to open notification.</item>
+        <item>Notifications will interrupt me, but I can read them.</item>
         <item>I need to concentrate on the task.</item>
         <item>Very busy, please don\'t interrupt!</item>
     </string-array>

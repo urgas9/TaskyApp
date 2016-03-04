@@ -2,6 +2,7 @@ package si.uni_lj.fri.taskyapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -15,6 +16,7 @@ import com.viewpagerindicator.CirclePageIndicator;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import si.uni_lj.fri.taskyapp.sensor.Constants;
 import si.uni_lj.fri.taskyapp.splash.SplashScreenFragment;
 
 public class SplashScreenActivity extends AppCompatActivity implements SplashScreenFragment.OnSplashScreenFragmentActionListener {
@@ -33,6 +35,10 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean(Constants.PREFS_WENT_THROUGH_TUTORIAL_SPLASH, false)){
+            //TODO: Uncomment
+            //startMainActivity();
+        }
         setContentView(R.layout.activity_splash_screen);
 
         ButterKnife.bind(this);
@@ -75,6 +81,12 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
         return null;
     }
 
+    private void startMainActivity(){
+        Intent startAppIntent = new Intent(this, MainActivity.class);
+        startActivity(startAppIntent);
+        finish();
+    }
+
     @OnClick(R.id.btn_splash_next)
     public void onNextClick(View v) {
         if (mPager.getCurrentItem() < (ALL_PAGES - 1)) {
@@ -82,9 +94,8 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
         } else {
             SplashScreenFragment curFragment = getCurrentlyVisibleFragment();
             if (curFragment != null && curFragment.canGoNext()) {
-                Intent startAppIntent = new Intent(this, MainActivity.class);
-                startActivity(startAppIntent);
-                finish();
+                PreferenceManager.getDefaultSharedPreferences(this.getBaseContext()).edit().putBoolean(Constants.PREFS_WENT_THROUGH_TUTORIAL_SPLASH, true).apply();
+                startMainActivity();
             }
         }
 

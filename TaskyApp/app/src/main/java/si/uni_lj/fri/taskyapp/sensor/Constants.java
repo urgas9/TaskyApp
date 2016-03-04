@@ -28,6 +28,7 @@ public class Constants {
 
     public static final String PREFS_LAST_TIME_SENT_TO_SERVER = "PREFS_LAST_TIME_SENT_TO_SERVER";
     public static final int MAX_INTERVAL_BETWEEN_TWO_SERVER_POSTS = 1000 * 60 * 60 * 4;
+    public static final String PREFS_WENT_THROUGH_TUTORIAL_SPLASH = "PREFS_WENT_THROUGH_TUTORIAL_SPLASH";
 
     public static final int LABEL_TASK_REQUEST_CODE = 1000;
     public static final int SHOW_NOTIFICATION_REMINDER_ID = 901;
