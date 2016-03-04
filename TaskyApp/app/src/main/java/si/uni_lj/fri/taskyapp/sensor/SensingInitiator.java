@@ -42,11 +42,11 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
 
     public void senseWithDefaultSensingConfiguration() {
 
+        senseOnLocationChanged();
         senseOnActivityRecognition();
 
         //AppHelper.setRepeatedNotification(mContext, 0, 13, 20, 22);
 
-        //senseOnLocationChanged();
     }
 
     public void senseOnActivityRecognition() {
@@ -84,7 +84,7 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     private GoogleApiClient buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(mContext)
                 .addApi(ActivityRecognition.API)
-                        //.addApi(LocationServices.API)
+                .addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();

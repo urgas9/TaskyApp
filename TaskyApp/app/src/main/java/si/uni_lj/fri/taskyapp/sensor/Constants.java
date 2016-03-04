@@ -5,7 +5,7 @@ package si.uni_lj.fri.taskyapp.sensor;
  */
 public class Constants {
     public static final long APPROXIMATE_INTERVAL_MILLIS = 60000 * 30;//30000;
-    public static final long MIN_INTERVAL_MILLIS = 1000 * 60 * 15; // Five mins is the minimum time required between two sensing
+    public static final long MIN_INTERVAL_MILLIS = 1000 * 60 * 10; // Five mins is the minimum time required between two sensing
     public static final long MAX_INTERVAL_WITHOUT_SENSING_DATA_IN_MILLIS = (long) (APPROXIMATE_INTERVAL_MILLIS * 1.2);
     public static final long SENSING_WINDOW_LENGTH_MILLIS = 10 * 1000;
 

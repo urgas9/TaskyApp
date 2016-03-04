@@ -191,7 +191,6 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
         protected void onPostExecute(BarData data) {
             super.onPostExecute(data);
 
-
             mCard2ViewSwitcher.setDisplayedChild(1);
             mDailyChart.setData(data);
             mDailyChart.setMaxVisibleValueCount(7);
