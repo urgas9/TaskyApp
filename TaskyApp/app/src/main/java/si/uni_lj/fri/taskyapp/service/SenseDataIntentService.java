@@ -5,9 +5,11 @@ import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.BatteryManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
@@ -240,6 +242,22 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         EnvironmentData environmentData = new EnvironmentData();
         environmentData.setWifiTurnedOn(SensorsHelper.isWifiEnabled(getBaseContext()));
         environmentData.setBluetoothTurnedOn(SensorsHelper.isBluetoothEnabled());
+
+        IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
+        Intent batteryStatus = getBaseContext().registerReceiver(null, ifilter);
+        if(batteryStatus != null) {
+            int status = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+            boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
+                    status == BatteryManager.BATTERY_STATUS_FULL;
+            environmentData.setIsBatteryCharging(isCharging);
+            Log.d(TAG, "Battery charging status: " + isCharging);
+            /*int chargePlug = batteryStatus.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
+            boolean usbCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_USB;
+            boolean acCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_AC;*/
+        }
+        else{
+            Log.d(TAG, "Cannot get battery charging status!");
+        }
 
         while (sensorThreadsManager.moreResultsAvailable()) {
             Object sensingData;

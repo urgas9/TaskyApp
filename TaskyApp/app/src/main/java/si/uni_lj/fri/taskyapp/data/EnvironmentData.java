@@ -16,6 +16,9 @@ public class EnvironmentData {
     @SerializedName("bluetooth_turned_on")
     private boolean bluetoothTurnedOn;
 
+    @SerializedName("battery_charging")
+    private Boolean isBatteryCharging;
+
     @SerializedName("average_light")
     private float averageLightPercentageValue;
 
@@ -59,6 +62,14 @@ public class EnvironmentData {
         this.bluetoothTurnedOn = bluetoothTurnedOn;
     }
 
+    public Boolean isBatteryCharging() {
+        return isBatteryCharging;
+    }
+
+    public void setIsBatteryCharging(Boolean isBatteryCharging) {
+        this.isBatteryCharging = isBatteryCharging;
+    }
+
     @Override
     public String toString() {
         return "EnvironmentData{" +
@@ -66,6 +77,7 @@ public class EnvironmentData {
                 ", wifiTurnedOn=" + wifiTurnedOn +
                 ", nBluetoothDevicesNearby=" + nBluetoothDevicesNearby +
                 ", bluetoothTurnedOn=" + bluetoothTurnedOn +
+                ", isBatteryCharging=" + isBatteryCharging +
                 ", averageLightPercentageValue=" + averageLightPercentageValue +
                 '}';
     }
