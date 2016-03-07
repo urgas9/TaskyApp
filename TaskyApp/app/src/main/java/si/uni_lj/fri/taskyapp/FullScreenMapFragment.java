@@ -168,6 +168,9 @@ public class FullScreenMapFragment extends Fragment implements OnMapReadyCallbac
         mLegendLl.setVisibility(View.INVISIBLE);
         ArrayList<LatLng> latLngArray = getLatLngArray();
 
+        if(latLngArray.isEmpty()){
+            return;
+        }
         TileProvider mProvider = new HeatmapTileProvider.Builder()
                 .data(latLngArray)
                 .build();

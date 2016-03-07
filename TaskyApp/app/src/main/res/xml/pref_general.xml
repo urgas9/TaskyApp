@@ -14,7 +14,7 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/pref_title_display_name"/>-->
-        <EditTextPreference
+        <EditTextPreferencef
             android:capitalize="words"
             android:defaultValue="@string/pref_default_email_name"
             android:inputType="textEmailAddress"

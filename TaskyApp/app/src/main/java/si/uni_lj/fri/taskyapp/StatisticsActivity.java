@@ -209,7 +209,9 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
 
             ArrayList<MarkerDataHolder> resultList = new ArrayList<>();
             for (SensorReadingRecord srr : sensorReadings) {
-                resultList.add(srr.getMarkerDataHolder());
+                if(srr.getLocationLat() != 0.0 && srr.getLocationLng() != 0.0) {
+                    resultList.add(srr.getMarkerDataHolder());
+                }
             }
             return resultList;
         }

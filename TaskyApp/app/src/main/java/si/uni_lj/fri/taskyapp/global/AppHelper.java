@@ -150,10 +150,7 @@ public class AppHelper {
     public static boolean isConnectedToWifi(Context ctx) {
         ConnectivityManager cm = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        if (activeNetwork != null && activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
-            return true;
-        }
-        return false;
+        return activeNetwork != null && activeNetwork.getType() == ConnectivityManager.TYPE_WIFI;
     }
 
     public static void showExplainNotificationsDialog(Activity activity) {
@@ -178,6 +175,9 @@ public class AppHelper {
     }
 
     public static int dpToPx(Context mContext, int dp) {
+        if(mContext == null){
+            return 0;
+        }
         DisplayMetrics displayMetrics = mContext.getResources().getDisplayMetrics();
         int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
         return px;
@@ -207,7 +207,7 @@ public class AppHelper {
         return calendar;
     }
 
-    public static void aggregateDailyData() {
+    public static List<DailyAggregatedData> aggregateDailyData() {
         final String TAG = "aggregateDailyData";
 
         Calendar calendar = Calendar.getInstance();
@@ -251,6 +251,7 @@ public class AppHelper {
         }
 
         Log.d(TAG, "Finished with daily data aggregation.");
+        return resultsList;
     }
 
     public static void showNotification(Context context) {

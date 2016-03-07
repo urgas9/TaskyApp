@@ -49,6 +49,7 @@ import si.uni_lj.fri.taskyapp.sensor.Constants;
 import si.uni_lj.fri.taskyapp.sensor.SensingInitiator;
 import si.uni_lj.fri.taskyapp.service.AggregateDataDailyService;
 
+//TODO: Check for slow performance if not on WiFi
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";

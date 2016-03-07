@@ -35,7 +35,6 @@ import com.ubhave.sensormanager.data.pull.ESBluetoothDevice;
 import com.ubhave.sensormanager.data.pull.MicrophoneData;
 import com.ubhave.sensormanager.data.pull.WifiData;
 import com.ubhave.sensormanager.data.pull.WifiScanResult;
-import com.ubhave.sensormanager.data.push.ConnectionStrengthData;
 import com.ubhave.sensormanager.data.push.ScreenData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
@@ -80,9 +79,6 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
     private long mCountLightValues = 0;
     private SensingDecisionHelper mSensingHelper;
 
-    private float mSumConnectionStrengthValues;
-    private long mCountConnectionStrengthValues;
-
     private List<ActivityData> mDetectedActivityList;
 
     private SharedPreferences mDefaultPrefs;
@@ -99,6 +95,8 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             return;
         }
         mDefaultPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        showNotification(-1);
+
         String policy = intent.getStringExtra("sensing_policy");
         int userLabel = intent.getIntExtra("user_label", -2);
         if (userLabel > 0) {
@@ -106,9 +104,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         }
         mSensingHelper = new SensingDecisionHelper(getApplicationContext(), userLabel);
 
-        mSumConnectionStrengthValues = 0;
         mSumLightValues = 0;
-        mCountConnectionStrengthValues = 0;
         mCountLightValues = 0;
 
         if (!mSensingHelper.decideOnMinimumIntervalTimeDifference()) {
@@ -333,11 +329,13 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         //Send Broadcast to be listen in MainActivity
         this.sendBroadcast(i);
 
+        sensorThreadsManager.dispose();
         // Shutting down everything
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
             ActivityRecognition.ActivityRecognitionApi.removeActivityUpdates(mGoogleApiClient, getPendingIntentForActivityRecognition());
             mGoogleApiClient.disconnect();
         }
+
     }
 
     private void showNotification(long id) {
@@ -358,7 +356,9 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
                 }
                 break;
             case "2":
-                AppHelper.showNotification(getBaseContext(), id);
+                if(id > 0) {
+                    AppHelper.showNotification(getBaseContext(), id);
+                }
                 break;
             default:
                 if (calendar.get(Calendar.HOUR_OF_DAY) >= Constants.HOUR_SEND_NOTIFICATION_LATE &&
@@ -418,9 +418,6 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             //Log.d(TAG, "LightData, max range: " + ((LightData) data).getValue());
             mCountLightValues++;
             mSumLightValues += (((LightData) data).getValue() / ((LightData) data).getMaxRange());
-        } else if (data instanceof ConnectionStrengthData) {
-            mCountConnectionStrengthValues++;
-            mSumConnectionStrengthValues += ((ConnectionStrengthData) data).getStrength();
         }
     }
 

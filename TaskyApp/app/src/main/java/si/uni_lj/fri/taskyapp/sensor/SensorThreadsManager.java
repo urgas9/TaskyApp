@@ -48,6 +48,12 @@ public class SensorThreadsManager {
         return null;
     }
 
+    public void dispose(){
+        mThreadPool.shutdownNow();
+        mThreadPool = null;
+        mCompletionService = null;
+    }
+
     public boolean moreResultsAvailable() {
         return numOfSubmittedThreads > 0;
     }

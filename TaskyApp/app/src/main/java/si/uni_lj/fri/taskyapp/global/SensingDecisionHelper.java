@@ -89,17 +89,21 @@ public class SensingDecisionHelper {
         boolean continueSensing = true;
         if (mNewSensorData != null && mOldSensorData != null) {
             if (newSensorData.getActivityData() != null && newSensorData.getLocationData() != null) {
-                if (!(continueSensing = decideOnLocationData())) {
-                    continueSensing = decideOnActivityData();
+                if (!(continueSensing = decideOnActivityData())) {
+                    Log.d(TAG, "activity data return false, now decide on location data");
+                    continueSensing = decideOnLocationData();
                 }
+                Log.d(TAG, "activity data return true (both available)");
             } else if (newSensorData.getActivityData() != null) {
+                Log.d(TAG, "decide on activity data");
                 continueSensing = decideOnActivityData();
             } else if (newSensorData.getLocationData() != null) {
+                Log.d(TAG, "decide on location data");
                 continueSensing = decideOnLocationData();
             }
-
         }
 
+        Log.d(TAG, "continueSensing = " + continueSensing);
         markDecisionToSense(continueSensing);
         return continueSensing;
     }
@@ -108,9 +112,14 @@ public class SensingDecisionHelper {
         if (mOldSensorData == null || mNewSensorData == null || mOldSensorData.getActivityData() == null || mNewSensorData.getActivityData() == null) {
             return true;
         }
+
         ActivityData newActivityData = mNewSensorData.getActivityData();
         ActivityData oldActivityData = mOldSensorData.getActivityData();
-        if (newActivityData.getConfidence() < 90 || newActivityData.getActivityType().equals("Unknown")) {
+
+        Log.d(TAG, "Old Activity data: " + oldActivityData.toString());
+        Log.d(TAG, "New Activity data: " + newActivityData.toString());
+
+        if (newActivityData.getConfidence() < 80 || newActivityData.getActivityType().equals("Unknown")) {
             return false;
         }
         if (newActivityData.getActivityType().equals(oldActivityData.getActivityType())) {
@@ -142,6 +151,9 @@ public class SensingDecisionHelper {
         }
         LocationData newLocData = mNewSensorData.getLocationData();
         LocationData oldLocData = mOldSensorData.getLocationData();
+
+        Log.d(TAG, "Old Location data: " + oldLocData.toString());
+        Log.d(TAG, "New Location data: " + newLocData.toString());
         // Do nothing if we are too close to previously sensed location
         if (newLocData.getAccuracy() <= Constants.LOCATION_ACCURACY_AT_LEAST &&
                 newLocData.getDistanceTo(oldLocData) < Constants.LOCATION_MIN_DISTANCE_TO_LAST_LOC) {
