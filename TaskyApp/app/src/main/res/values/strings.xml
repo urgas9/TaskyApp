@@ -78,6 +78,18 @@
         <item>2</item>
     </string-array>
 
+    <string-array name="participate_labels_array">
+        <item>Participate</item>
+        <item>Opt-out, keep collected anonymous data on server.</item>
+        <item>Opt-out, delete all data on server.</item>
+    </string-array>
+
+    <string-array name="participate_value_array">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+
     <!-- Example settings for Notifications -->
     <string name="pref_header_notifications">Notifications</string>
 
@@ -87,6 +99,7 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+    <string name="pref_title_participate">Participate in research</string>
     <string name="server_url">http://sc-rudno.si/test_api/</string>
     <string name="sensing">New task</string>
     <string name="daily_statistics_body_1">We have</string>
@@ -111,4 +124,5 @@
     <string name="press_once_more_to_exit">Press once more to exit app!</string>
     <string name="help">Help</string>
     <string name="task_descriptions">Task descriptions</string>
+    <string name="pref_summary_participate">If you want to opt-out switch this off.</string>
 </resources>

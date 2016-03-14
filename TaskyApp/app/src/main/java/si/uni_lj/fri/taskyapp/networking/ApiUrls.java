@@ -11,7 +11,8 @@ import si.uni_lj.fri.taskyapp.R;
  */
 public enum ApiUrls {
 
-    POST_RESULTS("/index.php?action=post_data");
+    POST_RESULTS("/index.php?action=post_data"),
+    POST_OPT_OUT("/index.php?action=opt_out");
 
     private String url;
 

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -21,7 +22,16 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+
+import si.uni_lj.fri.taskyapp.data.network.AuthRequest;
+import si.uni_lj.fri.taskyapp.data.network.OptOutResponse;
 import si.uni_lj.fri.taskyapp.global.AppHelper;
+import si.uni_lj.fri.taskyapp.networking.ApiUrls;
+import si.uni_lj.fri.taskyapp.networking.ConnectionHelper;
+import si.uni_lj.fri.taskyapp.networking.ConnectionResponse;
+import si.uni_lj.fri.taskyapp.sensor.SensingInitiator;
 
 /**
  * A {@link PreferenceActivity} that presents a set of application settings. On
@@ -36,26 +46,29 @@ import si.uni_lj.fri.taskyapp.global.AppHelper;
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
     private static Context mContext;
+
+    private static void setPreferenceTextSummaryOnValue(ListPreference listPreference, String stringValue){
+        // For list preferences, look up the correct display value in
+        // the preference's 'entries' list.
+        int index = listPreference.findIndexOfValue(stringValue);
+
+        // Set the summary to reflect the new value.
+        listPreference.setSummary(
+                index >= 0
+                        ? listPreference.getEntries()[index]
+                        : null);
+    }
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
      */
     private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
         @Override
-        public boolean onPreferenceChange(Preference preference, Object value) {
-            String stringValue = value.toString();
+        public boolean onPreferenceChange(final Preference preference, Object value) {
+            final String stringValue = value.toString();
 
             if (preference instanceof ListPreference) {
-                // For list preferences, look up the correct display value in
-                // the preference's 'entries' list.
-                ListPreference listPreference = (ListPreference) preference;
-                int index = listPreference.findIndexOfValue(stringValue);
-
-                // Set the summary to reflect the new value.
-                preference.setSummary(
-                        index >= 0
-                                ? listPreference.getEntries()[index]
-                                : null);
+                setPreferenceTextSummaryOnValue((ListPreference)preference, stringValue);
 
             } else if (preference instanceof RingtonePreference) {
                 // For ringtone preferences, look up the correct display value
@@ -78,7 +91,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                         preference.setSummary(name);
                     }
                 }
-
             } else {
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
@@ -130,6 +142,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         // Display the fragment as the main content.
         getFragmentManager().beginTransaction().replace(android.R.id.content,
                 new GeneralPreferenceFragment()).commit();
+
     }
 
     /**
@@ -183,6 +196,53 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             //bindPreferenceSummaryToValue(findPreference("profile_name_text"));
             bindPreferenceSummaryToValue(findPreference("profile_email_text"));
             bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
+            bindPreferenceSummaryToValue(findPreference("participate_preference"));
+            ListPreference participatePreference = (ListPreference)findPreference("participate_preference");
+
+            participatePreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(final Preference preference, Object newValue) {
+                    final String stringValue = newValue.toString();
+                    if (preference.getKey().equals("participate_preference")) {
+                        if (!stringValue.equals("0")) {
+                            String content = "Are you sure you want to opt-out? We are very sad to see you go :( \n" +
+                                    "TaskyApp will stop collecting data.";
+                            if(stringValue.equals("2")){
+                                content = "We need your data to finish this research. Data is completely anonymous and we would like to keep it. \n\n" +
+                                        "Would you really like to opt-out and delete collected data? You can opt-out without deleting data.";
+                            }
+                            new MaterialDialog.Builder(getActivity())
+                                    .content(content)
+                                    .positiveText("Yes")
+                                    .negativeText("No")
+                                    .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(MaterialDialog dialog, DialogAction which) {
+                                            if (stringValue.equals("2")) {
+                                                new OptOutAsyncTask(mContext).execute();
+                                            }
+
+                                            setPreferenceTextSummaryOnValue((ListPreference) preference, stringValue);
+                                            return;
+                                        }
+                                    })
+                                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                        @Override
+                                        public void onClick(MaterialDialog dialog, DialogAction which) {
+                                            dialog.dismiss();
+                                        }
+                                    })
+                                    .show();
+                        }
+                        else{
+                            new SensingInitiator(mContext).senseWithDefaultSensingConfiguration();
+                            setPreferenceTextSummaryOnValue((ListPreference)preference, stringValue);
+                        }
+                    }
+                    return true;
+                }
+            });
+
         }
 
         @Override
@@ -193,6 +253,35 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 return true;
             }
             return super.onOptionsItemSelected(item);
+        }
+    }
+
+    static class OptOutAsyncTask extends AsyncTask<Void, Void, ConnectionResponse<OptOutResponse>>{
+        private Context appContext;
+
+        public OptOutAsyncTask(Context context){
+            super();
+            this.appContext = context.getApplicationContext();
+        }
+        @Override
+        protected ConnectionResponse<OptOutResponse> doInBackground(Void... params) {
+
+            AuthRequest request = new AuthRequest(appContext);
+            return ConnectionHelper.postHttpDataCustomUrl(
+                    appContext,
+                    ApiUrls.getApiCall(appContext, ApiUrls.POST_OPT_OUT),
+                    request,
+                    OptOutResponse.class);
+        }
+
+        @Override
+        protected void onPostExecute(ConnectionResponse<OptOutResponse> optOutResponseConnectionResponse) {
+            super.onPostExecute(optOutResponseConnectionResponse);
+
+            if(!optOutResponseConnectionResponse.isSuccess()
+                    || !optOutResponseConnectionResponse.getContent().isSuccess()){
+                Toast.makeText(appContext, "Opt-out failed. Please check you internet connection.", Toast.LENGTH_LONG).show();
+            }
         }
     }
 

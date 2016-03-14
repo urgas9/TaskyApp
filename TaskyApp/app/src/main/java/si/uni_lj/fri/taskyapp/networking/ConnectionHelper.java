@@ -6,7 +6,6 @@ import android.util.Log;
 import com.google.gson.Gson;
 
 import java.io.BufferedWriter;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -107,7 +106,7 @@ public class ConnectionHelper {
                 }
             }
             ncr.setResponseCode(conn.getResponseCode());
-        } catch (IOException | IllegalStateException e) {
+        } catch (Exception e) {
             Log.e(LOG_TAG, "Cannot post data to server!");
             Log.e(LOG_TAG, "Message: " + e.getMessage());
             ncr.setResponseCode(-1);

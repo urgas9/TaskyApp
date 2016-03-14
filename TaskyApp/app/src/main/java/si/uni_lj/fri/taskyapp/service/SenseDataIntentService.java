@@ -56,6 +56,7 @@ import si.uni_lj.fri.taskyapp.global.AppHelper;
 import si.uni_lj.fri.taskyapp.global.SensingDecisionHelper;
 import si.uni_lj.fri.taskyapp.global.SensorsHelper;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
+import si.uni_lj.fri.taskyapp.sensor.SensingInitiator;
 import si.uni_lj.fri.taskyapp.sensor.SensorCallableGenerator;
 import si.uni_lj.fri.taskyapp.sensor.SensorThreadsManager;
 
@@ -93,6 +94,9 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
         if (intent == null) {
             return;
+        }
+        if(!SensingInitiator.isUserParticipating(getBaseContext())){
+            Log.d(TAG, "Service: User is not participating, quit.");
         }
         mDefaultPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         showNotification(-1);

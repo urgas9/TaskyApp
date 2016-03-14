@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -50,6 +51,9 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     }
 
     public void senseOnActivityRecognition() {
+        if (!isUserParticipating(mContext)){
+            return;
+        }
         mWhichPolicy = SensingPolicy.ACTIVITY_UPDATES;
         if (mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
             buildGoogleApiClient().connect();
@@ -59,12 +63,26 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     }
 
     public void senseOnLocationChanged() {
+        if (!isUserParticipating(mContext)){
+            return;
+        }
         mWhichPolicy = SensingPolicy.LOCATION_UPDATES;
+
         if (mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
             buildGoogleApiClient().connect();
         } else {
             requestLocationUpdates();
         }
+    }
+    public static boolean isUserParticipating(Context mContext){
+        boolean participating = PreferenceManager.getDefaultSharedPreferences(mContext).getString("participate_preference", "0").equals("0");
+        if(!participating){
+            Log.d(TAG, "User is not participating, don't start sensing.");
+        }
+        else{
+            Log.d(TAG, "User is participating, start sensing.");
+        }
+        return participating;
     }
 
     public void senseOnInterval() {

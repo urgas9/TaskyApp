@@ -14,8 +14,7 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/pref_title_display_name"/>-->
-        <EditTextPreferencef
-            android:capitalize="words"
+        <EditTextPreference
             android:defaultValue="@string/pref_default_email_name"
             android:inputType="textEmailAddress"
             android:key="profile_email_text"
@@ -23,6 +22,14 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/pref_title_email"/>
+
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/participate_labels_array"
+            android:entryValues="@array/participate_value_array"
+            android:key="participate_preference"
+            android:title="How actively do you want to participate in this research?"/>
+
     </PreferenceCategory>
     <PreferenceCategory
         android:icon="@drawable/ic_notifications_black_24dp"
