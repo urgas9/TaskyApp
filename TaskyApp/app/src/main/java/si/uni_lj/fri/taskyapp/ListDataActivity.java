@@ -108,6 +108,11 @@ public class ListDataActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        NavUtils.navigateUpFromSameTask(this);
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         try {

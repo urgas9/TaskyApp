@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,7 +89,11 @@ public class SplashScreenFragment extends Fragment {
                     return false;
                 }
             });
-        } else {
+        }
+        else if (mCurrentPage == (SplashScreenActivity.ALL_PAGES - 2)){
+            root = inflater.inflate(R.layout.fragment_terms_of_use, container, false);
+        }
+        else {
             root = inflater.inflate(R.layout.fragment_splash_info, container, false);
             ButterKnife.bind(this, root);
             switch (mCurrentPage) {
@@ -104,6 +109,8 @@ public class SplashScreenFragment extends Fragment {
                 case 3:
                     setupSafeFragment();
                     break;
+                default:
+                    Log.e(TAG, "Page not handled.");
             }
         }
 

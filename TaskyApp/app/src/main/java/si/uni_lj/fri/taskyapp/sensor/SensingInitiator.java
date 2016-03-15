@@ -129,7 +129,7 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     private PendingIntent getSensingServicePendingIntent() {
         return getSensingServicePendingIntent(-1);
     }
-
+    // TODO: Change Intent service to Service
     private PendingIntent getSensingServicePendingIntent(Integer userLabel) {
         Intent i = new Intent(mContext, SenseDataIntentService.class);
         if (mWhichPolicy == SensingPolicy.INTERVAL) {

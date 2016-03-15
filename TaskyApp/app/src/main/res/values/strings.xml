@@ -125,4 +125,18 @@
     <string name="help">Help</string>
     <string name="task_descriptions">Task descriptions</string>
     <string name="pref_summary_participate">If you want to opt-out switch this off.</string>
+    <string name="terms_of_use_text">By clicking \"I Agree\" below, I agree to participate in the NAME_OF_EXPERIMENT
+            study. \nThis application will collect data that samples my location, collocation with
+            other Bluetooth and WiFi devices, connectivity type, phone screen and battery status, accelerometer and microphone amplitude readings.
+            I understand that access to any data collected will only be allowed to FRI mobile computing
+            research team and only for the purpose of conducting these experiments. \n
+            Any published results of this study will only refer to anonymised and
+            obfuscated data, and aggregated statistics that do not reveal the identities of the
+            participants. As a participant I have the right to opt out of this study at any time during this
+            experiment by uninstalling the application. Moreover, I have the right to access any
+            information in the data set related to me, and request for any part of that data to be
+            removed.
+    </string>
+    <string name="i_agree">I agree</string>
+
 </resources>

@@ -21,7 +21,7 @@ import si.uni_lj.fri.taskyapp.splash.SplashScreenFragment;
 
 public class SplashScreenActivity extends AppCompatActivity implements SplashScreenFragment.OnSplashScreenFragmentActionListener {
 
-    public static final int ALL_PAGES = 5;
+    public static final int ALL_PAGES = 6;
     private static final String TAG = "SplashScreenActivity";
     @Bind(R.id.pager)
     ViewPager mPager;
@@ -54,6 +54,9 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
             public void onPageSelected(int position) {
                 if (position == (ALL_PAGES - 1)) {
                     mNextButton.setText(R.string.finish);
+                }
+                else if(position == (ALL_PAGES -2)){
+                    mNextButton.setText(getString(R.string.i_agree));
                 } else {
                     mNextButton.setText(R.string.next);
                 }
