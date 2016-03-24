@@ -86,12 +86,14 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
 
     public SenseDataIntentService() {
+
         super("SenseDataIntentService");
+        Log.e(TAG, "CONSTRUCTOR");
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
-
+        Log.e(TAG, "ON HANDLE INTENT");
         if (intent == null) {
             return;
         }

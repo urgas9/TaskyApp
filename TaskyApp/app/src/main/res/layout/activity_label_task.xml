@@ -79,6 +79,27 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/calendar_event_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|start"
+            android:text="@string/calendar_event"/>
+
+        <include layout="@layout/calendar_event_item"
+                 android:layout_width="0dp"
+                 android:layout_weight="1"
+                 android:layout_margin="5dp"
+                 android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight=".8"
@@ -101,14 +122,29 @@
 
     </LinearLayout>
 
-    <fragment
-        android:id="@+id/map_fragment"
-        android:name="si.uni_lj.fri.taskyapp.LabelTaskActivity"
-        class="com.google.android.gms.maps.MapFragment"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="6.2"
-        app:cameraZoom="13.5"/>
+        android:layout_weight="6.2">
+        <fragment
+            android:id="@+id/map_fragment"
+            android:name="si.uni_lj.fri.taskyapp.LabelTaskActivity"
+            class="com.google.android.gms.maps.MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cameraZoom="13.5"/>
+
+        <TextView
+            android:id="@+id/no_location_data_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/no_location_data_available"
+            android:gravity="center"
+            android:textSize="30sp"
+            android:clickable="false"
+            android:visibility="gone"
+            android:background="@color/half_white"/>
+    </FrameLayout>
 
     <include
         layout="@layout/seekbar_layout"

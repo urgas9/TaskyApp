@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ import si.uni_lj.fri.taskyapp.data.EnvironmentData;
 import si.uni_lj.fri.taskyapp.data.SensorReadingData;
 import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
 import si.uni_lj.fri.taskyapp.global.AppHelper;
+import si.uni_lj.fri.taskyapp.global.CalendarHelper;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
 
 public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -47,6 +49,13 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
     SeekBar mTaskComplexitySeekBar;
     @Bind(R.id.seekbar_value_text)
     TextView mSeekbarValueTv;
+    @Bind(R.id.no_location_data_tv)
+    TextView mNoLocationDataTv;
+    @Bind(R.id.calendar_event_layout)
+    LinearLayout mCalendarEventLayout;
+    @Bind(R.id.tv_event_on_calendar)
+    TextView mCalendarEventNameTv;
+
     Integer selectedTaskLabel = null;
     String[] arrayOfComplexities;
     private SensorReadingData mSensorReadingData;
@@ -112,6 +121,20 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
                 return false;
             }
         });
+
+        if(mSensorReadingData.getLocationData().getLng() == 0.0 && mSensorReadingData.getLocationData().getLat() == 0.0){
+            mNoLocationDataTv.setVisibility(View.VISIBLE);
+        }
+
+        String eventName = CalendarHelper.getEventNameAtTime(this, mSensorReadingData.getTimestampStarted());
+        if(eventName != null){
+            mCalendarEventLayout.setVisibility(View.VISIBLE);
+            mCalendarEventNameTv.setText(eventName);
+        }
+        else {
+            mCalendarEventLayout.setVisibility(View.GONE);
+        }
+
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }

@@ -2,7 +2,6 @@ package si.uni_lj.fri.taskyapp.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +20,7 @@ import si.uni_lj.fri.taskyapp.ListDataActivity;
 import si.uni_lj.fri.taskyapp.R;
 import si.uni_lj.fri.taskyapp.data.SensorReadingDataWithSections;
 import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
-import si.uni_lj.fri.taskyapp.global.AppHelper;
+import si.uni_lj.fri.taskyapp.global.CalendarHelper;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
 
 /**
@@ -131,13 +130,14 @@ public class ListDataRecyclerAdapter extends RecyclerView.Adapter {
                 }
             }
 
-
-            if (srr.getLabel() != null && srr.getLabel() > 0) {
-                ((GradientDrawable) ((NormalItemViewHolder) holder).mLabelCircle.getBackground())
-                        .setColor(AppHelper.getTaskColor(mActivity.getBaseContext(), srr.getLabel()));
-                ((NormalItemViewHolder) holder).mLabelCircle.setVisibility(View.VISIBLE);
+            String eventName = CalendarHelper.getEventNameAtTime(mActivity.getBaseContext(), srr.getTimeStartedSensing());
+            if (eventName != null) {
+                /*((GradientDrawable) ((NormalItemViewHolder) holder).mCalendarEvent.getBackground())
+                        .setColor(AppHelper.getTaskColor(mActivity.getBaseContext(), srr.getLabel()));*/
+                ((NormalItemViewHolder) holder).mCalendarEvent.setVisibility(View.VISIBLE);
+                ((NormalItemViewHolder) holder).mCalendarEvent.setText(eventName);
             } else {
-                ((NormalItemViewHolder) holder).mLabelCircle.setVisibility(View.GONE);
+                ((NormalItemViewHolder) holder).mCalendarEvent.setVisibility(View.GONE);
             }
 
         } else if (holder instanceof SectionHeaderViewHolder) {
@@ -174,8 +174,8 @@ public class ListDataRecyclerAdapter extends RecyclerView.Adapter {
         TextView mLocationTv;
         @Bind(R.id.item_activity_tv)
         TextView mActivityTv;
-        @Bind(R.id.label_circle)
-        View mLabelCircle;
+        @Bind(R.id.tv_event_on_calendar)
+        TextView mCalendarEvent;
 
         View contentView;
 

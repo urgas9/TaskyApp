@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.crashlytics.android.Crashlytics;
 import com.orm.SugarContext;
+import com.squareup.leakcanary.LeakCanary;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -18,6 +19,7 @@ public class TaskyAppApplication extends Application {
         SugarContext.init(getApplicationContext());
 
         Fabric.with(this, new Crashlytics());
+        LeakCanary.install(this);
     }
 
     @Override

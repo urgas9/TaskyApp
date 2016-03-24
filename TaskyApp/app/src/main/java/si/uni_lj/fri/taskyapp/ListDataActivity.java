@@ -87,11 +87,6 @@ public class ListDataActivity extends AppCompatActivity {
         mDataRecyclerView.addItemDecoration(new DividerItemDecoration(ContextCompat.getDrawable(this, R.drawable.divider)));
         mAdapter = new ListDataRecyclerAdapter(this);
         mDataRecyclerView.setAdapter(mAdapter);
-        //Filter the Intent and register broadcast receiver
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(Constants.ACTION_NEW_SENSOR_READING_RECORD);
-        mNewSensorRecordReceiver = new SensorRecordReceiver();
-        registerReceiver(new SensorRecordReceiver(), filter);
 
         new ReadAllSensorRecords().execute();
     }
@@ -113,12 +108,22 @@ public class ListDataActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
+        super.onPause();
         try {
             unregisterReceiver(mNewSensorRecordReceiver);
         } catch (IllegalArgumentException e) {
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Filter the Intent and register broadcast receiver
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constants.ACTION_NEW_SENSOR_READING_RECORD);
+        mNewSensorRecordReceiver = new SensorRecordReceiver();
+        registerReceiver(new SensorRecordReceiver(), filter);
     }
 
     @Override

@@ -125,7 +125,7 @@
     <string name="help">Help</string>
     <string name="task_descriptions">Task descriptions</string>
     <string name="pref_summary_participate">If you want to opt-out switch this off.</string>
-    <string name="terms_of_use_text">By clicking \"I Agree\" below, I agree to participate in the NAME_OF_EXPERIMENT
+    <string name="terms_of_use_text">By clicking \"I Agree\" below, I agree to participate in the TaskyApp
             study. \nThis application will collect data that samples my location, collocation with
             other Bluetooth and WiFi devices, connectivity type, phone screen and battery status, accelerometer and microphone amplitude readings.
             I understand that access to any data collected will only be allowed to FRI mobile computing
@@ -138,5 +138,8 @@
             removed.
     </string>
     <string name="i_agree">I agree</string>
+    <string name="terms_of_use">Terms of use</string>
+    <string name="no_location_data_available">No location data available</string>
+    <string name="calendar_event">Event on your calendar:</string>
 
 </resources>
