@@ -102,11 +102,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(Constants.ACTION_NEW_SENSOR_READING_RECORD);
-        mNewSensorRecordReceiver = new SensorRecordReceiver();
-        registerReceiver(new SensorRecordReceiver(), filter);
-
         AggregateDataDailyService.startService(this.getBaseContext());
         resetSeekBar();
         mTaskComplexitySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -141,6 +136,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mNumsPressesToExitApp = 2;
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Constants.ACTION_NEW_SENSOR_READING_RECORD);
+        mNewSensorRecordReceiver = new SensorRecordReceiver();
+        registerReceiver(mNewSensorRecordReceiver, filter);
     }
 
     @Override

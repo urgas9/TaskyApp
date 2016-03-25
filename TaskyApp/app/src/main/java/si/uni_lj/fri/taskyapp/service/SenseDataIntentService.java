@@ -274,9 +274,12 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             if (sensingData instanceof BluetoothData) {
                 ArrayList<ESBluetoothDevice> bDevices = ((BluetoothData) sensingData).getBluetoothDevices();
                 Log.d(TAG, "Got nearby bluetooth devices.");
+                LinkedList<String> btMacAddresses = new LinkedList<>();
                 for (ESBluetoothDevice esbd : bDevices) {
                     Log.d(TAG, "BT device: " + esbd.getBluetoothDeviceName());
+                    btMacAddresses.add(esbd.getBluetoothDeviceAddress());
                 }
+                environmentData.setBluetoothMacAddresses(btMacAddresses);
                 environmentData.setnBluetoothDevicesNearby(bDevices.size());
             } else if (sensingData instanceof AccelerometerData) {
                 float[] meanValues = SensorsHelper.getMeanAccelerometerValues(((AccelerometerData) sensingData).getSensorReadings());

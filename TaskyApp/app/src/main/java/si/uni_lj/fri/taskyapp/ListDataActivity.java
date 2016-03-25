@@ -123,7 +123,7 @@ public class ListDataActivity extends AppCompatActivity {
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constants.ACTION_NEW_SENSOR_READING_RECORD);
         mNewSensorRecordReceiver = new SensorRecordReceiver();
-        registerReceiver(new SensorRecordReceiver(), filter);
+        registerReceiver(mNewSensorRecordReceiver, filter);
     }
 
     @Override

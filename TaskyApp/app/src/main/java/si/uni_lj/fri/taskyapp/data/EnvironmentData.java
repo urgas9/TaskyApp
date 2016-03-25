@@ -2,6 +2,8 @@ package si.uni_lj.fri.taskyapp.data;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by urgas9 on 24. 01. 2016.
  */
@@ -15,6 +17,8 @@ public class EnvironmentData {
     private int nBluetoothDevicesNearby;
     @SerializedName("bluetooth_turned_on")
     private boolean bluetoothTurnedOn;
+    @SerializedName("bluetooth_mac_addresses")
+    private List<String> bluetoothMacAddresses;
 
     @SerializedName("battery_charging")
     private Boolean isBatteryCharging;
@@ -68,6 +72,14 @@ public class EnvironmentData {
 
     public void setIsBatteryCharging(Boolean isBatteryCharging) {
         this.isBatteryCharging = isBatteryCharging;
+    }
+
+    public List<String> getBluetoothMacAddresses() {
+        return bluetoothMacAddresses;
+    }
+
+    public void setBluetoothMacAddresses(List<String> bluetoothMacAddresses) {
+        this.bluetoothMacAddresses = bluetoothMacAddresses;
     }
 
     @Override

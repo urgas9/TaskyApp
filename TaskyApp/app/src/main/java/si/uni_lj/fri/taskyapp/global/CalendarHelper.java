@@ -84,7 +84,7 @@ public class CalendarHelper {
         Uri eventsUri = eventsUriBuilder.build();
         Cursor cursor = null;
         cursor = context.getContentResolver().query(eventsUri, new String[] { "calendar_id", "title", "description",
-                "dtstart", "dtend", "eventLocation", "duration" }, null, null, CalendarContract.Instances.DTSTART + " ASC");
+                "dtstart", "dtend", "eventLocation", "duration" }, null, null, CalendarContract.Instances.ALL_DAY + " ASC, " + CalendarContract.Instances.DTSTART + " ASC");
         if(cursor == null){
             Log.e(TAG, "Cursor is null!");
             return null;
