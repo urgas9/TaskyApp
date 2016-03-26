@@ -43,8 +43,8 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
 
     public void senseWithDefaultSensingConfiguration() {
 
-        senseOnLocationChanged();
-        //senseOnActivityRecognition();
+        //senseOnLocationChanged();
+        senseOnActivityRecognition();
         senseOnInterval();
 
         //AppHelper.setRepeatedNotification(mContext, 0, 13, 20, 22);
@@ -103,7 +103,7 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     private GoogleApiClient buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(mContext)
                 .addApi(ActivityRecognition.API)
-                .addApi(LocationServices.API)
+                //.addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
@@ -200,7 +200,7 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     public void stopAllUpdates() {
         Log.d(TAG, "Stopping all updates.");
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, getSensingServicePendingIntent());
+            //LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, getSensingServicePendingIntent());
             ActivityRecognition.ActivityRecognitionApi.removeActivityUpdates(mGoogleApiClient, getSensingServicePendingIntent());
         }
         AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);

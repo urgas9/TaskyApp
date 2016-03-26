@@ -35,13 +35,20 @@ import butterknife.OnClick;
 import si.uni_lj.fri.taskyapp.data.MarkerDataHolder;
 import si.uni_lj.fri.taskyapp.data.db.DailyAggregatedData;
 import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
+import si.uni_lj.fri.taskyapp.data.network.AuthRequest;
+import si.uni_lj.fri.taskyapp.data.network.LeaderboardMessageResponse;
 import si.uni_lj.fri.taskyapp.global.AppHelper;
+import si.uni_lj.fri.taskyapp.networking.ApiUrls;
+import si.uni_lj.fri.taskyapp.networking.ConnectionHelper;
+import si.uni_lj.fri.taskyapp.networking.ConnectionResponse;
 
 public class StatisticsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final String TAG = "StatisticsActivity";
     @Bind(R.id.daily_statistics_body_tv)
     TextView mDailyStatisticsBodyTv;
+    @Bind(R.id.leaderboard_msg_tv)
+    TextView mLeaderboardMsgTv;
 
     @Bind(R.id.cardview_1_view_switcher)
     ViewSwitcher mCard1ViewSwitcher;
@@ -49,6 +56,8 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
     ViewSwitcher mCard2ViewSwitcher;
     @Bind(R.id.cardview_3_view_switcher)
     ViewSwitcher mCard3ViewSwitcher;
+    @Bind(R.id.cardview_4_view_switcher)
+    ViewSwitcher mCard4ViewSwitcher;
     @Bind(R.id.chart1)
     BarChart mDailyChart;
 
@@ -60,6 +69,8 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
 
         mDailyChart.animateY(2500);
         new GetAndShowStatistics().execute();
+
+        new GetAndShowLeaderboardMsg().execute();
 
         new GetAndShowGraphStatistics().execute();
 
@@ -143,6 +154,42 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
         return data;
     }
 
+    class GetAndShowLeaderboardMsg extends AsyncTask<Void, Void, ConnectionResponse<LeaderboardMessageResponse>>{
+
+        @Override
+        protected ConnectionResponse<LeaderboardMessageResponse> doInBackground(Void... params) {
+
+            AuthRequest request = new AuthRequest(getApplicationContext());
+            return ConnectionHelper.postHttpDataCustomUrl(
+                    getApplicationContext(),
+                    ApiUrls.getApiCall(getApplicationContext(), ApiUrls.POST_LEADERBOARD_MSG),
+                    request,
+                    LeaderboardMessageResponse.class);
+        }
+
+        @Override
+        protected void onPostExecute(ConnectionResponse<LeaderboardMessageResponse> leaderboardMessageResponseConnectionResponse) {
+            super.onPostExecute(leaderboardMessageResponseConnectionResponse);
+
+            String textViewMessage = "Ooops! It appears there are some issues with your network.";
+            if(leaderboardMessageResponseConnectionResponse.isSuccess() && leaderboardMessageResponseConnectionResponse.getContent().isSuccess()){
+                Log.d(TAG, "Leaderboard message successfully received.");
+                textViewMessage = leaderboardMessageResponseConnectionResponse.getContent().getMessage();
+                if(leaderboardMessageResponseConnectionResponse.getContent().isHideMessage()){
+                    mCard1ViewSwitcher.setVisibility(View.GONE);
+                }
+                else{
+                    mCard1ViewSwitcher.setVisibility(View.VISIBLE);
+                }
+            }
+            else{
+                Log.e(TAG, "Cannot get leaderboard message");
+            }
+
+            mLeaderboardMsgTv.setText(textViewMessage);
+            mCard1ViewSwitcher.setDisplayedChild(1);
+        }
+    }
     class GetAndShowStatistics extends AsyncTask<Void, Void, DailyAggregatedData> {
 
         @Override
@@ -172,7 +219,7 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
             sb.append("</html>");
             Log.d(TAG, "dailyBodyString: " + sb.toString());
             mDailyStatisticsBodyTv.setText(Html.fromHtml(sb.toString()));
-            mCard1ViewSwitcher.setDisplayedChild(1);
+            mCard2ViewSwitcher.setDisplayedChild(1);
         }
     }
 
@@ -191,7 +238,7 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
         protected void onPostExecute(BarData data) {
             super.onPostExecute(data);
 
-            mCard2ViewSwitcher.setDisplayedChild(1);
+            mCard3ViewSwitcher.setDisplayedChild(1);
             mDailyChart.setData(data);
             mDailyChart.setMaxVisibleValueCount(7);
             mDailyChart.setDescription("Your tasks over past few days.");
@@ -225,7 +272,7 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
 
             FullScreenMapFragment fragment = FullScreenMapFragment.newInstance(FullScreenMapFragment.VIEW_HEATMAP, resultArray, false);
             getSupportFragmentManager().beginTransaction().replace(R.id.map_content_frame, fragment).commit();
-            mCard3ViewSwitcher.setDisplayedChild(1);
+            mCard4ViewSwitcher.setDisplayedChild(1);
 
             findViewById(R.id.map_click_interceptor).setOnClickListener(new View.OnClickListener() {
                 @Override
