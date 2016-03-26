@@ -61,9 +61,9 @@ public class SendDataToServerService extends IntentService {
             return;
         }*/
 
+        mPrefs.edit().putLong(Constants.PREFS_LAST_TIME_SENT_TO_SERVER, System.currentTimeMillis()).commit();
         AppHelper.aggregateDailyData();
 
-        mPrefs.edit().putLong(Constants.PREFS_LAST_TIME_SENT_TO_SERVER, System.currentTimeMillis()).apply();
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -78,6 +78,7 @@ public class SendDataToServerService extends IntentService {
 
         Gson gson = new Gson();
         int countDeleted = 0;
+
         for (SensorReadingRecord srr : sensorReadings) {
             if (srr.getLabel() == null || srr.getLabel() <= 0) {
                 //TODO: Remove after testing
@@ -89,12 +90,14 @@ public class SendDataToServerService extends IntentService {
             srd.setDbRecordId(srr.getId());
             sensorReadingDataList.add(srd);
         }
+        Log.d(TAG, "Sensor readings to send: " + sensorReadingDataList.size());
         // Post data to server using exponential backoff
         ConnectionResponse<PostDataResponse> result;
         final int MAX_TRIES = 3;
         int count = 0, backoffMillis = 1000;
         do {
             Log.d(TAG, "Trying to post data to server.");
+
             result = ConnectionHelper.postHttpDataCustomUrl(getBaseContext(),
                     ApiUrls.getApiCall(getBaseContext(), ApiUrls.POST_RESULTS),
                     new PostDataRequest(getBaseContext(), sensorReadingDataList),
