@@ -27,10 +27,10 @@ public class SensorReadingData {
     private String sensingPolicy;
 
     @SerializedName("t_started")
-    private long timestampStarted;
+    private String timestampStarted;
 
     @SerializedName("t_ended")
-    private long timestampEnded;
+    private String timestampEnded;
 
     @SerializedName("location")
     private LocationData locationData;
@@ -45,7 +45,10 @@ public class SensorReadingData {
     private MicrophoneData microphoneData;
 
     @SerializedName("accelerometer")
-    private AccelerometerData accelerometerData;
+    private MotionSensorData accelerometerData;
+
+    @SerializedName("gyroscope")
+    private MotionSensorData gyroscopeData;
 
     @SerializedName("phone_status_list")
     private List<PhoneStatusData> phoneStatusData;
@@ -63,28 +66,20 @@ public class SensorReadingData {
         }
     }
 
-    public int getAppVersion() {
-        return appVersion;
-    }
-
-    public void setAppVersion(int appVersion) {
-        this.appVersion = appVersion;
-    }
-
     public long getTimestampStarted() {
-        return timestampStarted;
+        return Long.valueOf(timestampStarted);
     }
 
     public void setTimestampStarted(long timestampStarted) {
-        this.timestampStarted = timestampStarted;
+        this.timestampStarted = Long.toString(timestampStarted);
     }
 
     public long getTimestampEnded() {
-        return timestampEnded;
+        return Long.valueOf(timestampEnded);
     }
 
     public void setTimestampEnded(long timestampEnded) {
-        this.timestampEnded = timestampEnded;
+        this.timestampEnded = Long.toString(timestampEnded);
     }
 
     public ActivityData getActivityData() {
@@ -119,11 +114,11 @@ public class SensorReadingData {
         this.sensingPolicy = sensingPolicy;
     }
 
-    public AccelerometerData getAccelerometerData() {
+    public MotionSensorData getAccelerometerData() {
         return accelerometerData;
     }
 
-    public void setAccelerometerData(AccelerometerData accelerometerData) {
+    public void setAccelerometerData(MotionSensorData accelerometerData) {
         this.accelerometerData = accelerometerData;
     }
 
@@ -167,6 +162,14 @@ public class SensorReadingData {
 
     public void setDbRecordId(Long dbRecordId) {
         this.dbRecordId = dbRecordId;
+    }
+
+    public MotionSensorData getGyroscopeData() {
+        return gyroscopeData;
+    }
+
+    public void setGyroscopeData(MotionSensorData gyroscopeData) {
+        this.gyroscopeData = gyroscopeData;
     }
 
     @Override

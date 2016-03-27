@@ -73,6 +73,7 @@
         </receiver>
 
         <service android:name=".service.SenseDataIntentService"/>
+        <service android:name=".service.SenseDataIntentService$MyActivityRecognitionIntentService" />
         <service android:name=".service.ScreenStateService"/>
         <service android:name=".service.SendDataToServerService"/>
 

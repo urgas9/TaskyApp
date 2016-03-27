@@ -32,6 +32,7 @@ import com.ubhave.sensormanager.data.env.LightData;
 import com.ubhave.sensormanager.data.pull.AccelerometerData;
 import com.ubhave.sensormanager.data.pull.BluetoothData;
 import com.ubhave.sensormanager.data.pull.ESBluetoothDevice;
+import com.ubhave.sensormanager.data.pull.GyroscopeData;
 import com.ubhave.sensormanager.data.pull.MicrophoneData;
 import com.ubhave.sensormanager.data.pull.WifiData;
 import com.ubhave.sensormanager.data.pull.WifiScanResult;
@@ -47,8 +48,10 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import si.uni_lj.fri.taskyapp.data.ActivityData;
+import si.uni_lj.fri.taskyapp.data.AmbientLightData;
 import si.uni_lj.fri.taskyapp.data.EnvironmentData;
 import si.uni_lj.fri.taskyapp.data.LocationData;
+import si.uni_lj.fri.taskyapp.data.MotionSensorData;
 import si.uni_lj.fri.taskyapp.data.PhoneStatusData;
 import si.uni_lj.fri.taskyapp.data.SensorReadingData;
 import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
@@ -71,16 +74,21 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             SensorUtils.SENSOR_TYPE_SCREEN};
 
     private GoogleApiClient mGoogleApiClient;
+    private PendingIntent mActivityRecognitionPendingIntent;
     private List<Integer> sensorSubscriptionIds;
 
     //Data for callbacks
     private long mTimeSensingStarted;
     private List<PhoneStatusData> mPhoneStatusDataList;
-    private float mSumLightValues = 0;
-    private long mCountLightValues = 0;
+    private double mSumLightValues;
+    private float mMinLightValue;
+    private float mMaxLightValue;
+    private float mMaxRangeLight;
+
+    private long mCountLightValues;
     private SensingDecisionHelper mSensingHelper;
 
-    private List<ActivityData> mDetectedActivityList;
+    private static List<ActivityData> mDetectedActivityList;
 
     private SharedPreferences mDefaultPrefs;
 
@@ -112,6 +120,10 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
         mSumLightValues = 0;
         mCountLightValues = 0;
+        mMinLightValue = Float.MAX_VALUE;
+        mMaxLightValue = Float.MIN_VALUE;
+        mCountLightValues = 0;
+        mMaxRangeLight = -1;
 
         if (!mSensingHelper.decideOnMinimumIntervalTimeDifference()) {
             Log.d(TAG, "decideOnMinimumIntervalTimeDifference decided not to sense");
@@ -176,11 +188,12 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         //detectedActivity = new DetectedActivity(DetectedActivity.STILL, 90);
         if (detectedActivity == null) {
             mDetectedActivityList = new LinkedList<>();
+            mActivityRecognitionPendingIntent = getPendingIntentForActivityRecognition();
             if (mGoogleApiClient.isConnected()) {
                 Log.d(TAG, "Start Activity Recognition");
                 Status status = ActivityRecognition.
                         ActivityRecognitionApi.
-                        requestActivityUpdates(mGoogleApiClient, 1000, getPendingIntentForActivityRecognition())
+                        requestActivityUpdates(mGoogleApiClient, 500, mActivityRecognitionPendingIntent)
                         .await();
                 if (status.isSuccess()) {
                     Log.d(TAG, "Successfully requested Activity Recognition updates.");
@@ -219,6 +232,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             sm.setSensorConfig(SensorUtils.SENSOR_TYPE_ACCELEROMETER,
                     PullSensorConfig.SENSE_WINDOW_LENGTH_MILLIS, Constants.SENSING_WINDOW_LENGTH_MILLIS);
             sm.setSensorConfig(SensorUtils.SENSOR_TYPE_MICROPHONE, PullSensorConfig.SENSE_WINDOW_LENGTH_MILLIS, Constants.SENSING_WINDOW_LENGTH_MILLIS);
+            sm.setSensorConfig(SensorUtils.SENSOR_TYPE_GYROSCOPE, PullSensorConfig.SENSE_WINDOW_LENGTH_MILLIS, Constants.SENSING_WINDOW_LENGTH_MILLIS);
 
         } catch (ESException e) {
             e.printStackTrace();
@@ -230,6 +244,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         SensorThreadsManager sensorThreadsManager = new SensorThreadsManager();
 
         sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_ACCELEROMETER));
+        sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_GYROSCOPE));
         sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_BLUETOOTH));
         sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_MICROPHONE));
         sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_WIFI));
@@ -285,7 +300,12 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
                 float[] meanValues = SensorsHelper.getMeanAccelerometerValues(((AccelerometerData) sensingData).getSensorReadings());
                 Log.d(TAG, "Got accelerometer data with mean values: " + meanValues[0] + ", " + meanValues[1] + ", " + meanValues[2]);
 
-                srd.setAccelerometerData(new si.uni_lj.fri.taskyapp.data.AccelerometerData(meanValues, ((AccelerometerData) sensingData).getSensorReadings()));
+                srd.setAccelerometerData(new MotionSensorData(meanValues, ((AccelerometerData) sensingData).getSensorReadings()));
+            } else if(sensingData instanceof GyroscopeData){
+                float[] meanValues = SensorsHelper.getMeanAccelerometerValues(((GyroscopeData) sensingData).getSensorReadings());
+                Log.d(TAG, "Got gyroscope data with mean values: " + meanValues[0] + ", " + meanValues[1] + ", " + meanValues[2]);
+
+                srd.setGyroscopeData(new MotionSensorData(meanValues, ((GyroscopeData) sensingData).getSensorReadings()));
             } else if (sensingData instanceof MicrophoneData) {
                 int[] amplitudes = ((MicrophoneData) sensingData).getAmplitudeArray();
                 Log.d(TAG, "Mean amplitude from microphone: " + SensorsHelper.getMeanValue(amplitudes));
@@ -305,11 +325,10 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
         unsubscribeFromSensors(sm);
 
-        float lightPercentage = mSumLightValues / mCountLightValues;
-        if (Float.isNaN(lightPercentage)) {
-            lightPercentage = -1.f;
+        float averageLight = (float)mSumLightValues / mCountLightValues;
+        if (!Float.isNaN(averageLight)) {
+            environmentData.setAmbientLightData(new AmbientLightData(mMinLightValue, mMaxLightValue, averageLight, mMaxRangeLight));
         }
-        environmentData.setAverageLightPercentageValue(lightPercentage);
 
         srd.setEnvironmentData(environmentData);
         srd.setTimestampEnded(System.currentTimeMillis());
@@ -340,8 +359,8 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
         sensorThreadsManager.dispose();
         // Shutting down everything
-        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-            ActivityRecognition.ActivityRecognitionApi.removeActivityUpdates(mGoogleApiClient, getPendingIntentForActivityRecognition());
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected() && mActivityRecognitionPendingIntent != null) {
+            ActivityRecognition.ActivityRecognitionApi.removeActivityUpdates(mGoogleApiClient, mActivityRecognitionPendingIntent);
             mGoogleApiClient.disconnect();
         }
 
@@ -383,6 +402,8 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
     private ActivityData extractMostProbableActivity() {
         ActivityData mostProbableActivity = null;
         boolean inDoubt = false;
+
+        Log.d(TAG, "extractMostProbableActivity: From list: " + mDetectedActivityList);
         if (mDetectedActivityList == null) {
             return null;
         }
@@ -399,6 +420,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
                 inDoubt = false;
             }
         }
+        Log.d(TAG, "extractMostProbableActivity: Decided to go with " + mostProbableActivity);
         return mostProbableActivity;
     }
 
@@ -426,7 +448,15 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         } else if (data instanceof LightData) {
             //Log.d(TAG, "LightData, max range: " + ((LightData) data).getValue());
             mCountLightValues++;
-            mSumLightValues += (((LightData) data).getValue() / ((LightData) data).getMaxRange());
+            mMaxRangeLight = ((LightData) data).getMaxRange();
+            float value = ((LightData) data).getValue();
+            mSumLightValues += value;
+            if(value > mMaxLightValue){
+                mMaxLightValue = value;
+            }
+            if(value < mMinLightValue){
+                mMinLightValue = value;
+            }
         }
     }
 
@@ -477,7 +507,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
     }
 
-    class MyActivityRecognitionIntentService extends IntentService {
+    public static class MyActivityRecognitionIntentService extends IntentService {
 
         /**
          * Creates an IntentService.  Invoked by your subclass's constructor.
@@ -487,11 +517,14 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         public MyActivityRecognitionIntentService(String name) {
             super(name);
         }
-
+        public MyActivityRecognitionIntentService(){
+            super("MyActivityRecognitionIntentService");
+        }
         @Override
         protected void onHandleIntent(Intent intent) {
             Log.d(TAG, "onHandleIntent in MyActivityRecognitionIntentService");
             if (ActivityRecognitionResult.hasResult(intent)) {
+                Log.d(TAG, "Got activity data: " + ActivityRecognitionResult.extractResult(intent).getMostProbableActivity());
                 mDetectedActivityList.add(new ActivityData(ActivityRecognitionResult.extractResult(intent).getMostProbableActivity()));
             }
         }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by urgas9 on 24. 01. 2016.
  */
-public class AccelerometerData {
+public class MotionSensorData {
     private float meanX;
     private float meanY;
     private float meanZ;
@@ -13,7 +13,7 @@ public class AccelerometerData {
     private ArrayList<float[]> values;
 
 
-    public AccelerometerData(float[] meanValues, ArrayList<float[]> values) {
+    public MotionSensorData(float[] meanValues, ArrayList<float[]> values) {
         super();
         this.meanX = meanValues[0];
         this.meanY = meanValues[1];

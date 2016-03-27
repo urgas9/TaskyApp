@@ -23,8 +23,8 @@ public class EnvironmentData {
     @SerializedName("battery_charging")
     private Boolean isBatteryCharging;
 
-    @SerializedName("average_light")
-    private float averageLightPercentageValue;
+    @SerializedName("ambient_light")
+    private AmbientLightData ambientLightData;
 
     public int getnWifiDevicesNearby() {
         return nWifiDevicesNearby;
@@ -42,12 +42,12 @@ public class EnvironmentData {
         this.nBluetoothDevicesNearby = nBluetoothDevicesNearby;
     }
 
-    public float getAverageLightPercentageValue() {
-        return averageLightPercentageValue;
+    public AmbientLightData getAmbientLightData() {
+        return ambientLightData;
     }
 
-    public void setAverageLightPercentageValue(float averageLightPercentageValue) {
-        this.averageLightPercentageValue = averageLightPercentageValue;
+    public void setAmbientLightData(AmbientLightData ambientLightData) {
+        this.ambientLightData = ambientLightData;
     }
 
     public boolean isWifiTurnedOn() {
@@ -90,7 +90,7 @@ public class EnvironmentData {
                 ", nBluetoothDevicesNearby=" + nBluetoothDevicesNearby +
                 ", bluetoothTurnedOn=" + bluetoothTurnedOn +
                 ", isBatteryCharging=" + isBatteryCharging +
-                ", averageLightPercentageValue=" + averageLightPercentageValue +
+                ", averageLightPercentageValue=" + ambientLightData +
                 '}';
     }
 }

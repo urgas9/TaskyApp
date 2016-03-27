@@ -89,7 +89,7 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
         SimpleDateFormat formatFullDate = new SimpleDateFormat(Constants.DATE_FORMAT_TO_SHOW_FULL);
         mTimeSensedTv.setText(formatFullDate.format(new Date(srr.getTimeStartedSensing())));
         EnvironmentData environmentData = mSensorReadingData.getEnvironmentData();
-        mDetectedAmbientLightTv.setText("" + environmentData.getAverageLightPercentageValue());
+        mDetectedAmbientLightTv.setText("" + environmentData.getAmbientLightData());
         mDetectedAmbientSoundLevel.setText("" + mSensorReadingData.getMicrophoneData().getMeanAmplitude());
 
         mSeekbarValueTv.setText(R.string.no_value_chosen);
