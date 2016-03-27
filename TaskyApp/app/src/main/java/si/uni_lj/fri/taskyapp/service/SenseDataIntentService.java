@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -20,7 +21,6 @@ import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.ActivityRecognition;
 import com.google.android.gms.location.ActivityRecognitionResult;
 import com.google.android.gms.location.DetectedActivity;
-import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.gson.Gson;
 import com.ubhave.sensormanager.ESException;
@@ -159,11 +159,10 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             //Send Broadcast to be listen in MainActivity
             this.sendBroadcast(i);
 
-        } else if (LocationResult.hasResult(intent)) {
+        } else if (intent.hasExtra(LocationManager.KEY_LOCATION_CHANGED)) {
             Log.d(TAG, "Got intent from location update.");
 
-            LocationResult result = LocationResult.extractResult(intent);
-            sensedLocation = result.getLastLocation();
+            sensedLocation =  (Location) intent.getExtras().get(LocationManager.KEY_LOCATION_CHANGED);
 
             Intent i = new Intent(Constants.ACTION_NEW_SENSOR_READING);
 

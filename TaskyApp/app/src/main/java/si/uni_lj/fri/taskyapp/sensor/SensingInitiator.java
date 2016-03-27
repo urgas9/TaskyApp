@@ -5,6 +5,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -41,8 +42,8 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
 
     public void senseWithDefaultSensingConfiguration() {
 
-        //senseOnLocationChanged();
         senseOnInterval();
+        senseOnLocationChanged();
         senseOnActivityRecognition();
 
         //AppHelper.setRepeatedNotification(mContext, 0, 13, 20, 22);
@@ -65,11 +66,7 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
             return;
         }
 
-        if (mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
-            buildGoogleApiClient().connect();
-        } else {
-            requestLocationUpdates();
-        }
+        requestLocationUpdates();
     }
     public static boolean isUserParticipating(Context mContext){
         boolean participating = PreferenceManager.getDefaultSharedPreferences(mContext).getString("participate_preference", "0").equals("0");
@@ -155,10 +152,10 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
         }
         stopAllUpdates();
         Log.d(TAG, "Firing requested location updates.");
-        LocationRequest myLocationRequest = new LocationRequest();
-        myLocationRequest.setInterval(Constants.APPROXIMATE_INTERVAL_MILLIS);
-        myLocationRequest.setPriority(LocationRequest.PRIORITY_NO_POWER);
-        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, myLocationRequest, getSensingServicePendingIntent(SensingPolicy.LOCATION_UPDATES));
+
+        ((LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE))
+                .requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, Constants.MIN_INTERVAL_MILLIS, Constants.LOCATION_MIN_DISTANCE_TO_LAST_LOC, getSensingServicePendingIntent(SensingPolicy.LOCATION_UPDATES));
+
     }
 
     private void requestAlarmIntervalUpdates() {
