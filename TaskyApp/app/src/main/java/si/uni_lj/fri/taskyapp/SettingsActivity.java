@@ -267,6 +267,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         protected ConnectionResponse<OptOutResponse> doInBackground(Void... params) {
 
             AuthRequest request = new AuthRequest(appContext);
+
             return ConnectionHelper.postHttpDataCustomUrl(
                     appContext,
                     ApiUrls.getApiCall(appContext, ApiUrls.POST_OPT_OUT),
@@ -281,6 +282,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             if(!optOutResponseConnectionResponse.isSuccess()
                     || !optOutResponseConnectionResponse.getContent().isSuccess()){
                 Toast.makeText(appContext, "Opt-out failed. Please check you internet connection.", Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(appContext, "Thanks for participating. TaskyApp will stop sensing and all you data was removed from server.", Toast.LENGTH_LONG).show();
             }
         }
     }

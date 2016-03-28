@@ -8,9 +8,12 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TimeZone;
 
 import si.uni_lj.fri.taskyapp.data.SensorReadingData;
 import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
@@ -53,13 +56,13 @@ public class SendDataToServerService extends IntentService {
         }
 
         long lastTimestamp = mPrefs.getLong(Constants.PREFS_LAST_TIME_SENT_TO_SERVER, 0);
-        //TODO: Uncomment
-        /*if ((lastTimestamp + Constants.MAX_INTERVAL_BETWEEN_TWO_SERVER_POSTS) > System.currentTimeMillis()) {
+
+        if ((lastTimestamp + Constants.MAX_INTERVAL_BETWEEN_TWO_SERVER_POSTS) > System.currentTimeMillis()) {
             SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
             format.setTimeZone(TimeZone.getTimeZone("GMT"));
             Log.d(TAG, "Won't post to server as the task executed " + format.format(new Date(System.currentTimeMillis() - lastTimestamp)) + " ago.");
             return;
-        }*/
+        }
 
         mPrefs.edit().putLong(Constants.PREFS_LAST_TIME_SENT_TO_SERVER, System.currentTimeMillis()).commit();
         AppHelper.aggregateDailyData();
@@ -125,6 +128,7 @@ public class SendDataToServerService extends IntentService {
                     SensorReadingRecord srr = SensorReadingRecord.findById(SensorReadingRecord.class, confirmedId);
                     if (srr != null) {
                         Log.d(TAG, "DELETE: " + srr.getAddress());
+                        srr.delete();
                     } else {
                         Log.d(TAG, "Not found any items for: " + confirmedId);
                     }

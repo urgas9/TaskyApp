@@ -57,6 +57,7 @@ import si.uni_lj.fri.taskyapp.data.SensorReadingData;
 import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
 import si.uni_lj.fri.taskyapp.global.AppHelper;
 import si.uni_lj.fri.taskyapp.global.SensingDecisionHelper;
+import si.uni_lj.fri.taskyapp.global.SensingPolicy;
 import si.uni_lj.fri.taskyapp.global.SensorsHelper;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
 import si.uni_lj.fri.taskyapp.sensor.SensingInitiator;
@@ -65,6 +66,7 @@ import si.uni_lj.fri.taskyapp.sensor.SensorThreadsManager;
 
 /**
  * Created by urgas9 on 31. 12. 2015.
+ *
  */
 public class SenseDataIntentService extends IntentService implements GoogleApiClient.ConnectionCallbacks, SensorDataListener {
     //LogCat
@@ -86,7 +88,6 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
     private float mMaxRangeLight;
 
     private long mCountLightValues;
-    private SensingDecisionHelper mSensingHelper;
 
     private static List<ActivityData> mDetectedActivityList;
 
@@ -112,11 +113,14 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         showNotification(-1);
 
         String policy = intent.getStringExtra("sensing_policy");
+        SensingPolicy sensingPolicy = SensingPolicy.NONE;
+
         int userLabel = intent.getIntExtra("user_label", -2);
         if (userLabel > 0) {
             Log.d(TAG, "+++++++++++++++ Force sensing set to true!");
+            sensingPolicy = SensingPolicy.USER_FORCED;
         }
-        mSensingHelper = new SensingDecisionHelper(getApplicationContext(), userLabel);
+        SensingDecisionHelper mSensingHelper = new SensingDecisionHelper(getApplicationContext(), userLabel);
 
         mSumLightValues = 0;
         mCountLightValues = 0;
@@ -125,6 +129,11 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         mCountLightValues = 0;
         mMaxRangeLight = -1;
 
+        if (!mSensingHelper.decideOnTimeOfTheDay()) {
+            int hourNow = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+            Log.d(TAG, "decideOnTimeOfTheDay decided not to sense, hour = " + hourNow);
+            return;
+        }
         if (!mSensingHelper.decideOnMinimumIntervalTimeDifference()) {
             Log.d(TAG, "decideOnMinimumIntervalTimeDifference decided not to sense");
             return;
@@ -139,46 +148,36 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         DetectedActivity detectedActivity = null;
         SensorReadingData srd = new SensorReadingData(getApplicationContext());
 
-        if (ActivityRecognitionResult.hasResult(intent)) {
-            //Extract the result from the Response
-            ActivityRecognitionResult result = ActivityRecognitionResult.extractResult(intent);
-            detectedActivity = result.getMostProbableActivity();
+        if(sensingPolicy != SensingPolicy.USER_FORCED) {
+            if (ActivityRecognitionResult.hasResult(intent)) {
+                //Extract the result from the Response
+                ActivityRecognitionResult result = ActivityRecognitionResult.extractResult(intent);
+                detectedActivity = result.getMostProbableActivity();
 
-            //Get the Confidence and Name of Activity
-            int confidence = detectedActivity.getConfidence();
-            String mostProbableName = SensorsHelper.getDetectedActivityName(detectedActivity.getType());
+                //Get the Confidence and Name of Activity
+                int confidence = detectedActivity.getConfidence();
+                String mostProbableName = SensorsHelper.getDetectedActivityName(detectedActivity.getType());
 
-            //Fire the intent with activity name & confidence
-            Intent i = new Intent(Constants.ACTION_NEW_SENSOR_READING);
-            i.putExtra("policy", "activity");
-            i.putExtra("activity", mostProbableName);
-            i.putExtra("confidence", confidence);
 
-            Log.d(TAG, "Most Probable Name : " + mostProbableName);
-            Log.d(TAG, "Confidence : " + confidence);
-            //Send Broadcast to be listen in MainActivity
-            this.sendBroadcast(i);
+                Log.d(TAG, "Got intent from activity recognition API update. [" + mostProbableName + ", " + confidence + "]");
+                sensingPolicy = SensingPolicy.ACTIVITY_UPDATES;
 
-        } else if (intent.hasExtra(LocationManager.KEY_LOCATION_CHANGED)) {
-            Log.d(TAG, "Got intent from location update.");
+            } else if (intent.hasExtra(LocationManager.KEY_LOCATION_CHANGED)) {
+                Log.d(TAG, "Got intent from location update.");
 
-            sensedLocation =  (Location) intent.getExtras().get(LocationManager.KEY_LOCATION_CHANGED);
+                sensedLocation = (Location) intent.getExtras().get(LocationManager.KEY_LOCATION_CHANGED);
+                sensingPolicy = SensingPolicy.LOCATION_UPDATES;
 
-            Intent i = new Intent(Constants.ACTION_NEW_SENSOR_READING);
+            } else if (policy != null && policy.equals("INTERVAL")) {
+                Log.d(TAG, "Got intent from fired alarm.");
 
-            i.putExtra("policy", "location");
-            i.putExtra("location", sensedLocation);
-
-            this.sendBroadcast(i);
-
-        } else if (policy != null && policy.equals("INTERVAL")) {
-            Log.d(TAG, "Got intent from fired alarm.");
-
-            Intent i = new Intent(Constants.ACTION_NEW_SENSOR_READING);
-            i.putExtra("policy", "alarm");
-        } else {
-            Log.d(TAG, "Policy unresolved: " + policy);
+            } else {
+                Log.d(TAG, "Policy unresolved: " + policy);
+            }
         }
+
+        Log.d(TAG, "Sensing service started with sensing policy: " + sensingPolicy.toString());
+        srd.setSensingPolicy(sensingPolicy.toString());
 
         // We need to get activity and location instance, as one or another may not exist at this point
         if (sensedLocation == null) {

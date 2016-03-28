@@ -16,10 +16,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.ActivityRecognition;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
 
 import si.uni_lj.fri.taskyapp.global.PermissionsHelper;
+import si.uni_lj.fri.taskyapp.global.SensingPolicy;
 import si.uni_lj.fri.taskyapp.service.SenseDataIntentService;
 
 /**
@@ -226,7 +225,4 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
         }
     }
 
-    enum SensingPolicy {
-        NONE, LOCATION_UPDATES, INTERVAL, ACTIVITY_UPDATES
-    }
 }

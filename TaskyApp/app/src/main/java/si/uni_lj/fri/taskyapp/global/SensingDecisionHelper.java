@@ -7,6 +7,8 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
+import java.util.Calendar;
+
 import si.uni_lj.fri.taskyapp.data.ActivityData;
 import si.uni_lj.fri.taskyapp.data.LocationData;
 import si.uni_lj.fri.taskyapp.data.SensorReadingData;
@@ -26,6 +28,9 @@ public class SensingDecisionHelper {
 
     private SensorReadingData mOldSensorData;
     private SensorReadingData mNewSensorData;
+
+    private static final int HOUR_OF_DAY_TO_START_SENSING = 7;
+    private static final int HOUR_OF_DAY_TO_STOP_SENSING = 22;
 
     public SensingDecisionHelper(Context context, int userLabel) {
         super();
@@ -174,6 +179,14 @@ public class SensingDecisionHelper {
         }
         long prevTimestamp = getPreviousDecisiveSensingData().getTimestampStarted();
         return (System.currentTimeMillis() - prevTimestamp) > Constants.MIN_INTERVAL_MILLIS;
+    }
+
+    public boolean decideOnTimeOfTheDay(){
+        if (userLabel > 0) {
+            return true;
+        }
+        int hourNow = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        return hourNow >= HOUR_OF_DAY_TO_START_SENSING && hourNow <= HOUR_OF_DAY_TO_STOP_SENSING;
     }
 
     private boolean decideOnTimeDifference() {
