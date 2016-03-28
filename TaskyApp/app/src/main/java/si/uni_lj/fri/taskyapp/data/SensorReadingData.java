@@ -67,7 +67,7 @@ public class SensorReadingData {
     }
 
     public long getTimestampStarted() {
-        return Long.valueOf(timestampStarted);
+        return Long.valueOf(timestampStarted == null?"0":timestampStarted);
     }
 
     public void setTimestampStarted(long timestampStarted) {

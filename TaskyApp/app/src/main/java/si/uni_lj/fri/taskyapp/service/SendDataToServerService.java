@@ -80,12 +80,11 @@ public class SendDataToServerService extends IntentService {
         List<SensorReadingData> sensorReadingDataList = new LinkedList<>();
 
         Gson gson = new Gson();
-        int countDeleted = 0;
 
         for (SensorReadingRecord srr : sensorReadings) {
             if (srr.getLabel() == null || srr.getLabel() <= 0) {
                 //TODO: Remove after testing
-                //countDeleted += srr.delete();
+                srr.delete();
                 continue;
             }
             SensorReadingData srd = gson.fromJson(srr.getSensorJsonObject(), SensorReadingData.class);
