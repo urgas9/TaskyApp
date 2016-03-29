@@ -143,7 +143,7 @@ public class SplashScreenFragment extends Fragment {
         mIconView.setImageResource(R.drawable.ic_developer_board_white_48dp);
         mTitleText.setText("Collecting data...");
         mText1.setText("App will collect data from your phone's sensors periodically, trying to detect your daily tasks.");
-        mText2.setText("We will sense you accelerometer, location, nearby bluetooth and WiFi devices and environment noise loudness.");
+        mText2.setText("We will sense nearby bluetooth and WiFi devices, accelerometer, gyroscope, location and ambient noise loudness.");
     }
 
     private void setupNeedYouFragment() {

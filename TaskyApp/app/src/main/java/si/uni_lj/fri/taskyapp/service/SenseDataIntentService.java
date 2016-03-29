@@ -52,7 +52,7 @@ import si.uni_lj.fri.taskyapp.data.AmbientLightData;
 import si.uni_lj.fri.taskyapp.data.EnvironmentData;
 import si.uni_lj.fri.taskyapp.data.LocationData;
 import si.uni_lj.fri.taskyapp.data.MotionSensorData;
-import si.uni_lj.fri.taskyapp.data.PhoneStatusData;
+import si.uni_lj.fri.taskyapp.data.ScreenStatusData;
 import si.uni_lj.fri.taskyapp.data.SensorReadingData;
 import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
 import si.uni_lj.fri.taskyapp.global.AppHelper;
@@ -81,7 +81,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
     //Data for callbacks
     private long mTimeSensingStarted;
-    private List<PhoneStatusData> mPhoneStatusDataList;
+    private List<ScreenStatusData> mScreenStatusDataList;
     private double mSumLightValues;
     private float mMinLightValue;
     private float mMaxLightValue;
@@ -213,12 +213,12 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         mTimeSensingStarted = System.currentTimeMillis();
         srd.setTimestampStarted(mTimeSensingStarted);
 
-        mPhoneStatusDataList = new ArrayList<>();
+        mScreenStatusDataList = new ArrayList<>();
         if (mDefaultPrefs.contains(Constants.PREFS_LAST_SCREEN_STATE)) {
-            PhoneStatusData psd = new PhoneStatusData();
+            ScreenStatusData psd = new ScreenStatusData();
             psd.setScreenOn(mDefaultPrefs.getBoolean(Constants.PREFS_LAST_SCREEN_STATE, false));
             psd.setMillisAfterStart(0);
-            mPhoneStatusDataList.add(psd);
+            mScreenStatusDataList.add(psd);
         }
 
         Log.d(TAG, "Decided to start sensing.");
@@ -330,7 +330,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
         srd.setEnvironmentData(environmentData);
         srd.setTimestampEnded(System.currentTimeMillis());
-        srd.setPhoneStatusData(mPhoneStatusDataList);
+        srd.setScreenStatusData(mScreenStatusDataList);
 
         srd.setActivityData(extractMostProbableActivity());
         if (srd.getActivityData() == null && detectedActivity != null) {
@@ -437,12 +437,12 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
     @Override
     public void onDataSensed(SensorData data) {
-        if (data instanceof ScreenData && mPhoneStatusDataList != null) {
+        if (data instanceof ScreenData && mScreenStatusDataList != null) {
             //Log.d(TAG, "Screen is: " + ((ScreenData) data).isOn());
-            PhoneStatusData psd = new PhoneStatusData();
+            ScreenStatusData psd = new ScreenStatusData();
             psd.setScreenOn(((ScreenData) data).isOn());
             psd.setMillisAfterStart(data.getTimestamp() - mTimeSensingStarted);
-            mPhoneStatusDataList.add(psd);
+            mScreenStatusDataList.add(psd);
         } else if (data instanceof LightData) {
             //Log.d(TAG, "LightData, max range: " + ((LightData) data).getValue());
             mCountLightValues++;

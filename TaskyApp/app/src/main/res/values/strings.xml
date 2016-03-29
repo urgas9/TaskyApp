@@ -141,5 +141,11 @@
     <string name="terms_of_use">Terms of use</string>
     <string name="no_location_data_available">No location data available</string>
     <string name="calendar_event">Event on your calendar:</string>
+    <string name="wait_for_countdown">Wait for the countdown to complete.</string>
+    <string name="start_sensing">Start sensing</string>
+    <string name="label_tasks">Label tasks</string>
+    <string name="check_statistics">Check statistics</string>
+    <string name="start_sense_task_complexity">Task complexity will be:</string>
+    <string name="start_sense_start_after">starting after:</string>
 
 </resources>

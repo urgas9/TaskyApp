@@ -50,8 +50,8 @@ public class SensorReadingData {
     @SerializedName("gyroscope")
     private MotionSensorData gyroscopeData;
 
-    @SerializedName("phone_status_list")
-    private List<PhoneStatusData> phoneStatusData;
+    @SerializedName("screen_status_list")
+    private List<ScreenStatusData> screenStatusData;
 
     private Integer label; // Label on Likert scale 1-5 (easy - hard)
     @SerializedName("database_id")
@@ -122,12 +122,12 @@ public class SensorReadingData {
         this.accelerometerData = accelerometerData;
     }
 
-    public List<PhoneStatusData> getPhoneStatusData() {
-        return phoneStatusData;
+    public List<ScreenStatusData> getScreenStatusData() {
+        return screenStatusData;
     }
 
-    public void setPhoneStatusData(List<PhoneStatusData> phoneStatusData) {
-        this.phoneStatusData = phoneStatusData;
+    public void setScreenStatusData(List<ScreenStatusData> screenStatusData) {
+        this.screenStatusData = screenStatusData;
     }
 
     public LocationData getLocationData() {
@@ -184,7 +184,7 @@ public class SensorReadingData {
                 ", environmentData=" + environmentData +
                 ", microphoneData=" + microphoneData +
                 ", accelerometerData=" + accelerometerData +
-                ", phoneStatusData=" + phoneStatusData +
+                ", phoneStatusData=" + screenStatusData +
                 ", label=" + label +
                 '}';
     }

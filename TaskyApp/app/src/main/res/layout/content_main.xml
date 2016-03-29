@@ -49,7 +49,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:text="Task complexity will be:"
+                        android:text="@string/start_sense_task_complexity"
                         android:textSize="@dimen/text_subtitle_size"/>
 
                     <include
@@ -63,7 +63,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:text="starting after:"
+                        android:text="@string/start_sense_start_after"
                         android:textSize="@dimen/text_subtitle_size"/>
 
                     <RadioGroup
@@ -109,8 +109,8 @@
                         android:id="@+id/btn_start_sensing"
                         android:layout_gravity="right|end|bottom"
                         android:layout_marginTop="10dp"
-                        android:text="Start sensing"
-                        style="@style/FlatButton"/>
+                        android:text="@string/start_sensing"
+                        style="@style/RaisedButton"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -122,7 +122,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Wait for the countdown to complete."/>
+                        android:text="@string/wait_for_countdown"/>
 
                     <FrameLayout
                         android:layout_width="130dp"
@@ -187,14 +187,14 @@
             <Button
                 android:id="@+id/btn_label_data"
                 android:layout_gravity="center"
-                android:text="Label tasks"
-                style="@style/RaisedButton"/>
+                android:text="@string/label_tasks"
+                style="@style/FlatButton"/>
 
             <Button
                 android:id="@+id/btn_statistics"
                 android:layout_width="match_parent"
                 android:layout_gravity="center"
-                android:text="Check statistics"
+                android:text="@string/check_statistics"
                 style="@style/FlatButton"/>
         </LinearLayout>
     </android.support.v7.widget.CardView>

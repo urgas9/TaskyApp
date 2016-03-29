@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by urgas9 on 24. 01. 2016.
  */
-public class PhoneStatusData {
+public class ScreenStatusData {
 
     @SerializedName("screen_on")
     private Boolean screenOn;
