@@ -21,16 +21,14 @@ public class SensingDecisionHelper {
 
     private static final String TAG = "SensingDecisionHelper";
     private static final String PREFS_NAME = "SensingDecisionSharedPrefs";
+    private static final int HOUR_OF_DAY_TO_START_SENSING = 7;
+    private static final int HOUR_OF_DAY_TO_STOP_SENSING = 22;
     private SharedPreferences mSharedPreferences;
     private Context mContext;
     private Gson gson;
     private int userLabel;
-
     private SensorReadingData mOldSensorData;
     private SensorReadingData mNewSensorData;
-
-    private static final int HOUR_OF_DAY_TO_START_SENSING = 7;
-    private static final int HOUR_OF_DAY_TO_STOP_SENSING = 22;
 
     public SensingDecisionHelper(Context context, int userLabel) {
         super();

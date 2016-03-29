@@ -130,7 +130,6 @@ public class AppHelper {
         calendar.set(Calendar.SECOND, ss);
 
         //check whether the time is earlier than current time. If so, set it to tomorrow. Otherwise, all alarms for earlier time will fire
-        //TODO: Uncomment
         if (calendar.before(now)) {
             calendar.add(Calendar.HOUR, 12);
             if (calendar.before(now)) {
@@ -221,7 +220,7 @@ public class AppHelper {
 
         List<DailyAggregatedData> resultsList = new LinkedList<>();
 
-        SugarRecord.deleteAll(DailyAggregatedData.class);
+        //TODO: Check this: SugarRecord.deleteAll(DailyAggregatedData.class);
 
         int sumLabels = 0, countDailyTasks = 0, countLabels = 0, lastDay = -1;
         for (SensorReadingRecord srr : sensorReadings) {
@@ -263,7 +262,7 @@ public class AppHelper {
         Intent intent = new Intent(context, ListDataActivity.class);
         PendingIntent pi = PendingIntent.getActivity(context, Constants.SHOW_NOTIFICATION_REQUEST_CODE, intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.ic_notifications_black_24dp)
+                .setSmallIcon(R.drawable.ic_notifications_white_24dp)
                 .setContentTitle(context.getString(R.string.app_name));
         if (dataBaseId == null) {
             mBuilder.setContentText("Would you mind labelling your daily tasks?");

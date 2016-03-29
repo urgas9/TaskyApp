@@ -223,7 +223,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                                             }
 
                                             setPreferenceTextSummaryOnValue((ListPreference) preference, stringValue);
-                                            return;
                                         }
                                     })
                                     .onNegative(new MaterialDialog.SingleButtonCallback() {

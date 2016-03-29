@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="There are no tasks to label! \n Check again later."
+            android:text="@string/no_tasks_to_label"
             android:textSize="16sp"
             android:visibility="gone"/>
     </ViewSwitcher>

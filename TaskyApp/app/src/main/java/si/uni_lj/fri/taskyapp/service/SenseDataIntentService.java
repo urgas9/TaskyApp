@@ -78,7 +78,6 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
     private GoogleApiClient mGoogleApiClient;
     private PendingIntent mActivityRecognitionPendingIntent;
     private List<Integer> sensorSubscriptionIds;
-
     //Data for callbacks
     private long mTimeSensingStarted;
     private List<ScreenStatusData> mScreenStatusDataList;
@@ -90,24 +89,22 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
     private long mCountLightValues;
 
     private static List<ActivityData> mDetectedActivityList;
-
-    private SharedPreferences mDefaultPrefs;
+   private SharedPreferences mDefaultPrefs;
 
 
     public SenseDataIntentService() {
-
         super("SenseDataIntentService");
-        Log.e(TAG, "CONSTRUCTOR");
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        Log.e(TAG, "ON HANDLE INTENT");
         if (intent == null) {
+            Log.d(TAG, "Received intent is null, quit.");
             return;
         }
         if(!SensingInitiator.isUserParticipating(getBaseContext())){
             Log.d(TAG, "Service: User is not participating, quit.");
+            return;
         }
         mDefaultPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         showNotification(-1);
@@ -117,7 +114,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
         int userLabel = intent.getIntExtra("user_label", -2);
         if (userLabel > 0) {
-            Log.d(TAG, "+++++++++++++++ Force sensing set to true!");
+            Log.d(TAG, "+++ Force sensing set to true!");
             sensingPolicy = SensingPolicy.USER_FORCED;
         }
         SensingDecisionHelper mSensingHelper = new SensingDecisionHelper(getApplicationContext(), userLabel);

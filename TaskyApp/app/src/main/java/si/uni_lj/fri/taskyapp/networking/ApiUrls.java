@@ -31,12 +31,9 @@ public enum ApiUrls {
      * @param params  params to be passed to urlType's value
      * @return an url string
      */
-    public static String getOHUrl(Context ctx, ApiUrls urlType, String... params) {
+    public static String getServerUrl(Context ctx, ApiUrls urlType, String... params) {
         String coreUrl = getCoreURL(ctx);
         String urlTypeValue = urlType.getValue();
-        StringBuilder sb = new StringBuilder()
-                .append(coreUrl)
-                .append(urlTypeValue);
 
         /*if (appendApiParameters) {
             if (urlTypeValue.charAt(urlTypeValue.length() - 1) != '?') {
@@ -45,15 +42,15 @@ public enum ApiUrls {
             sb.append(new DeviceInfo(ctx).toGetString());
         }*/
 
-        return String.format(sb.toString(), params);
+        return String.format(coreUrl + urlTypeValue, params);
     }
 
     public static String getApiCall(Context ctx, ApiUrls urlType, String... params) {
-        return getOHUrl(ctx, urlType, params);
+        return getServerUrl(ctx, urlType, params);
     }
 
     public static String getWebUrlWithNoParams(Context ctx, ApiUrls urlType, String... params) {
-        return getOHUrl(ctx, urlType, params);
+        return getServerUrl(ctx, urlType, params);
     }
 
     public static String getCoreURL(Context ctx) {

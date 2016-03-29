@@ -10,7 +10,7 @@
     <string name="permission_grant_all">Please grant us permissions to get as accurate data as possible.</string>
     <string name="permission_location_forever_denied">Cannot access your location. Please grant us permissions.</string>
     <string name="permission_accounts_denied">We need access to your profile mail address to log you in.</string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
 
     <string name="complexity_prompt">Choose task complexity</string>
     <string name="task_complexity_not_selected">Select your task complexity first.</string>
@@ -23,7 +23,7 @@
     <string name="about_app_body">TaskyApp is developed solely for research purpose and is part of master thesis <b>Mobile Sensing for Task Engagement Inferences</b>. \nWith use of this app you are helping us out to collect data, which will be later used for machine learning on server. The goal of the research is trying to classify complexity of users\' tasks only with phone\'s built-in sensors.</string>
     <string name="about_app_title">About TaskyApp</string>
     <string name="author_title">Author</string>
-    <string name="author_description">App was developed by <b>Gašper Urh</b>, student at Faculty of Computer and Information Science, University of Ljubljana, supervised by <b>doc. dr. Veljko Pejović</b>.</string>
+    <string name="about_author_description">App was developed by <b>Gašper Urh</b>, student at Faculty of Computer and Information Science, University of Ljubljana, supervised by <b>doc. dr. Veljko Pejović</b>.</string>
 
     <string-array name="task_complexities_array">
         <item></item>
@@ -147,5 +147,13 @@
     <string name="check_statistics">Check statistics</string>
     <string name="start_sense_task_complexity">Task complexity will be:</string>
     <string name="start_sense_start_after">starting after:</string>
+    <string name="leaderboard">Leaderboard</string>
+    <string name="label_more">Label more</string>
+    <string name="daily_data">Daily data</string>
+    <string name="your_last_2_days">Your last 2 days</string>
+    <string name="no_tasks_to_label">There are no tasks to label! \n Check again later.</string>
+    <string name="almost_done">Almost done!</string>
+    <string name="about_contact">Contact</string>
+    <string name="about_contact_description">If you have experienced any issues, or just want to give us a shout, you can reach us on email:\n<b>gu7668@student.uni-lj.si</b></string>
 
 </resources>

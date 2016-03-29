@@ -41,10 +41,7 @@ public class ActivityData {
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof ActivityData && ((ActivityData) o).getActivityType().equals(this.getActivityType())) {
-            return true;
-        }
-        return false;
+        return o instanceof ActivityData && ((ActivityData) o).getActivityType().equals(this.getActivityType());
     }
 
     @Override

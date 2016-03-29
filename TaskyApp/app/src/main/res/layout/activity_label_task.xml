@@ -91,11 +91,12 @@
             android:gravity="center_vertical|start"
             android:text="@string/calendar_event"/>
 
-        <include layout="@layout/calendar_event_item"
-                 android:layout_width="0dp"
-                 android:layout_weight="1"
-                 android:layout_margin="5dp"
-                 android:layout_height="wrap_content"/>
+        <include
+            layout="@layout/calendar_event_item"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"/>
 
     </LinearLayout>
 
@@ -126,6 +127,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="6.2">
+
         <fragment
             android:id="@+id/map_fragment"
             android:name="si.uni_lj.fri.taskyapp.LabelTaskActivity"
@@ -138,12 +140,12 @@
             android:id="@+id/no_location_data_tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/no_location_data_available"
-            android:gravity="center"
-            android:textSize="30sp"
+            android:background="@color/half_white"
             android:clickable="false"
-            android:visibility="gone"
-            android:background="@color/half_white"/>
+            android:gravity="center"
+            android:text="@string/no_location_data_available"
+            android:textSize="30sp"
+            android:visibility="gone"/>
     </FrameLayout>
 
     <include

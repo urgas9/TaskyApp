@@ -148,10 +148,11 @@ public class SensorReadingData {
 
     public boolean equalByDayTimestampStarted(SensorReadingData srd) {
         SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_FORMAT_TO_SHOW_DAY, Locale.ENGLISH);
-        String dayThis = format.format(new Date(this.timestampStarted));
-        String daySrd = format.format(new Date(srd.timestampStarted));
-        if (dayThis.equals(daySrd)) {
-            return true;
+        if(timestampStarted != null) {
+            long tStarted = Long.valueOf(timestampStarted);
+            String dayThis = format.format(new Date(tStarted));
+            String daySrd = format.format(new Date(tStarted));
+            return dayThis.equals(daySrd);
         }
         return false;
     }

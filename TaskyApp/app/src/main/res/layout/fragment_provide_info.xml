@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/activity_horizontal_margin"
-            android:text="Almost done!"
+            android:text="@string/almost_done"
             android:textColor="@color/primary"
             android:textSize="30sp"/>
 
