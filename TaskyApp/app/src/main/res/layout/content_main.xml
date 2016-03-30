@@ -186,6 +186,7 @@
                 android:layout_gravity="top|center_horizontal"/>-->
             <Button
                 android:id="@+id/btn_label_data"
+                android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:text="@string/label_tasks"
                 style="@style/FlatButton"/>
