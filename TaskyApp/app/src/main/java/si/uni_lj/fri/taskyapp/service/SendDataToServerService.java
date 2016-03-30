@@ -64,8 +64,8 @@ public class SendDataToServerService extends IntentService {
             return;
         }
 
-        mPrefs.edit().putLong(Constants.PREFS_LAST_TIME_SENT_TO_SERVER, System.currentTimeMillis()).commit();
         AppHelper.aggregateDailyData();
+        mPrefs.edit().putLong(Constants.PREFS_LAST_TIME_SENT_TO_SERVER, System.currentTimeMillis()).commit();
 
 
         Calendar calendar = Calendar.getInstance();
@@ -82,14 +82,13 @@ public class SendDataToServerService extends IntentService {
         Gson gson = new Gson();
 
         for (SensorReadingRecord srr : sensorReadings) {
-            if (srr.getLabel() == null || srr.getLabel() <= 0) {
-                //TODO: Remove after testing
-                srr.delete();
-                continue;
-            }
+
             SensorReadingData srd = gson.fromJson(srr.getSensorJsonObject(), SensorReadingData.class);
             srd.setLabel(srr.getLabel());
             srd.setDbRecordId(srr.getId());
+            //if (srr.getLabel() == null || srr.getLabel() <= 0) {
+            //    nonLabeledSensorReadingDataList.add(srd);
+            //}
             sensorReadingDataList.add(srd);
         }
         Log.d(TAG, "Sensor readings to send: " + sensorReadingDataList.size());
