@@ -25,12 +25,15 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import me.tittojose.www.timerangepicker_library.TimeRangePickerDialog;
+import si.uni_lj.fri.taskyapp.data.TimeRangeElement;
 import si.uni_lj.fri.taskyapp.data.network.AuthRequest;
 import si.uni_lj.fri.taskyapp.data.network.OptOutResponse;
 import si.uni_lj.fri.taskyapp.global.AppHelper;
 import si.uni_lj.fri.taskyapp.networking.ApiUrls;
 import si.uni_lj.fri.taskyapp.networking.ConnectionHelper;
 import si.uni_lj.fri.taskyapp.networking.ConnectionResponse;
+import si.uni_lj.fri.taskyapp.sensor.Constants;
 import si.uni_lj.fri.taskyapp.sensor.SensingInitiator;
 
 /**
@@ -65,7 +68,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
         @Override
         public boolean onPreferenceChange(final Preference preference, Object value) {
-            final String stringValue = value.toString();
+            String stringValue = value.toString();
 
             if (preference instanceof ListPreference) {
                 setPreferenceTextSummaryOnValue((ListPreference)preference, stringValue);
@@ -104,7 +107,33 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                         Toast.makeText(mContext, "Please enter a valid email address!", Toast.LENGTH_LONG).show();
                     }
                     return false;
+                } else if(preference.getKey().equals("profile_office_hours_text")){
+
+                    if(!stringValue.contains(" - ") && stringValue.contains("-")){
+                        Log.d("TAG", "we have a fucking match! " + stringValue);
+                        stringValue = stringValue.replaceAll(" ", "").replaceAll("-", " - ");
+                        Log.d("TAG", "new value: " + stringValue);
+
+                    }
+                    if(!TimeRangeElement.isStringValid(stringValue)) {
+                        if (mContext != null) {
+                            Toast.makeText(mContext, "Please enter a valid time range (example: 08:00 - 16:00)!", Toast.LENGTH_LONG).show();
+                        }
+                        return false;
+                    }
+                    TimeRangeElement tre = new TimeRangeElement(stringValue);
+                    if(!tre.isTimeDifferenceBigEnough()){
+                        if (mContext != null) {
+                            Toast.makeText(mContext, String.format(mContext.getString(R.string.time_range_too_short), stringValue), Toast.LENGTH_LONG).show();
+                        }
+                        return false;
+                    }
+                    stringValue = tre.toString();
+                    preference.setSummary(stringValue);
+                    PreferenceManager.getDefaultSharedPreferences(mContext).edit().putString(Constants.PREFS_OFFICE_HOURS, stringValue).commit();
+                    return false;
                 }
+
                 preference.setSummary(stringValue);
             }
             Log.d("SETTINGS", value.toString());
@@ -182,7 +211,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      * activity is showing a two-pane settings UI.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class GeneralPreferenceFragment extends PreferenceFragment {
+    public static class GeneralPreferenceFragment extends PreferenceFragment implements TimeRangePickerDialog.OnTimeRangeSelectedListener {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -197,6 +226,22 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(findPreference("profile_email_text"));
             bindPreferenceSummaryToValue(findPreference("notifications_new_message_ringtone"));
             bindPreferenceSummaryToValue(findPreference("participate_preference"));
+            bindPreferenceSummaryToValue(findPreference("profile_office_hours_text"));
+
+
+            /*Preference timeRangePreference = findPreference("profile_office_hours_text");
+            timeRangePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Toast.makeText(mContext, "Clicked.", Toast.LENGTH_LONG).show();
+                    final TimeRangePickerDialog timePickerDialog = TimeRangePickerDialog.newInstance(
+                            GeneralPreferenceFragment.this, true);
+                    timePickerDialog.show(get);
+                    timePickerDialog.show(GeneralPreferenceFragment.this.g, "timepickerdialog");
+                    //timePickerDialog.show(getActivity().getFragmentManager(), "timepicker");
+                    return false;
+                }
+            });*/
             ListPreference participatePreference = (ListPreference)findPreference("participate_preference");
 
             participatePreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
@@ -253,7 +298,22 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             }
             return super.onOptionsItemSelected(item);
         }
+
+        @Override
+        public void onTimeRangeSelected(int startHour, int startMin, int endHour, int endMin) {
+
+            TimeRangeElement tre = new TimeRangeElement(startHour, startMin, endHour, endMin);
+            String timeRange = tre.toString();
+
+            if(!tre.isTimeDifferenceBigEnough()) {
+                Toast.makeText(mContext, "Selected time range (" + timeRange + ") must be at least 4 hours.", Toast.LENGTH_LONG).show();
+            }
+            else {
+                PreferenceManager.getDefaultSharedPreferences(mContext).edit().putString(Constants.PREFS_OFFICE_HOURS, timeRange).apply();
+            }
+        }
     }
+
 
     static class OptOutAsyncTask extends AsyncTask<Void, Void, ConnectionResponse<OptOutResponse>>{
         private Context appContext;

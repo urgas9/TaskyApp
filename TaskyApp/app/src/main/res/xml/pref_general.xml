@@ -28,7 +28,17 @@
             android:entries="@array/participate_labels_array"
             android:entryValues="@array/participate_value_array"
             android:key="participate_preference"
-            android:title="How actively do you want to participate in this research?"/>
+            android:title="How actively do you want to participate?"/>
+
+        <EditTextPreference
+            android:defaultValue="@string/pref_default_email_name"
+            android:inputType="textEmailAddress"
+            android:hint="@string/pref_default_office_hours"
+            android:key="profile_office_hours_text"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/pref_title_office_hours"/>
 
     </PreferenceCategory>
     <PreferenceCategory

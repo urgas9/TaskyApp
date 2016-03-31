@@ -126,9 +126,9 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         mCountLightValues = 0;
         mMaxRangeLight = -1;
 
-        if (!mSensingHelper.decideOnTimeOfTheDay()) {
+        if (!mSensingHelper.decideOnOfficeHours()) {
             int hourNow = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-            Log.d(TAG, "decideOnTimeOfTheDay decided not to sense, hour = " + hourNow);
+            Log.d(TAG, "decideOnOfficeHours decided not to sense, hour = " + hourNow);
             return;
         }
         if (!mSensingHelper.decideOnMinimumIntervalTimeDifference()) {

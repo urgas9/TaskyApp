@@ -14,19 +14,24 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import me.tittojose.www.timerangepicker_library.TimeRangePickerDialog;
 import si.uni_lj.fri.taskyapp.R;
 import si.uni_lj.fri.taskyapp.SplashScreenActivity;
+import si.uni_lj.fri.taskyapp.data.TimeRangeElement;
 import si.uni_lj.fri.taskyapp.global.AppHelper;
+import si.uni_lj.fri.taskyapp.sensor.Constants;
 
-public class SplashScreenFragment extends Fragment {
+public class SplashScreenFragment extends Fragment implements TimeRangePickerDialog.OnTimeRangeSelectedListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_CURRENT_PAGE = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_CURRENT_PAGE = "current_page";
     private static final String TAG = "SplashScreenFragment";
+    private static final String TIMERANGEPICKER_TAG = "timerangepicker";
+
     SharedPreferences mPrefs;
     @Bind(R.id.icon_splash)
     ImageView mIconView;
@@ -41,6 +46,7 @@ public class SplashScreenFragment extends Fragment {
     private boolean mEmailFragment;
     private OnSplashScreenFragmentActionListener mCallback;
     private EditText mEmailEditText;
+    private TextView mOfficeTimeRangeTv;
 
     public SplashScreenFragment() {
         // Required empty public constructor
@@ -53,7 +59,6 @@ public class SplashScreenFragment extends Fragment {
      * @param param1 Parameter 1.
      * @return A new instance of fragment ProvideInfoFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static SplashScreenFragment newInstance(int param1) {
         SplashScreenFragment fragment = new SplashScreenFragment();
         Bundle args = new Bundle();
@@ -90,8 +95,24 @@ public class SplashScreenFragment extends Fragment {
                 }
             });
         }
-        else if (mCurrentPage == (SplashScreenActivity.ALL_PAGES - 2)){
+        else if (mCurrentPage == (SplashScreenActivity.ALL_PAGES - 3)){
             root = inflater.inflate(R.layout.fragment_terms_of_use, container, false);
+        }
+        else if (mCurrentPage == (SplashScreenActivity.ALL_PAGES) - 2){
+            root = inflater.inflate(R.layout.fragment_provide_office_hours, container, false);
+            mOfficeTimeRangeTv = (TextView) root.findViewById(R.id.content_timerage);
+            mOfficeTimeRangeTv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final TimeRangePickerDialog timePickerDialog = TimeRangePickerDialog.newInstance(
+                            SplashScreenFragment.this, true);
+                    timePickerDialog.show(getActivity().getSupportFragmentManager(), TIMERANGEPICKER_TAG);
+                }
+            });
+
+            TimeRangeElement tre = new TimeRangeElement(getContext());
+            mOfficeTimeRangeTv.setText(tre.toString());
+
         }
         else {
             root = inflater.inflate(R.layout.fragment_splash_info, container, false);
@@ -172,6 +193,21 @@ public class SplashScreenFragment extends Fragment {
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement OnSplashScreenFragmentActionListener");
+        }
+    }
+
+    @Override
+    public void onTimeRangeSelected(int startHour, int startMin, int endHour, int endMin) {
+
+        TimeRangeElement tre = new TimeRangeElement(startHour, startMin, endHour, endMin);
+        String timeRange = tre.toString();
+
+        if(!tre.isTimeDifferenceBigEnough()) {
+            Toast.makeText(getContext(), String.format(getString(R.string.time_range_too_short), timeRange), Toast.LENGTH_LONG).show();
+        }
+        else {
+            mPrefs.edit().putString(Constants.PREFS_OFFICE_HOURS, timeRange).apply();
+            mOfficeTimeRangeTv.setText(timeRange);
         }
     }
 

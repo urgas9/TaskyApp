@@ -7,11 +7,10 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
-import java.util.Calendar;
-
 import si.uni_lj.fri.taskyapp.data.ActivityData;
 import si.uni_lj.fri.taskyapp.data.LocationData;
 import si.uni_lj.fri.taskyapp.data.SensorReadingData;
+import si.uni_lj.fri.taskyapp.data.TimeRangeElement;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
 
 /**
@@ -21,8 +20,7 @@ public class SensingDecisionHelper {
 
     private static final String TAG = "SensingDecisionHelper";
     private static final String PREFS_NAME = "SensingDecisionSharedPrefs";
-    private static final int HOUR_OF_DAY_TO_START_SENSING = 7;
-    private static final int HOUR_OF_DAY_TO_STOP_SENSING = 22;
+
     private SharedPreferences mSharedPreferences;
     private Context mContext;
     private Gson gson;
@@ -88,6 +86,10 @@ public class SensingDecisionHelper {
         }
         mOldSensorData = getPreviousDecisiveSensingData();
         mNewSensorData = newSensorData;
+
+        if(decideOnTimeDifference()){
+            return true;
+        }
 
         boolean continueSensing = true;
         if (mNewSensorData != null && mOldSensorData != null) {
@@ -179,12 +181,12 @@ public class SensingDecisionHelper {
         return (System.currentTimeMillis() - prevTimestamp) > Constants.MIN_INTERVAL_MILLIS;
     }
 
-    public boolean decideOnTimeOfTheDay(){
+    public boolean decideOnOfficeHours(){
         if (userLabel > 0) {
             return true;
         }
-        int hourNow = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        return hourNow >= HOUR_OF_DAY_TO_START_SENSING && hourNow <= HOUR_OF_DAY_TO_STOP_SENSING;
+        TimeRangeElement tre = new TimeRangeElement(mContext);
+        return tre.areNowOfficeHours();
     }
 
     private boolean decideOnTimeDifference() {
