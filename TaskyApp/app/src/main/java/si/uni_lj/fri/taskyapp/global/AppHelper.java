@@ -216,24 +216,24 @@ public class AppHelper {
         calendar.add(Calendar.DAY_OF_YEAR, -1);
 
         List<SensorReadingRecord> sensorReadings = SensorReadingRecord.find(SensorReadingRecord.class,
-                "time_started_sensing < ?", new String[]{"" + calendar.getTimeInMillis()}, null, "time_started_sensing ASC", null);
+                "time_started_sensing <= ?", new String[]{"" + calendar.getTimeInMillis()}, null, "time_started_sensing ASC", null);
 
         List<DailyAggregatedData> resultsList = new LinkedList<>();
 
-        //TODO: Check this: SugarRecord.deleteAll(DailyAggregatedData.class);
-
-        int sumLabels = 0, countDailyTasks = 0, countLabels = 0, lastDay = -1;
+        int sumLabels = 0, countDailyTasks = 0, countLabels = 0, lastDay = -1, countAll = 0, allRecords = sensorReadings.size();
         for (SensorReadingRecord srr : sensorReadings) {
+            countAll++;
             calendar.setTimeInMillis(srr.getTimeStartedSensing());
-            if (calendar.get(Calendar.DAY_OF_YEAR) != lastDay) {
+            if (calendar.get(Calendar.DAY_OF_YEAR) != lastDay || countAll == allRecords) {
+                long count = SugarRecord.count(DailyAggregatedData.class, " day_of_year = ?", new String[]{"" + calendar.get(Calendar.DAY_OF_YEAR)});
                 if (lastDay > 0 &&
-                        SugarRecord.count(DailyAggregatedData.class, " day_of_year = ?", new String[]{"" + calendar.get(Calendar.DAY_OF_YEAR)}) == 0) {
+                        count == 0L) {
                     DailyAggregatedData dad = new DailyAggregatedData();
                     dad.setDayOfYear(calendar.get(Calendar.DAY_OF_YEAR));
                     dad.setAllReadings(countDailyTasks);
                     dad.setCountLabeled(countLabels);
                     dad.setAverageLabel((sumLabels / (double) countLabels));
-                    Log.d(TAG, "Saving");
+                    Log.d(TAG, "Saving: " + dad);
                     resultsList.add(dad);
                     SugarRecord.save(dad);
                 } else {
@@ -243,6 +243,7 @@ public class AppHelper {
                 sumLabels = countLabels = countDailyTasks = 0;
             }
             if (srr.getLabel() != null && srr.getLabel() > 0) {
+
                 sumLabels += srr.getLabel();
                 countLabels++;
             }
