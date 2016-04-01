@@ -12,7 +12,7 @@ import si.uni_lj.fri.taskyapp.sensor.Constants;
 /**
  * Created by urgas9 on 31.3.16, OpenHours.com
  */
-public class TimeRangeElement {
+public class OfficeHoursObject {
 
     private static final int TIMERANGE_DIFFERENCE_ATLEAST_MINUTES = 4*60;
     private int hoursStart;
@@ -20,7 +20,7 @@ public class TimeRangeElement {
     private int hoursEnd;
     private int minutesEnd;
 
-    public TimeRangeElement(Context context){
+    public OfficeHoursObject(Context context){
         super();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         String savedOfficeHours = prefs.getString(Constants.PREFS_OFFICE_HOURS, context.getString(R.string.pref_default_office_hours));
@@ -31,7 +31,7 @@ public class TimeRangeElement {
         }
     }
 
-    public TimeRangeElement(String timeRangeString){
+    public OfficeHoursObject(String timeRangeString){
         if(timeRangeString != null){
             String[] times = timeRangeString.split(" - ");
             if(times.length == 2){
@@ -39,12 +39,12 @@ public class TimeRangeElement {
             }
         }
     }
-    public TimeRangeElement(String startHoursMinsSeparatedByColon, String endHoursMinsSeparatedByColon){
+    public OfficeHoursObject(String startHoursMinsSeparatedByColon, String endHoursMinsSeparatedByColon){
         super();
         parseStartAndEndTime(startHoursMinsSeparatedByColon, endHoursMinsSeparatedByColon);
     }
 
-    public TimeRangeElement(int hoursStart, int minutesStart, int hoursEnd, int minutesEnd){
+    public OfficeHoursObject(int hoursStart, int minutesStart, int hoursEnd, int minutesEnd){
         super();
         this.hoursStart = hoursStart;
         this.minutesStart = minutesStart;
@@ -58,10 +58,11 @@ public class TimeRangeElement {
 
     public boolean areNowOfficeHours(){
         Calendar c = Calendar.getInstance();
-        int hoursNow = c.get(Calendar.HOUR_OF_DAY);
-        int minutesNow = c.get(Calendar.MINUTE);
-        return hoursStart >= hoursNow && minutesStart >= minutesNow &&
-                hoursEnd <= hoursNow && minutesEnd <= minutesNow;
+        int timeMinsNow = c.get(Calendar.HOUR_OF_DAY) * 60 + c.get(Calendar.MINUTE);
+        int timeMinsStart = hoursStart * 60 + minutesStart;
+        int timeMinsEnd = hoursEnd * 60 + minutesEnd;
+
+        return timeMinsNow >= timeMinsStart && timeMinsNow <= timeMinsEnd;
     }
     private void parseStartAndEndTime(String startHoursMinsSeparatedByColon, String endHoursMinsSeparatedByColon){
         if(startHoursMinsSeparatedByColon != null) {

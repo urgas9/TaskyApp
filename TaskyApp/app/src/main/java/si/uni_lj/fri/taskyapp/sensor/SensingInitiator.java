@@ -136,7 +136,6 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
 
     private void requestActivityUpdates() {
         Log.d(TAG, "Starting requested activity recognition updates.");
-        stopAllUpdates();
         ActivityRecognition
                 .ActivityRecognitionApi
                 .requestActivityUpdates(mGoogleApiClient, Constants.APPROXIMATE_INTERVAL_MILLIS, getSensingServicePendingIntent(SensingPolicy.ACTIVITY_UPDATES))
@@ -149,7 +148,6 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
             mPendingAction = true;
             return;
         }
-        stopAllUpdates();
         Log.d(TAG, "Firing requested location updates.");
 
         ((LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE))
@@ -158,7 +156,7 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     }
 
     private void requestAlarmIntervalUpdates() {
-        stopAllUpdates();
+        stopAlarmUpdates();
         Log.d(TAG, "Firing requested alarm interval updates.");
         AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
         am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
@@ -188,12 +186,12 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     /**
      * Stopping all updates, regardless of sensing policy
      */
-    public void stopAllUpdates() {
-        Log.d(TAG, "Stopping all updates.");
-        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+    public void stopAlarmUpdates() {
+        Log.d(TAG, "Stopping alarm updates.");
+        /*if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
             //LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, getSensingServicePendingIntent(SensingPolicy.LOCATION_UPDATES));
             ActivityRecognition.ActivityRecognitionApi.removeActivityUpdates(mGoogleApiClient, getSensingServicePendingIntent(SensingPolicy.ACTIVITY_UPDATES));
-        }
+        }*/
         AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
         am.cancel(getSensingServicePendingIntent(SensingPolicy.INTERVAL));
     }

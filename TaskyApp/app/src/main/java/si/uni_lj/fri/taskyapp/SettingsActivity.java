@@ -26,7 +26,7 @@ import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
 import me.tittojose.www.timerangepicker_library.TimeRangePickerDialog;
-import si.uni_lj.fri.taskyapp.data.TimeRangeElement;
+import si.uni_lj.fri.taskyapp.data.OfficeHoursObject;
 import si.uni_lj.fri.taskyapp.data.network.AuthRequest;
 import si.uni_lj.fri.taskyapp.data.network.OptOutResponse;
 import si.uni_lj.fri.taskyapp.global.AppHelper;
@@ -115,13 +115,13 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                         Log.d("TAG", "new value: " + stringValue);
 
                     }
-                    if(!TimeRangeElement.isStringValid(stringValue)) {
+                    if(!OfficeHoursObject.isStringValid(stringValue)) {
                         if (mContext != null) {
                             Toast.makeText(mContext, "Please enter a valid time range (example: 08:00 - 16:00)!", Toast.LENGTH_LONG).show();
                         }
                         return false;
                     }
-                    TimeRangeElement tre = new TimeRangeElement(stringValue);
+                    OfficeHoursObject tre = new OfficeHoursObject(stringValue);
                     if(!tre.isTimeDifferenceBigEnough()){
                         if (mContext != null) {
                             Toast.makeText(mContext, String.format(mContext.getString(R.string.time_range_too_short), stringValue), Toast.LENGTH_LONG).show();
@@ -302,7 +302,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         @Override
         public void onTimeRangeSelected(int startHour, int startMin, int endHour, int endMin) {
 
-            TimeRangeElement tre = new TimeRangeElement(startHour, startMin, endHour, endMin);
+            OfficeHoursObject tre = new OfficeHoursObject(startHour, startMin, endHour, endMin);
             String timeRange = tre.toString();
 
             if(!tre.isTimeDifferenceBigEnough()) {

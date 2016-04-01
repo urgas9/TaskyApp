@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 import me.tittojose.www.timerangepicker_library.TimeRangePickerDialog;
 import si.uni_lj.fri.taskyapp.R;
 import si.uni_lj.fri.taskyapp.SplashScreenActivity;
-import si.uni_lj.fri.taskyapp.data.TimeRangeElement;
+import si.uni_lj.fri.taskyapp.data.OfficeHoursObject;
 import si.uni_lj.fri.taskyapp.global.AppHelper;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
 
@@ -110,7 +110,7 @@ public class SplashScreenFragment extends Fragment implements TimeRangePickerDia
                 }
             });
 
-            TimeRangeElement tre = new TimeRangeElement(getContext());
+            OfficeHoursObject tre = new OfficeHoursObject(getContext());
             mOfficeTimeRangeTv.setText(tre.toString());
 
         }
@@ -199,7 +199,7 @@ public class SplashScreenFragment extends Fragment implements TimeRangePickerDia
     @Override
     public void onTimeRangeSelected(int startHour, int startMin, int endHour, int endMin) {
 
-        TimeRangeElement tre = new TimeRangeElement(startHour, startMin, endHour, endMin);
+        OfficeHoursObject tre = new OfficeHoursObject(startHour, startMin, endHour, endMin);
         String timeRange = tre.toString();
 
         if(!tre.isTimeDifferenceBigEnough()) {

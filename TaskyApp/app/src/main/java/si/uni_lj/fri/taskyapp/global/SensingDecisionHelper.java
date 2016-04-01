@@ -10,7 +10,7 @@ import com.google.gson.Gson;
 import si.uni_lj.fri.taskyapp.data.ActivityData;
 import si.uni_lj.fri.taskyapp.data.LocationData;
 import si.uni_lj.fri.taskyapp.data.SensorReadingData;
-import si.uni_lj.fri.taskyapp.data.TimeRangeElement;
+import si.uni_lj.fri.taskyapp.data.OfficeHoursObject;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
 
 /**
@@ -98,7 +98,9 @@ public class SensingDecisionHelper {
                     Log.d(TAG, "activity data return false, now decide on location data");
                     continueSensing = decideOnLocationData();
                 }
-                Log.d(TAG, "activity data return true (both available)");
+                else {
+                    Log.d(TAG, "activity data return true (both available)");
+                }
             } else if (newSensorData.getActivityData() != null) {
                 Log.d(TAG, "decide on activity data");
                 continueSensing = decideOnActivityData();
@@ -185,7 +187,7 @@ public class SensingDecisionHelper {
         if (userLabel > 0) {
             return true;
         }
-        TimeRangeElement tre = new TimeRangeElement(mContext);
+        OfficeHoursObject tre = new OfficeHoursObject(mContext);
         return tre.areNowOfficeHours();
     }
 
