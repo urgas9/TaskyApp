@@ -3,6 +3,8 @@ package si.uni_lj.fri.taskyapp.data;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -81,8 +83,38 @@ public class OfficeHoursObject {
         }
     }
 
+    public static boolean validateAndSaveOfficeHoursString(Context mContext, String stringValue){
+        stringValue = prettifyTimeRangeStringValue(stringValue);
+        if(!OfficeHoursObject.isStringValid(stringValue)) {
+            if (mContext != null) {
+                Toast.makeText(mContext, "Please enter a valid time range (example: 08:00 - 16:00)!", Toast.LENGTH_LONG).show();
+            }
+            return false;
+        }
+        OfficeHoursObject tre = new OfficeHoursObject(stringValue);
+        if(!tre.isTimeDifferenceBigEnough()){
+            if (mContext != null) {
+                Toast.makeText(mContext, String.format(mContext.getString(R.string.time_range_too_short), stringValue), Toast.LENGTH_LONG).show();
+            }
+            return false;
+        }
+        stringValue = tre.toString();
+        PreferenceManager.getDefaultSharedPreferences(mContext).edit().putString(Constants.PREFS_OFFICE_HOURS, stringValue).commit();
+        return true;
+    }
+
+    public static String prettifyTimeRangeStringValue(String stringValue) {
+        if(!stringValue.contains(" - ") && stringValue.contains("-")){
+            Log.d("TAG", "we have a fucking match! " + stringValue);
+            stringValue = stringValue.replaceAll(" ", "").replaceAll("-", " - ");
+            Log.d("TAG", "new value: " + stringValue);
+
+        }
+        return new OfficeHoursObject(stringValue).toString();
+    }
+
     public static boolean isStringValid(String timeRangeString){
-        return timeRangeString.matches("^[0-9]{1,2}:[0-9]{1,2} - [0-9]{1,2}:[0-9]{1,2}$");
+        return timeRangeString.matches("^([01]?[0-9]|2[0-3]):[0-5][0-9] - ([01]?[0-9]|2[0-3]):[0-5][0-9]$");
     }
 
     @Override

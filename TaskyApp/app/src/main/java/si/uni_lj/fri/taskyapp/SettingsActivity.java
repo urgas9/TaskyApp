@@ -108,29 +108,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     }
                     return false;
                 } else if(preference.getKey().equals("profile_office_hours_text")){
-
-                    if(!stringValue.contains(" - ") && stringValue.contains("-")){
-                        Log.d("TAG", "we have a fucking match! " + stringValue);
-                        stringValue = stringValue.replaceAll(" ", "").replaceAll("-", " - ");
-                        Log.d("TAG", "new value: " + stringValue);
-
-                    }
-                    if(!OfficeHoursObject.isStringValid(stringValue)) {
-                        if (mContext != null) {
-                            Toast.makeText(mContext, "Please enter a valid time range (example: 08:00 - 16:00)!", Toast.LENGTH_LONG).show();
-                        }
-                        return false;
-                    }
-                    OfficeHoursObject tre = new OfficeHoursObject(stringValue);
-                    if(!tre.isTimeDifferenceBigEnough()){
-                        if (mContext != null) {
-                            Toast.makeText(mContext, String.format(mContext.getString(R.string.time_range_too_short), stringValue), Toast.LENGTH_LONG).show();
-                        }
-                        return false;
-                    }
-                    stringValue = tre.toString();
-                    preference.setSummary(stringValue);
-                    PreferenceManager.getDefaultSharedPreferences(mContext).edit().putString(Constants.PREFS_OFFICE_HOURS, stringValue).commit();
+                    OfficeHoursObject.validateAndSaveOfficeHoursString(mContext, stringValue);
                     return false;
                 }
 

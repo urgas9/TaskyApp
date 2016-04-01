@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -14,18 +15,17 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.afollestad.materialdialogs.MaterialDialog;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import me.tittojose.www.timerangepicker_library.TimeRangePickerDialog;
 import si.uni_lj.fri.taskyapp.R;
 import si.uni_lj.fri.taskyapp.SplashScreenActivity;
 import si.uni_lj.fri.taskyapp.data.OfficeHoursObject;
 import si.uni_lj.fri.taskyapp.global.AppHelper;
-import si.uni_lj.fri.taskyapp.sensor.Constants;
 
-public class SplashScreenFragment extends Fragment implements TimeRangePickerDialog.OnTimeRangeSelectedListener {
+public class SplashScreenFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_CURRENT_PAGE = "current_page";
@@ -77,7 +77,7 @@ public class SplashScreenFragment extends Fragment implements TimeRangePickerDia
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View root;
@@ -101,17 +101,25 @@ public class SplashScreenFragment extends Fragment implements TimeRangePickerDia
         else if (mCurrentPage == (SplashScreenActivity.ALL_PAGES) - 2){
             root = inflater.inflate(R.layout.fragment_provide_office_hours, container, false);
             mOfficeTimeRangeTv = (TextView) root.findViewById(R.id.content_timerage);
+            final String currentOfficeHours = new OfficeHoursObject(getContext()).toString();
             mOfficeTimeRangeTv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final TimeRangePickerDialog timePickerDialog = TimeRangePickerDialog.newInstance(
-                            SplashScreenFragment.this, true);
-                    timePickerDialog.show(getActivity().getSupportFragmentManager(), TIMERANGEPICKER_TAG);
+                    new MaterialDialog.Builder(getActivity())
+                            .content("Please input your usual office hours (e.g. " + getString(R.string.pref_default_office_hours) + ").")
+                            .inputType(InputType.TYPE_CLASS_DATETIME)
+                            .input(getString(R.string.pref_default_office_hours), currentOfficeHours, new MaterialDialog.InputCallback() {
+                                @Override
+                                public void onInput(MaterialDialog dialog, CharSequence input) {
+                                    if(OfficeHoursObject.validateAndSaveOfficeHoursString(getContext(), input.toString())){
+                                        mOfficeTimeRangeTv.setText(OfficeHoursObject.prettifyTimeRangeStringValue(input.toString()));
+                                    }
+                                }
+                            }).show();
                 }
             });
 
-            OfficeHoursObject tre = new OfficeHoursObject(getContext());
-            mOfficeTimeRangeTv.setText(tre.toString());
+            mOfficeTimeRangeTv.setText(currentOfficeHours);
 
         }
         else {
@@ -193,21 +201,6 @@ public class SplashScreenFragment extends Fragment implements TimeRangePickerDia
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement OnSplashScreenFragmentActionListener");
-        }
-    }
-
-    @Override
-    public void onTimeRangeSelected(int startHour, int startMin, int endHour, int endMin) {
-
-        OfficeHoursObject tre = new OfficeHoursObject(startHour, startMin, endHour, endMin);
-        String timeRange = tre.toString();
-
-        if(!tre.isTimeDifferenceBigEnough()) {
-            Toast.makeText(getContext(), String.format(getString(R.string.time_range_too_short), timeRange), Toast.LENGTH_LONG).show();
-        }
-        else {
-            mPrefs.edit().putString(Constants.PREFS_OFFICE_HOURS, timeRange).apply();
-            mOfficeTimeRangeTv.setText(timeRange);
         }
     }
 
