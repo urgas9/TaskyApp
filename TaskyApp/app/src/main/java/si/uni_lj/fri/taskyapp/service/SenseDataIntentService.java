@@ -202,13 +202,13 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         srd.setActivityData(new ActivityData(detectedActivity));
         srd.setLocationData(new LocationData(getApplicationContext(), sensedLocation));
 
+        mTimeSensingStarted = System.currentTimeMillis();
+        srd.setTimestampStarted(mTimeSensingStarted);
+
         if (!mSensingHelper.shouldContinueSensing(srd)) {
             Log.d(TAG, "Decided not to sense this time!");
             return;
         }
-
-        mTimeSensingStarted = System.currentTimeMillis();
-        srd.setTimestampStarted(mTimeSensingStarted);
 
         mScreenStatusDataList = new ArrayList<>();
         if (mDefaultPrefs.contains(Constants.PREFS_LAST_SCREEN_STATE)) {
