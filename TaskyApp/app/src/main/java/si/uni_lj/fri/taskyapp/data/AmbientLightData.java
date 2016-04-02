@@ -13,13 +13,14 @@ public class AmbientLightData {
     @SerializedName("max_range")
     private float maxRange;
 
-    public AmbientLightData(float min, float max, float mean, float maxRange){
+    public AmbientLightData(float min, float max, float mean, float maxRange) {
         super();
         this.min = min;
         this.max = max;
         this.mean = mean;
         this.maxRange = maxRange;
     }
+
     public float getMin() {
         return min;
     }

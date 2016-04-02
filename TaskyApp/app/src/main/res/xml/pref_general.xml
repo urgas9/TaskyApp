@@ -16,8 +16,8 @@
             android:title="@string/pref_title_display_name"/>-->
         <EditTextPreference
             android:defaultValue="@string/pref_default_email_name"
-            android:inputType="textEmailAddress"
             android:hint="@string/pref_default_email_name"
+            android:inputType="textEmailAddress"
             android:key="profile_email_text"
             android:maxLines="1"
             android:selectAllOnFocus="true"
@@ -33,8 +33,8 @@
 
         <EditTextPreference
             android:defaultValue="@string/pref_default_office_hours"
-            android:inputType="datetime"
             android:hint="@string/pref_default_office_hours"
+            android:inputType="datetime"
             android:key="profile_office_hours_text"
             android:maxLines="1"
             android:selectAllOnFocus="true"

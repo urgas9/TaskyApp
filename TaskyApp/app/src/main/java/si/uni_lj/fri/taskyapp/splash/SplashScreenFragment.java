@@ -94,11 +94,9 @@ public class SplashScreenFragment extends Fragment {
                     return false;
                 }
             });
-        }
-        else if (mCurrentPage == (SplashScreenActivity.ALL_PAGES - 3)){
+        } else if (mCurrentPage == (SplashScreenActivity.ALL_PAGES - 3)) {
             root = inflater.inflate(R.layout.fragment_terms_of_use, container, false);
-        }
-        else if (mCurrentPage == (SplashScreenActivity.ALL_PAGES) - 2){
+        } else if (mCurrentPage == (SplashScreenActivity.ALL_PAGES) - 2) {
             root = inflater.inflate(R.layout.fragment_provide_office_hours, container, false);
             mOfficeTimeRangeTv = (TextView) root.findViewById(R.id.content_timerage);
             final String currentOfficeHours = new OfficeHoursObject(getContext()).toString();
@@ -111,7 +109,7 @@ public class SplashScreenFragment extends Fragment {
                             .input(getString(R.string.pref_default_office_hours), currentOfficeHours, new MaterialDialog.InputCallback() {
                                 @Override
                                 public void onInput(MaterialDialog dialog, CharSequence input) {
-                                    if(OfficeHoursObject.validateAndSaveOfficeHoursString(getContext(), input.toString())){
+                                    if (OfficeHoursObject.validateAndSaveOfficeHoursString(getContext(), input.toString())) {
                                         mOfficeTimeRangeTv.setText(OfficeHoursObject.prettifyTimeRangeStringValue(input.toString()));
                                     }
                                 }
@@ -121,8 +119,7 @@ public class SplashScreenFragment extends Fragment {
 
             mOfficeTimeRangeTv.setText(currentOfficeHours);
 
-        }
-        else {
+        } else {
             root = inflater.inflate(R.layout.fragment_splash_info, container, false);
             ButterKnife.bind(this, root);
             switch (mCurrentPage) {

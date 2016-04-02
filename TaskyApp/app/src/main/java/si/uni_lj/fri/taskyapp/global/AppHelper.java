@@ -153,8 +153,8 @@ public class AppHelper {
     }
 
     public static void showExplainNotificationsDialog(Activity activity) {
-        String[] taskComplexities = activity.getResources().getStringArray(R.array.task_complexities_array);
-        String[] taskDescriptions = activity.getResources().getStringArray(R.array.task_complexities_description_array);
+        String[] taskComplexities = activity.getResources().getStringArray(R.array.task_difficulties_array);
+        String[] taskDescriptions = activity.getResources().getStringArray(R.array.task_difficulties_description_array);
 
         String resultString = "<html>";
         for (int i = 1; i < taskComplexities.length; i++) {
@@ -174,7 +174,7 @@ public class AppHelper {
     }
 
     public static int dpToPx(Context mContext, int dp) {
-        if(mContext == null){
+        if (mContext == null) {
             return 0;
         }
         DisplayMetrics displayMetrics = mContext.getResources().getDisplayMetrics();

@@ -38,6 +38,15 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
         this.mPendingAction = false;
     }
 
+    public static boolean isUserParticipating(Context mContext) {
+        boolean participating = PreferenceManager.getDefaultSharedPreferences(mContext).getString("participate_preference", "0").equals("0");
+        if (!participating) {
+            Log.d(TAG, "User is not participating, don't start sensing.");
+        } else {
+            Log.d(TAG, "User is participating, start sensing.");
+        }
+        return participating;
+    }
 
     public void senseWithDefaultSensingConfiguration() {
 
@@ -50,7 +59,7 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     }
 
     public void senseOnActivityRecognition() {
-        if (!isUserParticipating(mContext)){
+        if (!isUserParticipating(mContext)) {
             return;
         }
         if (mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
@@ -61,21 +70,11 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     }
 
     public void senseOnLocationChanged() {
-        if (!isUserParticipating(mContext)){
+        if (!isUserParticipating(mContext)) {
             return;
         }
 
         requestLocationUpdates();
-    }
-    public static boolean isUserParticipating(Context mContext){
-        boolean participating = PreferenceManager.getDefaultSharedPreferences(mContext).getString("participate_preference", "0").equals("0");
-        if(!participating){
-            Log.d(TAG, "User is not participating, don't start sensing.");
-        }
-        else{
-            Log.d(TAG, "User is participating, start sensing.");
-        }
-        return participating;
     }
 
     public void senseOnInterval() {
@@ -94,7 +93,7 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     private GoogleApiClient buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(mContext)
                 .addApi(ActivityRecognition.API)
-                //.addApi(LocationServices.API)
+                        //.addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
@@ -121,6 +120,7 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     private PendingIntent getSensingServicePendingIntent(SensingPolicy sensingPolicy) {
         return getSensingServicePendingIntent(sensingPolicy, -1);
     }
+
     // TODO: Change Intent service to Service
     private PendingIntent getSensingServicePendingIntent(SensingPolicy sensingPolicy, Integer userLabel) {
         Intent i = new Intent(mContext, SenseDataIntentService.class);

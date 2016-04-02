@@ -48,7 +48,7 @@ public class SensorThreadsManager {
         return null;
     }
 
-    public void dispose(){
+    public void dispose() {
         mThreadPool.shutdownNow();
         mThreadPool = null;
         mCompletionService = null;

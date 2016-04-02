@@ -10,7 +10,7 @@ import si.uni_lj.fri.taskyapp.data.Auth;
 public class AuthRequest {
     private Auth auth;
 
-    public AuthRequest(Context ctx){
+    public AuthRequest(Context ctx) {
         super();
         this.auth = new Auth(ctx);
     }

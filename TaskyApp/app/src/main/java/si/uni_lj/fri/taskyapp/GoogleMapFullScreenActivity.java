@@ -59,7 +59,7 @@ public class GoogleMapFullScreenActivity extends AppCompatActivity {
         }
         mFullScreenMapFragment.setDataList(mMarkerDataHolderList);
 
-        arrayOfComplexities = getResources().getStringArray(R.array.task_complexities_array);
+        arrayOfComplexities = getResources().getStringArray(R.array.task_difficulties_array);
 
         mMapDataType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

@@ -11,7 +11,7 @@ import si.uni_lj.fri.taskyapp.data.SensorReadingData;
 /**
  * Created by urgas9 on 20-Feb-16, OpenHours.com
  */
-public class PostDataRequest extends AuthRequest{
+public class PostDataRequest extends AuthRequest {
 
     @SerializedName("data")
     private List<SensorReadingData> dataList;

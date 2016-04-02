@@ -66,7 +66,6 @@ import si.uni_lj.fri.taskyapp.sensor.SensorThreadsManager;
 
 /**
  * Created by urgas9 on 31. 12. 2015.
- *
  */
 public class SenseDataIntentService extends IntentService implements GoogleApiClient.ConnectionCallbacks, SensorDataListener {
     //LogCat
@@ -74,22 +73,19 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
     private static final int[] SENSOR_IDS = {
             SensorUtils.SENSOR_TYPE_LIGHT,
             SensorUtils.SENSOR_TYPE_SCREEN};
-
+    private static List<ActivityData> mDetectedActivityLint;
     private GoogleApiClient mGoogleApiClient;
-    private PendingIntent mActivityRecognitionPendingIntent;
-    private List<Integer> sensorSubscriptionIds;
+    private PendingIntent mActivityRecognitionPendingInteds;
+    private List<Integer> sensorSubscriptionIed;
     //Data for callbacks
-    private long mTimeSensingStarted;
-    private List<ScreenStatusData> mScreenStatusDataList;
-    private double mSumLightValues;
+    private long mTimeSensingStartst;
+    private List<ScreenStatusData> mScreenStatusDataLies;
+    private double mSumLightValuue;
     private float mMinLightValue;
-    private float mMaxLightValue;
-    private float mMaxRangeLight;
-
-    private long mCountLightValues;
-
-    private static List<ActivityData> mDetectedActivityList;
-   private SharedPreferences mDefaultPrefs;
+    private float mMaxLightValht;
+    private float mMaxRangeLiges;
+    private long mCountLightValust;
+    private SharedPreferences mDefaultPrefs;
 
 
     public SenseDataIntentService() {
@@ -102,7 +98,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             Log.d(TAG, "Received intent is null, quit.");
             return;
         }
-        if(!SensingInitiator.isUserParticipating(getBaseContext())){
+        if (!SensingInitiator.isUserParticipating(getBaseContext())) {
             Log.d(TAG, "Service: User is not participating, quit.");
             return;
         }
@@ -145,7 +141,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         DetectedActivity detectedActivity = null;
         SensorReadingData srd = new SensorReadingData(getApplicationContext());
 
-        if(sensingPolicy != SensingPolicy.USER_FORCED) {
+        if (sensingPolicy != SensingPolicy.USER_FORCED) {
             if (ActivityRecognitionResult.hasResult(intent)) {
                 //Extract the result from the Response
                 ActivityRecognitionResult result = ActivityRecognitionResult.extractResult(intent);
@@ -257,7 +253,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
         IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
         Intent batteryStatus = getBaseContext().registerReceiver(null, ifilter);
-        if(batteryStatus != null) {
+        if (batteryStatus != null) {
             int status = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
             boolean isCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
                     status == BatteryManager.BATTERY_STATUS_FULL;
@@ -266,8 +262,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             /*int chargePlug = batteryStatus.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
             boolean usbCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_USB;
             boolean acCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_AC;*/
-        }
-        else{
+        } else {
             Log.d(TAG, "Cannot get battery charging status!");
         }
 
@@ -296,7 +291,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
                 Log.d(TAG, "Got accelerometer data with mean values: " + meanValues[0] + ", " + meanValues[1] + ", " + meanValues[2]);
 
                 srd.setAccelerometerData(new MotionSensorData(meanValues, ((AccelerometerData) sensingData).getSensorReadings()));
-            } else if(sensingData instanceof GyroscopeData){
+            } else if (sensingData instanceof GyroscopeData) {
                 float[] meanValues = SensorsHelper.getMeanAccelerometerValues(((GyroscopeData) sensingData).getSensorReadings());
                 Log.d(TAG, "Got gyroscope data with mean values: " + meanValues[0] + ", " + meanValues[1] + ", " + meanValues[2]);
 
@@ -320,7 +315,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
         unsubscribeFromSensors(sm);
 
-        float averageLight = (float)mSumLightValues / mCountLightValues;
+        float averageLight = (float) mSumLightValues / mCountLightValues;
         if (!Float.isNaN(averageLight)) {
             environmentData.setAmbientLightData(new AmbientLightData(mMinLightValue, mMaxLightValue, averageLight, mMaxRangeLight));
         }
@@ -379,7 +374,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
                 }
                 break;
             case "2":
-                if(id > 0) {
+                if (id > 0) {
                     AppHelper.showNotification(getBaseContext(), id);
                 }
                 break;
@@ -446,10 +441,10 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             mMaxRangeLight = ((LightData) data).getMaxRange();
             float value = ((LightData) data).getValue();
             mSumLightValues += value;
-            if(value > mMaxLightValue){
+            if (value > mMaxLightValue) {
                 mMaxLightValue = value;
             }
-            if(value < mMinLightValue){
+            if (value < mMinLightValue) {
                 mMinLightValue = value;
             }
         }
@@ -512,9 +507,11 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         public MyActivityRecognitionIntentService(String name) {
             super(name);
         }
-        public MyActivityRecognitionIntentService(){
+
+        public MyActivityRecognitionIntentService() {
             super("MyActivityRecognitionIntentService");
         }
+
         @Override
         protected void onHandleIntent(Intent intent) {
             Log.d(TAG, "onHandleIntent in MyActivityRecognitionIntentService");

@@ -49,7 +49,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/activity_vertical_margin"
-                        android:text="@string/start_sense_task_complexity"
+                        android:text="@string/start_sense_task_difficulty"
                         android:textSize="@dimen/text_subtitle_size"/>
 
                     <include

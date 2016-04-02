@@ -75,7 +75,7 @@ public class DailyAggregatedData {
     }
 
     public String getAverageLabelTaskText(Context ctx) {
-        String[] complexitiesArray = ctx.getResources().getStringArray(R.array.task_complexities_array);
+        String[] complexitiesArray = ctx.getResources().getStringArray(R.array.task_difficulties_array);
 
         int base = (int) averageLabel;
         double decimal = averageLabel - base;

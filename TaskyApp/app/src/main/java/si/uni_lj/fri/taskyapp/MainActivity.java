@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        arrayOfComplexities = getResources().getStringArray(R.array.task_complexities_array);
+        arrayOfComplexities = getResources().getStringArray(R.array.task_difficulties_array);
         if (!AppHelper.isPlayServiceAvailable(this)) {
             Snackbar.make(findViewById(R.id.main_coordinator_layout), "Google Play Services are not available! Please install them first.", Snackbar.LENGTH_INDEFINITE).show();
         }
@@ -299,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
 
         } else {
             mSeekbarValueTv.setTextColor(ContextCompat.getColor(this, R.color.red));
-            Toast.makeText(this, R.string.task_complexity_not_selected, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.task_difficulty_not_selected, Toast.LENGTH_LONG).show();
         }
     }
 

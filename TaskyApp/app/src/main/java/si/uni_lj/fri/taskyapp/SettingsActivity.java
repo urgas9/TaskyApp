@@ -25,7 +25,6 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 
-import me.tittojose.www.timerangepicker_library.TimeRangePickerDialog;
 import si.uni_lj.fri.taskyapp.data.OfficeHoursObject;
 import si.uni_lj.fri.taskyapp.data.network.AuthRequest;
 import si.uni_lj.fri.taskyapp.data.network.OptOutResponse;
@@ -33,7 +32,6 @@ import si.uni_lj.fri.taskyapp.global.AppHelper;
 import si.uni_lj.fri.taskyapp.networking.ApiUrls;
 import si.uni_lj.fri.taskyapp.networking.ConnectionHelper;
 import si.uni_lj.fri.taskyapp.networking.ConnectionResponse;
-import si.uni_lj.fri.taskyapp.sensor.Constants;
 import si.uni_lj.fri.taskyapp.sensor.SensingInitiator;
 
 /**
@@ -49,18 +47,6 @@ import si.uni_lj.fri.taskyapp.sensor.SensingInitiator;
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
     private static Context mContext;
-
-    private static void setPreferenceTextSummaryOnValue(ListPreference listPreference, String stringValue){
-        // For list preferences, look up the correct display value in
-        // the preference's 'entries' list.
-        int index = listPreference.findIndexOfValue(stringValue);
-
-        // Set the summary to reflect the new value.
-        listPreference.setSummary(
-                index >= 0
-                        ? listPreference.getEntries()[index]
-                        : null);
-    }
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
@@ -71,7 +57,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             String stringValue = value.toString();
 
             if (preference instanceof ListPreference) {
-                setPreferenceTextSummaryOnValue((ListPreference)preference, stringValue);
+                setPreferenceTextSummaryOnValue((ListPreference) preference, stringValue);
 
             } else if (preference instanceof RingtonePreference) {
                 // For ringtone preferences, look up the correct display value
@@ -107,9 +93,15 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                         Toast.makeText(mContext, "Please enter a valid email address!", Toast.LENGTH_LONG).show();
                     }
                     return false;
-                } else if(preference.getKey().equals("profile_office_hours_text")){
-                    OfficeHoursObject.validateAndSaveOfficeHoursString(mContext, stringValue);
-                    return false;
+                } else if (preference.getKey().equals("profile_office_hours_text")) {
+
+
+                    if (OfficeHoursObject.validateAndSaveOfficeHoursString(mContext, stringValue)) {
+                        stringValue = OfficeHoursObject.prettifyTimeRangeStringValue(stringValue);
+                    } else {
+                        return false;
+                    }
+
                 }
 
                 preference.setSummary(stringValue);
@@ -118,6 +110,18 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             return true;
         }
     };
+
+    private static void setPreferenceTextSummaryOnValue(ListPreference listPreference, String stringValue) {
+        // For list preferences, look up the correct display value in
+        // the preference's 'entries' list.
+        int index = listPreference.findIndexOfValue(stringValue);
+
+        // Set the summary to reflect the new value.
+        listPreference.setSummary(
+                index >= 0
+                        ? listPreference.getEntries()[index]
+                        : null);
+    }
 
     /**
      * Binds a preference's summary to its value. More specifically, when the
@@ -189,7 +193,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      * activity is showing a two-pane settings UI.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static class GeneralPreferenceFragment extends PreferenceFragment implements TimeRangePickerDialog.OnTimeRangeSelectedListener {
+    public static class GeneralPreferenceFragment extends PreferenceFragment {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -206,21 +210,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             bindPreferenceSummaryToValue(findPreference("participate_preference"));
             bindPreferenceSummaryToValue(findPreference("profile_office_hours_text"));
 
-
-            /*Preference timeRangePreference = findPreference("profile_office_hours_text");
-            timeRangePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    Toast.makeText(mContext, "Clicked.", Toast.LENGTH_LONG).show();
-                    final TimeRangePickerDialog timePickerDialog = TimeRangePickerDialog.newInstance(
-                            GeneralPreferenceFragment.this, true);
-                    timePickerDialog.show(get);
-                    timePickerDialog.show(GeneralPreferenceFragment.this.g, "timepickerdialog");
-                    //timePickerDialog.show(getActivity().getFragmentManager(), "timepicker");
-                    return false;
-                }
-            });*/
-            ListPreference participatePreference = (ListPreference)findPreference("participate_preference");
+            ListPreference participatePreference = (ListPreference) findPreference("participate_preference");
 
             participatePreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
@@ -230,7 +220,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                         if (!stringValue.equals("0")) {
                             String content = "Are you sure you want to opt-out? We are very sad to see you go :( \n" +
                                     "TaskyApp will stop collecting data.";
-                            if(stringValue.equals("2")){
+                            if (stringValue.equals("2")) {
                                 content = "We need your data to finish this research. Data is completely anonymous and we would like to keep it. \n\n" +
                                         "Would you really like to opt-out and delete collected data? You can opt-out without deleting data.";
                             }
@@ -255,10 +245,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                                         }
                                     })
                                     .show();
-                        }
-                        else{
+                        } else {
                             new SensingInitiator(mContext).senseWithDefaultSensingConfiguration();
-                            setPreferenceTextSummaryOnValue((ListPreference)preference, stringValue);
+                            setPreferenceTextSummaryOnValue((ListPreference) preference, stringValue);
                         }
                     }
                     return true;
@@ -277,29 +266,17 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             return super.onOptionsItemSelected(item);
         }
 
-        @Override
-        public void onTimeRangeSelected(int startHour, int startMin, int endHour, int endMin) {
-
-            OfficeHoursObject tre = new OfficeHoursObject(startHour, startMin, endHour, endMin);
-            String timeRange = tre.toString();
-
-            if(!tre.isTimeDifferenceBigEnough()) {
-                Toast.makeText(mContext, "Selected time range (" + timeRange + ") must be at least 4 hours.", Toast.LENGTH_LONG).show();
-            }
-            else {
-                PreferenceManager.getDefaultSharedPreferences(mContext).edit().putString(Constants.PREFS_OFFICE_HOURS, timeRange).apply();
-            }
-        }
     }
 
 
-    static class OptOutAsyncTask extends AsyncTask<Void, Void, ConnectionResponse<OptOutResponse>>{
+    static class OptOutAsyncTask extends AsyncTask<Void, Void, ConnectionResponse<OptOutResponse>> {
         private Context appContext;
 
-        public OptOutAsyncTask(Context context){
+        public OptOutAsyncTask(Context context) {
             super();
             this.appContext = context.getApplicationContext();
         }
+
         @Override
         protected ConnectionResponse<OptOutResponse> doInBackground(Void... params) {
 
@@ -316,11 +293,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         protected void onPostExecute(ConnectionResponse<OptOutResponse> optOutResponseConnectionResponse) {
             super.onPostExecute(optOutResponseConnectionResponse);
 
-            if(!optOutResponseConnectionResponse.isSuccess()
-                    || !optOutResponseConnectionResponse.getContent().isSuccess()){
+            if (!optOutResponseConnectionResponse.isSuccess()
+                    || !optOutResponseConnectionResponse.getContent().isSuccess()) {
                 Toast.makeText(appContext, "Opt-out failed. Please check you internet connection.", Toast.LENGTH_LONG).show();
-            }
-            else{
+            } else {
                 Toast.makeText(appContext, "Thanks for participating. TaskyApp will stop sensing and all you data was removed from server.", Toast.LENGTH_LONG).show();
             }
         }

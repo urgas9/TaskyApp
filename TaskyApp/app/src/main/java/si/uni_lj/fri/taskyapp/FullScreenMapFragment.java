@@ -135,7 +135,7 @@ public class FullScreenMapFragment extends Fragment implements OnMapReadyCallbac
             fm.beginTransaction().replace(R.id.map_content_frame, mMapFragment).commit();
         }
 
-        mArrayOfComplexities = getResources().getStringArray(R.array.task_complexities_array);
+        mArrayOfComplexities = getResources().getStringArray(R.array.task_difficulties_array);
 
     }
 
@@ -168,7 +168,7 @@ public class FullScreenMapFragment extends Fragment implements OnMapReadyCallbac
         mLegendLl.setVisibility(View.INVISIBLE);
         ArrayList<LatLng> latLngArray = getLatLngArray();
 
-        if(latLngArray.isEmpty()){
+        if (latLngArray.isEmpty()) {
             return;
         }
         TileProvider mProvider = new HeatmapTileProvider.Builder()

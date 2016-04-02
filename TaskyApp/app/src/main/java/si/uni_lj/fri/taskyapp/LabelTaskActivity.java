@@ -72,7 +72,7 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
         SensorReadingRecord srr = SensorReadingRecord.findById(SensorReadingRecord.class, mDbRecordId);
         mSensorReadingData = new Gson().fromJson(srr.getSensorJsonObject(), SensorReadingData.class);
 
-        arrayOfComplexities = getResources().getStringArray(R.array.task_complexities_array);
+        arrayOfComplexities = getResources().getStringArray(R.array.task_difficulties_array);
         ButterKnife.bind(this);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -122,16 +122,15 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
             }
         });
 
-        if(mSensorReadingData.getLocationData().getLng() == 0.0 && mSensorReadingData.getLocationData().getLat() == 0.0){
+        if (mSensorReadingData.getLocationData().getLng() == 0.0 && mSensorReadingData.getLocationData().getLat() == 0.0) {
             mNoLocationDataTv.setVisibility(View.VISIBLE);
         }
 
         String eventName = CalendarHelper.getEventNameAtTime(this, mSensorReadingData.getTimestampStarted());
-        if(eventName != null){
+        if (eventName != null) {
             mCalendarEventLayout.setVisibility(View.VISIBLE);
             mCalendarEventNameTv.setText(eventName);
-        }
-        else {
+        } else {
             mCalendarEventLayout.setVisibility(View.GONE);
         }
 

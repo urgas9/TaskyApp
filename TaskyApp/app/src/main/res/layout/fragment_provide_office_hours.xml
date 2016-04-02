@@ -33,21 +33,21 @@
             android:id="@+id/content_timerage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/activity_horizontal_margin"
             android:gravity="center"
+            android:padding="@dimen/activity_horizontal_margin"
             android:text="@string/pref_default_office_hours"
             android:textColor="@color/accent"
-            android:textStyle="bold"
-            android:textSize="24sp"/>
+            android:textSize="24sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/content2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/activity_horizontal_margin"
             android:paddingBottom="@dimen/activity_horizontal_margin_small"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_horizontal_margin"
             android:text="Click above if the time range is not correct."
             android:textSize="18sp"/>
         <!--<TextView

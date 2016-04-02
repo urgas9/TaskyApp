@@ -67,7 +67,7 @@ public class SensorReadingData {
     }
 
     public long getTimestampStarted() {
-        return Long.valueOf(timestampStarted == null?"0":timestampStarted);
+        return Long.valueOf(timestampStarted == null ? "0" : timestampStarted);
     }
 
     public void setTimestampStarted(long timestampStarted) {
@@ -148,7 +148,7 @@ public class SensorReadingData {
 
     public boolean equalByDayTimestampStarted(SensorReadingData srd) {
         SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_FORMAT_TO_SHOW_DAY, Locale.ENGLISH);
-        if(timestampStarted != null) {
+        if (timestampStarted != null) {
             long tStarted = Long.valueOf(timestampStarted);
             String dayThis = format.format(new Date(tStarted));
             String daySrd = format.format(new Date(tStarted));

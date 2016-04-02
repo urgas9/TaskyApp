@@ -12,20 +12,20 @@
     <string name="permission_accounts_denied">We need access to your profile mail address to log you in.</string>
     <string name="ok">OK</string>
 
-    <string name="complexity_prompt">Choose task complexity</string>
-    <string name="task_complexity_not_selected">Select your task complexity first.</string>
+    <string name="difficulty_prompt">Choose task difficulty</string>
+    <string name="task_difficulty_not_selected">Select your task difficulty first.</string>
     <string name="label">Label</string>
     <string name="discard">Discard</string>
     <string name="nearby_devices">Nearby devices</string>
     <string name="detected_phone_activity">Detected phone activity:</string>
     <string name="no_data">no data</string>
     <string name="action_about">About</string>
-    <string name="about_app_body">TaskyApp is developed solely for research purpose and is part of master thesis <b>Mobile Sensing for Task Engagement Inferences</b>. \nWith use of this app you are helping us out to collect data, which will be later used for machine learning on server. The goal of the research is trying to classify complexity of users\' tasks only with phone\'s built-in sensors.</string>
+    <string name="about_app_body">TaskyApp is developed solely for research purpose and is part of master thesis <b>Mobile Sensing for Task Engagement Inferences</b>. \nWith use of this app you are helping us out to collect data, which will be later used for machine learning on server. The goal of the research is trying to classify difficulty of users\' tasks only with phone\'s built-in sensors.</string>
     <string name="about_app_title">About TaskyApp</string>
     <string name="author_title">Author</string>
     <string name="about_author_description">App was developed by <b>Gašper Urh</b>, student at Faculty of Computer and Information Science, University of Ljubljana, supervised by <b>doc. dr. Veljko Pejović</b>.</string>
 
-    <string-array name="task_complexities_array">
+    <string-array name="task_difficulties_array">
         <item></item>
         <item>Very easy</item>
         <item>Pretty easy</item>
@@ -33,7 +33,7 @@
         <item>Pretty hard</item>
         <item>Very hard</item>
     </string-array>
-    <string-array name="task_complexities_description_array">
+    <string-array name="task_difficulties_description_array">
         <item></item>
         <item>Boring, I could still actively use my phone.</item>
         <item>I have enough time to open notification.</item>
@@ -106,18 +106,18 @@
     <string name="sensing">New task</string>
     <string name="daily_statistics_body_1">We have</string>
     <string name="daily_statistics_body_2">sensor readings of your activity during the day, of which you have labeled</string>
-    <string name="daily_statistics_body_3">Your average task complexity for today is</string>
+    <string name="daily_statistics_body_3">Your average task difficulty for today is</string>
     <string name="statistics_today_title">Your statistics for today</string>
     <string name="not_labeled">Not labeled</string>
     <string name="heat_map">Heat map</string>
     <string name="task_markers">Task markers</string>
-    <string name="legend_num_non_labeled"># non labeled tasks</string>
+    <string name="legend_num_non_labeled"># non-labeled tasks</string>
     <string name="legend_num_labeled"># labeled tasks</string>
     <string name="show_on_map">Show on map</string>
     <string name="show_in_list">Show in list</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="title_activity_list_data">Sensed data</string>
+    <string name="title_activity_list_data">Non-labeled tasks</string>
     <string name="title_activity_statistics">Statistics</string>
     <string name="next">Next</string>
     <string name="finish">Finish</string>
@@ -125,14 +125,14 @@
     <string name="not_vaid_email">Email is not valid.</string>
     <string name="press_once_more_to_exit">Press once more to exit app!</string>
     <string name="help">Help</string>
-    <string name="task_descriptions">Task descriptions</string>
+    <string name="task_descriptions">Task difficulties</string>
     <string name="pref_summary_participate">If you want to opt-out switch this off.</string>
     <string name="terms_of_use_text">By clicking \"I Agree\" below, I agree to participate in the TaskyApp
             study. \nThis application will collect data that samples my location, collocation with
             other Bluetooth and WiFi devices, connectivity type, phone screen and battery status, accelerometer and microphone amplitude readings.
             I understand that access to any data collected will only be allowed to FRI mobile computing
-            research team and only for the purpose of conducting these experiments. \n
-            Any published results of this study will only refer to anonymised and
+            research team and only for the purpose of conducting these experiments.
+        \nAny published results of this study will only refer to anonymised and
             obfuscated data, and aggregated statistics that do not reveal the identities of the
             participants. As a participant I have the right to opt out of this study at any time during this
             experiment by uninstalling the application. Moreover, I have the right to access any
@@ -146,8 +146,9 @@
     <string name="wait_for_countdown">Wait for the countdown to complete.</string>
     <string name="start_sensing">Start sensing</string>
     <string name="label_tasks">Label tasks</string>
+    <string name="label_task_title">How difficult was this task?</string>
     <string name="check_statistics">Check statistics</string>
-    <string name="start_sense_task_complexity">Task complexity will be:</string>
+    <string name="start_sense_task_difficulty">Task difficulty will be:</string>
     <string name="start_sense_start_after">starting after:</string>
     <string name="leaderboard">Leaderboard</string>
     <string name="label_more">Label more</string>

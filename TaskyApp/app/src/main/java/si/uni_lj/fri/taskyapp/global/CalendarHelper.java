@@ -24,17 +24,17 @@ public class CalendarHelper {
     public static ArrayList<String> descriptions = new ArrayList<>();
 
     public static ArrayList<String> readCalendarEvent(Context context) {
-        if(!PermissionsHelper.hasPermission(context, Manifest.permission.READ_CALENDAR)){
-           Log.e(TAG, "Cannot read calendar events as permission is not granted!");
+        if (!PermissionsHelper.hasPermission(context, Manifest.permission.READ_CALENDAR)) {
+            Log.e(TAG, "Cannot read calendar events as permission is not granted!");
             return nameOfEvent;
         }
         Cursor cursor = context.getContentResolver()
                 .query(
                         Uri.parse("content://com.android.calendar/events"),
-                        new String[] { "calendar_id", "title", "description",
-                                "dtstart", "dtend", "eventLocation" }, "dtstart > ? AND (dtend IS NULL OR dtend < ?",
+                        new String[]{"calendar_id", "title", "description",
+                                "dtstart", "dtend", "eventLocation"}, "dtstart > ? AND (dtend IS NULL OR dtend < ?",
                         null, null);
-        if(cursor == null){
+        if (cursor == null) {
             Log.e(TAG, "Cursor is null!");
             return new ArrayList<>();
         }
@@ -53,7 +53,7 @@ public class CalendarHelper {
                     + cursor.getString(2) + ";-; " + cursor.getString(3) + ";-; " + cursor.getString(4));
             nameOfEvent.add(cursor.getString(1));
             startDates.add(getDate(Long.parseLong(cursor.getString(3))));
-            if(cursor.getString(4) != null) {
+            if (cursor.getString(4) != null) {
                 endDates.add(getDate(Long.parseLong(cursor.getString(4))));
             }
             descriptions.add(cursor.getString(2));
@@ -65,8 +65,8 @@ public class CalendarHelper {
         return nameOfEvent;
     }
 
-    public static String getEventNameAtTime(Context context, long timestamp){
-        if(!PermissionsHelper.hasPermission(context, Manifest.permission.READ_CALENDAR)){
+    public static String getEventNameAtTime(Context context, long timestamp) {
+        if (!PermissionsHelper.hasPermission(context, Manifest.permission.READ_CALENDAR)) {
             Log.e(TAG, "Cannot read calendar events as permission is not granted!");
             return null;
         }
@@ -83,9 +83,9 @@ public class CalendarHelper {
         ContentUris.appendId(eventsUriBuilder, timestamp);
         Uri eventsUri = eventsUriBuilder.build();
         Cursor cursor = null;
-        cursor = context.getContentResolver().query(eventsUri, new String[] { "calendar_id", "title", "description",
-                "dtstart", "dtend", "eventLocation", "duration" }, null, null, CalendarContract.Instances.ALL_DAY + " ASC, " + CalendarContract.Instances.DTSTART + " ASC");
-        if(cursor == null){
+        cursor = context.getContentResolver().query(eventsUri, new String[]{"calendar_id", "title", "description",
+                "dtstart", "dtend", "eventLocation", "duration"}, null, null, CalendarContract.Instances.ALL_DAY + " ASC, " + CalendarContract.Instances.DTSTART + " ASC");
+        if (cursor == null) {
             Log.e(TAG, "Cursor is null!");
             return null;
         }
@@ -104,7 +104,7 @@ public class CalendarHelper {
 
         }
         cursor.close();
-        if(eventNameArray.isEmpty()){
+        if (eventNameArray.isEmpty()) {
             return null;
         }
         return eventNameArray.get(0);

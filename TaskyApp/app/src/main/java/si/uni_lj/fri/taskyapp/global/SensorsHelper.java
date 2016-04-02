@@ -70,7 +70,7 @@ public class SensorsHelper {
         int size = array.length;
         double meanValue = 0;
         for (int val : array) {
-            meanValue += val / (double)size;
+            meanValue += val / (double) size;
         }
         return meanValue;
     }

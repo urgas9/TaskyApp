@@ -35,7 +35,7 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean(Constants.PREFS_WENT_THROUGH_TUTORIAL_SPLASH, false)){
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(Constants.PREFS_WENT_THROUGH_TUTORIAL_SPLASH, false)) {
             //TODO: Uncomment
             //startMainActivity();
         }
@@ -54,8 +54,7 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
             public void onPageSelected(int position) {
                 if (position == (ALL_PAGES - 1)) {
                     mNextButton.setText(R.string.finish);
-                }
-                else if(position == (ALL_PAGES - 3)){
+                } else if (position == (ALL_PAGES - 3)) {
                     mNextButton.setText(getString(R.string.i_agree));
                 } else {
                     mNextButton.setText(R.string.next);
@@ -84,7 +83,7 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
         return null;
     }
 
-    private void startMainActivity(){
+    private void startMainActivity() {
         Intent startAppIntent = new Intent(this, MainActivity.class);
         startActivity(startAppIntent);
         finish();

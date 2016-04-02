@@ -31,7 +31,7 @@ public class ConnectivityChangedReceiver extends BroadcastReceiver {
                 long lastTimestamp = PreferenceManager.getDefaultSharedPreferences(context).getLong(Constants.PREFS_LAST_TIME_SENT_TO_SERVER, 0);
                 //TODO: Uncomment
                 //if ((lastTimestamp + Constants.MAX_INTERVAL_BETWEEN_TWO_SERVER_POSTS) < System.currentTimeMillis()) {
-                    context.startService(new Intent(context, SendDataToServerService.class));
+                context.startService(new Intent(context, SendDataToServerService.class));
                 //}
 
             } else if (intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, Boolean.FALSE)) {

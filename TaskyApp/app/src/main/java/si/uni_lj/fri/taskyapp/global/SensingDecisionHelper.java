@@ -9,8 +9,8 @@ import com.google.gson.Gson;
 
 import si.uni_lj.fri.taskyapp.data.ActivityData;
 import si.uni_lj.fri.taskyapp.data.LocationData;
-import si.uni_lj.fri.taskyapp.data.SensorReadingData;
 import si.uni_lj.fri.taskyapp.data.OfficeHoursObject;
+import si.uni_lj.fri.taskyapp.data.SensorReadingData;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
 
 /**
@@ -87,7 +87,7 @@ public class SensingDecisionHelper {
         mOldSensorData = getPreviousDecisiveSensingData();
         mNewSensorData = newSensorData;
 
-        if(decideOnTimeDifference()){
+        if (decideOnTimeDifference()) {
             return true;
         }
 
@@ -97,8 +97,7 @@ public class SensingDecisionHelper {
                 if (!(continueSensing = decideOnActivityData())) {
                     Log.d(TAG, "activity data return false, now decide on location data");
                     continueSensing = decideOnLocationData();
-                }
-                else {
+                } else {
                     Log.d(TAG, "activity data return true (both available)");
                 }
             } else if (newSensorData.getActivityData() != null) {
@@ -183,7 +182,7 @@ public class SensingDecisionHelper {
         return (System.currentTimeMillis() - prevTimestamp) > Constants.MIN_INTERVAL_MILLIS;
     }
 
-    public boolean decideOnOfficeHours(){
+    public boolean decideOnOfficeHours() {
         if (userLabel > 0) {
             return true;
         }

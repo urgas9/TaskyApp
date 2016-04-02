@@ -154,7 +154,7 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
         return data;
     }
 
-    class GetAndShowLeaderboardMsg extends AsyncTask<Void, Void, ConnectionResponse<LeaderboardMessageResponse>>{
+    class GetAndShowLeaderboardMsg extends AsyncTask<Void, Void, ConnectionResponse<LeaderboardMessageResponse>> {
 
         @Override
         protected ConnectionResponse<LeaderboardMessageResponse> doInBackground(Void... params) {
@@ -172,17 +172,15 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
             super.onPostExecute(leaderboardMessageResponseConnectionResponse);
 
             String textViewMessage = "Ooops! It appears there are some issues with your network.";
-            if(leaderboardMessageResponseConnectionResponse.isSuccess() && leaderboardMessageResponseConnectionResponse.getContent().isSuccess()){
+            if (leaderboardMessageResponseConnectionResponse.isSuccess() && leaderboardMessageResponseConnectionResponse.getContent().isSuccess()) {
                 Log.d(TAG, "Leaderboard message successfully received.");
                 textViewMessage = leaderboardMessageResponseConnectionResponse.getContent().getMessage();
-                if(leaderboardMessageResponseConnectionResponse.getContent().isHideMessage()){
+                if (leaderboardMessageResponseConnectionResponse.getContent().isHideMessage()) {
                     mCard1ViewSwitcher.setVisibility(View.GONE);
-                }
-                else{
+                } else {
                     mCard1ViewSwitcher.setVisibility(View.VISIBLE);
                 }
-            }
-            else{
+            } else {
                 Log.e(TAG, "Cannot get leaderboard message");
             }
 
@@ -190,6 +188,7 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
             mCard1ViewSwitcher.setDisplayedChild(1);
         }
     }
+
     class GetAndShowStatistics extends AsyncTask<Void, Void, DailyAggregatedData> {
 
         @Override
@@ -256,7 +255,7 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
 
             ArrayList<MarkerDataHolder> resultList = new ArrayList<>();
             for (SensorReadingRecord srr : sensorReadings) {
-                if(srr.getLocationLat() != 0.0 && srr.getLocationLng() != 0.0) {
+                if (srr.getLocationLat() != 0.0 && srr.getLocationLng() != 0.0) {
                     resultList.add(srr.getMarkerDataHolder());
                 }
             }
