@@ -133,10 +133,11 @@
 
                         <ViewFlipper
                             android:id="@+id/tick_cd_text_viewflipper"
-                            android:inAnimation="@android:anim/fade_in"
-                            android:outAnimation="@android:anim/fade_out"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:inAnimation="@android:anim/fade_in"
+                            android:outAnimation="@android:anim/fade_out">
+
                             <TextView
                                 android:id="@+id/countdown_text"
                                 android:layout_width="match_parent"
@@ -145,13 +146,15 @@
                                 android:textAlignment="center"
                                 android:textSize="27sp"
                                 android:textStyle="bold"/>
+
                             <me.zhanghai.android.materialprogressbar.MaterialProgressBar
                                 android:layout_width="75dp"
                                 android:layout_height="wrap_content"
-                                android:indeterminate="true"
                                 android:layout_gravity="center"
+                                android:indeterminate="true"
                                 app:mpb_progressStyle="horizontal"
                                 style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"/>
+
                             <ImageView
                                 android:layout_width="48dp"
                                 android:layout_height="48dp"
