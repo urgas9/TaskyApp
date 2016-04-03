@@ -25,7 +25,7 @@ android {
         applicationId "si.uni_lj.fri.taskyapp"
         minSdkVersion 18
         targetSdkVersion 23
-        versionCode 4
+        versionCode 5
         versionName "1.0"
     }
     buildTypes {
