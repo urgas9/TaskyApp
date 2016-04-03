@@ -406,7 +406,7 @@ public class MainActivity extends AppCompatActivity {
             SensorReadingRecord srr = SensorReadingRecord.findById(SensorReadingRecord.class, recordId);
             SensorReadingData mSensorReadingData = new Gson().fromJson(srr.getSensorJsonObject(), SensorReadingData.class);
 
-            if(mSensorReadingData.getSensingPolicy().equals(SensingPolicy.USER_FORCED.toString())) {
+            if (mSensorReadingData.getSensingPolicy().equals(SensingPolicy.USER_FORCED.toString())) {
                 mCountDownStatusTv.setText("Successfully received sensing results.");
                 mCountDownStatusTv.setTextColor(ContextCompat.getColor(context, R.color.green));
                 mCountDownStatusTv.setTypeface(null, Typeface.BOLD);
