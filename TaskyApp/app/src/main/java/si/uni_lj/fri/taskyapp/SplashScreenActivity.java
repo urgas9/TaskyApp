@@ -36,8 +36,7 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(Constants.PREFS_WENT_THROUGH_TUTORIAL_SPLASH, false)) {
-            //TODO: Uncomment
-            //startMainActivity();
+            startMainActivity();
         }
         setContentView(R.layout.activity_splash_screen);
 

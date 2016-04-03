@@ -177,7 +177,7 @@ public class SplashScreenFragment extends Fragment {
         mTitleText.setText("...but we need you!");
         mText1.setText("We will kindly ask you to label detected tasks on scale from very easy to very hard.");
         mText2.setText("Very easy means that you are still able to interact with phone (play games for instance) " +
-                "whereas hard means you are very busy - you don't have time even to turn your screen on.");
+                "whereas very hard means you are very busy - you don't have time even to turn your phone screen on.");
     }
 
     private void setupSafeFragment() {

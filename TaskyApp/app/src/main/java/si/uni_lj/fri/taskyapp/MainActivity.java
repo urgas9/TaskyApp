@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.Snackbar;
@@ -23,6 +24,7 @@ import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 import android.widget.ViewSwitcher;
 
 import com.afollestad.materialdialogs.DialogAction;
@@ -45,6 +47,7 @@ import si.uni_lj.fri.taskyapp.data.SensorReadingData;
 import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
 import si.uni_lj.fri.taskyapp.global.AppHelper;
 import si.uni_lj.fri.taskyapp.global.PermissionsHelper;
+import si.uni_lj.fri.taskyapp.global.SensingPolicy;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
 import si.uni_lj.fri.taskyapp.sensor.SensingInitiator;
 import si.uni_lj.fri.taskyapp.service.AggregateDataDailyService;
@@ -57,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.start_sensing_view_switcher)
     ViewSwitcher mStartSensingViewSwitcher;
+    @Bind(R.id.tick_cd_text_viewflipper)
+    ViewFlipper mTickCountDownDoneViewFlipper;
     @Bind(R.id.status_tv)
     TextView mCountDownStatusTv;
     @Bind(R.id.countdown_progressbar)
@@ -163,8 +168,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void resetSeekBar() {
-        mSeekbarValueTv.setText(R.string.no_value_chosen);
         mTaskComplexitySeekBar.setProgress(0);
+        mSeekbarValueTv.setText(R.string.no_value_chosen);
         selectedComplexity = null;
     }
 
@@ -243,6 +248,7 @@ public class MainActivity extends AppCompatActivity {
             mFinishedSensingBtn.setText(R.string.back);
             isCountDownRunning = false;
         } else {
+            mTickCountDownDoneViewFlipper.setDisplayedChild(0);
             mStartSensingViewSwitcher.setDisplayedChild(0);
         }
         resetSeekBar();
@@ -262,6 +268,11 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.btn_start_sensing)
     public void startCountDownForSensing(View v) {
         if (selectedComplexity != null) {
+
+            mCountDownStatusTv.setTextColor(ContextCompat.getColor(getBaseContext(), R.color.primary_text));
+            mCountDownStatusTv.setTypeface(null, Typeface.NORMAL);
+            mCountDownStatusTv.setText("");
+            mTickCountDownDoneViewFlipper.setDisplayedChild(0);
 
             selectedComplexity = mTaskComplexitySeekBar.getProgress() + 1;
 
@@ -286,12 +297,14 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 public void onFinish() {
-                    mCountDownStatusTv.setText("Sensing started.");
+                    mCountDownStatusTv.setText(R.string.sensing_running);
                     mCountdownProgress.setProgressWithAnimation(0, 1000);
                     mProgressTv.setText("0s");
                     mFinishedSensingBtn.setText(R.string.back);
                     mFinishedSensingBtn.setVisibility(View.VISIBLE);
+                    mFinishedSensingBtn.setEnabled(false);
                     isCountDownRunning = false;
+                    mTickCountDownDoneViewFlipper.setDisplayedChild(1);
                     new SensingInitiator(getBaseContext()).startSensingOnUserRequest(selectedComplexity);
                     //Toast.makeText(getBaseContext(), "Started labeled (" + selectedComplexity + ") sensing.", Toast.LENGTH_LONG).show();
                 }
@@ -393,7 +406,13 @@ public class MainActivity extends AppCompatActivity {
             SensorReadingRecord srr = SensorReadingRecord.findById(SensorReadingRecord.class, recordId);
             SensorReadingData mSensorReadingData = new Gson().fromJson(srr.getSensorJsonObject(), SensorReadingData.class);
 
-            mCountDownStatusTv.setText("Successfully received sensing results.");
+            if(mSensorReadingData.getSensingPolicy().equals(SensingPolicy.USER_FORCED.toString())) {
+                mCountDownStatusTv.setText("Successfully received sensing results.");
+                mCountDownStatusTv.setTextColor(ContextCompat.getColor(context, R.color.green));
+                mCountDownStatusTv.setTypeface(null, Typeface.BOLD);
+                mFinishedSensingBtn.setEnabled(true);
+                mTickCountDownDoneViewFlipper.setDisplayedChild(2);
+            }
         }
     }
 

@@ -131,14 +131,34 @@
                         android:layout_marginBottom="20dp"
                         android:layout_marginTop="20dp">
 
-                        <TextView
-                            android:id="@+id/countdown_text"
+                        <ViewFlipper
+                            android:id="@+id/tick_cd_text_viewflipper"
+                            android:inAnimation="@android:anim/fade_in"
+                            android:outAnimation="@android:anim/fade_out"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:textAlignment="center"
-                            android:textSize="27sp"
-                            android:textStyle="bold"/>
+                            android:layout_height="match_parent">
+                            <TextView
+                                android:id="@+id/countdown_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:textAlignment="center"
+                                android:textSize="27sp"
+                                android:textStyle="bold"/>
+                            <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+                                android:layout_width="75dp"
+                                android:layout_height="wrap_content"
+                                android:indeterminate="true"
+                                android:layout_gravity="center"
+                                app:mpb_progressStyle="horizontal"
+                                style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal"/>
+                            <ImageView
+                                android:layout_width="48dp"
+                                android:layout_height="48dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_done_black_48dp"
+                                android:tint="@color/green"/>
+                        </ViewFlipper>
 
                         <com.mikhaellopez.circularprogressbar.CircularProgressBar
                             android:id="@+id/countdown_progressbar"

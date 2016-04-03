@@ -73,18 +73,18 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
     private static final int[] SENSOR_IDS = {
             SensorUtils.SENSOR_TYPE_LIGHT,
             SensorUtils.SENSOR_TYPE_SCREEN};
-    private static List<ActivityData> mDetectedActivityLint;
+    private static List<ActivityData> mDetectedActivityList;
     private GoogleApiClient mGoogleApiClient;
-    private PendingIntent mActivityRecognitionPendingInteds;
-    private List<Integer> sensorSubscriptionIed;
+    private PendingIntent mActivityRecognitionPendingIntent;
+    private List<Integer> sensorSubscriptionIds;
     //Data for callbacks
-    private long mTimeSensingStartst;
-    private List<ScreenStatusData> mScreenStatusDataLies;
-    private double mSumLightValuue;
+    private long mTimeSensingStarted;
+    private List<ScreenStatusData> mScreenStatusDataList;
+    private double mSumLightValues;
     private float mMinLightValue;
-    private float mMaxLightValht;
-    private float mMaxRangeLiges;
-    private long mCountLightValust;
+    private float mMaxLightValue;
+    private float mMaxRangeLight;
+    private long mCountLightValues;
     private SharedPreferences mDefaultPrefs;
 
 

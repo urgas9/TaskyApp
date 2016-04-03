@@ -159,5 +159,6 @@
     <string name="about_contact">Contact</string>
     <string name="about_contact_description">If you have experienced any issues, or just want to give us a shout, you can reach us on email:\n<b>gu7668@student.uni-lj.si</b></string>
     <string name="time_range_too_short">Selected time range (%s) must be at least 4 hours.</string>
+    <string name="sensing_running">Sensing running in background.</string>
 
 </resources>

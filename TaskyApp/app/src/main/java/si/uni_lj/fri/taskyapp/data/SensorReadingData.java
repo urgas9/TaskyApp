@@ -29,6 +29,9 @@ public class SensorReadingData {
     @SerializedName("t_started")
     private String timestampStarted;
 
+    @SerializedName("t_started_pretty")
+    private String timestampStartedPretty;
+
     @SerializedName("t_ended")
     private String timestampEnded;
 
@@ -72,6 +75,8 @@ public class SensorReadingData {
 
     public void setTimestampStarted(long timestampStarted) {
         this.timestampStarted = Long.toString(timestampStarted);
+        SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_FORMAT_TO_SHOW_FULL, Locale.ENGLISH);
+        this.timestampStartedPretty = format.format(new Date(timestampStarted));
     }
 
     public long getTimestampEnded() {
