@@ -29,37 +29,39 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     private static final String TAG = "SensingManager";
     private Context mContext;
     private GoogleApiClient mGoogleApiClient;
-    private boolean mPendingAction;
-
 
     public SensingInitiator(Context context) {
         super();
         this.mContext = context;
-        this.mPendingAction = false;
     }
 
-    public static boolean isUserParticipating(Context mContext) {
+    public static boolean isUserParticipating(Context mContext, boolean forcedByUser) {
         boolean participating = PreferenceManager.getDefaultSharedPreferences(mContext).getString("participate_preference", "0").equals("0");
         if (!participating) {
-            Log.d(TAG, "User is not participating, don't start sensing.");
+            if (forcedByUser) {
+                Log.d(TAG, "Sensing forced by user, although user is not participating start sensing.");
+            } else {
+                Log.d(TAG, "User is not participating, don't start sensing.");
+            }
+
         } else {
             Log.d(TAG, "User is participating, start sensing.");
         }
-        return participating;
+        return forcedByUser || participating;
     }
 
     public void senseWithDefaultSensingConfiguration() {
-
+        if (!isUserParticipating(mContext, false)) {
+            return;
+        }
+        Log.d(TAG, "Sensing with default sensing configuration.");
         senseOnInterval();
         senseOnLocationChanged();
         senseOnActivityRecognition();
-
-        //AppHelper.setRepeatedNotification(mContext, 0, 13, 20, 22);
-
     }
 
     public void senseOnActivityRecognition() {
-        if (!isUserParticipating(mContext)) {
+        if (!isUserParticipating(mContext, false)) {
             return;
         }
         if (mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
@@ -70,7 +72,7 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     }
 
     public void senseOnLocationChanged() {
-        if (!isUserParticipating(mContext)) {
+        if (!isUserParticipating(mContext, false)) {
             return;
         }
 
@@ -78,6 +80,9 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     }
 
     public void senseOnInterval() {
+        if (!isUserParticipating(mContext, false)) {
+            return;
+        }
         requestAlarmIntervalUpdates();
     }
 
@@ -145,7 +150,6 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     private void requestLocationUpdates() {
         if (!PermissionsHelper.hasPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION)) {
             Log.d(TAG, "No location permissions provided.");
-            mPendingAction = true;
             return;
         }
         Log.d(TAG, "Firing requested location updates.");
@@ -166,24 +170,6 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     }
 
     /**
-     * Method will try to reconnect to GPlay services, or start pending sensing.
-     * For example. Requesting location updates cannot be done, while user don't grant
-     * ACCESS_FINE_LOCATION permission
-     */
-    public void checkForPendingActions(SensingPolicy sensingPolicy) {
-
-        if (mPendingAction) {
-            switch (sensingPolicy) {
-                case LOCATION_UPDATES:
-                    requestLocationUpdates();
-                    break;
-                default:
-                    Log.d(TAG, "There appears to be a pending action, policy equals to: " + sensingPolicy);
-            }
-        }
-    }
-
-    /**
      * Stopping all updates, regardless of sensing policy
      */
     public void stopAlarmUpdates() {
@@ -194,6 +180,19 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
         }*/
         AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
         am.cancel(getSensingServicePendingIntent(SensingPolicy.INTERVAL));
+    }
+
+    public void stopAllUpdates() {
+        try {
+            Log.d(TAG, "Stopping alarm updates.");
+            if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+                //LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, getSensingServicePendingIntent(SensingPolicy.LOCATION_UPDATES));
+                ActivityRecognition.ActivityRecognitionApi.removeActivityUpdates(mGoogleApiClient, getSensingServicePendingIntent(SensingPolicy.ACTIVITY_UPDATES));
+            }
+            stopAlarmUpdates();
+        } catch (Exception e) {
+            Log.e(TAG, "Cannot stop updates");
+        }
     }
 
     public void dispose() {

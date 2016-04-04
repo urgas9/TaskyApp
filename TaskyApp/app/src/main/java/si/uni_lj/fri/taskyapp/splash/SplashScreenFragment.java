@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.SwitchCompat;
 import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -117,6 +119,16 @@ public class SplashScreenFragment extends Fragment {
                 }
             });
 
+            SwitchCompat switchCompat = (SwitchCompat) root.findViewById(R.id.office_weekends_switch);
+            switchCompat.setChecked(OfficeHoursObject.areInOfficeForWeekends(getContext()));
+
+            switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    Log.d(TAG, "Weekends checked changed to: " + isChecked);
+                    OfficeHoursObject.saveWeekendsDecision(getContext(), isChecked);
+                }
+            });
             mOfficeTimeRangeTv.setText(currentOfficeHours);
 
         } else {

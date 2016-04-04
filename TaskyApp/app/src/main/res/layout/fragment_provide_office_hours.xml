@@ -34,20 +34,45 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:padding="@dimen/activity_horizontal_margin"
+            android:paddingBottom="@dimen/activity_horizontal_margin_small"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_horizontal_margin"
             android:text="@string/pref_default_office_hours"
             android:textColor="@color/accent"
             android:textSize="24sp"
             android:textStyle="bold"/>
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/activity_horizontal_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_horizontal_margin_small">
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/office_weekends_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@id/office_weekends_switch"
+                android:text="@string/pref_title_weekends_included"
+                android:textSize="18sp"/>
+        </RelativeLayout>
+
         <TextView
             android:id="@+id/content2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/activity_horizontal_margin_small"
+            android:paddingBottom="@dimen/activity_horizontal_margin"
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_horizontal_margin_small"
             android:text="Click above if the time range is not correct."
             android:textSize="18sp"/>
         <!--<TextView

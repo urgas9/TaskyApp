@@ -6,7 +6,7 @@ import si.uni_lj.fri.taskyapp.R;
 
 /**
  * Created by urgas9 on 13. 01. 2016.
- * <p/>
+ * <p>
  * Class to server Api url addresses
  */
 public enum ApiUrls {

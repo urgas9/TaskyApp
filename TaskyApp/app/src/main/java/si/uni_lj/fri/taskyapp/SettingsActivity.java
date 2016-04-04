@@ -18,7 +18,6 @@ import android.preference.RingtonePreference;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -39,7 +38,7 @@ import si.uni_lj.fri.taskyapp.sensor.SensingInitiator;
  * handset devices, settings are presented as a single list. On tablets,
  * settings are split by category, with category headers shown to the left of
  * the list of settings.
- * <p/>
+ * <p>
  * See <a href="http://developer.android.com/design/patterns/settings.html">
  * Android Design: Settings</a> for design guidelines and the <a
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
@@ -106,7 +105,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
                 preference.setSummary(stringValue);
             }
-            Log.d("SETTINGS", value.toString());
             return true;
         }
     };
@@ -218,8 +216,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     final String stringValue = newValue.toString();
                     if (preference.getKey().equals("participate_preference")) {
                         if (!stringValue.equals("0")) {
-                            String content = "Are you sure you want to opt-out? We are very sad to see you go :( \n" +
-                                    "TaskyApp will stop collecting data.";
+                            String content = "Are you sure you want to opt-out? We are very sad to see you go :( \n\n" +
+                                    "TaskyApp will stop collecting data in background. You can still start sensing on your own.";
                             if (stringValue.equals("2")) {
                                 content = "We need your data to finish this research. Data is completely anonymous and we would like to keep it. \n\n" +
                                         "Would you really like to opt-out and delete collected data? You can opt-out without deleting data.";
@@ -234,7 +232,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                                             if (stringValue.equals("2")) {
                                                 new OptOutAsyncTask(mContext).execute();
                                             }
-
+                                            new SensingInitiator(mContext).stopAllUpdates();
                                             setPreferenceTextSummaryOnValue((ListPreference) preference, stringValue);
                                         }
                                     })

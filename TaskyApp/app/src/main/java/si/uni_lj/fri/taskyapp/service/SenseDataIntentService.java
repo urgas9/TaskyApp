@@ -98,10 +98,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             Log.d(TAG, "Received intent is null, quit.");
             return;
         }
-        if (!SensingInitiator.isUserParticipating(getBaseContext())) {
-            Log.d(TAG, "Service: User is not participating, quit.");
-            return;
-        }
+
         mDefaultPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         showNotification(-1);
 
@@ -112,6 +109,10 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         if (userLabel > 0) {
             Log.d(TAG, "+++ Force sensing set to true!");
             sensingPolicy = SensingPolicy.USER_FORCED;
+        }
+        if (!SensingInitiator.isUserParticipating(getBaseContext(), userLabel > 0)) {
+            Log.d(TAG, "Service: User is not participating, quit.");
+            return;
         }
         SensingDecisionHelper mSensingHelper = new SensingDecisionHelper(getApplicationContext(), userLabel);
 

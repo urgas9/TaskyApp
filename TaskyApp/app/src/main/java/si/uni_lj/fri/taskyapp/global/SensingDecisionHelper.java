@@ -62,7 +62,7 @@ public class SensingDecisionHelper {
         } else {
             editor.putInt("count_decisions_not_to_sense", (getNumDecisionsNotToSense() + 1));
         }
-        editor.commit();
+        editor.apply();
     }
 
     private int getNumDecisionsToSense() {

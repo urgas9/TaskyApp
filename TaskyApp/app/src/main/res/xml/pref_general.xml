@@ -30,7 +30,11 @@
             android:entryValues="@array/participate_value_array"
             android:key="participate_preference"
             android:title="How actively do you want to participate?"/>
+    </PreferenceCategory>
 
+    <PreferenceCategory
+        android:icon="@drawable/ic_business_center_black_24dp"
+        android:title="@string/pref_header_office_hours">
         <EditTextPreference
             android:defaultValue="@string/pref_default_office_hours"
             android:hint="@string/pref_default_office_hours"
@@ -40,8 +44,13 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="@string/pref_title_office_hours"/>
-
+        <SwitchPreference
+            android:defaultValue="@string/pref_default_office_weekend"
+            android:key="profile_office_hours_include_weekends"
+            android:summary="Switch on if you are in office for weekends"
+            android:title="@string/pref_title_weekends_included"/>
     </PreferenceCategory>
+
     <PreferenceCategory
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="@string/pref_header_notifications">

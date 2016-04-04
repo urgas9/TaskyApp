@@ -66,11 +66,11 @@
     <string name="pref_title_email">Contact email</string>
     <string name="pref_default_email_name">anonymous@email.si</string>
     <string name="pref_default_office_hours">08:00 - 16:00</string>
-    <string name="pref_title_office_hours">My office hours</string>
+    <string name="pref_title_office_hours">My usual office hours</string>
 
     <string-array name="notifications_labels_array">
-        <item>Only once (at 20:00)</item>
-        <item>Twice per day (at 13:00 and 20:00)</item>
+        <item>Only once (at around 20:00)</item>
+        <item>Twice per day (at around 13:00 and 20:00)</item>
         <item>For every sensed task</item>
     </string-array>
 
@@ -160,5 +160,8 @@
     <string name="about_contact_description">If you have experienced any issues, or just want to give us a shout, you can reach us on email:\n<b>gu7668@student.uni-lj.si</b></string>
     <string name="time_range_too_short">Selected time range (%s) must be at least 4 hours.</string>
     <string name="sensing_running">Sensing running in background.</string>
+    <string name="pref_header_office_hours">Office hours</string>
+    <string name="pref_title_weekends_included">Weekends included</string>
+    <string name="pref_default_office_weekend">false</string>
 
 </resources>

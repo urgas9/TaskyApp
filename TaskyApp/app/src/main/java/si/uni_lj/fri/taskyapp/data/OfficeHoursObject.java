@@ -17,6 +17,7 @@ import si.uni_lj.fri.taskyapp.sensor.Constants;
 public class OfficeHoursObject {
 
     private static final int TIMERANGE_DIFFERENCE_ATLEAST_MINUTES = 4 * 60;
+    boolean weekendsIncluded;
     private int hoursStart;
     private int minutesStart;
     private int hoursEnd;
@@ -31,6 +32,8 @@ public class OfficeHoursObject {
         if (time.length == 2) {
             parseStartAndEndTime(time[0], time[1]);
         }
+
+        weekendsIncluded = areInOfficeForWeekends(context);
     }
 
     public OfficeHoursObject(String timeRangeString) {
@@ -40,19 +43,6 @@ public class OfficeHoursObject {
                 parseStartAndEndTime(times[0], times[1]);
             }
         }
-    }
-
-    public OfficeHoursObject(String startHoursMinsSeparatedByColon, String endHoursMinsSeparatedByColon) {
-        super();
-        parseStartAndEndTime(startHoursMinsSeparatedByColon, endHoursMinsSeparatedByColon);
-    }
-
-    public OfficeHoursObject(int hoursStart, int minutesStart, int hoursEnd, int minutesEnd) {
-        super();
-        this.hoursStart = hoursStart;
-        this.minutesStart = minutesStart;
-        this.hoursEnd = hoursEnd;
-        this.minutesEnd = minutesEnd;
     }
 
     public static boolean validateAndSaveOfficeHoursString(Context mContext, String stringValue) {
@@ -89,6 +79,17 @@ public class OfficeHoursObject {
         return timeRangeString.matches("^([01]?[0-9]|2[0-3]):[0-5][0-9] - ([01]?[0-9]|2[0-3]):[0-5][0-9]$");
     }
 
+    public static boolean areInOfficeForWeekends(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean("profile_office_hours_include_weekends", false);
+    }
+
+    public static void saveWeekendsDecision(Context context, boolean includeWeekends) {
+        PreferenceManager.getDefaultSharedPreferences(context)
+                .edit()
+                .putBoolean("profile_office_hours_include_weekends", includeWeekends)
+                .apply();
+    }
+
     public boolean isTimeDifferenceBigEnough() {
         return (hoursEnd * 60 + minutesEnd - (hoursStart * 60 + minutesStart)) > TIMERANGE_DIFFERENCE_ATLEAST_MINUTES;
     }
@@ -99,7 +100,9 @@ public class OfficeHoursObject {
         int timeMinsStart = hoursStart * 60 + minutesStart;
         int timeMinsEnd = hoursEnd * 60 + minutesEnd;
 
-        return timeMinsNow >= timeMinsStart && timeMinsNow <= timeMinsEnd;
+        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+        boolean isWeekendToday = dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY;
+        return (!isWeekendToday || weekendsIncluded) && timeMinsNow >= timeMinsStart && timeMinsNow <= timeMinsEnd;
     }
 
     private void parseStartAndEndTime(String startHoursMinsSeparatedByColon, String endHoursMinsSeparatedByColon) {
