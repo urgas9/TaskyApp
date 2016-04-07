@@ -17,8 +17,6 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.ActivityRecognition;
 
-import java.util.Calendar;
-
 import si.uni_lj.fri.taskyapp.global.PermissionsHelper;
 import si.uni_lj.fri.taskyapp.global.SensingPolicy;
 import si.uni_lj.fri.taskyapp.service.SenseDataIntentService;
@@ -137,7 +135,7 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
             i.putExtra("user_label", userLabel);
         }
         int requestCode = 0;
-        switch (sensingPolicy){
+        switch (sensingPolicy) {
             case ACTIVITY_UPDATES:
                 requestCode = Constants.REQUEST_CODE_ACTIVITY_UPDATES;
                 break;

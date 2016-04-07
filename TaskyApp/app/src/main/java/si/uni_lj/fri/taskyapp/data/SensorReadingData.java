@@ -15,7 +15,7 @@ import si.uni_lj.fri.taskyapp.sensor.Constants;
 
 /**
  * Created by urgas9 on 24. 01. 2016.
- * <p>
+ * <p/>
  * Class used to store sensing data
  */
 public class SensorReadingData {

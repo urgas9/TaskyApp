@@ -23,7 +23,7 @@ import si.uni_lj.fri.taskyapp.R;
 
 /**
  * Created by urgas9 on 29. 10. 2015.
- * <p>
+ * <p/>
  * This class includes helper methods for
  */
 public class PermissionsHelper {

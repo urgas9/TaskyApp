@@ -183,7 +183,7 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
                 Log.d(TAG, "Leaderboard message successfully received.");
                 LeaderboardMessageResponse responseContent = leaderboardMessageResponseConnectionResponse.getContent();
                 textViewMessage = responseContent.getMessage();
-                if(responseContent.getTitle() != null){
+                if (responseContent.getTitle() != null) {
                     leaderBoardTitle = responseContent.getTitle();
                 }
                 if (leaderboardMessageResponseConnectionResponse.getContent().isHideMessage()) {
@@ -196,7 +196,7 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
                 }
             } else {
                 Log.d(TAG, "Cannot get leaderboard message");
-                if(!prefs.getBoolean(Constants.PREFS_SHOW_LEADERBOARD_MSG, true)){
+                if (!prefs.getBoolean(Constants.PREFS_SHOW_LEADERBOARD_MSG, true)) {
                     mCard1ViewSwitcher.setVisibility(View.GONE);
                 }
             }
@@ -234,6 +234,13 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
             }
             sb.append("</html>");
             Log.d(TAG, "dailyBodyString: " + sb.toString());
+
+            if (dailyAggregatedData.getAllReadings() == dailyAggregatedData.getCountLabeled()) {
+                View labelMoreTasksBtn = findViewById(R.id.btn_label_tasks);
+                if (labelMoreTasksBtn != null) {
+                    labelMoreTasksBtn.setVisibility(View.GONE);
+                }
+            }
             mDailyStatisticsBodyTv.setText(Html.fromHtml(sb.toString()));
             mCard2ViewSwitcher.setDisplayedChild(1);
         }
