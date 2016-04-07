@@ -51,8 +51,8 @@ import si.uni_lj.fri.taskyapp.global.SensingPolicy;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
 import si.uni_lj.fri.taskyapp.sensor.SensingInitiator;
 import si.uni_lj.fri.taskyapp.service.AggregateDataDailyService;
+import si.uni_lj.fri.taskyapp.service.SendDataToServerService;
 
-//TODO: Check for slow performance if not on WiFi
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
@@ -89,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        startService(new Intent(this, SendDataToServerService.class));
 
         arrayOfComplexities = getResources().getStringArray(R.array.task_difficulties_array);
         if (!AppHelper.isPlayServiceAvailable(this)) {

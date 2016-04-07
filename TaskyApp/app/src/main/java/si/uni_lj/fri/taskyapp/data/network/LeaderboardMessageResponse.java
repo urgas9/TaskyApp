@@ -9,6 +9,7 @@ public class LeaderboardMessageResponse {
 
     private boolean success;
     private String message;
+    private String title;
     @SerializedName("hide_message")
     private boolean hideMessage;
 
@@ -36,11 +37,20 @@ public class LeaderboardMessageResponse {
         this.hideMessage = hideMessage;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     @Override
     public String toString() {
         return "LeaderboardMessageResponse{" +
                 "success=" + success +
                 ", message='" + message + '\'' +
+                ", title='" + title + '\'' +
                 ", hideMessage=" + hideMessage +
                 '}';
     }

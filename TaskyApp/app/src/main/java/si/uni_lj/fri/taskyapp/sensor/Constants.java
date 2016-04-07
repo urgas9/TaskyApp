@@ -12,6 +12,7 @@ public class Constants {
     public static final String PREFS_LAST_LOC_LAT = "PREFS_LAST_LOC_LAT";
     public static final String PREFS_LAST_LOC_LNG = "PREFS_LAST_LOC_LNG";
     public static final String PREFS_LAST_LOC_ACCURACY = "PREFS_LAST_LOC_ACCURACY";
+    public static final String PREFS_SHOW_LEADERBOARD_MSG = "PREFS_SHOW_LEADERBOARD_MSG";
     public static final String PREFS_OFFICE_HOURS = "profile_office_hours_text";
 
     public static final int LOCATION_ACCURACY_AT_LEAST = 200;
@@ -39,5 +40,9 @@ public class Constants {
     public static final int HOUR_SEND_NOTIFICATION_EARLY = 13;
     public static final int HOUR_SEND_NOTIFICATION_LATE = 20;
 
+    public static final int REQUEST_CODE_KEEP_SENSING_ALIVE = 31;
+    public static final int REQUEST_CODE_ACTIVITY_UPDATES = 21;
+    public static final int REQUEST_CODE_ALARM_UPDATES = 22;
+    public static final int REQUEST_CODE_LOCATION_UPDATES = 23;
 
 }

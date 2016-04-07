@@ -102,7 +102,7 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="pref_title_participate">Participate in research</string>
-    <string name="server_url">http://193.2.72.121/</string>
+    <string name="server_url">http://193.2.72.121</string>
     <string name="sensing">New task</string>
     <string name="daily_statistics_body_1">We have</string>
     <string name="daily_statistics_body_2">sensor readings of your activity during the day, of which you have labeled</string>

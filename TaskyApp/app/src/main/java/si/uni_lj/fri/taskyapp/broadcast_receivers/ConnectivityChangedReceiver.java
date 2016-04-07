@@ -20,7 +20,7 @@ public class ConnectivityChangedReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d(TAG, "Network connectivity change");
+        //Log.d(TAG, "Network connectivity change");
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (intent.getExtras() != null) {
             NetworkInfo ni = cm.getActiveNetworkInfo();
@@ -29,10 +29,9 @@ public class ConnectivityChangedReceiver extends BroadcastReceiver {
                 Log.i(TAG, "Network " + ni.getTypeName() + " connected");
 
                 long lastTimestamp = PreferenceManager.getDefaultSharedPreferences(context).getLong(Constants.PREFS_LAST_TIME_SENT_TO_SERVER, 0);
-                //TODO: Uncomment
-                //if ((lastTimestamp + Constants.MAX_INTERVAL_BETWEEN_TWO_SERVER_POSTS) < System.currentTimeMillis()) {
-                context.startService(new Intent(context, SendDataToServerService.class));
-                //}
+                if ((lastTimestamp + Constants.MAX_INTERVAL_BETWEEN_TWO_SERVER_POSTS) <= System.currentTimeMillis()) {
+                    context.startService(new Intent(context, SendDataToServerService.class));
+                }
 
             } else if (intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, Boolean.FALSE)) {
                 Log.d(TAG, "There's no network connectivity");

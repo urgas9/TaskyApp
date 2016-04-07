@@ -38,7 +38,7 @@ public class KeepSensingAliveReceiver extends BroadcastReceiver {
                     Constants.APPROXIMATE_INTERVAL_MILLIS,
                     Constants.APPROXIMATE_INTERVAL_MILLIS,
                     PendingIntent
-                            .getService(context, 0, recoveryIntent, PendingIntent.FLAG_UPDATE_CURRENT));
+                            .getService(context, 20, recoveryIntent, PendingIntent.FLAG_UPDATE_CURRENT));
         }
     }
 }

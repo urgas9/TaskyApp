@@ -1,8 +1,10 @@
 package si.uni_lj.fri.taskyapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
@@ -41,6 +43,7 @@ import si.uni_lj.fri.taskyapp.global.AppHelper;
 import si.uni_lj.fri.taskyapp.networking.ApiUrls;
 import si.uni_lj.fri.taskyapp.networking.ConnectionHelper;
 import si.uni_lj.fri.taskyapp.networking.ConnectionResponse;
+import si.uni_lj.fri.taskyapp.sensor.Constants;
 
 public class StatisticsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -49,6 +52,8 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
     TextView mDailyStatisticsBodyTv;
     @Bind(R.id.leaderboard_msg_tv)
     TextView mLeaderboardMsgTv;
+    @Bind(R.id.leaderboard_title_tv)
+    TextView mLeaderboardTitleTv;
 
     @Bind(R.id.cardview_1_view_switcher)
     ViewSwitcher mCard1ViewSwitcher;
@@ -171,19 +176,31 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
         protected void onPostExecute(ConnectionResponse<LeaderboardMessageResponse> leaderboardMessageResponseConnectionResponse) {
             super.onPostExecute(leaderboardMessageResponseConnectionResponse);
 
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
             String textViewMessage = "Ooops! It appears there are some issues with your network.";
+            String leaderBoardTitle = getString(R.string.leaderboard);
             if (leaderboardMessageResponseConnectionResponse.isSuccess() && leaderboardMessageResponseConnectionResponse.getContent().isSuccess()) {
                 Log.d(TAG, "Leaderboard message successfully received.");
-                textViewMessage = leaderboardMessageResponseConnectionResponse.getContent().getMessage();
+                LeaderboardMessageResponse responseContent = leaderboardMessageResponseConnectionResponse.getContent();
+                textViewMessage = responseContent.getMessage();
+                if(responseContent.getTitle() != null){
+                    leaderBoardTitle = responseContent.getTitle();
+                }
                 if (leaderboardMessageResponseConnectionResponse.getContent().isHideMessage()) {
                     mCard1ViewSwitcher.setVisibility(View.GONE);
+                    prefs.edit().putBoolean(Constants.PREFS_SHOW_LEADERBOARD_MSG, false).apply();
+
                 } else {
                     mCard1ViewSwitcher.setVisibility(View.VISIBLE);
+                    prefs.edit().putBoolean(Constants.PREFS_SHOW_LEADERBOARD_MSG, true).apply();
                 }
             } else {
-                Log.e(TAG, "Cannot get leaderboard message");
+                Log.d(TAG, "Cannot get leaderboard message");
+                if(!prefs.getBoolean(Constants.PREFS_SHOW_LEADERBOARD_MSG, true)){
+                    mCard1ViewSwitcher.setVisibility(View.GONE);
+                }
             }
-
+            mLeaderboardTitleTv.setText(leaderBoardTitle);
             mLeaderboardMsgTv.setText(textViewMessage);
             mCard1ViewSwitcher.setDisplayedChild(1);
         }

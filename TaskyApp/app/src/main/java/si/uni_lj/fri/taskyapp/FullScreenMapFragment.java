@@ -2,7 +2,6 @@ package si.uni_lj.fri.taskyapp;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -60,7 +59,7 @@ public class FullScreenMapFragment extends Fragment implements OnMapReadyCallbac
     private boolean mShowLegend;
     private ArrayList<MarkerDataHolder> mDataList;
     private ArrayList<LatLng> mLatLngArray;
-    private OnFragmentInteractionListener mListener;
+    //private OnFragmentInteractionListener mListener;
 
     public FullScreenMapFragment() {
         // Required empty public constructor
@@ -73,7 +72,6 @@ public class FullScreenMapFragment extends Fragment implements OnMapReadyCallbac
      * @param defaultView Parameter 1.
      * @return A new instance of fragment FullScreenMapFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static FullScreenMapFragment newInstance(String defaultView, ArrayList<MarkerDataHolder> dataArray, boolean showLegend) {
         FullScreenMapFragment fragment = new FullScreenMapFragment();
         Bundle args = new Bundle();
@@ -295,30 +293,20 @@ public class FullScreenMapFragment extends Fragment implements OnMapReadyCallbac
         outState.putString(PARAM_DEFAULT_VIEW, mDefaultView);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
+        /*if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
             Log.e(TAG, context.toString() + " must implement OnFragmentInteractionListener");
-            //TODO:
-            /*throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");*/
-        }
+        }*/
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+        //mListener = null;
     }
 
     @Override
@@ -344,18 +332,4 @@ public class FullScreenMapFragment extends Fragment implements OnMapReadyCallbac
         showDefaultView(true);
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }

@@ -25,14 +25,28 @@ android {
         applicationId "si.uni_lj.fri.taskyapp"
         minSdkVersion 18
         targetSdkVersion 23
-        versionCode 6
-        versionName "1.0.1"
+        versionCode 7
+        versionName "1.0.2"
+    }
+    signingConfigs {
+        release {
+            storeFile file("../release-key.jks")
+            storePassword "taskyapp"
+            keyAlias "taskyapp"
+            keyPassword "taskyapp"
+        }
     }
     buildTypes {
         release {
+            debuggable false
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    //TODO: Remov
+    lintOptions{
+         checkReleaseBuilds true
     }
 }
 

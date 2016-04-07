@@ -28,7 +28,6 @@ import si.uni_lj.fri.taskyapp.data.OfficeHoursObject;
 import si.uni_lj.fri.taskyapp.global.AppHelper;
 
 public class SplashScreenFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_CURRENT_PAGE = "current_page";
     private static final String TAG = "SplashScreenFragment";
@@ -43,7 +42,7 @@ public class SplashScreenFragment extends Fragment {
     TextView mText1;
     @Bind(R.id.content2)
     TextView mText2;
-    // TODO: Rename and change types of parameters
+
     private int mCurrentPage;
     private boolean mEmailFragment;
     private OnSplashScreenFragmentActionListener mCallback;
@@ -58,13 +57,13 @@ public class SplashScreenFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
+     * @param currentPage Parameter 1.
      * @return A new instance of fragment ProvideInfoFragment.
      */
-    public static SplashScreenFragment newInstance(int param1) {
+    public static SplashScreenFragment newInstance(int currentPage) {
         SplashScreenFragment fragment = new SplashScreenFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_CURRENT_PAGE, param1);
+        args.putInt(ARG_CURRENT_PAGE, currentPage);
         fragment.setArguments(args);
         return fragment;
     }
@@ -196,7 +195,7 @@ public class SplashScreenFragment extends Fragment {
         mIconView.setImageResource(R.drawable.ic_vpn_lock_white_48dp);
         mTitleText.setText("Safety first!");
         mText1.setText("We need to send your data to server to learn from it...");
-        mText2.setText("... but don't worry! Your data is anonymous and will be stored safely on a faculty server.");
+        mText2.setText("... but don't worry! Your data will be anonymised and stored safely on a faculty server.");
     }
 
     @Override

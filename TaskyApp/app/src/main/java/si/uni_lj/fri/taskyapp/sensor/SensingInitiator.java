@@ -17,6 +17,8 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.ActivityRecognition;
 
+import java.util.Calendar;
+
 import si.uni_lj.fri.taskyapp.global.PermissionsHelper;
 import si.uni_lj.fri.taskyapp.global.SensingPolicy;
 import si.uni_lj.fri.taskyapp.service.SenseDataIntentService;
@@ -126,7 +128,6 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
         return getSensingServicePendingIntent(sensingPolicy, -1);
     }
 
-    // TODO: Change Intent service to Service
     private PendingIntent getSensingServicePendingIntent(SensingPolicy sensingPolicy, Integer userLabel) {
         Intent i = new Intent(mContext, SenseDataIntentService.class);
         if (sensingPolicy == SensingPolicy.INTERVAL) {
@@ -135,8 +136,20 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
         if (userLabel > 0) {
             i.putExtra("user_label", userLabel);
         }
+        int requestCode = 0;
+        switch (sensingPolicy){
+            case ACTIVITY_UPDATES:
+                requestCode = Constants.REQUEST_CODE_ACTIVITY_UPDATES;
+                break;
+            case LOCATION_UPDATES:
+                requestCode = Constants.REQUEST_CODE_LOCATION_UPDATES;
+                break;
+            case INTERVAL:
+                requestCode = Constants.REQUEST_CODE_ALARM_UPDATES;
+                break;
+        }
         return PendingIntent
-                .getService(mContext, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+                .getService(mContext, requestCode, i, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     private void requestActivityUpdates() {

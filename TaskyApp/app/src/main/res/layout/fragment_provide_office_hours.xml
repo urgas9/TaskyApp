@@ -16,18 +16,18 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/activity_horizontal_margin"
+            android:padding="@dimen/splash_screen_texts_margin"
             android:text="A bit about you"
             android:textColor="@color/primary"
-            android:textSize="30sp"/>
+            android:textSize="@dimen/splash_screen_texts_size_title"/>
 
         <TextView
             android:id="@+id/content1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/activity_horizontal_margin"
+            android:padding="@dimen/splash_screen_texts_margin"
             android:text="Our aim is to automatically detect your tasks in an office environment (eg. sense typing, meetings, conversations...) and to detect only relevant data.\nTherefore we would like to know when are you located in an office setting."
-            android:textSize="18sp"/>
+            android:textSize="@dimen/splash_screen_texts_size"/>
 
         <TextView
             android:id="@+id/content_timerage"
@@ -35,9 +35,9 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingBottom="@dimen/activity_horizontal_margin_small"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:paddingTop="@dimen/activity_horizontal_margin"
+            android:paddingLeft="@dimen/splash_screen_texts_margin"
+            android:paddingRight="@dimen/splash_screen_texts_margin"
+            android:paddingTop="@dimen/splash_screen_texts_margin"
             android:text="@string/pref_default_office_hours"
             android:textColor="@color/accent"
             android:textSize="24sp"
@@ -46,9 +46,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/activity_horizontal_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingBottom="@dimen/splash_screen_texts_margin"
+            android:paddingLeft="@dimen/splash_screen_texts_margin"
+            android:paddingRight="@dimen/splash_screen_texts_margin"
             android:paddingTop="@dimen/activity_horizontal_margin_small">
 
             <android.support.v7.widget.SwitchCompat
@@ -62,19 +62,19 @@
                 android:layout_height="wrap_content"
                 android:layout_toStartOf="@id/office_weekends_switch"
                 android:text="@string/pref_title_weekends_included"
-                android:textSize="18sp"/>
+                android:textSize="@dimen/splash_screen_texts_size"/>
         </RelativeLayout>
 
         <TextView
             android:id="@+id/content2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/activity_horizontal_margin"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingBottom="@dimen/splash_screen_texts_margin"
+            android:paddingLeft="@dimen/splash_screen_texts_margin"
+            android:paddingRight="@dimen/splash_screen_texts_margin"
             android:paddingTop="@dimen/activity_horizontal_margin_small"
             android:text="Click above if the time range is not correct."
-            android:textSize="18sp"/>
+            android:textSize="@dimen/splash_screen_texts_size"/>
         <!--<TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

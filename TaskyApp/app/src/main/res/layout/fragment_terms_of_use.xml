@@ -16,10 +16,10 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/activity_horizontal_margin"
+            android:padding="@dimen/splash_screen_texts_margin"
             android:text="@string/terms_of_use"
             android:textColor="@color/primary"
-            android:textSize="30sp"/>
+            android:textSize="@dimen/splash_screen_texts_size_title"/>
 
         <!--<CheckBox
             android:id="@+id/agree_checkbox"
@@ -35,6 +35,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/splash_screen_texts_size"
                 android:text="@string/terms_of_use_text"/>
         </ScrollView>
 
