@@ -141,8 +141,8 @@ public class MainActivity extends AppCompatActivity {
         if(getIntent() != null && getIntent().getExtras() != null) {
             int notificationPrizeReminderRequestCode = getIntent().getExtras().getInt("notification_prize_reminder");
             if (notificationPrizeReminderRequestCode == Constants.SHOW_NOTIFICATION_PRIZE_REMINDER_ID) {
-                Snackbar snackbar = Snackbar.make(this.findViewById(R.id.main_coordinator_layout), "Are you in office? Click start sensing to monitor you task. You can win 50€.", Snackbar.LENGTH_LONG);
-                snackbar.setAction("INFO", new View.OnClickListener() {
+                Snackbar snackbar = Snackbar.make(this.findViewById(R.id.main_coordinator_layout), R.string.explain_after_prize_notification_reward, Snackbar.LENGTH_LONG);
+                snackbar.setAction(R.string.info, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.server_url)));

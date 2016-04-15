@@ -164,5 +164,8 @@
     <string name="pref_title_weekends_included">Weekends included</string>
     <string name="pref_default_office_weekend">false</string>
     <string name="notif_prize_reminder_message">Reminder! You can win a 50€ voucher.</string>
+    <string name="mind_labeling_tasks_notification">Would you mind labelling your daily tasks?</string>
+    <string name="explain_after_prize_notification_reward">Are you in office? Click start sensing to monitor you task. You have a change to win 50€.</string>
+    <string name="info">INFO</string>
 
 </resources>

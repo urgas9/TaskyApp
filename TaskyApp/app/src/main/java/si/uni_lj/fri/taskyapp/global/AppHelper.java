@@ -286,7 +286,7 @@ public class AppHelper {
                 .setSmallIcon(R.drawable.ic_notifications_white_24dp)
                 .setContentTitle(context.getString(R.string.app_name));
         if (dataBaseId == null) {
-            mBuilder.setContentText("Would you mind labelling your daily tasks?");
+            mBuilder.setContentText(context.getString(R.string.mind_labeling_tasks_notification));
         } else {
             SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_FORMAT_TO_SHOW_FULL);
             mBuilder.setContentText(String.format("Last sensing at: %s", format.format(new Date())));
