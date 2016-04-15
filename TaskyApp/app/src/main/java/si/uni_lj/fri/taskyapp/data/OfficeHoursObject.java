@@ -1,6 +1,8 @@
 package si.uni_lj.fri.taskyapp.data;
 
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -8,7 +10,9 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
+import si.uni_lj.fri.taskyapp.MainActivity;
 import si.uni_lj.fri.taskyapp.R;
+import si.uni_lj.fri.taskyapp.global.AppHelper;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
 
 /**
@@ -120,6 +124,32 @@ public class OfficeHoursObject {
                 this.minutesEnd = Integer.parseInt(hoursMins[1]);
             }
         }
+    }
+
+    public void showReminderPrizeNotification(Context context){
+        if(!areNowOfficeHours()){
+            return;
+        }
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        Calendar c = Calendar.getInstance();
+        long timeDifferenceSinceLastNotification = c.getTimeInMillis() - prefs.getLong(Constants.PREFS_PRIZE_NOTIFICATION_REMINDER_LAST_SENT, 0);
+        final long MIN_TIME_DIFFERENCE_TWO_NOTIFS = 23 * 60 * 60 * 1000;
+
+
+        int absMinutesStart = hoursStart * 60 + minutesStart;
+        int minutesDifference = hoursEnd * 60 + minutesEnd - absMinutesStart;
+
+        int minutesNow = c.get(Calendar.HOUR_OF_DAY) * 60 + c.get(Calendar.MINUTE);
+        double percentOfOfficeHours = (minutesNow - absMinutesStart)/((double)minutesDifference);
+        Log.d("OfficeHours", "Daily percentage worked: " + percentOfOfficeHours * 100);
+        if(percentOfOfficeHours > 0.3 && timeDifferenceSinceLastNotification > MIN_TIME_DIFFERENCE_TWO_NOTIFS){
+            Intent intent = new Intent(context, MainActivity.class);
+            intent.putExtra("notification_prize_reminder", Constants.SHOW_NOTIFICATION_PRIZE_REMINDER_ID);
+            PendingIntent pi = PendingIntent.getActivity(context, Constants.SHOW_NOTIFICATION_REQUEST_CODE, intent, 0);
+            AppHelper.showNotification(context, context.getString(R.string.notif_prize_reminder_message), pi, Constants.SHOW_NOTIFICATION_PRIZE_REMINDER_ID);
+            prefs.edit().putLong(Constants.PREFS_PRIZE_NOTIFICATION_REMINDER_LAST_SENT, c.getTimeInMillis()).apply();
+        }
+
     }
 
     @Override

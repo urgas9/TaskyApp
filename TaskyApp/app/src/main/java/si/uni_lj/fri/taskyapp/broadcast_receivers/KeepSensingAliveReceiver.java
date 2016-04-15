@@ -15,7 +15,7 @@ import si.uni_lj.fri.taskyapp.sensor.SensingInitiator;
  */
 public class KeepSensingAliveReceiver extends BroadcastReceiver {
 
-    private static final String TAG = "AfterStartupReceiver";
+    private static final String TAG = "KeepSensingAliveRecvr";
     Object o = new Object();
     private SensingInitiator mSensingInitiator;
 

@@ -197,6 +197,9 @@ public class FullScreenMapFragment extends Fragment implements OnMapReadyCallbac
     }
 
     private void moveCameraToFitData(ArrayList<LatLng> latLngArray) {
+        if(latLngArray == null || latLngArray.isEmpty()){
+            return;
+        }
         final LatLngBounds.Builder boundsBuilder = new LatLngBounds.Builder();
         for (LatLng latLng : latLngArray) {
             if (latLng.latitude != 0 && latLng.longitude != 0) {

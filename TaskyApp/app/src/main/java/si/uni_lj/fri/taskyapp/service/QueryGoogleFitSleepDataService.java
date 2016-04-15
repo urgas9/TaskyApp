@@ -12,18 +12,13 @@ import java.util.Date;
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
  * a service on a separate handler thread.
- * <p/>
- * TODO: Customize class - update intent actions, extra parameters and static
- * helper methods.
  */
 public class QueryGoogleFitSleepDataService extends IntentService {
-    // TODO: Rename actions, choose action names that describe tasks that this
     // IntentService can perform, e.g. ACTION_FETCH_NEW_ITEMS
     private static final String ACTION_FOO = "si.uni_lj.fri.taskyapp.service.action.FOO";
     private static final String ACTION_BAZ = "si.uni_lj.fri.taskyapp.service.action.BAZ";
 
     private static final String TAG = "QueryGFitSleepService";
-    // TODO: Rename parameters
     private static final String EXTRA_PARAM1 = "si.uni_lj.fri.taskyapp.service.extra.PARAM1";
     private static final String EXTRA_PARAM2 = "si.uni_lj.fri.taskyapp.service.extra.PARAM2";
 

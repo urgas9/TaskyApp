@@ -21,7 +21,7 @@ public class ShowNotificationToUserReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Log.d(LOG_TAG, "onReceive");
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        AppHelper.showNotification(context);
+        AppHelper.showLabelDailyTasksNotification(context);
     }
 
 }

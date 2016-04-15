@@ -163,5 +163,6 @@
     <string name="pref_header_office_hours">Office hours</string>
     <string name="pref_title_weekends_included">Weekends included</string>
     <string name="pref_default_office_weekend">false</string>
+    <string name="notif_prize_reminder_message">Reminder! You can win a 50€ voucher.</string>
 
 </resources>

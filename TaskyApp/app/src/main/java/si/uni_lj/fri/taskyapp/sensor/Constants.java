@@ -14,6 +14,7 @@ public class Constants {
     public static final String PREFS_LAST_LOC_ACCURACY = "PREFS_LAST_LOC_ACCURACY";
     public static final String PREFS_SHOW_LEADERBOARD_MSG = "PREFS_SHOW_LEADERBOARD_MSG";
     public static final String PREFS_OFFICE_HOURS = "profile_office_hours_text";
+    public static final String PREFS_PRIZE_NOTIFICATION_REMINDER_LAST_SENT = "PREFS_PRIZE_NOTIFICATION_REMINDER_LAST_SENT";
 
     public static final int LOCATION_ACCURACY_AT_LEAST = 200;
 
@@ -35,6 +36,7 @@ public class Constants {
     public static final int LABEL_TASK_REQUEST_CODE = 1000;
     public static final int SHOW_NOTIFICATION_REMINDER_ID = 901;
     public static final int SHOW_NOTIFICATION_JUST_SENSED_ID = 902;
+    public static final int SHOW_NOTIFICATION_PRIZE_REMINDER_ID = 903;
     public static final int SHOW_NOTIFICATION_REQUEST_CODE = 900;
 
     public static final int HOUR_SEND_NOTIFICATION_EARLY = 13;

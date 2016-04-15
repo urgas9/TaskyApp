@@ -52,6 +52,7 @@ import si.uni_lj.fri.taskyapp.data.AmbientLightData;
 import si.uni_lj.fri.taskyapp.data.EnvironmentData;
 import si.uni_lj.fri.taskyapp.data.LocationData;
 import si.uni_lj.fri.taskyapp.data.MotionSensorData;
+import si.uni_lj.fri.taskyapp.data.OfficeHoursObject;
 import si.uni_lj.fri.taskyapp.data.ScreenStatusData;
 import si.uni_lj.fri.taskyapp.data.SensorReadingData;
 import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
@@ -114,6 +115,10 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             Log.d(TAG, "Service: User is not participating, quit.");
             return;
         }
+
+        OfficeHoursObject oho = new OfficeHoursObject(getBaseContext());
+        oho.showReminderPrizeNotification(getBaseContext());
+
         SensingDecisionHelper mSensingHelper = new SensingDecisionHelper(getApplicationContext(), userLabel);
 
         mSumLightValues = 0;
@@ -370,19 +375,19 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
                 if ((calendar.get(Calendar.HOUR_OF_DAY) >= Constants.HOUR_SEND_NOTIFICATION_LATE ||
                         calendar.get(Calendar.HOUR_OF_DAY) >= Constants.HOUR_SEND_NOTIFICATION_EARLY) &&
                         hoursSinceLastNotification >= 7) {
-                    AppHelper.showNotification(getBaseContext());
+                    AppHelper.showLabelDailyTasksNotification(getBaseContext());
                     mDefaultPrefs.edit().putLong("last_time_user_notified_to_label", nowMillis).apply();
                 }
                 break;
             case "2":
                 if (id > 0) {
-                    AppHelper.showNotification(getBaseContext(), id);
+                    AppHelper.showLabelDailyTasksNotification(getBaseContext(), id);
                 }
                 break;
             default:
                 if (calendar.get(Calendar.HOUR_OF_DAY) >= Constants.HOUR_SEND_NOTIFICATION_LATE &&
                         hoursSinceLastNotification >= 7) {
-                    AppHelper.showNotification(getBaseContext());
+                    AppHelper.showLabelDailyTasksNotification(getBaseContext());
                     mDefaultPrefs.edit().putLong("last_time_user_notified_to_label", nowMillis).apply();
                 }
                 break;
@@ -517,6 +522,9 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         protected void onHandleIntent(Intent intent) {
             Log.d(TAG, "onHandleIntent in MyActivityRecognitionIntentService");
             if (ActivityRecognitionResult.hasResult(intent)) {
+                if(mDetectedActivityList == null){
+                    mDetectedActivityList = new ArrayList<>();
+                }
                 Log.d(TAG, "Got activity data: " + ActivityRecognitionResult.extractResult(intent).getMostProbableActivity());
                 mDetectedActivityList.add(new ActivityData(ActivityRecognitionResult.extractResult(intent).getMostProbableActivity()));
             }

@@ -3,7 +3,6 @@ package si.uni_lj.fri.taskyapp.global;
 import android.animation.ArgbEvaluator;
 import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -183,7 +182,7 @@ public class AppHelper {
     }
 
     public static int getTaskColor(Context ctx, int label) {
-        if (label > 0) {
+        if (label > 0 && ctx != null) {
             return (Integer) new ArgbEvaluator()
                     .evaluate(label / 5.f, Color.GREEN, Color.RED);
         } else {
@@ -254,11 +253,32 @@ public class AppHelper {
         return resultsList;
     }
 
-    public static void showNotification(Context context) {
-        showNotification(context, null);
+    public static void showNotification(Context context, String message, PendingIntent pendingIntent, int notifId){
+
+        SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
+                .setSmallIcon(R.drawable.ic_notifications_white_24dp)
+                .setContentTitle(context.getString(R.string.app_name));
+        mBuilder.setContentText(message);
+        mBuilder.setContentIntent(pendingIntent);
+        if (mPrefs.getBoolean("notifications_new_message_vibrate", false)) {
+            mBuilder.setVibrate(new long[]{100, 500, 100});
+        }
+        mBuilder.setLights(Color.CYAN, 2000, 2000);
+        String notifSound = mPrefs.getString("notifications_new_message_ringtone", null);
+        if (notifSound != null) {
+            mBuilder.setSound(Uri.parse(notifSound));
+        }
+        mBuilder.setAutoCancel(true);
+        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(notifId, mBuilder.build());
+
+    }
+    public static void showLabelDailyTasksNotification(Context context) {
+        showLabelDailyTasksNotification(context, null);
     }
 
-    public static void showNotification(Context context, Long dataBaseId) {
+    public static void showLabelDailyTasksNotification(Context context, Long dataBaseId) {
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         Intent intent = new Intent(context, ListDataActivity.class);
         PendingIntent pi = PendingIntent.getActivity(context, Constants.SHOW_NOTIFICATION_REQUEST_CODE, intent, 0);
@@ -275,12 +295,11 @@ public class AppHelper {
         if (mPrefs.getBoolean("notifications_new_message_vibrate", false)) {
             mBuilder.setVibrate(new long[]{100, 500, 100});
         }
-        mBuilder.setLights(Color.RED, 2000, 2000);
+        mBuilder.setLights(Color.CYAN, 2000, 2000);
         String notifSound = mPrefs.getString("notifications_new_message_ringtone", null);
         if (notifSound != null) {
             mBuilder.setSound(Uri.parse(notifSound));
         }
-        mBuilder.setDefaults(Notification.DEFAULT_LIGHTS);
         mBuilder.setAutoCancel(true);
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         int id = Constants.SHOW_NOTIFICATION_REMINDER_ID;

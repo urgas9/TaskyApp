@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.Snackbar;
@@ -137,12 +138,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        if(getIntent() != null && getIntent().getExtras() != null) {
+            int notificationPrizeReminderRequestCode = getIntent().getExtras().getInt("notification_prize_reminder");
+            if (notificationPrizeReminderRequestCode == Constants.SHOW_NOTIFICATION_PRIZE_REMINDER_ID) {
+                Snackbar snackbar = Snackbar.make(this.findViewById(R.id.main_coordinator_layout), "Are you in office? Click start sensing to monitor you task. You can win 50€.", Snackbar.LENGTH_LONG);
+                snackbar.setAction("INFO", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(getString(R.string.server_url)));
+                        startActivity(browserIntent);
+                    }
+                });
+                snackbar.show();
+            }
+        }
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         mNumsPressesToExitApp = 2;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constants.ACTION_NEW_SENSOR_READING_RECORD);
@@ -182,8 +203,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStop() {
+        super.onStop();
         try {
             unregisterReceiver(mNewSensorRecordReceiver);
         } catch (IllegalArgumentException e) {
