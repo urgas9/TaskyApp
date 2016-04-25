@@ -273,9 +273,7 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
 
         @Override
         protected ArrayList<MarkerDataHolder> doInBackground(Void... params) {
-            Calendar calendarFrom = AppHelper.getCalendarAtMidnight(-1);
-            List<SensorReadingRecord> sensorReadings = SensorReadingRecord.find(SensorReadingRecord.class,
-                    "time_started_sensing > ?", new String[]{"" + calendarFrom.getTimeInMillis()}, null, "time_started_sensing ASC", null);
+            List<SensorReadingRecord> sensorReadings = AppHelper.getSensorRecordsOfLastTwoDays();
 
             ArrayList<MarkerDataHolder> resultList = new ArrayList<>();
             for (SensorReadingRecord srr : sensorReadings) {

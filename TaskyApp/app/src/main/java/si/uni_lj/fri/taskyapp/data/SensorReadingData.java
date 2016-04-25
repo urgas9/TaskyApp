@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import si.uni_lj.fri.taskyapp.data.network.VolumeSettingsData;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
 
 /**
@@ -55,6 +56,9 @@ public class SensorReadingData {
 
     @SerializedName("screen_status_list")
     private List<ScreenStatusData> screenStatusData;
+
+    @SerializedName("volume_settings")
+    private VolumeSettingsData volumeSettingsData;
 
     private Integer label; // Label on Likert scale 1-5 (easy - hard)
     @SerializedName("database_id")
@@ -178,22 +182,33 @@ public class SensorReadingData {
         this.gyroscopeData = gyroscopeData;
     }
 
+    public VolumeSettingsData getVolumeSettingsData() {
+        return volumeSettingsData;
+    }
+
+    public void setVolumeSettingsData(VolumeSettingsData volumeSettingsData) {
+        this.volumeSettingsData = volumeSettingsData;
+    }
+
     @Override
     public String toString() {
         return "SensorReadingData{" +
                 "appVersion=" + appVersion +
                 ", sensingPolicy='" + sensingPolicy + '\'' +
-                ", timestampStarted=" + timestampStarted +
-                ", timestampEnded=" + timestampEnded +
+                ", timestampStarted='" + timestampStarted + '\'' +
+                ", timestampStartedPretty='" + timestampStartedPretty + '\'' +
+                ", timestampEnded='" + timestampEnded + '\'' +
                 ", locationData=" + locationData +
                 ", activityData=" + activityData +
                 ", environmentData=" + environmentData +
                 ", microphoneData=" + microphoneData +
                 ", accelerometerData=" + accelerometerData +
-                ", phoneStatusData=" + screenStatusData +
+                ", gyroscopeData=" + gyroscopeData +
+                ", screenStatusData=" + screenStatusData +
+                ", volumeSettingsData=" + volumeSettingsData +
                 ", label=" + label +
+                ", dbRecordId=" + dbRecordId +
                 '}';
     }
-
 }
 

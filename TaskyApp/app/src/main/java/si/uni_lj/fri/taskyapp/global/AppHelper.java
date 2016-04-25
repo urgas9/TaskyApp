@@ -41,7 +41,8 @@ import java.util.List;
 import si.uni_lj.fri.taskyapp.BuildConfig;
 import si.uni_lj.fri.taskyapp.ListDataActivity;
 import si.uni_lj.fri.taskyapp.R;
-import si.uni_lj.fri.taskyapp.broadcast_receivers.ShowNotificationToUserReceiver;
+import si.uni_lj.fri.taskyapp.broadcast_receivers.ShowPrizeReminderNotificationReceiver;
+import si.uni_lj.fri.taskyapp.data.OfficeHoursObject;
 import si.uni_lj.fri.taskyapp.data.db.DailyAggregatedData;
 import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
@@ -113,36 +114,6 @@ public class AppHelper {
 
     public static String getUniqueDeviceId(Context context) {
         return android.provider.Settings.Secure.getString(context.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
-    }
-
-    public static void setRepeatedNotification(Context ctx, int ID, int hh, int mm, int ss) {
-        AlarmManager alarmManager = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
-        Intent alarmIntent = new Intent(ctx, ShowNotificationToUserReceiver.class);
-        alarmIntent.putExtra("ID", ID);
-        Log.d("setRepeatedNotification", "ID:" + ID);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(ctx, ID, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        Calendar calendar = Calendar.getInstance();
-        Calendar now = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, hh);
-        calendar.set(Calendar.MINUTE, mm);
-        calendar.set(Calendar.SECOND, ss);
-
-        //check whether the time is earlier than current time. If so, set it to tomorrow. Otherwise, all alarms for earlier time will fire
-        if (calendar.before(now)) {
-            calendar.add(Calendar.HOUR, 12);
-            if (calendar.before(now)) {
-                calendar.add(Calendar.HOUR, 12);
-            }
-        }
-
-        SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(ctx);
-        long interval = AlarmManager.INTERVAL_DAY;
-        if (mPrefs.getString("notifications_preference", "").equals("1")) {
-            interval = AlarmManager.INTERVAL_HALF_DAY;
-        }
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), interval, pendingIntent);
-
     }
 
     public static boolean isConnectedToWifi(Context ctx) {
@@ -307,5 +278,26 @@ public class AppHelper {
             id = Constants.SHOW_NOTIFICATION_JUST_SENSED_ID;
         }
         mNotificationManager.notify(id, mBuilder.build());
+    }
+
+    public static List<SensorReadingRecord> getSensorRecordsOfLastTwoDays(){
+        Calendar calendarFrom = AppHelper.getCalendarAtMidnight(-1);
+        return SensorReadingRecord.find(SensorReadingRecord.class,
+                "time_started_sensing > ?", new String[]{"" + calendarFrom.getTimeInMillis()}, null, "time_started_sensing ASC", null);
+    }
+
+    public static void startNotificationsAlarm(Context context){
+        Calendar calendar = Calendar.getInstance();
+
+        OfficeHoursObject officeHoursObject = new OfficeHoursObject(context);
+        int minutesOfTheDay = officeHoursObject.getMinutesTimeOfTheDayToShowReminder();
+        calendar.set(Calendar.HOUR_OF_DAY, minutesOfTheDay / 60); // For 1 PM or 2 PM
+        calendar.set(Calendar.MINUTE, minutesOfTheDay % 60);
+        calendar.set(Calendar.SECOND, 0);
+        PendingIntent pi = PendingIntent.getBroadcast(context, 0,
+                new Intent(context, ShowPrizeReminderNotificationReceiver.class),PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY, pi);
     }
 }

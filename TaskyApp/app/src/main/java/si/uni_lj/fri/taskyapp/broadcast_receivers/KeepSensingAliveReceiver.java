@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import si.uni_lj.fri.taskyapp.global.AppHelper;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
 import si.uni_lj.fri.taskyapp.sensor.SensingInitiator;
 
@@ -26,6 +27,8 @@ public class KeepSensingAliveReceiver extends BroadcastReceiver {
             mSensingInitiator = new SensingInitiator(context);
         }
         mSensingInitiator.senseWithDefaultSensingConfiguration();
+
+        AppHelper.startNotificationsAlarm(context);
 
         synchronized (o) {
             // Setting recovery alarm

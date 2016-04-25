@@ -47,6 +47,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import si.uni_lj.fri.taskyapp.LabelTaskActivity;
+import si.uni_lj.fri.taskyapp.R;
 import si.uni_lj.fri.taskyapp.data.ActivityData;
 import si.uni_lj.fri.taskyapp.data.AmbientLightData;
 import si.uni_lj.fri.taskyapp.data.EnvironmentData;
@@ -56,6 +58,7 @@ import si.uni_lj.fri.taskyapp.data.OfficeHoursObject;
 import si.uni_lj.fri.taskyapp.data.ScreenStatusData;
 import si.uni_lj.fri.taskyapp.data.SensorReadingData;
 import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
+import si.uni_lj.fri.taskyapp.data.network.VolumeSettingsData;
 import si.uni_lj.fri.taskyapp.global.AppHelper;
 import si.uni_lj.fri.taskyapp.global.SensingDecisionHelper;
 import si.uni_lj.fri.taskyapp.global.SensingPolicy;
@@ -101,7 +104,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         }
 
         mDefaultPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        showNotification(-1);
+        showLabelRecordedNotification(-1);
 
         String policy = intent.getStringExtra("sensing_policy");
         SensingPolicy sensingPolicy = SensingPolicy.NONE;
@@ -272,6 +275,9 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             Log.d(TAG, "Cannot get battery charging status!");
         }
 
+        // Volume settings
+        srd.setVolumeSettingsData(new VolumeSettingsData(getBaseContext()));
+
         while (sensorThreadsManager.moreResultsAvailable()) {
             Object sensingData;
             try {
@@ -346,7 +352,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         // Persisting sensor readings to database
         long id = new SensorReadingRecord(getBaseContext(), srd, userLabel > 0, userLabel).save();
 
-        showNotification(id);
+        showLabelRecordedNotification(id);
 
         Intent i = new Intent(Constants.ACTION_NEW_SENSOR_READING_RECORD);
         i.putExtra("id", id);
@@ -362,35 +368,70 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
     }
 
-    private void showNotification(long id) {
+    private void showLabelRecordedNotification(long id) {
         Calendar calendar = Calendar.getInstance();
         String notificationsFrequency = mDefaultPrefs.getString("notifications_preference", "");
         Long lastTimeNotificationSent = mDefaultPrefs.getLong("last_time_user_notified_to_label", 0);
         long nowMillis = calendar.getTimeInMillis();
         int hoursSinceLastNotification = (int) ((nowMillis - lastTimeNotificationSent) / (AlarmManager.INTERVAL_HOUR));
 
+        OfficeHoursObject officeHoursObject = new OfficeHoursObject(getBaseContext());
+        if(id > 0 && officeHoursObject.areNowOfficeHours() && !notificationsFrequency.equals("2")){
+            // Code to show n random notifications to label current task
+            double percentageToShowANotification = Math.max(1 - (officeHoursObject.getPercentageOfWorkDone() + 0.3), 0.1);
+            Calendar cNow = Calendar.getInstance();
+            int dayToday = cNow.get(Calendar.DAY_OF_YEAR);
+            int minutesNow = cNow.get(Calendar.MINUTE) + cNow.get(Calendar.HOUR_OF_DAY) * 60;
+            Calendar cLast = Calendar.getInstance();
+            cLast.setTimeInMillis(mDefaultPrefs.getLong(Constants.PREFS_PRIZE_NOTIFICATION_REMINDER_LAST_SENT, 0));
 
-        switch (notificationsFrequency) {
-            case "1":
-                if ((calendar.get(Calendar.HOUR_OF_DAY) >= Constants.HOUR_SEND_NOTIFICATION_LATE ||
-                        calendar.get(Calendar.HOUR_OF_DAY) >= Constants.HOUR_SEND_NOTIFICATION_EARLY) &&
-                        hoursSinceLastNotification >= 7) {
-                    AppHelper.showLabelDailyTasksNotification(getBaseContext());
-                    mDefaultPrefs.edit().putLong("last_time_user_notified_to_label", nowMillis).apply();
-                }
-                break;
-            case "2":
-                if (id > 0) {
-                    AppHelper.showLabelDailyTasksNotification(getBaseContext(), id);
-                }
-                break;
-            default:
-                if (calendar.get(Calendar.HOUR_OF_DAY) >= Constants.HOUR_SEND_NOTIFICATION_LATE &&
-                        hoursSinceLastNotification >= 7) {
-                    AppHelper.showLabelDailyTasksNotification(getBaseContext());
-                    mDefaultPrefs.edit().putLong("last_time_user_notified_to_label", nowMillis).apply();
-                }
-                break;
+            int differenceInMins = minutesNow - (cLast.get(Calendar.MINUTE) + cLast.get(Calendar.HOUR_OF_DAY) * 60);
+
+            int numNotificationsShown = mDefaultPrefs.getInt(Constants.PREFS_NUM_OF_LABEL_TASK_NOTIFICATION_REMINDERS_SENT, 0);
+            if(dayToday != cLast.get(Calendar.DAY_OF_YEAR)){
+                numNotificationsShown = 0;
+                mDefaultPrefs.edit().putInt(Constants.PREFS_NUM_OF_LABEL_TASK_NOTIFICATION_REMINDERS_SENT, 0).apply();
+            }
+
+            if(differenceInMins > 45 && percentageToShowANotification > Math.random() &&
+                    numNotificationsShown < Constants.NUM_OF_RANDOMLY_LABEL_NOTIFICATIONS_TO_SEND){
+
+                Intent notifIntent = new Intent(getBaseContext(), LabelTaskActivity.class);
+                notifIntent.putExtra("db_record_id", id);
+                //notifIntent.putExtra("notification_prize_reminder", Constants.SHOW_NOTIFICATION_PRIZE_REMINDER_ID);
+                PendingIntent pi = PendingIntent.getActivity(getBaseContext(), Constants.SHOW_NOTIFICATION_REQUEST_CODE, notifIntent, 0);
+                AppHelper.showNotification(getBaseContext(), "[AfterTask] " + getBaseContext().getString(R.string.notif_prize_reminder_message), pi, Constants.SHOW_NOTIFICATION_PRIZE_REMINDER_ID);
+                mDefaultPrefs.edit().putLong(Constants.PREFS_PRIZE_NOTIFICATION_REMINDER_LAST_SENT, cNow.getTimeInMillis()).apply();
+                mDefaultPrefs.edit().putInt(Constants.PREFS_NUM_OF_LABEL_TASK_NOTIFICATION_REMINDERS_SENT, numNotificationsShown + 1).apply();
+            }
+        }
+        else {
+            switch (notificationsFrequency) {
+                case "1":
+                    if ((calendar.get(Calendar.HOUR_OF_DAY) >= Constants.HOUR_SEND_NOTIFICATION_LATE ||
+                            calendar.get(Calendar.HOUR_OF_DAY) >= Constants.HOUR_SEND_NOTIFICATION_EARLY) &&
+                            hoursSinceLastNotification >= 7) {
+                        mDefaultPrefs.edit().putLong("last_time_user_notified_to_label", nowMillis).apply();
+                        if (!AppHelper.getSensorRecordsOfLastTwoDays().isEmpty()) {
+                            AppHelper.showLabelDailyTasksNotification(getBaseContext());
+                        }
+                    }
+                    break;
+                case "2":
+                    if (id > 0) {
+                        AppHelper.showLabelDailyTasksNotification(getBaseContext(), id);
+                    }
+                    break;
+                default:
+                    if (calendar.get(Calendar.HOUR_OF_DAY) >= Constants.HOUR_SEND_NOTIFICATION_LATE &&
+                            hoursSinceLastNotification >= 7) {
+                        mDefaultPrefs.edit().putLong("last_time_user_notified_to_label", nowMillis).apply();
+                        if (!AppHelper.getSensorRecordsOfLastTwoDays().isEmpty()) {
+                            AppHelper.showLabelDailyTasksNotification(getBaseContext());
+                        }
+                    }
+                    break;
+            }
         }
 
     }

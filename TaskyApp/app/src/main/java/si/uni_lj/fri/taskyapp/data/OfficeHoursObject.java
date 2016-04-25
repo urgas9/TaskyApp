@@ -126,6 +126,20 @@ public class OfficeHoursObject {
         }
     }
 
+    public double getPercentageOfWorkDone(){
+        Calendar c = Calendar.getInstance();
+        int absMinutesStart = hoursStart * 60 + minutesStart;
+        int minutesDifference = hoursEnd * 60 + minutesEnd - absMinutesStart;
+        int minutesNow = c.get(Calendar.HOUR_OF_DAY) * 60 + c.get(Calendar.MINUTE);
+        return (minutesNow - absMinutesStart)/((double)minutesDifference);
+    }
+
+    public int getMinutesTimeOfTheDayToShowReminder(){
+        int absMinutesStart = hoursStart * 60 + minutesStart;
+        int minutesDifference = hoursEnd * 60 + minutesEnd - absMinutesStart;
+
+        return (int)(absMinutesStart + minutesDifference * 0.3);
+    }
     public void showReminderPrizeNotification(Context context){
         if(!areNowOfficeHours()){
             return;

@@ -66,7 +66,7 @@
                 <action android:name="si.uni_lj.fri.taskyapp.KeepAliveAction"/>
             </intent-filter>
         </receiver>
-        <receiver android:name=".broadcast_receivers.ShowNotificationToUserReceiver"/>
+        <receiver android:name=".broadcast_receivers.ShowPrizeReminderNotificationReceiver"/>
         <receiver android:name=".broadcast_receivers.ConnectivityChangedReceiver">
             <intent-filter>
                 <action android:name="android.net.wifi.STATE_CHANGE"/>
