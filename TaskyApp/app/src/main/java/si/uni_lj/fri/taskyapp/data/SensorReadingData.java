@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import si.uni_lj.fri.taskyapp.data.network.VolumeSettingsData;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
 
 /**
@@ -56,6 +55,9 @@ public class SensorReadingData {
 
     @SerializedName("screen_status_list")
     private List<ScreenStatusData> screenStatusData;
+
+    @SerializedName("active_calendar_events")
+    private List<String> calendarEvents;
 
     @SerializedName("volume_settings")
     private VolumeSettingsData volumeSettingsData;
@@ -190,6 +192,14 @@ public class SensorReadingData {
         this.volumeSettingsData = volumeSettingsData;
     }
 
+    public List<String> getCalendarEvents() {
+        return calendarEvents;
+    }
+
+    public void setCalendarEvents(List<String> calendarEvents) {
+        this.calendarEvents = calendarEvents;
+    }
+
     @Override
     public String toString() {
         return "SensorReadingData{" +
@@ -205,6 +215,7 @@ public class SensorReadingData {
                 ", accelerometerData=" + accelerometerData +
                 ", gyroscopeData=" + gyroscopeData +
                 ", screenStatusData=" + screenStatusData +
+                ", calendarEvents=" + calendarEvents +
                 ", volumeSettingsData=" + volumeSettingsData +
                 ", label=" + label +
                 ", dbRecordId=" + dbRecordId +

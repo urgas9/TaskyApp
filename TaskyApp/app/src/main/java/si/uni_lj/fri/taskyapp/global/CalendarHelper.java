@@ -11,6 +11,7 @@ import android.util.Log;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by urgas9 on 24.3.16, OpenHours.com
@@ -65,18 +66,11 @@ public class CalendarHelper {
         return nameOfEvent;
     }
 
-    public static String getEventNameAtTime(Context context, long timestamp) {
+    public static List<String> getAllEventsNameAtTime(Context context, long timestamp) {
         if (!PermissionsHelper.hasPermission(context, Manifest.permission.READ_CALENDAR)) {
             Log.e(TAG, "Cannot read calendar events as permission is not granted!");
             return null;
         }
-        String whereArg = Long.toString(timestamp);
-        /*Cursor cursor = context.getContentResolver()
-                .query(
-                        Uri.parse("content://com.android.calendar/events"),
-                        new String[] { "calendar_id", "title", "description",
-                                "dtstart", "dtend", "eventLocation", "duration" }, "dtstart <= ? AND (dtend IS NULL OR dtend >= ?)",
-                        new String[]{whereArg, whereArg}, null);*/
         Uri.Builder eventsUriBuilder = CalendarContract.Instances.CONTENT_URI
                 .buildUpon();
         ContentUris.appendId(eventsUriBuilder, timestamp);
@@ -104,10 +98,15 @@ public class CalendarHelper {
 
         }
         cursor.close();
-        if (eventNameArray.isEmpty()) {
+        return eventNameArray;
+    }
+
+    public static String getEventNameAtTime(Context context, long timestamp) {
+        List<String> eventsNames = getAllEventsNameAtTime(context, timestamp);
+        if(eventsNames == null || eventsNames.isEmpty()){
             return null;
         }
-        return eventNameArray.get(0);
+        return eventsNames.get(0);
     }
 
     public static String getDate(long milliSeconds) {

@@ -58,8 +58,9 @@ import si.uni_lj.fri.taskyapp.data.OfficeHoursObject;
 import si.uni_lj.fri.taskyapp.data.ScreenStatusData;
 import si.uni_lj.fri.taskyapp.data.SensorReadingData;
 import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
-import si.uni_lj.fri.taskyapp.data.network.VolumeSettingsData;
+import si.uni_lj.fri.taskyapp.data.VolumeSettingsData;
 import si.uni_lj.fri.taskyapp.global.AppHelper;
+import si.uni_lj.fri.taskyapp.global.CalendarHelper;
 import si.uni_lj.fri.taskyapp.global.SensingDecisionHelper;
 import si.uni_lj.fri.taskyapp.global.SensingPolicy;
 import si.uni_lj.fri.taskyapp.global.SensorsHelper;
@@ -276,7 +277,9 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         }
 
         // Volume settings
+        Log.d(TAG, "Getting volume settings.");
         srd.setVolumeSettingsData(new VolumeSettingsData(getBaseContext()));
+        srd.setCalendarEvents(CalendarHelper.getAllEventsNameAtTime(getBaseContext(), System.currentTimeMillis()));
 
         while (sensorThreadsManager.moreResultsAvailable()) {
             Object sensingData;

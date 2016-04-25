@@ -1,8 +1,8 @@
-package si.uni_lj.fri.taskyapp.data.network;
+package si.uni_lj.fri.taskyapp.data;
 
 import android.content.Context;
 import android.media.AudioManager;
-import android.widget.Toast;
+import android.util.Log;
 
 /**
  * Created by urgas9 on 26-Apr-16, OpenHours.com
@@ -19,7 +19,8 @@ public class VolumeSettingsData {
         this.ringtoneVolume = (int)(audio.getStreamVolume(AudioManager.STREAM_RING) * 100 / (double)audio.getStreamMaxVolume(AudioManager.STREAM_RING));
         this.musicVolume = (int)(audio.getStreamVolume(AudioManager.STREAM_MUSIC) * 100 / (double)audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
 
-        Toast.makeText(ctx, "Current volume percentages, [R]: " + ringtoneVolume + ", [M]:"+musicVolume, Toast.LENGTH_LONG).show();
+        Log.d("VolumeSettingsData", "Current volume percentages, [Ring]: " + ringtoneVolume + ", [Music]:"+musicVolume);
+
     }
 
     public int getRingtoneVolume() {
