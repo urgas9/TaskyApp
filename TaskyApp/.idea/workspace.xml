@@ -6,18 +6,13 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="notificatio" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
     <option name="TOOL_WINDOW_REGEXP_FILTER" value="false" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="080f3e08-f11e-457d-b30a-4cdb2f1feb18" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/CalendarData.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/LabelTaskActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/LabelTaskActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/SensorReadingData.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/SensorReadingData.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/global/CalendarHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/global/CalendarHelper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java" />
     </list>
     <ignored path="TaskyApp.iws" />
@@ -62,8 +57,8 @@
       <file leaf-file-name="SenseDataIntentService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.24876848">
-              <caret line="395" column="13" selection-start-line="395" selection-start-column="13" selection-end-line="395" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.5418719">
+              <caret line="111" column="55" selection-start-line="111" selection-start-column="55" selection-end-line="111" selection-end-column="55" />
               <folding />
             </state>
           </provider>
@@ -3711,12 +3706,6 @@
       <option name="number" value="Default" />
       <updated>1451555585848</updated>
     </task>
-    <task id="LOCAL-00035" summary="map size and lite mode">
-      <created>1456392377531</created>
-      <option name="number" value="00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1456392377531</updated>
-    </task>
     <task id="LOCAL-00036" summary="back from lite mode">
       <created>1456392417826</created>
       <option name="number" value="00036" />
@@ -4005,7 +3994,13 @@
       <option name="project" value="LOCAL" />
       <updated>1461624655699</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="work on notiications, providing more detailed calendar events...">
+      <created>1461663924107</created>
+      <option name="number" value="00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1461663924121</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="TodoView">
@@ -4070,7 +4065,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="bug fixes&#10;" />
     <MESSAGE value="gyroscope added, light data changed, getting activity in intent service (if null), bug fixes" />
     <MESSAGE value="passive location provider" />
     <MESSAGE value="bug fixes, sensing optimised" />
@@ -4095,7 +4089,8 @@
     <MESSAGE value="extracted strings.." />
     <MESSAGE value="sending 4 notifications randomly for prize reminder, sensing volume settings, notification for prize reminder moved to its own broadcast receiver" />
     <MESSAGE value="getting all calendar events at sensing time, refactored some code, updated version" />
-    <option name="LAST_COMMIT_MESSAGE" value="getting all calendar events at sensing time, refactored some code, updated version" />
+    <MESSAGE value="work on notiications, providing more detailed calendar events..." />
+    <option name="LAST_COMMIT_MESSAGE" value="work on notiications, providing more detailed calendar events..." />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.8790036" />
   </component>
   <component name="XDebuggerManager">
@@ -4667,8 +4662,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.24876848">
-          <caret line="395" column="13" selection-start-line="395" selection-start-column="13" selection-end-line="395" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.5418719">
+          <caret line="111" column="55" selection-start-line="111" selection-start-column="55" selection-end-line="111" selection-end-column="55" />
           <folding />
         </state>
       </provider>

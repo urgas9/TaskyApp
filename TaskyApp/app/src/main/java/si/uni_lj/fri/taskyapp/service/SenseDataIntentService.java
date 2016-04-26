@@ -104,12 +104,12 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         }
 
         mDefaultPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        showLabelRecordedNotification(-1);
 
         String policy = intent.getStringExtra("sensing_policy");
         SensingPolicy sensingPolicy = SensingPolicy.NONE;
 
         int userLabel = intent.getIntExtra("user_label", -2);
+        showLabelRecordedNotification(-1, userLabel > 0);
         if (userLabel > 0) {
             Log.d(TAG, "+++ Force sensing set to true!");
             sensingPolicy = SensingPolicy.USER_FORCED;
@@ -354,7 +354,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         // Persisting sensor readings to database
         long id = new SensorReadingRecord(getBaseContext(), srd, userLabel > 0, userLabel).save();
 
-        showLabelRecordedNotification(id);
+        showLabelRecordedNotification(id, userLabel > 0);
 
         Intent i = new Intent(Constants.ACTION_NEW_SENSOR_READING_RECORD);
         i.putExtra("id", id);
@@ -370,7 +370,10 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
     }
 
-    private void showLabelRecordedNotification(long id) {
+    private void showLabelRecordedNotification(long id, boolean isUserForced) {
+        if(isUserForced){
+            return;
+        }
         Calendar cNow = Calendar.getInstance();
         String notificationsFrequency = mDefaultPrefs.getString("notifications_preference", "");
         Long lastTimeNotificationSent = mDefaultPrefs.getLong("last_time_user_notified_to_label", 0);
