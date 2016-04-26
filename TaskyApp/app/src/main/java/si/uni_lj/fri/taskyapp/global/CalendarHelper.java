@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import si.uni_lj.fri.taskyapp.data.CalendarData;
+
 /**
  * Created by urgas9 on 24.3.16, OpenHours.com
  */
@@ -66,7 +68,7 @@ public class CalendarHelper {
         return nameOfEvent;
     }
 
-    public static List<String> getAllEventsNameAtTime(Context context, long timestamp) {
+    public static List<CalendarData> getAllEventsNameAtTime(Context context, long timestamp) {
         if (!PermissionsHelper.hasPermission(context, Manifest.permission.READ_CALENDAR)) {
             Log.e(TAG, "Cannot read calendar events as permission is not granted!");
             return null;
@@ -77,36 +79,34 @@ public class CalendarHelper {
         ContentUris.appendId(eventsUriBuilder, timestamp);
         Uri eventsUri = eventsUriBuilder.build();
         Cursor cursor = null;
-        cursor = context.getContentResolver().query(eventsUri, new String[]{"calendar_id", "title", "description",
+        cursor = context.getContentResolver().query(eventsUri, new String[]{"calendar_id", "title", "description", "allDay",
                 "dtstart", "dtend", "eventLocation", "duration"}, null, null, CalendarContract.Instances.ALL_DAY + " ASC, " + CalendarContract.Instances.DTSTART + " ASC");
         if (cursor == null) {
             Log.e(TAG, "Cursor is null!");
             return null;
         }
         cursor.moveToFirst();
-        // fetching calendars name
-        String CNames[] = new String[cursor.getCount()];
 
         // fetching calendars id
-        ArrayList<String> eventNameArray = new ArrayList<>();
-        for (int i = 0; i < CNames.length; i++) {
+        ArrayList<CalendarData> calendarDataArray = new ArrayList<>();
+        for (int i = 0; i < cursor.getCount(); i++) {
 
-            Log.d(TAG, "Cursor row: " + cursor.getString(0) + ";-; " + cursor.getString(1) + ";-; "
-                    + cursor.getString(2) + ";-; " + cursor.getString(3) + ";-; " + cursor.getString(4) + ";-; " + cursor.getString(6));
-            eventNameArray.add(cursor.getString(1));
+            /*Log.d(TAG, "Cursor row: " + cursor.getString(0) + ";-; " + cursor.getString(1) + ";-; "
+                    + cursor.getString(2) + ";-; " + cursor.getString(3) + ";-; " + cursor.getString(4) + ";-; " + cursor.getString(6) + ";-; " + cursor.getString(7));*/
+            calendarDataArray.add(new CalendarData(cursor.getString(1), cursor.getString(7), cursor.getString(3)));
             cursor.moveToNext();
 
         }
         cursor.close();
-        return eventNameArray;
+        return calendarDataArray;
     }
 
     public static String getEventNameAtTime(Context context, long timestamp) {
-        List<String> eventsNames = getAllEventsNameAtTime(context, timestamp);
+        List<CalendarData> eventsNames = getAllEventsNameAtTime(context, timestamp);
         if(eventsNames == null || eventsNames.isEmpty()){
             return null;
         }
-        return eventsNames.get(0);
+        return eventsNames.get(0).getName();
     }
 
     public static String getDate(long milliSeconds) {

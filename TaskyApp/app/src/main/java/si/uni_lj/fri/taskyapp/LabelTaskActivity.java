@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -60,6 +61,7 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
     String[] arrayOfComplexities;
     private SensorReadingData mSensorReadingData;
     private long mDbRecordId;
+    private boolean mFromNotification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,8 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
         //mSensorReadingData = new Gson().fromJson(getIntent().getStringExtra("task"), SensorReadingData.class);
 
         mDbRecordId = getIntent().getLongExtra("db_record_id", 0);
+        mFromNotification = getIntent().getBooleanExtra("from_notification", false);
+
         SensorReadingRecord srr = SensorReadingRecord.findById(SensorReadingRecord.class, mDbRecordId);
         mSensorReadingData = new Gson().fromJson(srr.getSensorJsonObject(), SensorReadingData.class);
 
@@ -86,8 +90,15 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
             mDetectedActivityTv.setText(R.string.no_data);
         }
 
-        SimpleDateFormat formatFullDate = new SimpleDateFormat(Constants.DATE_FORMAT_TO_SHOW_FULL);
-        mTimeSensedTv.setText(formatFullDate.format(new Date(srr.getTimeStartedSensing())));
+        String timeSpan = DateUtils.getRelativeTimeSpanString(srr.getTimeStartedSensing(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
+        int minutesDifference = (int)(System.currentTimeMillis() - srr.getTimeStartedSensing()) / (1000 * 60);
+        if(minutesDifference < 60){
+            mTimeSensedTv.setText(timeSpan);
+        }
+        else {
+            SimpleDateFormat formatFullDate = new SimpleDateFormat(Constants.DATE_FORMAT_TO_SHOW_FULL);
+            mTimeSensedTv.setText(formatFullDate.format(new Date(srr.getTimeStartedSensing())));
+        }
         EnvironmentData environmentData = mSensorReadingData.getEnvironmentData();
         mDetectedAmbientLightTv.setText("" + environmentData.getAmbientLightData());
         mDetectedAmbientSoundLevel.setText("" + mSensorReadingData.getMicrophoneData().getMeanAmplitude());

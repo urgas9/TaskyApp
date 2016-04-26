@@ -229,9 +229,9 @@ public class AppHelper {
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_notifications_white_24dp)
-                .setContentTitle(context.getString(R.string.app_name));
-        mBuilder.setContentText(message);
-        mBuilder.setContentIntent(pendingIntent);
+                .setContentTitle(context.getString(R.string.app_name))
+                .setContentText(message)
+                .setContentIntent(pendingIntent);
         if (mPrefs.getBoolean("notifications_new_message_vibrate", false)) {
             mBuilder.setVibrate(new long[]{100, 500, 100});
         }

@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "Starting sensing.");
             broadcastIntentToStartSensing();
         }
+        AppHelper.startNotificationsAlarm(getBaseContext());
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

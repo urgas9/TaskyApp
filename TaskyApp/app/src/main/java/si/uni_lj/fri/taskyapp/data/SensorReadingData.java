@@ -57,7 +57,7 @@ public class SensorReadingData {
     private List<ScreenStatusData> screenStatusData;
 
     @SerializedName("active_calendar_events")
-    private List<String> calendarEvents;
+    private List<CalendarData> calendarEvents;
 
     @SerializedName("volume_settings")
     private VolumeSettingsData volumeSettingsData;
@@ -192,11 +192,11 @@ public class SensorReadingData {
         this.volumeSettingsData = volumeSettingsData;
     }
 
-    public List<String> getCalendarEvents() {
+    public List<CalendarData> getCalendarEvents() {
         return calendarEvents;
     }
 
-    public void setCalendarEvents(List<String> calendarEvents) {
+    public void setCalendarEvents(List<CalendarData> calendarEvents) {
         this.calendarEvents = calendarEvents;
     }
 
