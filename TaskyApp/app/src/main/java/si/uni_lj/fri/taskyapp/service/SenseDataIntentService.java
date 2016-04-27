@@ -408,18 +408,18 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
                 int differenceInMins = (int) (cNow.getTimeInMillis() - cLast.getTimeInMillis()) / (1000 * 60);
                 // Building percentage to decide if show notification or not
-                // There is a greater possibility to show one, if one hasn't been shown for a long time, or we are still alowed to show many notifications
+                // There is a greater possibility to show one, if one hasn't been shown for a long time, or we are still allowed to show many notifications
                 double differencePercentage = Math.min(differenceInMins / 180.0, 1.0);
                 double minPercentage = ((NUM_OF_UP_TO_NOTIFICATIONS_TO_SHOW - numNotificationsShown) / 6.0 * 0.3)
                         + differencePercentage * 0.6 + 0.1;
-                double percentageToShowANotification = Math.max(1 - (officeHoursObject.getPercentageOfWorkDone() + 0.3), minPercentage);
+                double percentageToShowANotification = Math.max(1 - (officeHoursObject.getPercentageOfWorkDone() + 0.15), minPercentage);
 
                 double random = Math.random();
                 Log.e(TAG, "NOTIFICATION: difference = " + differenceInMins + " random: " + random + " percentage: " + percentageToShowANotification + " notificationsShown: " + numNotificationsShown);
 
 
                 if (percentageToShowANotification > random &&
-                        numNotificationsShown < NUM_OF_UP_TO_NOTIFICATIONS_TO_SHOW) {
+                        numNotificationsShown < (NUM_OF_UP_TO_NOTIFICATIONS_TO_SHOW-1)) {
 
                     showNotification = true;
 
