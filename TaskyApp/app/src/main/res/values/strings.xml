@@ -44,7 +44,7 @@
 
     <string-array name="notification_contents_array">
         <item>How busy are you right now?</item>
-        <item>Try to tell us about your task.</item>
+        <item>Tell us about task difficulty.</item>
         <item>Remember, you can win a 50€ voucher!</item>
         <item>We have sensed your task. Please label it.</item>
     </string-array>
