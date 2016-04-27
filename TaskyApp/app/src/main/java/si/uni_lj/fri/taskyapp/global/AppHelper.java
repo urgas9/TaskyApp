@@ -291,7 +291,9 @@ public class AppHelper {
 
         OfficeHoursObject officeHoursObject = new OfficeHoursObject(context);
         int minutesOfTheDay = officeHoursObject.getMinutesTimeOfTheDayToShowReminder();
-        calendar.set(Calendar.HOUR_OF_DAY, minutesOfTheDay / 60); // For 1 PM or 2 PM
+
+        Log.e("NOTIFICATIONS_ALARM", "Setting it to: " + minutesOfTheDay / 60 + "h " + minutesOfTheDay % 60 + "mins");
+        calendar.set(Calendar.HOUR_OF_DAY, minutesOfTheDay / 60);
         calendar.set(Calendar.MINUTE, minutesOfTheDay % 60);
         calendar.set(Calendar.SECOND, 0);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0,
