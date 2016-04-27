@@ -60,8 +60,9 @@
             android:defaultValue="0"
             android:entries="@array/notifications_labels_array"
             android:entryValues="@array/notifications_value_array"
-            android:key="notifications_preference"
-            android:title="How often do you want to be notified?"/>
+            android:key="notifications_reminder_preference"
+            android:title="Label task as they happen"
+            android:summary="How many reminders would you like to get during your office hours?"/>
 
         <!-- Allows the user to choose a ringtone in the 'notification' category. -->
         <!-- NOTE: This preference will be enabled only when the checkbox above is checked. -->

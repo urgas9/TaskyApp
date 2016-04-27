@@ -43,11 +43,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 import si.uni_lj.fri.taskyapp.LabelTaskActivity;
+import si.uni_lj.fri.taskyapp.R;
 import si.uni_lj.fri.taskyapp.data.ActivityData;
 import si.uni_lj.fri.taskyapp.data.AmbientLightData;
 import si.uni_lj.fri.taskyapp.data.EnvironmentData;
@@ -109,7 +111,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         SensingPolicy sensingPolicy = SensingPolicy.NONE;
 
         int userLabel = intent.getIntExtra("user_label", -2);
-        showLabelRecordedNotification(-1, userLabel > 0);
+        //showPostSensingReminderNotification(-1, userLabel > 0);
         if (userLabel > 0) {
             Log.d(TAG, "+++ Force sensing set to true!");
             sensingPolicy = SensingPolicy.USER_FORCED;
@@ -354,7 +356,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         // Persisting sensor readings to database
         long id = new SensorReadingRecord(getBaseContext(), srd, userLabel > 0, userLabel).save();
 
-        showLabelRecordedNotification(id, userLabel > 0);
+        showPostSensingReminderNotification(id, userLabel > 0);
 
         Intent i = new Intent(Constants.ACTION_NEW_SENSOR_READING_RECORD);
         i.putExtra("id", id);
@@ -370,77 +372,74 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
     }
 
-    private void showLabelRecordedNotification(long id, boolean isUserForced) {
-        if(isUserForced){
+    private void showPostSensingReminderNotification(long recordId, boolean isUserForced) {
+        if (isUserForced) {
+            Log.d(TAG, "showPostSensingReminderNotification but user forced sensing.. returning.");
             return;
         }
-        Calendar cNow = Calendar.getInstance();
-        String notificationsFrequency = mDefaultPrefs.getString("notifications_preference", "");
-        Long lastTimeNotificationSent = mDefaultPrefs.getLong("last_time_user_notified_to_label", 0);
-        long nowMillis = cNow.getTimeInMillis();
-        int hoursSinceLastNotification = (int) ((nowMillis - lastTimeNotificationSent) / (AlarmManager.INTERVAL_HOUR));
+        String prefsString = mDefaultPrefs.getString("notifications_reminder_preference", ""+Constants.NUM_OF_RANDOMLY_LABEL_NOTIFICATIONS_TO_SEND);
+        Log.d(TAG, "After sense: " + prefsString);
+        final int NUM_OF_UP_TO_NOTIFICATIONS_TO_SHOW = Integer.parseInt(prefsString);
 
-        Log.e(TAG, "NOTIFICATION: showLabelRecordedNotification, id = " + id + " notificationFrequency: " + notificationsFrequency);
+        Log.e(TAG, "NOTIFICATION: showPostSensingReminderNotification, id = " + recordId + " upToNotificationsToShow: " + NUM_OF_UP_TO_NOTIFICATIONS_TO_SHOW);
         OfficeHoursObject officeHoursObject = new OfficeHoursObject(getBaseContext());
-        if(id > 0 && officeHoursObject.areNowOfficeHours() && !notificationsFrequency.equals("2")){
-            // Code to show n random notifications to label current task
-            double percentageToShowANotification = Math.max(1 - (officeHoursObject.getPercentageOfWorkDone() + 0.3), 0.1);
+        if (recordId > 0 && officeHoursObject.areNowOfficeHours()) {
+            boolean showNotification = false;
+            Calendar cNow = Calendar.getInstance();
+            Long lastTimeNotificationSent = mDefaultPrefs.getLong("last_time_user_notified_to_label", 0);
+            long nowMillis = cNow.getTimeInMillis();
+
+            int numNotificationsShown = mDefaultPrefs.getInt(Constants.PREFS_NUM_OF_LABEL_TASK_NOTIFICATION_REMINDERS_SENT, 0);
             int dayToday = cNow.get(Calendar.DAY_OF_YEAR);
 
             Calendar cLast = Calendar.getInstance();
             cLast.setTimeInMillis(mDefaultPrefs.getLong(Constants.PREFS_PRIZE_NOTIFICATION_REMINDER_LAST_SENT, 0));
 
-            int differenceInMins = (int)(cNow.getTimeInMillis() - cLast.getTimeInMillis()) / (1000 * 60);
-
-            int numNotificationsShown = mDefaultPrefs.getInt(Constants.PREFS_NUM_OF_LABEL_TASK_NOTIFICATION_REMINDERS_SENT, 0);
-            if(dayToday != cLast.get(Calendar.DAY_OF_YEAR)){
+            if (dayToday != cLast.get(Calendar.DAY_OF_YEAR)) {
                 numNotificationsShown = 0;
                 mDefaultPrefs.edit().putInt(Constants.PREFS_NUM_OF_LABEL_TASK_NOTIFICATION_REMINDERS_SENT, 0).apply();
             }
-            double random = Math.random();
-            Log.e(TAG, "NOTIFICATION: difference = " + differenceInMins + " random: " + random + " percentage: " + percentageToShowANotification + " notificationsShown: " + numNotificationsShown);
-            if(percentageToShowANotification > random &&
-                    numNotificationsShown < Constants.NUM_OF_RANDOMLY_LABEL_NOTIFICATIONS_TO_SEND){
+            if (NUM_OF_UP_TO_NOTIFICATIONS_TO_SHOW < 0) {
+                showNotification = true;
+            } else {
 
+                int hoursSinceLastNotification = (int) ((nowMillis - lastTimeNotificationSent) / (AlarmManager.INTERVAL_HOUR));
+                // Code to show n random notifications to label current task
+
+                int differenceInMins = (int) (cNow.getTimeInMillis() - cLast.getTimeInMillis()) / (1000 * 60);
+                // Building percentage to decide if show notification or not
+                // There is a greater possibility to show one, if one hasn't been shown for a long time, or we are still alowed to show many notifications
+                double differencePercentage = Math.min(differenceInMins / 180.0, 1.0);
+                double minPercentage = ((NUM_OF_UP_TO_NOTIFICATIONS_TO_SHOW - numNotificationsShown) / 6.0 * 0.3)
+                        + differencePercentage * 0.6 + 0.1;
+                double percentageToShowANotification = Math.max(1 - (officeHoursObject.getPercentageOfWorkDone() + 0.3), minPercentage);
+
+                double random = Math.random();
+                Log.e(TAG, "NOTIFICATION: difference = " + differenceInMins + " random: " + random + " percentage: " + percentageToShowANotification + " notificationsShown: " + numNotificationsShown);
+
+
+                if (percentageToShowANotification > random &&
+                        numNotificationsShown < NUM_OF_UP_TO_NOTIFICATIONS_TO_SHOW) {
+
+                    showNotification = true;
+
+                }
+            }
+            if (showNotification) {
                 Intent notifIntent = new Intent(getBaseContext(), LabelTaskActivity.class);
-                notifIntent.putExtra("db_record_id", id);
+                notifIntent.putExtra("db_record_id", recordId);
                 notifIntent.putExtra("from_notification", true);
+
+                String[] notificationContentsArray = getResources().getStringArray(R.array.notification_contents_array);
+                int idx = new Random().nextInt(notificationContentsArray.length);
                 //notifIntent.putExtra("notification_prize_reminder", Constants.SHOW_NOTIFICATION_PRIZE_REMINDER_ID);
-                PendingIntent pi = PendingIntent.getActivity(getBaseContext(), Constants.SHOW_NOTIFICATION_REQUEST_CODE, notifIntent, 0);
-                AppHelper.showNotification(getBaseContext(), "How busy are you right now?" , pi, Constants.SHOW_NOTIFICATION_PRIZE_REMINDER_ID);
+                PendingIntent pi = PendingIntent.getActivity(getBaseContext(), Constants.SHOW_NOTIFICATION_REQUEST_CODE, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                AppHelper.showNotification(getBaseContext(), notificationContentsArray[idx], pi, Constants.SHOW_NOTIFICATION_LABEL_LAST_ID);
                 mDefaultPrefs.edit().putLong(Constants.PREFS_PRIZE_NOTIFICATION_REMINDER_LAST_SENT, nowMillis).apply();
                 mDefaultPrefs.edit().putInt(Constants.PREFS_NUM_OF_LABEL_TASK_NOTIFICATION_REMINDERS_SENT, numNotificationsShown + 1).apply();
             }
-        }
-        else {
-            switch (notificationsFrequency) {
-                case "1":
-                    if ((cNow.get(Calendar.HOUR_OF_DAY) >= Constants.HOUR_SEND_NOTIFICATION_LATE ||
-                            cNow.get(Calendar.HOUR_OF_DAY) >= Constants.HOUR_SEND_NOTIFICATION_EARLY) &&
-                            hoursSinceLastNotification >= 7) {
-                        mDefaultPrefs.edit().putLong("last_time_user_notified_to_label", nowMillis).apply();
-                        if (!AppHelper.getSensorRecordsOfLastTwoDays().isEmpty()) {
-                            AppHelper.showLabelDailyTasksNotification(getBaseContext());
-                        }
-                    }
-                    break;
-                case "2":
-                    if (id > 0) {
-                        AppHelper.showLabelDailyTasksNotification(getBaseContext(), id);
-                    }
-                    break;
-                default:
-                    if (cNow.get(Calendar.HOUR_OF_DAY) >= Constants.HOUR_SEND_NOTIFICATION_LATE &&
-                            hoursSinceLastNotification >= 7) {
-                        mDefaultPrefs.edit().putLong("last_time_user_notified_to_label", nowMillis).apply();
-                        if (!AppHelper.getSensorRecordsOfLastTwoDays().isEmpty()) {
-                            AppHelper.showLabelDailyTasksNotification(getBaseContext());
-                        }
-                    }
-                    break;
-            }
-        }
 
+        }
     }
 
     private ActivityData extractMostProbableActivity() {

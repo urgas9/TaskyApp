@@ -41,6 +41,13 @@
         <item>I need to concentrate on the task.</item>
         <item>Very busy, please don\'t interrupt!</item>
     </string-array>
+
+    <string-array name="notification_contents_array">
+        <item>How busy are you right now?</item>
+        <item>Try to tell us about your task.</item>
+        <item>Remember, you can win a 50€ voucher!</item>
+        <item>We have sensed your task. Please label it.</item>
+    </string-array>
     <string name="title_activity_sensing">SensingActivity</string>
     <string name="detected_ambient_sound">Detected ambient sound:</string>
     <string name="time_sensed">Time sensed:</string>
@@ -69,15 +76,15 @@
     <string name="pref_title_office_hours">My usual office hours</string>
 
     <string-array name="notifications_labels_array">
-        <item>Only once (at around 20:00)</item>
-        <item>Twice per day (at around 13:00 and 20:00)</item>
-        <item>For every sensed task</item>
+        <item>Up to 3 notifications</item>
+        <item>Up to 5 notifications</item>
+        <item>Remind me after every sensed task</item>
     </string-array>
 
     <string-array name="notifications_value_array">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
+        <item>3</item>
+        <item>5</item>
+        <item>-1</item>
     </string-array>
 
     <string-array name="participate_labels_array">

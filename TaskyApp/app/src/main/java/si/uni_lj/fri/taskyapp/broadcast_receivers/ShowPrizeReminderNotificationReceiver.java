@@ -39,7 +39,7 @@ public class ShowPrizeReminderNotificationReceiver extends BroadcastReceiver {
         if(timeDifferenceSinceLastNotification > MIN_TIME_DIFFERENCE_TWO_NOTIFS){
             Intent notifIntent = new Intent(context, MainActivity.class);
             notifIntent.putExtra("notification_prize_reminder", Constants.SHOW_NOTIFICATION_PRIZE_REMINDER_ID);
-            PendingIntent pi = PendingIntent.getActivity(context, Constants.SHOW_NOTIFICATION_REQUEST_CODE, notifIntent, 0);
+            PendingIntent pi = PendingIntent.getActivity(context, Constants.SHOW_NOTIFICATION_REQUEST_CODE, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             AppHelper.showNotification(context, "[RECEIVER] " + context.getString(R.string.notif_prize_reminder_message), pi, Constants.SHOW_NOTIFICATION_PRIZE_REMINDER_ID);
             mPrefs.edit().putLong(Constants.PREFS_PRIZE_NOTIFICATION_REMINDER_LAST_SENT, c.getTimeInMillis()).apply();
         }

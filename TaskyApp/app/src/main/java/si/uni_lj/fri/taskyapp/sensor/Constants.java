@@ -8,7 +8,7 @@ public class Constants {
     public static final long MIN_INTERVAL_MILLIS = 1000 * 60 * 10; // The minimum time required between two sensing
     public static final long MAX_INTERVAL_WITHOUT_SENSING_DATA_IN_MILLIS = 1000 * 60 * 30;
     public static final long SENSING_WINDOW_LENGTH_MILLIS = 10 * 1000;
-    public static int NUM_OF_RANDOMLY_LABEL_NOTIFICATIONS_TO_SEND = 4;
+    public static int NUM_OF_RANDOMLY_LABEL_NOTIFICATIONS_TO_SEND = 3;
 
     public static final String PREFS_LAST_LOC_LAT = "PREFS_LAST_LOC_LAT";
     public static final String PREFS_LAST_LOC_LNG = "PREFS_LAST_LOC_LNG";
@@ -40,6 +40,7 @@ public class Constants {
     public static final int SHOW_NOTIFICATION_REMINDER_ID = 901;
     public static final int SHOW_NOTIFICATION_JUST_SENSED_ID = 902;
     public static final int SHOW_NOTIFICATION_PRIZE_REMINDER_ID = 903;
+    public static final int SHOW_NOTIFICATION_LABEL_LAST_ID = 904;
     public static final int SHOW_NOTIFICATION_REQUEST_CODE = 900;
 
     public static final int HOUR_SEND_NOTIFICATION_EARLY = 13;
