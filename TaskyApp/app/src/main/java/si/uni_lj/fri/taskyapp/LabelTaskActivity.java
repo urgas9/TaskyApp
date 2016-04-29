@@ -91,11 +91,10 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
         }
 
         String timeSpan = DateUtils.getRelativeTimeSpanString(srr.getTimeStartedSensing(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS).toString();
-        int minutesDifference = (int)(System.currentTimeMillis() - srr.getTimeStartedSensing()) / (1000 * 60);
-        if(minutesDifference < 60){
+        int minutesDifference = (int) (System.currentTimeMillis() - srr.getTimeStartedSensing()) / (1000 * 60);
+        if (minutesDifference < 60) {
             mTimeSensedTv.setText(timeSpan);
-        }
-        else {
+        } else {
             SimpleDateFormat formatFullDate = new SimpleDateFormat(Constants.DATE_FORMAT_TO_SHOW_FULL);
             mTimeSensedTv.setText(formatFullDate.format(new Date(srr.getTimeStartedSensing())));
         }

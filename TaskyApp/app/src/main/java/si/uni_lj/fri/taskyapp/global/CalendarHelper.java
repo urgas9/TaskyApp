@@ -103,7 +103,7 @@ public class CalendarHelper {
 
     public static String getEventNameAtTime(Context context, long timestamp) {
         List<CalendarData> eventsNames = getAllEventsNameAtTime(context, timestamp);
-        if(eventsNames == null || eventsNames.isEmpty()){
+        if (eventsNames == null || eventsNames.isEmpty()) {
             return null;
         }
         return eventsNames.get(0).getName();

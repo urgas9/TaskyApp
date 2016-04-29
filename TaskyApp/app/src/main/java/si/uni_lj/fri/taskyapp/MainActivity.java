@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if(getIntent() != null && getIntent().getExtras() != null) {
+        if (getIntent() != null && getIntent().getExtras() != null) {
             int notificationPrizeReminderRequestCode = getIntent().getExtras().getInt("notification_prize_reminder");
             if (notificationPrizeReminderRequestCode == Constants.SHOW_NOTIFICATION_PRIZE_REMINDER_ID) {
                 Snackbar snackbar = Snackbar.make(this.findViewById(R.id.main_coordinator_layout), R.string.explain_after_prize_notification_reward, Snackbar.LENGTH_LONG);

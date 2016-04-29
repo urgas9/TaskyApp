@@ -12,14 +12,14 @@ public class VolumeSettingsData {
     private int ringtoneVolume;
     private int musicVolume;
 
-    public VolumeSettingsData(Context ctx){
+    public VolumeSettingsData(Context ctx) {
         super();
         AudioManager audio = (AudioManager) ctx.getSystemService(Context.AUDIO_SERVICE);
 
-        this.ringtoneVolume = (int)(audio.getStreamVolume(AudioManager.STREAM_RING) * 100 / (double)audio.getStreamMaxVolume(AudioManager.STREAM_RING));
-        this.musicVolume = (int)(audio.getStreamVolume(AudioManager.STREAM_MUSIC) * 100 / (double)audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+        this.ringtoneVolume = (int) (audio.getStreamVolume(AudioManager.STREAM_RING) * 100 / (double) audio.getStreamMaxVolume(AudioManager.STREAM_RING));
+        this.musicVolume = (int) (audio.getStreamVolume(AudioManager.STREAM_MUSIC) * 100 / (double) audio.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
 
-        Log.d("VolumeSettingsData", "Current volume percentages, [Ring]: " + ringtoneVolume + ", [Music]:"+musicVolume);
+        Log.d("VolumeSettingsData", "Current volume percentages, [Ring]: " + ringtoneVolume + ", [Music]:" + musicVolume);
 
     }
 

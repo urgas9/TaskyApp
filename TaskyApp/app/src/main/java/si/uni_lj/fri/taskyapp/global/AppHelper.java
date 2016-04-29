@@ -32,14 +32,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 import si.uni_lj.fri.taskyapp.BuildConfig;
-import si.uni_lj.fri.taskyapp.ListDataActivity;
 import si.uni_lj.fri.taskyapp.R;
 import si.uni_lj.fri.taskyapp.broadcast_receivers.ShowPrizeReminderNotificationReceiver;
 import si.uni_lj.fri.taskyapp.data.OfficeHoursObject;
@@ -224,7 +221,7 @@ public class AppHelper {
         return resultsList;
     }
 
-    public static void showNotification(Context context, String message, PendingIntent pendingIntent, int notifId){
+    public static void showNotification(Context context, String message, PendingIntent pendingIntent, int notifId) {
 
         SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
@@ -241,52 +238,35 @@ public class AppHelper {
             mBuilder.setSound(Uri.parse(notifSound));
         }
         mBuilder.setAutoCancel(true);
+        boolean notInOfficeToday = true;
+        if (notInOfficeToday) {
+            mBuilder.addAction(R.drawable.ic_not_interested_black_24dp,
+                    context.getString(R.string.not_in_office_today_notification),
+                    getNotInOfficePendingIntent(context, notifId));
+        }
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(notifId, mBuilder.build());
 
     }
-    public static void showLabelDailyTasksNotification(Context context) {
-        showLabelDailyTasksNotification(context, null);
+
+    private static PendingIntent getNotInOfficePendingIntent(Context context, int notifId) {
+        // Prepare intent which is triggered if the
+        // notification is selected
+        Intent intent = new Intent();
+        intent.putExtra("action", Constants.ACTION_NOTIF_BTN_NOT_IN_OFFICE);
+        intent.putExtra("notif_id", notifId);
+        intent.setAction(Constants.ACTION_NOTIFICATION_CLICK_ACTION);
+
+        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
-    public static void showLabelDailyTasksNotification(Context context, Long dataBaseId) {
-        SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        Intent intent = new Intent(context, ListDataActivity.class);
-        PendingIntent pi = PendingIntent.getActivity(context, Constants.SHOW_NOTIFICATION_REQUEST_CODE, intent, 0);
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.ic_notifications_white_24dp)
-                .setContentTitle(context.getString(R.string.app_name));
-        if (dataBaseId == null) {
-            mBuilder.setContentText(context.getString(R.string.mind_labeling_tasks_notification));
-        } else {
-            SimpleDateFormat format = new SimpleDateFormat(Constants.DATE_FORMAT_TO_SHOW_FULL);
-            mBuilder.setContentText(String.format("Last sensing at: %s", format.format(new Date())));
-        }
-        mBuilder.setContentIntent(pi);
-        if (mPrefs.getBoolean("notifications_new_message_vibrate", false)) {
-            mBuilder.setVibrate(new long[]{100, 500, 100});
-        }
-        mBuilder.setLights(Color.CYAN, 2000, 2000);
-        String notifSound = mPrefs.getString("notifications_new_message_ringtone", null);
-        if (notifSound != null) {
-            mBuilder.setSound(Uri.parse(notifSound));
-        }
-        mBuilder.setAutoCancel(true);
-        NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        int id = Constants.SHOW_NOTIFICATION_REMINDER_ID;
-        if (dataBaseId != null) {
-            id = Constants.SHOW_NOTIFICATION_JUST_SENSED_ID;
-        }
-        mNotificationManager.notify(id, mBuilder.build());
-    }
-
-    public static List<SensorReadingRecord> getSensorRecordsOfLastTwoDays(){
+    public static List<SensorReadingRecord> getSensorRecordsOfLastTwoDays() {
         Calendar calendarFrom = AppHelper.getCalendarAtMidnight(-1);
         return SensorReadingRecord.find(SensorReadingRecord.class,
                 "time_started_sensing > ?", new String[]{"" + calendarFrom.getTimeInMillis()}, null, "time_started_sensing ASC", null);
     }
 
-    public static void startNotificationsAlarm(Context context){
+    public static void startNotificationsAlarm(Context context) {
         Calendar calendar = Calendar.getInstance();
 
         OfficeHoursObject officeHoursObject = new OfficeHoursObject(context);
@@ -297,7 +277,7 @@ public class AppHelper {
         calendar.set(Calendar.MINUTE, minutesOfTheDay % 60);
         calendar.set(Calendar.SECOND, 0);
         PendingIntent pi = PendingIntent.getBroadcast(context, 0,
-                new Intent(context, ShowPrizeReminderNotificationReceiver.class),PendingIntent.FLAG_UPDATE_CURRENT);
+                new Intent(context, ShowPrizeReminderNotificationReceiver.class), PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY, pi);

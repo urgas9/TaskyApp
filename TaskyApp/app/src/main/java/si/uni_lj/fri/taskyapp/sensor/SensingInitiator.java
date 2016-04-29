@@ -98,7 +98,7 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
     private GoogleApiClient buildGoogleApiClient() {
         mGoogleApiClient = new GoogleApiClient.Builder(mContext)
                 .addApi(ActivityRecognition.API)
-                        //.addApi(LocationServices.API)
+                //.addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();

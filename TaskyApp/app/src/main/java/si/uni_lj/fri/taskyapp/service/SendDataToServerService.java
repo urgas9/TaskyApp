@@ -90,8 +90,8 @@ public class SendDataToServerService extends IntentService {
         Log.d(TAG, "Sensor readings to send: " + sensorReadingDataList.size());
         // Post data to server using exponential backoff
         ConnectionResponse<PostDataResponse> result;
-        final int MAX_TRIES = 3;
-        int count = 0, backoffMillis = 1000;
+        final int MAX_TRIES = 2;
+        int count = 0, backoffMillis = 1500;
         do {
             Log.d(TAG, "Trying to post data to server.");
 

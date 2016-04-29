@@ -174,5 +174,6 @@
     <string name="mind_labeling_tasks_notification">Would you mind labelling your daily tasks?</string>
     <string name="explain_after_prize_notification_reward">Are you in office? Click start sensing to monitor you task. You have a change to win 50€.</string>
     <string name="info">INFO</string>
+    <string name="not_in_office_today_notification">I am not in the office today</string>
 
 </resources>

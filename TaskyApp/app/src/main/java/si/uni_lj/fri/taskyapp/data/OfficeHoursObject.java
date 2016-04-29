@@ -26,6 +26,7 @@ public class OfficeHoursObject {
     private int minutesStart;
     private int hoursEnd;
     private int minutesEnd;
+    private long lastTimeReportedNotInOffice;
 
     public OfficeHoursObject(Context context) {
         super();
@@ -38,6 +39,7 @@ public class OfficeHoursObject {
         }
 
         weekendsIncluded = areInOfficeForWeekends(context);
+        lastTimeReportedNotInOffice = lastTimeReportedNotInOffice(context);
     }
 
     public OfficeHoursObject(String timeRangeString) {
@@ -94,6 +96,12 @@ public class OfficeHoursObject {
                 .apply();
     }
 
+    public static void setNotInOfficeToday(Context context) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit()
+                .putLong(Constants.PREFS_NOT_IN_OFFICE_TODAY_TIMESTAMP, System.currentTimeMillis())
+                .apply();
+    }
+
     public boolean isTimeDifferenceBigEnough() {
         return (hoursEnd * 60 + minutesEnd - (hoursStart * 60 + minutesStart)) > TIMERANGE_DIFFERENCE_ATLEAST_MINUTES;
     }
@@ -104,6 +112,13 @@ public class OfficeHoursObject {
         int timeMinsStart = hoursStart * 60 + minutesStart;
         int timeMinsEnd = hoursEnd * 60 + minutesEnd;
 
+        // Check if user has reported that he is not in office today
+        Calendar notOfficeCal = Calendar.getInstance();
+        notOfficeCal.setTimeInMillis(lastTimeReportedNotInOffice);
+        if (c.get(Calendar.DAY_OF_YEAR) == notOfficeCal.get(Calendar.DAY_OF_YEAR)
+                && c.get(Calendar.YEAR) == notOfficeCal.get(Calendar.YEAR)) {
+            return false;
+        }
         int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
         boolean isWeekendToday = dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY;
         return (!isWeekendToday || weekendsIncluded) && timeMinsNow >= timeMinsStart && timeMinsNow <= timeMinsEnd;
@@ -126,22 +141,23 @@ public class OfficeHoursObject {
         }
     }
 
-    public double getPercentageOfWorkDone(){
+    public double getPercentageOfWorkDone() {
         Calendar c = Calendar.getInstance();
         int absMinutesStart = hoursStart * 60 + minutesStart;
         int minutesDifference = hoursEnd * 60 + minutesEnd - absMinutesStart;
         int minutesNow = c.get(Calendar.HOUR_OF_DAY) * 60 + c.get(Calendar.MINUTE);
-        return (minutesNow - absMinutesStart)/((double)minutesDifference);
+        return (minutesNow - absMinutesStart) / ((double) minutesDifference);
     }
 
-    public int getMinutesTimeOfTheDayToShowReminder(){
+    public int getMinutesTimeOfTheDayToShowReminder() {
         int absMinutesStart = hoursStart * 60 + minutesStart;
         int minutesDifference = hoursEnd * 60 + minutesEnd - absMinutesStart;
 
-        return (int)(absMinutesStart + minutesDifference * 0.3);
+        return (int) (absMinutesStart + minutesDifference * 0.3);
     }
-    public void showReminderPrizeNotification(Context context){
-        if(!areNowOfficeHours()){
+
+    public void showReminderPrizeNotification(Context context) {
+        if (!areNowOfficeHours()) {
             return;
         }
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -154,9 +170,9 @@ public class OfficeHoursObject {
         int minutesDifference = hoursEnd * 60 + minutesEnd - absMinutesStart;
 
         int minutesNow = c.get(Calendar.HOUR_OF_DAY) * 60 + c.get(Calendar.MINUTE);
-        double percentOfOfficeHours = (minutesNow - absMinutesStart)/((double)minutesDifference);
+        double percentOfOfficeHours = (minutesNow - absMinutesStart) / ((double) minutesDifference);
         Log.d("OfficeHours", "Daily percentage worked: " + percentOfOfficeHours * 100);
-        if(percentOfOfficeHours > 0.3 && timeDifferenceSinceLastNotification > MIN_TIME_DIFFERENCE_TWO_NOTIFS){
+        if (percentOfOfficeHours > 0.3 && timeDifferenceSinceLastNotification > MIN_TIME_DIFFERENCE_TWO_NOTIFS) {
             Intent intent = new Intent(context, MainActivity.class);
             intent.putExtra("notification_prize_reminder", Constants.SHOW_NOTIFICATION_PRIZE_REMINDER_ID);
             PendingIntent pi = PendingIntent.getActivity(context, Constants.SHOW_NOTIFICATION_REQUEST_CODE, intent, 0);
@@ -169,5 +185,10 @@ public class OfficeHoursObject {
     @Override
     public String toString() {
         return String.format("%02d:%02d - %02d:%02d", hoursStart, minutesStart, hoursEnd, minutesEnd);
+    }
+
+    private long lastTimeReportedNotInOffice(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context)
+                .getLong(Constants.PREFS_NOT_IN_OFFICE_TODAY_TIMESTAMP, 0);
     }
 }

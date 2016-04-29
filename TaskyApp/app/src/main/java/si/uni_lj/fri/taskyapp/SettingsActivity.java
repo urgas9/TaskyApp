@@ -95,9 +95,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 } else if (preference.getKey().equals("profile_office_hours_text")) {
 
 
-                    if (OfficeHoursObject.validateAndSaveOfficeHoursString(mContext, stringValue)) {
+                    if (mContext != null && OfficeHoursObject.validateAndSaveOfficeHoursString(mContext, stringValue)) {
                         stringValue = OfficeHoursObject.prettifyTimeRangeStringValue(stringValue);
-                    } else {
+                    } else if (mContext != null) {
                         return false;
                     }
 

@@ -1,7 +1,7 @@
 package si.uni_lj.fri.taskyapp.service;
 
 import android.Manifest;
-import android.app.AlarmManager;
+import android.annotation.SuppressLint;
 import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -372,12 +372,13 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
     }
 
+    @SuppressLint("CommitPrefEdits")
     private void showPostSensingReminderNotification(long recordId, boolean isUserForced) {
         if (isUserForced) {
             Log.d(TAG, "showPostSensingReminderNotification but user forced sensing.. returning.");
             return;
         }
-        String prefsString = mDefaultPrefs.getString("notifications_reminder_preference", ""+Constants.NUM_OF_RANDOMLY_LABEL_NOTIFICATIONS_TO_SEND);
+        String prefsString = mDefaultPrefs.getString("notifications_reminder_preference", "" + Constants.NUM_OF_RANDOMLY_LABEL_NOTIFICATIONS_TO_SEND);
         Log.d(TAG, "After sense: " + prefsString);
         final int NUM_OF_UP_TO_NOTIFICATIONS_TO_SHOW = Integer.parseInt(prefsString);
 
@@ -397,32 +398,31 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
             if (dayToday != cLast.get(Calendar.DAY_OF_YEAR)) {
                 numNotificationsShown = 0;
-                mDefaultPrefs.edit().putInt(Constants.PREFS_NUM_OF_LABEL_TASK_NOTIFICATION_REMINDERS_SENT, 0).apply();
+                cLast.setTimeInMillis(nowMillis - 10 * 60 * 1000);
+                mDefaultPrefs.edit()
+                        .putLong(Constants.PREFS_PRIZE_NOTIFICATION_REMINDER_LAST_SENT, cLast.getTimeInMillis())
+                        .putInt(Constants.PREFS_NUM_OF_LABEL_TASK_NOTIFICATION_REMINDERS_SENT, 0)
+                        .commit();
             }
             if (NUM_OF_UP_TO_NOTIFICATIONS_TO_SHOW < 0) {
                 showNotification = true;
             } else {
-
-                int hoursSinceLastNotification = (int) ((nowMillis - lastTimeNotificationSent) / (AlarmManager.INTERVAL_HOUR));
                 // Code to show n random notifications to label current task
-
                 int differenceInMins = (int) (cNow.getTimeInMillis() - cLast.getTimeInMillis()) / (1000 * 60);
                 // Building percentage to decide if show notification or not
                 // There is a greater possibility to show one, if one hasn't been shown for a long time, or we are still allowed to show many notifications
                 double differencePercentage = Math.min(differenceInMins / 180.0, 1.0);
-                double minPercentage = ((NUM_OF_UP_TO_NOTIFICATIONS_TO_SHOW - numNotificationsShown) / 6.0 * 0.3)
-                        + differencePercentage * 0.6 + 0.1;
-                double percentageToShowANotification = Math.max(1 - (officeHoursObject.getPercentageOfWorkDone() + 0.15), minPercentage);
+                double minPercentage = ((NUM_OF_UP_TO_NOTIFICATIONS_TO_SHOW - numNotificationsShown) / 6.0 * 0.2)
+                        + differencePercentage * 0.5;
+                double percentageToShowANotification = Math.max(1 - (officeHoursObject.getPercentageOfWorkDone() + 0.25), minPercentage);
 
                 double random = Math.random();
                 Log.e(TAG, "NOTIFICATION: difference = " + differenceInMins + " random: " + random + " percentage: " + percentageToShowANotification + " notificationsShown: " + numNotificationsShown);
 
 
                 if (percentageToShowANotification > random &&
-                        numNotificationsShown < (NUM_OF_UP_TO_NOTIFICATIONS_TO_SHOW-1)) {
-
+                        numNotificationsShown < (NUM_OF_UP_TO_NOTIFICATIONS_TO_SHOW - 1)) {
                     showNotification = true;
-
                 }
             }
             if (showNotification) {
@@ -436,7 +436,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
                 PendingIntent pi = PendingIntent.getActivity(getBaseContext(), Constants.SHOW_NOTIFICATION_REQUEST_CODE, notifIntent, PendingIntent.FLAG_UPDATE_CURRENT);
                 AppHelper.showNotification(getBaseContext(), notificationContentsArray[idx], pi, Constants.SHOW_NOTIFICATION_LABEL_LAST_ID);
                 mDefaultPrefs.edit().putLong(Constants.PREFS_PRIZE_NOTIFICATION_REMINDER_LAST_SENT, nowMillis).apply();
-                mDefaultPrefs.edit().putInt(Constants.PREFS_NUM_OF_LABEL_TASK_NOTIFICATION_REMINDERS_SENT, numNotificationsShown + 1).apply();
+                mDefaultPrefs.edit().putInt(Constants.PREFS_NUM_OF_LABEL_TASK_NOTIFICATION_REMINDERS_SENT, (numNotificationsShown + 1)).commit();
             }
 
         }
@@ -569,7 +569,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         protected void onHandleIntent(Intent intent) {
             Log.d(TAG, "onHandleIntent in MyActivityRecognitionIntentService");
             if (ActivityRecognitionResult.hasResult(intent)) {
-                if(mDetectedActivityList == null){
+                if (mDetectedActivityList == null) {
                     mDetectedActivityList = new ArrayList<>();
                 }
                 Log.d(TAG, "Got activity data: " + ActivityRecognitionResult.extractResult(intent).getMostProbableActivity());

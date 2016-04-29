@@ -9,12 +9,13 @@ public class CalendarData {
     private String isAllDay;
     private String duration;
 
-    public CalendarData(String name, String duration, String isAllDay){
+    public CalendarData(String name, String duration, String isAllDay) {
         super();
         this.name = name;
         this.duration = duration;
         this.isAllDay = isAllDay;
     }
+
     public String getName() {
         return name;
     }
