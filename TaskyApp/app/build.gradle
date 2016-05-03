@@ -25,7 +25,7 @@ android {
         applicationId "si.uni_lj.fri.taskyapp"
         minSdkVersion 18
         targetSdkVersion 23
-        versionCode 9
+        versionCode 10
         versionName "1.0.4"
     }
     signingConfigs {
@@ -44,10 +44,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    //TODO: Remov
+    /*TODO: Remov
     lintOptions{
          checkReleaseBuilds true
-    }
+    }*/
 }
 
 dependencies {

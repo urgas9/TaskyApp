@@ -56,29 +56,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight=".8"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical|start"
-            android:text="@string/detected_ambient_sound"/>
-
-        <TextView
-            android:id="@+id/tv_detected_ambient_sound_level"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical|end"
-            android:textStyle="bold"/>
-
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/calendar_event_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -97,29 +74,6 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight=".8"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical|start"
-            android:text="@string/detected_light_level"/>
-
-        <TextView
-            android:id="@+id/tv_detected_ambient_light_level"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical|end"
-            android:textStyle="bold"/>
 
     </LinearLayout>
 

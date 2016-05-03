@@ -7,9 +7,12 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.orm.SugarRecord;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -76,7 +79,12 @@ public class SendDataToServerService extends IntentService {
         List<SensorReadingRecord> sensorReadings = SensorReadingRecord.find(SensorReadingRecord.class,
                 "time_started_sensing <= ?", new String[]{"" + calendar.getTimeInMillis()}, null, "time_started_sensing ASC", null);
 
-        List<SensorReadingData> sensorReadingDataList = new LinkedList<>();
+        if(sensorReadings.isEmpty()){
+            Log.d(TAG, "There are no sensor readings to post. Refraining from sending empty data to server.");
+            return;
+        }
+        List<SensorReadingData> sensorReadingDataListToSend = new LinkedList<>();
+        ArrayList<SensorReadingData> nonLabeledSensorReadingDataList = new ArrayList<>();
 
         Gson gson = new Gson();
 
@@ -85,9 +93,39 @@ public class SendDataToServerService extends IntentService {
             SensorReadingData srd = gson.fromJson(srr.getSensorJsonObject(), SensorReadingData.class);
             srd.setLabel(srr.getLabel());
             srd.setDbRecordId(srr.getId());
-            sensorReadingDataList.add(srd);
+            srd.setLabeledAfterNotifSeconds(srr.getLabeledAfterNotifSeconds());
+            if (srr.getLabel() > 0) {
+                sensorReadingDataListToSend.add(srd);
+            } else {
+                nonLabeledSensorReadingDataList.add(srd);
+            }
         }
-        Log.d(TAG, "Sensor readings to send: " + sensorReadingDataList.size());
+
+        // Pick at max 8 non labeled tasks to send
+        ArrayList<Integer> randomIndexesList = new ArrayList<>();
+        int maxElements = 8;
+        int nonLabeledSize = nonLabeledSensorReadingDataList.size();
+        for (int i = 0; i < nonLabeledSize; i++) {
+            randomIndexesList.add(i);
+        }
+
+        Collections.shuffle(randomIndexesList);
+        int elementsToChoose = Math.min(maxElements, nonLabeledSize);
+        SensorReadingData srd;
+        Log.d(TAG, "Filtering non labeled data to send to server.");
+        for (int i = 0; i < nonLabeledSize; i++) {
+            int ind = randomIndexesList.get(i);
+            if(i < elementsToChoose) {
+                sensorReadingDataListToSend.add(nonLabeledSensorReadingDataList.get(ind));
+            }
+            else{
+                srd = nonLabeledSensorReadingDataList.get(ind);
+                Log.d(TAG, "DELETE: " + srd.getLabel());
+                SugarRecord.findById(SensorReadingRecord.class, srd.getDbRecordId()).delete();
+            }
+        }
+
+        Log.d(TAG, "Sensor readings to send: " + sensorReadingDataListToSend.size());
         // Post data to server using exponential backoff
         ConnectionResponse<PostDataResponse> result;
         final int MAX_TRIES = 2;
@@ -97,7 +135,7 @@ public class SendDataToServerService extends IntentService {
 
             result = ConnectionHelper.postHttpDataCustomUrl(getBaseContext(),
                     ApiUrls.getApiCall(getBaseContext(), ApiUrls.POST_RESULTS),
-                    new PostDataRequest(getBaseContext(), sensorReadingDataList),
+                    new PostDataRequest(getBaseContext(), sensorReadingDataListToSend),
                     PostDataResponse.class);
 
             if (result.isSuccess()) {

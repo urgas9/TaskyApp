@@ -22,6 +22,7 @@ public class SensorReadingRecord extends SugarRecord {
     private double locationLng;
     private String address; // Pretty printed lat and lng
     private String sensorJsonObject;
+    private Integer labeledAfterNotifSeconds;
 
     public SensorReadingRecord() {
 
@@ -110,6 +111,14 @@ public class SensorReadingRecord extends SugarRecord {
         this.locationLng = locationLng;
     }
 
+    public Integer getLabeledAfterNotifSeconds() {
+        return labeledAfterNotifSeconds;
+    }
+
+    public void setLabeledAfterNotifSeconds(Integer labeledAfterNotifSeconds) {
+        this.labeledAfterNotifSeconds = labeledAfterNotifSeconds;
+    }
+
     @Override
     public String toString() {
         return "SensorReadingRecord{" +
@@ -121,6 +130,7 @@ public class SensorReadingRecord extends SugarRecord {
                 ", locationLng=" + locationLng +
                 ", address='" + address + '\'' +
                 ", sensorJsonObject='" + sensorJsonObject + '\'' +
+                ", labeledAfterNotifSeconds=" + labeledAfterNotifSeconds +
                 '}';
     }
 

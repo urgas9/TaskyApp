@@ -387,7 +387,6 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         if (recordId > 0 && officeHoursObject.areNowOfficeHours()) {
             boolean showNotification = false;
             Calendar cNow = Calendar.getInstance();
-            Long lastTimeNotificationSent = mDefaultPrefs.getLong("last_time_user_notified_to_label", 0);
             long nowMillis = cNow.getTimeInMillis();
 
             int numNotificationsShown = mDefaultPrefs.getInt(Constants.PREFS_NUM_OF_LABEL_TASK_NOTIFICATION_REMINDERS_SENT, 0);
@@ -420,7 +419,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
                 Log.e(TAG, "NOTIFICATION: difference = " + differenceInMins + " random: " + random + " percentage: " + percentageToShowANotification + " notificationsShown: " + numNotificationsShown);
 
 
-                if (percentageToShowANotification > random &&
+                if (differenceInMins > 60 && percentageToShowANotification > random &&
                         numNotificationsShown < (NUM_OF_UP_TO_NOTIFICATIONS_TO_SHOW - 1)) {
                     showNotification = true;
                 }

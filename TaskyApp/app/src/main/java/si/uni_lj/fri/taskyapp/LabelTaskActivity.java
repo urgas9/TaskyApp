@@ -28,7 +28,6 @@ import java.util.Date;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import si.uni_lj.fri.taskyapp.data.EnvironmentData;
 import si.uni_lj.fri.taskyapp.data.SensorReadingData;
 import si.uni_lj.fri.taskyapp.data.db.SensorReadingRecord;
 import si.uni_lj.fri.taskyapp.global.AppHelper;
@@ -38,14 +37,11 @@ import si.uni_lj.fri.taskyapp.sensor.Constants;
 public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private final String TAG = "LabelTaskActivity";
-    @Bind(R.id.tv_detected_ambient_sound_level)
-    TextView mDetectedAmbientSoundLevel;
+
     @Bind(R.id.tv_task_time_sensed)
     TextView mTimeSensedTv;
     @Bind(R.id.tv_detected_activity)
     TextView mDetectedActivityTv;
-    @Bind(R.id.tv_detected_ambient_light_level)
-    TextView mDetectedAmbientLightTv;
     @Bind(R.id.task_complexity_seekbar)
     SeekBar mTaskComplexitySeekBar;
     @Bind(R.id.seekbar_value_text)
@@ -98,9 +94,6 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
             SimpleDateFormat formatFullDate = new SimpleDateFormat(Constants.DATE_FORMAT_TO_SHOW_FULL);
             mTimeSensedTv.setText(formatFullDate.format(new Date(srr.getTimeStartedSensing())));
         }
-        EnvironmentData environmentData = mSensorReadingData.getEnvironmentData();
-        mDetectedAmbientLightTv.setText("" + environmentData.getAmbientLightData());
-        mDetectedAmbientSoundLevel.setText("" + mSensorReadingData.getMicrophoneData().getMeanAmplitude());
 
         mSeekbarValueTv.setText(R.string.no_value_chosen);
         resetSeekBar();
@@ -201,6 +194,11 @@ public class LabelTaskActivity extends AppCompatActivity implements OnMapReadyCa
             srr.setLabel(selectedTaskLabel);
             mSensorReadingData.setLabel(selectedTaskLabel);
             srr.setSensorJsonObject(new Gson().toJson(mSensorReadingData));
+            if(mFromNotification) {
+                int secondsAfterSensing = (int) (System.currentTimeMillis() - srr.getTimeStartedSensing()) / 1000;
+                Log.d(TAG, "Setting seconds after to " + secondsAfterSensing);
+                srr.setLabeledAfterNotifSeconds(secondsAfterSensing);
+            }
             srr.save();
             Intent resultData = new Intent();
             resultData.putExtra("label", selectedTaskLabel);

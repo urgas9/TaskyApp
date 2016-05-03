@@ -6,38 +6,42 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="sens" />
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="random" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
     <option name="TOOL_WINDOW_REGEXP_FILTER" value="false" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="080f3e08-f11e-457d-b30a-4cdb2f1feb18" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-hdpi/ic_not_interested_black_24dp.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-mdpi/ic_not_interested_black_24dp.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xhdpi/ic_not_interested_black_24dp.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/ic_not_interested_black_24dp.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable-xxxhdpi/ic_not_interested_black_24dp.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/NotificationActionsBroadcastReceiver.java" />
+    <list default="true" id="080f3e08-f11e-457d-b30a-4cdb2f1feb18" name="Default" comment="notification action added (not in office today), changed the way notifications work, code reformated">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/android_maps_utils_0_4_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/answers_1_3_6.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/beta_1_1_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/butterknife_7_0_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/crashlytics_2_5_5.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/crashlytics_core_2_3_8.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/fabric_1_3_10.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/gson_2_6_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/library_2_4_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/material_1_2_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_auth_8_4_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_base_8_4_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_basement_8_4_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_fitness_8_4_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_location_8_4_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_maps_8_4_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/play_services_measurement_8_4_0.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/FullScreenMapFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/FullScreenMapFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/LabelTaskActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/LabelTaskActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/SettingsActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/SettingsActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/StatisticsActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/StatisticsActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/ShowPrizeReminderNotificationReceiver.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/ShowPrizeReminderNotificationReceiver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/CalendarData.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/CalendarData.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/OfficeHoursObject.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/OfficeHoursObject.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/VolumeSettingsData.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/VolumeSettingsData.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/global/CalendarHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/global/CalendarHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/SensingInitiator.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/SensingInitiator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/SensorReadingData.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/SensorReadingData.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/db/SensorReadingRecord.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/db/SensorReadingRecord.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SendDataToServerService.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SendDataToServerService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/xml/pref_general.xml" afterPath="$PROJECT_DIR$/app/src/main/res/xml/pref_general.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/test/java/si/uni_lj/fri/taskyapp/ExampleUnitTest.java" afterPath="$PROJECT_DIR$/app/src/test/java/si/uni_lj/fri/taskyapp/ExampleUnitTest.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_label_task.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_label_task.xml" />
     </list>
     <ignored path="TaskyApp.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -78,33 +82,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="SenseDataIntentService.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SenseDataIntentService.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.5789473">
-              <caret line="285" column="31" selection-start-line="285" selection-start-column="31" selection-end-line="285" selection-end-column="31" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SensingDecisionHelper.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/global/SensingDecisionHelper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="184" column="19" selection-start-line="184" selection-start-column="19" selection-end-line="184" selection-end-column="19" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.8181819">
-              <caret line="176" column="80" selection-start-line="176" selection-start-column="80" selection-end-line="176" selection-end-column="80" />
+            <state vertical-scroll-proportion="0.9032258">
+              <caret line="423" column="44" selection-start-line="423" selection-start-column="44" selection-end-line="423" selection-end-column="44" />
               <folding />
             </state>
           </provider>
@@ -114,10 +96,8 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="242" column="70" selection-start-line="242" selection-start-column="70" selection-end-line="242" selection-end-column="70" />
-              <folding>
-                <element signature="e#10308#10368#0" expanded="true" />
-              </folding>
+              <caret line="219" column="0" selection-start-line="219" selection-start-column="0" selection-end-line="219" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -125,28 +105,30 @@
       <file leaf-file-name="LabelTaskActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/LabelTaskActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="218" column="76" selection-start-line="218" selection-start-column="76" selection-end-line="218" selection-end-column="76" />
-              <folding />
+            <state vertical-scroll-proportion="-3.2280703">
+              <caret line="216" column="76" selection-start-line="216" selection-start-column="76" selection-end-line="216" selection-end-column="76" />
+              <folding>
+                <element signature="e#3901#3925#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SendDataToServerService.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SendDataToServerService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SendDataToServerService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.36285096">
-              <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
+            <state vertical-scroll-proportion="-4.4210525">
+              <caret line="127" column="85" selection-start-line="127" selection-start-column="85" selection-end-line="127" selection-end-column="85" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="OfficeHoursObject.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/OfficeHoursObject.java">
+      <file leaf-file-name="ConnectivityChangedReceiver.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/ConnectivityChangedReceiver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.368421">
-              <caret line="91" column="39" selection-start-line="91" selection-start-column="35" selection-end-line="91" selection-end-column="39" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="23" column="72" selection-start-line="23" selection-start-column="72" selection-end-line="23" selection-end-column="72" />
               <folding />
             </state>
           </provider>
@@ -156,30 +138,47 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/NotificationActionsBroadcastReceiver.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="27" column="41" selection-start-line="27" selection-start-column="41" selection-end-line="27" selection-end-column="41" />
+              <caret line="45" column="41" selection-start-line="45" selection-start-column="41" selection-end-line="45" selection-end-column="41" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NotificationManager.java" pinned="false" current-in-tab="false">
-        <entry file="file://D:/AndroidSDK/sources/android-23/android/app/NotificationManager.java">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="277" column="16" selection-start-line="277" selection-start-column="16" selection-end-line="277" selection-end-column="16" />
-              <folding>
-                <element signature="e#10874#10875#0" expanded="true" />
-                <element signature="e#10906#10907#0" expanded="true" />
-              </folding>
+              <caret line="103" column="93" selection-start-line="103" selection-start-column="93" selection-end-line="103" selection-end-column="93" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ListDataActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/ListDataActivity.java">
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-1.8181819">
+              <caret line="26" column="32" selection-start-line="26" selection-start-column="32" selection-end-line="26" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-19.982456">
+              <caret line="67" column="61" selection-start-line="67" selection-start-column="61" selection-end-line="67" selection-end-column="61" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Constants.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="170" column="61" selection-start-line="170" selection-start-column="21" selection-end-line="170" selection-end-column="61" />
+              <caret line="30" column="86" selection-start-line="30" selection-start-column="86" selection-end-line="30" selection-end-column="86" />
               <folding />
             </state>
           </provider>
@@ -2517,7 +2516,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="5842112872311" />
+        <entry key="$PROJECT_DIR$" value="5842716478105" />
         <entry key="D:\Dropbox\FRI\2.stopnja\2.letnik\magisterij\app\TaskyApp" value="5831404999819" />
       </map>
     </option>
@@ -3079,8 +3078,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_provide_info.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/TaskyAppApplication.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/calendar_event_item.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/global/SensingPolicy.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/ActivityData.java" />
@@ -3102,7 +3099,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_statistics.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/network/LeaderboardMessageResponse.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/SensingInitiator.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/ConnectivityChangedReceiver.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_provide_office_hours.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_terms_of_use.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/splash/SplashScreenFragment.java" />
@@ -3110,26 +3106,29 @@
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/SplashScreenActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/QueryGoogleFitSleepDataService.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/FullScreenMapFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/StatisticsActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/KeepSensingAliveReceiver.java" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/network/VolumeSettingsData.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/SensorReadingData.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/CalendarData.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/global/CalendarHelper.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/LabelTaskActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/xml/pref_general.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/ShowPrizeReminderNotificationReceiver.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/SettingsActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/OfficeHoursObject.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/NotificationActionsBroadcastReceiver.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SendDataToServerService.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/ShowPrizeReminderNotificationReceiver.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_label_task.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/db/SensorReadingRecord.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/SensorReadingData.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/OfficeHoursObject.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/LabelTaskActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/StatisticsActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/ConnectivityChangedReceiver.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SendDataToServerService.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
       </list>
     </option>
   </component>
@@ -3208,7 +3207,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -3505,6 +3504,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -3544,7 +3544,6 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -3558,7 +3557,7 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../graphics/screens/0204" />
     <property name="android.project.structure.last.selected" value="SeekBarHint" />
     <property name="android.project.structure.proportion" value="0.15" />
-    <property name="SearchEverywhereHistoryKey" value="strings&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/values/strings.xml&#10;lis&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/ListDataActivity.java&#10;app&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java&#10;stati&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/StatisticsActivity.java&#10;sen&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java&#10;consta&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java&#10;sense&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java&#10;apphelp&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java&#10;genera&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/xml/pref_general.xml&#10;abel&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/LabelTaskActivity.java&#10;labelta&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/LabelTaskActivity.java&#10;main&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java&#10;lisda&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/ListDataActivity.java&#10;gra&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/build.gradle&#10;keep&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/KeepSensingAliveReceiver.java&#10;listdata&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/ListDataActivity.java&#10;fulls&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/FullScreenMapFragment.java&#10;about&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/AboutActivity.java&#10;intent&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java&#10;office&#9;PSI&#9;JAVA://si.uni_lj.fri.taskyapp.data.OfficeHoursObject&#10;keepS&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/KeepSensingAliveReceiver.java&#10;datainte&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java&#10;connec&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/ConnectivityChangedReceiver.java&#10;splash&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/SplashScreenActivity.java&#10;mani&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/AndroidManifest.xml&#10;keeps&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/KeepSensingAliveReceiver.java&#10;gradle&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/build.gradle&#10;dimen&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/values/dimens.xml&#10;sensin&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/SensingInitiator.java&#10;splas&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/SplashScreenActivity.java&#10;sendda&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/SendDataToServerService.java&#10;const&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java&#10;statisti&#9;PSI&#9;JAVA://si.uni_lj.fri.taskyapp.StatisticsActivity&#10;manife&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/AndroidManifest.xml&#10;piur&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/networking/ApiUrls.java&#10;mainA&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java&#10;senddata&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/SendDataToServerService.java&#10;sens&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/global/SensingDecisionHelper.java&#10;deci&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/global/SensingDecisionHelper.java&#10;fragment_s&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/layout/fragment_splash_info.xml&#10;fragment_&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/layout/fragment_terms_of_use.xml&#10;officeh&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/data/OfficeHoursObject.java&#10;settings&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/SettingsActivity.java&#10;stri&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/values/strings.xml&#10;sensingI&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/SensingInitiator.java&#10;styles&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/values/styles.xml&#10;maina&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java&#10;label&#9;PSI&#9;JAVA://si.uni_lj.fri.taskyapp.LabelTaskActivity&#10;sensorRead&#9;PSI&#9;JAVA://si.uni_lj.fri.taskyapp.data.SensorReadingData&#10;decorat&#9;PSI&#9;JAVA://si.uni_lj.fri.taskyapp.adapter.DividerItemDecoration" />
+    <property name="SearchEverywhereHistoryKey" value="sense&#9;PSI&#9;JAVA://si.uni_lj.fri.taskyapp.service.SenseDataIntentService&#10;gradle&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/build.gradle&#10;mani&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/AndroidManifest.xml&#10;gra&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/build.gradle&#10;main&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java&#10;change&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/ConnectivityChangedReceiver.java&#10;gradl&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/build.gradle&#10;changed&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/ConnectivityChangedReceiver.java&#10;statis&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/StatisticsActivity.java&#10;label&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/LabelTaskActivity.java&#10;maina&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java&#10;anife&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/AndroidManifest.xml&#10;labelta&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/LabelTaskActivity.java&#10;strings&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/values/strings.xml&#10;lis&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/ListDataActivity.java&#10;app&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java&#10;stati&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/StatisticsActivity.java&#10;sen&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java&#10;consta&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java&#10;apphelp&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java&#10;genera&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/xml/pref_general.xml&#10;abel&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/LabelTaskActivity.java&#10;lisda&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/ListDataActivity.java&#10;keep&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/KeepSensingAliveReceiver.java&#10;listdata&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/ListDataActivity.java&#10;fulls&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/FullScreenMapFragment.java&#10;about&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/AboutActivity.java&#10;intent&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java&#10;office&#9;PSI&#9;JAVA://si.uni_lj.fri.taskyapp.data.OfficeHoursObject&#10;keepS&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/KeepSensingAliveReceiver.java&#10;datainte&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java&#10;connec&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/ConnectivityChangedReceiver.java&#10;splash&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/SplashScreenActivity.java&#10;keeps&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/KeepSensingAliveReceiver.java&#10;dimen&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/values/dimens.xml&#10;sensin&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/SensingInitiator.java&#10;splas&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/SplashScreenActivity.java&#10;sendda&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/SendDataToServerService.java&#10;const&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java&#10;statisti&#9;PSI&#9;JAVA://si.uni_lj.fri.taskyapp.StatisticsActivity&#10;manife&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/AndroidManifest.xml&#10;piur&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/networking/ApiUrls.java&#10;mainA&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java&#10;senddata&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/SendDataToServerService.java&#10;sens&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/global/SensingDecisionHelper.java&#10;deci&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/global/SensingDecisionHelper.java&#10;fragment_s&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/layout/fragment_splash_info.xml&#10;fragment_&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/res/layout/fragment_terms_of_use.xml&#10;officeh&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/data/OfficeHoursObject.java&#10;settings&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/magisterij/app/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/SettingsActivity.java" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatWidth0" value="249" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_flatOrder0" value="0" />
@@ -3881,12 +3880,6 @@
       <option name="number" value="Default" />
       <updated>1451555585848</updated>
     </task>
-    <task id="LOCAL-00041" summary="design glitches, some google fit code">
-      <created>1456774868961</created>
-      <option name="number" value="00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1456774868961</updated>
-    </task>
     <task id="LOCAL-00042" summary="some splash screen logic">
       <created>1456858638333</created>
       <option name="number" value="00042" />
@@ -4175,7 +4168,13 @@
       <option name="project" value="LOCAL" />
       <updated>1461773130767</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="notification action added (not in office today), changed the way notifications work, code reformated">
+      <created>1461919988519</created>
+      <option name="number" value="00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1461919988520</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="TodoView">
@@ -4197,21 +4196,22 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.47816828" sideWeight="0.5022247" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.47654584" sideWeight="0.5645161" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3283582" sideWeight="0.49779493" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.47654584" sideWeight="0.5645161" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40831557" sideWeight="0.49779493" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32800853" sideWeight="0.47997776" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290735" sideWeight="0.49558985" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22358176" sideWeight="0.6645768" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22358176" sideWeight="0.6645768" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31982943" sideWeight="0.5539488" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14849833" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24972191" sideWeight="0.4918033" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3855165" sideWeight="0.5194661" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3848614" sideWeight="0.5194661" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -4221,7 +4221,6 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="true" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298109" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" x="92" y="92" width="1674" height="896" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.399361" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Fabric" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19625138" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -4274,7 +4273,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="code inspection, code simplified, bug fixes&#10;&#10;" />
     <MESSAGE value="sending all sensed tasks" />
     <MESSAGE value="UI glitch&#10;" />
     <MESSAGE value="added office time range selection, UI glitches, bug fixes" />
@@ -4299,7 +4297,8 @@
     <MESSAGE value="more updates on notifications" />
     <MESSAGE value="string changed" />
     <MESSAGE value="small parameter changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="small parameter changes" />
+    <MESSAGE value="notification action added (not in office today), changed the way notifications work, code reformated" />
+    <option name="LAST_COMMIT_MESSAGE" value="notification action added (not in office today), changed the way notifications work, code reformated" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.8790036" />
   </component>
   <component name="XDebuggerManager">
@@ -4307,13 +4306,13 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java</url>
-          <line>374</line>
+          <line>375</line>
           <properties />
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java</url>
-          <line>372</line>
+          <line>373</line>
           <properties />
           <option name="timeStamp" value="6" />
         </line-breakpoint>
@@ -4354,28 +4353,34 @@
           <option name="timeStamp" value="89" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java</url>
-          <line>219</line>
-          <properties />
-          <option name="timeStamp" value="93" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/splash/SplashScreenFragment.java</url>
           <line>112</line>
           <properties />
           <option name="timeStamp" value="98" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SendDataToServerService.java</url>
-          <line>59</line>
+          <url>file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/ConnectivityChangedReceiver.java</url>
+          <line>32</line>
           <properties />
-          <option name="timeStamp" value="100" />
+          <option name="timeStamp" value="103" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SendDataToServerService.java</url>
-          <line>52</line>
+          <line>55</line>
           <properties />
-          <option name="timeStamp" value="101" />
+          <option name="timeStamp" value="104" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SendDataToServerService.java</url>
+          <line>60</line>
+          <properties />
+          <option name="timeStamp" value="105" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SendDataToServerService.java</url>
+          <line>73</line>
+          <properties />
+          <option name="timeStamp" value="107" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java</url>
@@ -4383,34 +4388,11 @@
           <option name="timeStamp" value="14" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="102" />
+      <option name="time" value="108" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/SensorManager/src/main/res/values/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.2592592">
-          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.148148">
-          <caret line="5" column="55" selection-start-line="5" selection-start-column="55" selection-end-line="5" selection-end-column="55" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/networking/ApiUrls.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -4443,7 +4425,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="47" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="47" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4454,25 +4435,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-6.034483">
           <caret line="64" column="65" selection-start-line="64" selection-start-column="65" selection-end-line="64" selection-end-column="65" />
-          <folding>
-            <element signature="e#665#700#0" expanded="true" />
-            <element signature="e#820#859#0" expanded="true" />
-            <element signature="e#1045#1080#0" expanded="true" />
-            <element signature="e#1635#1676#0" expanded="true" />
-            <element signature="e#1709#1744#0" expanded="true" />
-            <element signature="e#1778#1813#0" expanded="true" />
-            <element signature="e#1845#1880#0" expanded="true" />
-            <element signature="e#1906#1941#0" expanded="true" />
-            <element signature="e#2219#2254#0" expanded="true" />
-            <element signature="e#2287#2322#0" expanded="true" />
-            <element signature="e#2356#2391#0" expanded="true" />
-            <element signature="e#2423#2464#0" expanded="true" />
-            <element signature="e#2963#3001#0" expanded="true" />
-            <element signature="e#3286#3321#0" expanded="true" />
-            <element signature="e#3354#3389#0" expanded="true" />
-            <element signature="e#3423#3458#0" expanded="true" />
-            <element signature="e#3490#3531#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -4483,11 +4445,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-21.034483">
           <caret line="41" column="0" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
-          <folding>
-            <element signature="e#667#702#0" expanded="true" />
-            <element signature="e#728#750#0" expanded="true" />
-            <element signature="e#827#866#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -4516,7 +4473,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="100" column="56" selection-start-line="100" selection-start-column="41" selection-end-line="100" selection-end-column="56" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4612,14 +4568,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="21" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/VolumeSettingsData.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -4637,39 +4585,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/SensorReadingData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="192" column="5" selection-start-line="192" selection-start-column="5" selection-end-line="192" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/AndroidSDK/sources/android-23/android/provider/CalendarContract.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="1035" column="35" selection-start-line="1035" selection-start-column="35" selection-end-line="1035" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/CalendarData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="33" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
-          <folding>
-            <element signature="e#427#428#0" expanded="false" />
-            <element signature="e#454#455#0" expanded="false" />
-            <element signature="e#494#495#0" expanded="false" />
-            <element signature="e#526#527#0" expanded="false" />
-            <element signature="e#561#562#0" expanded="false" />
-            <element signature="e#592#593#0" expanded="false" />
-            <element signature="e#640#641#0" expanded="false" />
-            <element signature="e#680#681#0" expanded="false" />
-            <element signature="e#715#716#0" expanded="false" />
-            <element signature="e#746#747#0" expanded="false" />
-            <element signature="e#794#795#0" expanded="false" />
-            <element signature="e#834#835#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -4706,24 +4625,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/ShowPrizeReminderNotificationReceiver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="42" column="36" selection-start-line="42" selection-start-column="36" selection-end-line="42" selection-end-column="36" />
-          <folding>
-            <element signature="e#1977#2033#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="111" column="37" selection-start-line="111" selection-start-column="37" selection-end-line="111" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/NewSensorReadingReceiver.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -4740,50 +4641,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/ConnectivityChangedReceiver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="24" column="41" selection-start-line="24" selection-start-column="41" selection-end-line="24" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.346154">
-          <caret line="136" column="19" selection-start-line="136" selection-start-column="19" selection-end-line="136" selection-end-column="19" />
-          <folding>
-            <element signature="e#800#818#0" expanded="true" />
-            <element signature="e#1521#1539#0" expanded="true" />
-            <element signature="e#1755#1789#0" expanded="true" />
-            <element signature="e#3739#3765#0" expanded="true" />
-            <element signature="e#3981#4006#0" expanded="true" />
-            <element signature="e#4221#4254#0" expanded="true" />
-            <element signature="e#4627#4662#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/KeepSensingAliveReceiver.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="35" column="26" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/StatisticsActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="250" column="17" selection-start-line="250" selection-start-column="17" selection-end-line="250" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.631579">
-          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -4793,8 +4654,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="277" column="16" selection-start-line="277" selection-start-column="16" selection-end-line="277" selection-end-column="16" />
           <folding>
-            <element signature="e#10874#10875#0" expanded="true" />
-            <element signature="e#10906#10907#0" expanded="true" />
+            <element signature="e#10874#10875#0" expanded="false" />
+            <element signature="e#10906#10907#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -4803,14 +4664,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="170" column="61" selection-start-line="170" selection-start-column="21" selection-end-line="170" selection-end-column="61" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/NotificationActionsBroadcastReceiver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="27" column="41" selection-start-line="27" selection-start-column="41" selection-end-line="27" selection-end-column="41" />
           <folding />
         </state>
       </provider>
@@ -4831,18 +4684,85 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/OfficeHoursObject.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/CalendarData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.368421">
-          <caret line="91" column="39" selection-start-line="91" selection-start-column="35" selection-end-line="91" selection-end-column="39" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="15" column="33" selection-start-line="15" selection-start-column="33" selection-end-line="15" selection-end-column="33" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/LabelTaskActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_label_task.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.0446428">
+          <caret line="101" column="36" selection-start-line="101" selection-start-column="32" selection-end-line="101" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/SensorReadingData.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="218" column="76" selection-start-line="218" selection-start-column="76" selection-end-line="218" selection-end-column="76" />
+          <caret line="65" column="48" selection-start-line="65" selection-start-column="48" selection-end-line="65" selection-end-column="48" />
+          <folding>
+            <element signature="e#5771#5772#0" expanded="true" />
+            <element signature="e#5818#5819#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/ShowPrizeReminderNotificationReceiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="43" column="76" selection-start-line="43" selection-start-column="76" selection-end-line="43" selection-end-column="122" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/OfficeHoursObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="101" column="25" selection-start-line="99" selection-start-column="8" selection-end-line="101" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/db/SensorReadingRecord.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="24" column="44" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="44" />
+          <folding>
+            <element signature="e#3226#3227#0" expanded="true" />
+            <element signature="e#3273#3274#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/StatisticsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.1403508">
+          <caret line="192" column="24" selection-start-line="192" selection-start-column="24" selection-end-line="192" selection-end-column="24" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="30" column="86" selection-start-line="30" selection-start-column="86" selection-end-line="30" selection-end-column="86" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/ConnectivityChangedReceiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="72" selection-start-line="23" selection-start-column="72" selection-end-line="23" selection-end-column="72" />
           <folding />
         </state>
       </provider>
@@ -4850,27 +4770,65 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="242" column="70" selection-start-line="242" selection-start-column="70" selection-end-line="242" selection-end-column="70" />
+          <caret line="219" column="0" selection-start-line="219" selection-start-column="0" selection-end-line="219" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="103" column="93" selection-start-line="103" selection-start-column="93" selection-end-line="103" selection-end-column="93" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.8181819">
+          <caret line="26" column="32" selection-start-line="26" selection-start-column="32" selection-end-line="26" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-19.982456">
+          <caret line="67" column="61" selection-start-line="67" selection-start-column="61" selection-end-line="67" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/LabelTaskActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.2280703">
+          <caret line="216" column="76" selection-start-line="216" selection-start-column="76" selection-end-line="216" selection-end-column="76" />
           <folding>
-            <element signature="e#10308#10368#0" expanded="true" />
+            <element signature="e#3901#3925#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/NotificationActionsBroadcastReceiver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.5789473">
-          <caret line="285" column="31" selection-start-line="285" selection-start-column="31" selection-end-line="285" selection-end-column="31" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0">
+          <caret line="45" column="41" selection-start-line="45" selection-start-column="41" selection-end-line="45" selection-end-column="41" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SendDataToServerService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36285096">
-          <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
+        <state vertical-scroll-proportion="-4.4210525">
+          <caret line="127" column="85" selection-start-line="127" selection-start-column="85" selection-end-line="127" selection-end-column="85" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.9032258">
+          <caret line="423" column="44" selection-start-line="423" selection-start-column="44" selection-end-line="423" selection-end-column="44" />
           <folding />
         </state>
       </provider>

@@ -201,7 +201,7 @@ public class StatisticsActivity extends AppCompatActivity implements OnMapReadyC
                 }
             }
             mLeaderboardTitleTv.setText(leaderBoardTitle);
-            mLeaderboardMsgTv.setText(textViewMessage);
+            mLeaderboardMsgTv.setText(Html.fromHtml(textViewMessage));
             mCard1ViewSwitcher.setDisplayedChild(1);
         }
     }

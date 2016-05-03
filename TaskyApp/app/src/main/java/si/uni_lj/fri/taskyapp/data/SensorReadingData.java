@@ -63,6 +63,8 @@ public class SensorReadingData {
     private VolumeSettingsData volumeSettingsData;
 
     private Integer label; // Label on Likert scale 1-5 (easy - hard)
+    @SerializedName("labeled_after_notif_seconds")
+    private Integer labeledAfterNotifSeconds;
     @SerializedName("database_id")
     private Long dbRecordId;
 
@@ -200,6 +202,14 @@ public class SensorReadingData {
         this.calendarEvents = calendarEvents;
     }
 
+    public Integer getLabeledAfterNotifSeconds() {
+        return labeledAfterNotifSeconds;
+    }
+
+    public void setLabeledAfterNotifSeconds(Integer labeledAfterNotifSeconds) {
+        this.labeledAfterNotifSeconds = labeledAfterNotifSeconds;
+    }
+
     @Override
     public String toString() {
         return "SensorReadingData{" +
@@ -217,6 +227,7 @@ public class SensorReadingData {
                 ", screenStatusData=" + screenStatusData +
                 ", calendarEvents=" + calendarEvents +
                 ", volumeSettingsData=" + volumeSettingsData +
+                ", labeledAfterNotifSeconds=" + labeledAfterNotifSeconds +
                 ", label=" + label +
                 ", dbRecordId=" + dbRecordId +
                 '}';

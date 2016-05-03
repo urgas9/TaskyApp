@@ -129,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
         //TODO: buildFitnessClient();
         mTaskComplexitySeekBar.setOnTouchListener(new View.OnTouchListener() {
             @Override
