@@ -11,9 +11,7 @@
     <option name="TOOL_WINDOW_REGEXP_FILTER" value="false" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="080f3e08-f11e-457d-b30a-4cdb2f1feb18" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="080f3e08-f11e-457d-b30a-4cdb2f1feb18" name="Default" comment="" />
     <ignored path="TaskyApp.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -3274,9 +3272,12 @@
     <property name="device.picker.selection" value="00baa20e4894bee4" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
+    <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Dropbox\FRI\2.stopnja\2.letnik\magisterij\app\TaskyApp\app\src\main\res" />
-      <recent name="D:\Dropbox\FRI\2.stopnja\2.letnik\magisterij\app\TaskyApp" />
+      <recent name="D:\Dropbox\FRI\2.stopnja\2.letnik\magisterij\app\TaskyApp\app\src\main\res\drawable" />
+      <recent name="D:\Dropbox\FRI\2.stopnja\2.letnik\magisterij\app\TaskyApp\app\src\main" />
+      <recent name="D:\Dropbox\FRI\2.stopnja\2.letnik\magisterij\app\TaskyApp\app\src\main\java\si\uni_lj\fri\taskyapp\networking" />
+      <recent name="D:\Dropbox\FRI\2.stopnja\2.letnik\magisterij\app\TaskyApp\app\src\main\res\color" />
     </key>
     <key name="android.template.packageName">
       <recent name="si.uni_lj.fri.taskyapp.splash" />
@@ -3291,12 +3292,9 @@
       <recent name="si.uni_lj.fri.taskyapp.data" />
       <recent name="si.uni_lj.fri.taskyapp.global" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Dropbox\FRI\2.stopnja\2.letnik\magisterij\app\TaskyApp\app\src\main\res" />
-      <recent name="D:\Dropbox\FRI\2.stopnja\2.letnik\magisterij\app\TaskyApp\app\src\main\res\drawable" />
-      <recent name="D:\Dropbox\FRI\2.stopnja\2.letnik\magisterij\app\TaskyApp\app\src\main" />
-      <recent name="D:\Dropbox\FRI\2.stopnja\2.letnik\magisterij\app\TaskyApp\app\src\main\java\si\uni_lj\fri\taskyapp\networking" />
-      <recent name="D:\Dropbox\FRI\2.stopnja\2.letnik\magisterij\app\TaskyApp\app\src\main\res\color" />
+      <recent name="D:\Dropbox\FRI\2.stopnja\2.letnik\magisterij\app\TaskyApp" />
     </key>
   </component>
   <component name="RunManager" selected="Android Application.app">
@@ -3572,12 +3570,6 @@
       <created>1451555585848</created>
       <option name="number" value="Default" />
       <updated>1451555585848</updated>
-    </task>
-    <task id="LOCAL-00044" summary="updated splash activity, showing version in about, updated settings, new logic for zooming into google map...">
-      <created>1456960229262</created>
-      <option name="number" value="00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1456960229262</updated>
     </task>
     <task id="LOCAL-00045" summary="task descriptions added, with info button above seekbar">
       <created>1456995258111</created>
@@ -3867,7 +3859,13 @@
       <option name="project" value="LOCAL" />
       <updated>1463752308041</updated>
     </task>
-    <option name="localTasksCounter" value="93" />
+    <task id="LOCAL-00093" summary="Some uncomitted files">
+      <created>1463752398416</created>
+      <option name="number" value="00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1463752398416</updated>
+    </task>
+    <option name="localTasksCounter" value="94" />
     <servers />
   </component>
   <component name="TodoView">
