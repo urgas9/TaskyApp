@@ -1,0 +1,108 @@
+=== Run information ===
+
+Scheme:       weka.classifiers.bayes.BayesNet -D -Q weka.classifiers.bayes.net.search.local.K2 -- -P 1 -S BAYES -E weka.classifiers.bayes.net.estimate.SimpleEstimator -- -A 0.5
+Relation:     users-weka.filters.unsupervised.attribute.Remove-R28
+Instances:    216
+Attributes:   27
+              label
+              sensing_policy
+              num_wifi_devices
+              num_bluetooth_devices
+              accelerometer_mean_x
+              accelerometer_mean_y
+              accelerometer_mean_z
+              accelerometer_mean_intensity
+              accelerometer_intensity_variance
+              accelerometer_mean_crossings_x
+              accelerometer_mean_crossings_y
+              accelerometer_mean_crossings_z
+              gyroscope_mean_x
+              gyroscope_mean_y
+              gyroscope_mean_z
+              gyroscope_mean_intensity
+              gyroscope_intensity_variance
+              gyroscope_mean_crossings_x
+              gyroscope_mean_crossings_y
+              gyroscope_mean_crossings_z
+              microphone_mean
+              microphone_mean_crossing
+              google_activity
+              charging
+              screen_on
+              num_of_calendar_events
+              hour_of_day
+Test mode:    10-fold cross-validation
+
+=== Classifier model (full training set) ===
+
+Bayes Network Classifier
+not using ADTree
+#attributes=27 #classindex=0
+Network structure (nodes followed by parents)
+label(5): 
+sensing_policy(5): label 
+num_wifi_devices(1): label 
+num_bluetooth_devices(1): label 
+accelerometer_mean_x(1): label 
+accelerometer_mean_y(2): label 
+accelerometer_mean_z(1): label 
+accelerometer_mean_intensity(1): label 
+accelerometer_intensity_variance(1): label 
+accelerometer_mean_crossings_x(1): label 
+accelerometer_mean_crossings_y(1): label 
+accelerometer_mean_crossings_z(1): label 
+gyroscope_mean_x(1): label 
+gyroscope_mean_y(1): label 
+gyroscope_mean_z(1): label 
+gyroscope_mean_intensity(1): label 
+gyroscope_intensity_variance(1): label 
+gyroscope_mean_crossings_x(2): label 
+gyroscope_mean_crossings_y(2): label 
+gyroscope_mean_crossings_z(2): label 
+microphone_mean(1): label 
+microphone_mean_crossing(1): label 
+google_activity(8): label 
+charging(2): label 
+screen_on(2): label 
+num_of_calendar_events(1): label 
+hour_of_day(2): label 
+LogScore Bayes: -1456.3983233599458
+LogScore BDeu: -1710.586690883218
+LogScore MDL: -1699.0956863378988
+LogScore ENTROPY: -1446.457601176743
+LogScore AIC: -1540.457601176743
+
+
+Time taken to build model: 0.06 seconds
+
+=== Stratified cross-validation ===
+=== Summary ===
+
+Correctly Classified Instances          83               38.4259 %
+Incorrectly Classified Instances       133               61.5741 %
+Kappa statistic                          0.1509
+Mean absolute error                      0.2789
+Root mean squared error                  0.3919
+Relative absolute error                 91.8099 %
+Root relative squared error            100.6176 %
+Total Number of Instances              216     
+
+=== Detailed Accuracy By Class ===
+
+                 TP Rate  FP Rate  Precision  Recall   F-Measure  MCC      ROC Area  PRC Area  Class
+                 0.188    0.071    0.316      0.188    0.235      0.147    0.669     0.273     1
+                 0.671    0.452    0.416      0.671    0.514      0.206    0.602     0.377     2
+                 0.020    0.060    0.091      0.020    0.033      -0.077   0.466     0.225     3
+                 0.558    0.262    0.403      0.558    0.468      0.268    0.671     0.447     4
+                 0.000    0.005    0.000      0.000    0.000      -0.017   0.710     0.149     5
+Weighted Avg.    0.384    0.234    0.300      0.384    0.322      0.134    0.603     0.331     
+
+=== Confusion Matrix ===
+
+  a  b  c  d  e   <-- classified as
+  6 21  2  3  0 |  a = 1
+  6 47  3 13  1 |  b = 2
+  4 27  1 18  0 |  c = 3
+  3 15  5 29  0 |  d = 4
+  0  3  0  9  0 |  e = 5
+
