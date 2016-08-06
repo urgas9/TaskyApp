@@ -44,21 +44,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    /*TODO: Remov
     lintOptions{
          checkReleaseBuilds true
-    }*/
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile('com.github.afollestad.material-dialogs:core:0.8.5.7@aar') {
+    compile('com.github.afollestad.material-dialogs:core:0.8.6.2@aar') {
         // For material design dialogs https://github.com/afollestad/material-dialogs
         transitive = true
     }
     compile project(':SensorManager')
-    compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
+
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.1@aar') {
         transitive = true;
     }
     compile 'com.android.support:appcompat-v7:23.3.0'
@@ -70,12 +70,12 @@ dependencies {
     compile 'com.google.android.gms:play-services-maps:8.4.0'
     compile 'com.google.android.gms:play-services-fitness:8.4.0'
     compile 'com.google.maps.android:android-maps-utils:0.4.3'
-    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.google.code.gson:gson:2.7'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.github.satyan:sugar:1.5'
     compile 'com.mikhaellopez:circularprogressbar:1.1.1'
-    compile 'com.github.rey5137:material:1.2.2'
-    compile 'com.github.PhilJay:MPAndroidChart:v2.2.4'
+    compile 'com.github.rey5137:material:1.2.4'
+    compile 'com.github.PhilJay:MPAndroidChart:v2.2.5'
     compile 'com.viewpagerindicator:library:2.4.1@aar'
 
 }
