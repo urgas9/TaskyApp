@@ -51,8 +51,8 @@ import si.uni_lj.fri.taskyapp.global.PermissionsHelper;
 import si.uni_lj.fri.taskyapp.global.SensingPolicy;
 import si.uni_lj.fri.taskyapp.sensor.Constants;
 import si.uni_lj.fri.taskyapp.sensor.SensingInitiator;
-import si.uni_lj.fri.taskyapp.service.AggregateDataDailyService;
-import si.uni_lj.fri.taskyapp.service.SendDataToServerService;
+import si.uni_lj.fri.taskyapp.service.AggregateDataDailyIntentService;
+import si.uni_lj.fri.taskyapp.service.SendDataToServerIntentService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        startService(new Intent(this, SendDataToServerService.class));
+        startService(new Intent(this, SendDataToServerIntentService.class));
 
         arrayOfComplexities = getResources().getStringArray(R.array.task_difficulties_array);
         if (!AppHelper.isPlayServiceAvailable(this)) {
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        AggregateDataDailyService.startService(this.getBaseContext());
+        AggregateDataDailyIntentService.startService(this.getBaseContext());
         resetSeekBar();
         mTaskComplexitySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override

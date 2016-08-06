@@ -74,7 +74,7 @@
         <service android:name=".service.SenseDataIntentService"/>
         <service android:name=".service.SenseDataIntentService$MyActivityRecognitionIntentService"/>
         <service android:name=".service.ScreenStateService"/>
-        <service android:name=".service.SendDataToServerService"/>
+        <service android:name=".service.SendDataToServerIntentService"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"
@@ -109,7 +109,7 @@
         </activity>
 
         <service
-            android:name=".service.AggregateDataDailyService"
+            android:name=".service.AggregateDataDailyIntentService"
             android:exported="false">
         </service>
 
@@ -121,7 +121,7 @@
         </activity>
 
         <service
-            android:name=".service.QueryGoogleFitSleepDataService"
+            android:name=".service.QueryGoogleFitSleepDataIntentService"
             android:exported="false">
         </service>
 

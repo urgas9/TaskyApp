@@ -9,7 +9,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import si.uni_lj.fri.taskyapp.sensor.Constants;
-import si.uni_lj.fri.taskyapp.service.SendDataToServerService;
+import si.uni_lj.fri.taskyapp.service.SendDataToServerIntentService;
 
 /**
  * Created by urgas9 on 20-Feb-16, OpenHours.com
@@ -30,7 +30,7 @@ public class ConnectivityChangedReceiver extends BroadcastReceiver {
 
                 long lastTimestamp = PreferenceManager.getDefaultSharedPreferences(context).getLong(Constants.PREFS_LAST_TIME_SENT_TO_SERVER, 0);
                 if ((lastTimestamp + Constants.MAX_INTERVAL_BETWEEN_TWO_SERVER_POSTS) <= System.currentTimeMillis()) {
-                    context.startService(new Intent(context, SendDataToServerService.class));
+                    context.startService(new Intent(context, SendDataToServerIntentService.class));
                 }
 
             } else if (intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, Boolean.FALSE)) {

@@ -25,7 +25,7 @@ public class PostDataRequest extends AuthRequest {
         return dataList;
     }
 
-    public void setDataList(List<SensorReadingData> dataList) {
+    public void setDataList(List<SensorReadingData> datsaList) {
         this.dataList = dataList;
     }
 

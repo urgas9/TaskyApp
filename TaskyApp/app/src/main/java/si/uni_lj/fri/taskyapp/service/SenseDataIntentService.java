@@ -243,7 +243,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         }
         sensorSubscriptionIds = new LinkedList<>();
 
-        SensorThreadsManager sensorThreadsManager = new SensorThreadsManager();
+            SensorThreadsManager sensorThreadsManager = new SensorThreadsManager();
 
         sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_ACCELEROMETER));
         sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_GYROSCOPE));
