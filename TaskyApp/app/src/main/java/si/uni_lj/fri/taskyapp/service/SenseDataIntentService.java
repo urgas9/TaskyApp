@@ -364,6 +364,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         this.sendBroadcast(i);
 
         sensorThreadsManager.dispose();
+
         // Shutting down everything
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected() && mActivityRecognitionPendingIntent != null) {
             ActivityRecognition.ActivityRecognitionApi.removeActivityUpdates(mGoogleApiClient, mActivityRecognitionPendingIntent);
