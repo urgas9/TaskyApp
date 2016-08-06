@@ -1,1 +1,1 @@
-include ':app', ':SensorManager'
+include ':app', ':SensorManager', ':angel-sdk-debug'

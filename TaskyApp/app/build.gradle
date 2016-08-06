@@ -57,6 +57,7 @@ dependencies {
         transitive = true
     }
     compile project(':SensorManager')
+    compile project(':angel-sdk-debug')
 
     compile('com.crashlytics.sdk.android:crashlytics:2.6.1@aar') {
         transitive = true;
