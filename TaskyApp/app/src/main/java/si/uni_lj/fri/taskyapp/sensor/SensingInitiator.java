@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -26,7 +27,7 @@ import si.uni_lj.fri.taskyapp.service.SenseDataIntentService;
  */
 public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, ResultCallback<Status> {
 
-    private static final String TAG = "SensingManager";
+    private static final String TAG = "SensingInitiator";
     private Context mContext;
     private GoogleApiClient mGoogleApiClient;
 
@@ -175,7 +176,7 @@ public class SensingInitiator implements GoogleApiClient.ConnectionCallbacks, Go
         Log.d(TAG, "Firing requested alarm interval updates.");
         AlarmManager am = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
         am.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                Constants.APPROXIMATE_INTERVAL_MILLIS,
+                SystemClock.elapsedRealtime() + Constants.APPROXIMATE_INTERVAL_MILLIS,
                 Constants.APPROXIMATE_INTERVAL_MILLIS,
                 getSensingServicePendingIntent(SensingPolicy.INTERVAL));
     }

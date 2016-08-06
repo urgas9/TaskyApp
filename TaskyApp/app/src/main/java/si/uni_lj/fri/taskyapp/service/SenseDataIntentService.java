@@ -105,6 +105,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             return;
         }
 
+        AppHelper.printExtras(intent);
         mDefaultPrefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 
         String policy = intent.getStringExtra("sensing_policy");
@@ -113,11 +114,11 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         int userLabel = intent.getIntExtra("user_label", -2);
         //showPostSensingReminderNotification(-1, userLabel > 0);
         if (userLabel > 0) {
-            Log.d(TAG, "+++ Force sensing set to true!");
+            Log.d(TAG, "Force sensing set to true!");
             sensingPolicy = SensingPolicy.USER_FORCED;
         }
         if (!SensingInitiator.isUserParticipating(getBaseContext(), userLabel > 0)) {
-            Log.d(TAG, "Service: User is not participating, quit.");
+            Log.d(TAG, "User is not participating, quit.");
             return;
         }
 

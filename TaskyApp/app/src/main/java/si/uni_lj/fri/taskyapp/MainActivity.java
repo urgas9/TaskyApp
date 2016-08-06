@@ -419,6 +419,7 @@ public class MainActivity extends AppCompatActivity {
     private void broadcastIntentToStartSensing() {
         Intent keepAliveBroadcastIntent = new Intent();
         keepAliveBroadcastIntent.setAction(Constants.ACTION_KEEP_SENSING_ALIVE);
+        keepAliveBroadcastIntent.putExtra("source", "started_main_activity");
         sendBroadcast(keepAliveBroadcastIntent);
     }
 

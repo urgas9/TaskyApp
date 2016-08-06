@@ -12,6 +12,7 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
@@ -281,5 +282,20 @@ public class AppHelper {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY, pi);
+    }
+    public static void printExtras(Intent i){
+        if(i == null){
+            return;
+        }
+        Bundle bundle = i.getExtras();
+        if(bundle == null){
+            return;
+        }
+        Log.d("INTENT_EXTRAS", "++++ Printing extras: +++");
+        for (String key : bundle.keySet()) {
+            Object value = bundle.get(key);
+            Log.d("INTENT_EXTRAS", String.format("%s %s (%s)", key,
+                    value.toString(), value.getClass().getName()));
+        }
     }
 }

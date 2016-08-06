@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.SystemClock;
 import android.util.Log;
 
 import si.uni_lj.fri.taskyapp.global.AppHelper;
@@ -26,6 +27,7 @@ public class KeepSensingAliveReceiver extends BroadcastReceiver {
         if (mSensingInitiator == null) {
             mSensingInitiator = new SensingInitiator(context);
         }
+        AppHelper.printExtras(intent);
         mSensingInitiator.senseWithDefaultSensingConfiguration();
 
         AppHelper.startNotificationsAlarm(context);
@@ -34,12 +36,13 @@ public class KeepSensingAliveReceiver extends BroadcastReceiver {
             // Setting recovery alarm
             Intent recoveryIntent = new Intent();
             recoveryIntent.setAction(Constants.ACTION_KEEP_SENSING_ALIVE);
+            recoveryIntent.putExtra("source", "recovery_intent");
 
             AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
             am.setInexactRepeating(
                     AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                    Constants.APPROXIMATE_INTERVAL_MILLIS,
-                    Constants.APPROXIMATE_INTERVAL_MILLIS,
+                    SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_HALF_HOUR,
+                    AlarmManager.INTERVAL_HALF_HOUR,
                     PendingIntent
                             .getBroadcast(context, 20, recoveryIntent, PendingIntent.FLAG_UPDATE_CURRENT));
         }
