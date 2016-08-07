@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/list_item_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/list_item_vertical_margin">
+
+        <TextView
+            android:id="@+id/wearable_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primary_text"
+            android:textSize="@dimen/text_list_data_size"/>
+
+        <TextView
+            android:id="@+id/wearable_mac"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/secondary_text"
+            android:textSize="@dimen/text_list_data_size"/>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/wearable_selected"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:background="@drawable/circle_shape_accent"
+        android:visibility="gone"/>
+</RelativeLayout>

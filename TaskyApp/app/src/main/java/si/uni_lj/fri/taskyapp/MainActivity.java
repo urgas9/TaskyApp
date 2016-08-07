@@ -4,11 +4,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -58,7 +60,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
 
-
     @Bind(R.id.start_sensing_view_switcher)
     ViewSwitcher mStartSensingViewSwitcher;
     @Bind(R.id.tick_cd_text_viewflipper)
@@ -77,6 +78,12 @@ public class MainActivity extends AppCompatActivity {
     SeekBar mTaskComplexitySeekBar;
     @Bind(R.id.seekbar_value_text)
     TextView mSeekbarValueTv;
+    @Bind(R.id.wearable_name)
+    TextView mWearableName;
+    @Bind(R.id.wearable_mac)
+    TextView mWearableMac;
+
+
     Integer selectedComplexity = null;
     boolean isCountDownRunning = false;
     String[] arrayOfComplexities;
@@ -161,6 +168,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mNumsPressesToExitApp = 2;
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String wearableName = prefs.getString(Constants.PREFS_CHOSEN_WEARABLE_NAME, "Click to choose one");
+        String wearableMac = prefs.getString(Constants.PREFS_CHOSEN_WEARABLE_MAC, "");
+
+        mWearableName.setText(wearableName);
+        mWearableMac.setText(wearableMac);
     }
 
     @Override
@@ -201,6 +215,12 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.btn_label_data)
     public void startListDataActivity(View v) {
         Intent intent = new Intent(this, ListDataActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.wearable_card)
+    public void openWearableActivity(View v){
+        Intent intent = new Intent(this, ChooseWearableActivity.class);
         startActivity(intent);
     }
 

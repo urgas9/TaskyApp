@@ -37,9 +37,14 @@ public class Constants {
     public static final int SHOW_NOTIFICATION_LABEL_LAST_ID = 904;
     public static final int SHOW_NOTIFICATION_REQUEST_CODE = 900;
     public static final int REQUEST_CODE_KEEP_SENSING_ALIVE = 31;
+    public static final int REQUEST_CODE_KEEP_ALIVE_ALARM = 20;
     public static final int REQUEST_CODE_ACTIVITY_UPDATES = 21;
     public static final int REQUEST_CODE_ALARM_UPDATES = 22;
     public static final int REQUEST_CODE_LOCATION_UPDATES = 23;
     public static int NUM_OF_RANDOMLY_LABEL_NOTIFICATIONS_TO_SEND = 3;
     public static String ACTION_NOTIF_BTN_NOT_IN_OFFICE = "not_in_office";
+
+    public static final String PREFS_CHOSEN_WEARABLE_NAME = "PREFS_CHOSEN_WEARABLE_NAME";
+    public static final String PREFS_CHOSEN_WEARABLE_MAC = "PREFS_CHOSEN_WEARABLE_MAC";
+
 }

@@ -142,6 +142,9 @@
                 <action android:name="si.uni_lj.fri.taskyapp.NotificationClickAction"/>
             </intent-filter>
         </receiver>
+
+        <activity android:name=".ChooseWearableActivity">
+        </activity>
     </application>
 
 </manifest>

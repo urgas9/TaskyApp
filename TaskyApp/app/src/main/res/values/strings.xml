@@ -175,5 +175,10 @@
     <string name="explain_after_prize_notification_reward">Are you in office? Click start sensing to monitor you task. You have a change to win 50€.</string>
     <string name="info">INFO</string>
     <string name="not_in_office_today_notification">I am not in the office today</string>
+    <string name="angel_sensor">Angel sensor</string>
+    <string name="disabled_bluetooth_msg">Please enable bluetooth and click on "Scan".</string>
+    <string name="scan">Scan</string>
+    <string name="no_angel_sensors_found">No Angel Sensors found.</string>
+    <string name="pair_angel_sensor">Pair an Angel Sensor</string>
 
 </resources>

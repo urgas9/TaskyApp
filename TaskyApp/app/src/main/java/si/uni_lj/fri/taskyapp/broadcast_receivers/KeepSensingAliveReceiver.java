@@ -44,7 +44,7 @@ public class KeepSensingAliveReceiver extends BroadcastReceiver {
                     SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_HALF_HOUR,
                     AlarmManager.INTERVAL_HALF_HOUR,
                     PendingIntent
-                            .getBroadcast(context, 20, recoveryIntent, PendingIntent.FLAG_UPDATE_CURRENT));
+                            .getBroadcast(context, Constants.REQUEST_CODE_KEEP_ALIVE_ALARM, recoveryIntent, PendingIntent.FLAG_UPDATE_CURRENT));
         }
     }
 }
