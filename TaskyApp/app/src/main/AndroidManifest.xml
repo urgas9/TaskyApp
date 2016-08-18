@@ -143,7 +143,9 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ChooseWearableActivity">
+        <activity
+            android:name=".ChooseWearableActivity"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

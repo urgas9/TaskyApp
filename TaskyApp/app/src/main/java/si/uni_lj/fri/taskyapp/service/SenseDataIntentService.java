@@ -4,6 +4,8 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.IntentService;
 import android.app.PendingIntent;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -12,10 +14,19 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.BatteryManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.angel.sdk.BleCharacteristic;
+import com.angel.sdk.BleDevice;
+import com.angel.sdk.ChHeartRateMeasurement;
+import com.angel.sdk.ChTemperatureMeasurement;
+import com.angel.sdk.SrvHealthThermometer;
+import com.angel.sdk.SrvHeartRate;
+import com.angel.sdk.SrvWaveformSignal;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.ActivityRecognition;
@@ -44,6 +55,7 @@ import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -93,6 +105,11 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
     private long mCountLightValues;
     private SharedPreferences mDefaultPrefs;
 
+    // ANGEL SENSOR
+    private Handler mBluetoothHandler;
+    private Runnable mBluetoothPeriodicReader;
+    private static final int RSSI_UPDATE_INTERVAL = 2000; // Milliseconds
+    private BleDevice mAngelSensorBleDevice;
 
     public SenseDataIntentService() {
         super("SenseDataIntentService");
@@ -143,6 +160,20 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             Log.d(TAG, "decideOnMinimumIntervalTimeDifference decided not to sense");
             return;
         }
+
+        if(SensorsHelper.isBluetoothEnabled()){
+            mAngelSensorBleDevice = connectToAngelSensor();
+
+            mBluetoothPeriodicReader = new Runnable() {
+                @Override
+                public void run() {
+                    mAngelSensorBleDevice.readRemoteRssi();
+
+                    mBluetoothHandler.postDelayed(mBluetoothPeriodicReader, RSSI_UPDATE_INTERVAL);
+                }
+            };
+        }
+
         // Blocking connect to Google API, so we will have a connected instance in future
         if (mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
             Log.d(TAG, "Connecting to GoogleApiClient");
@@ -372,6 +403,16 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             mGoogleApiClient.disconnect();
         }
 
+        // Clean after using AngelSensor
+        if(mBluetoothHandler != null && mBluetoothPeriodicReader != null){
+            mBluetoothHandler.removeCallbacks(mBluetoothPeriodicReader);
+        }
+        mBluetoothHandler = null;
+
+        if(mAngelSensorBleDevice != null) {
+            mAngelSensorBleDevice.disconnect();
+        }
+
     }
 
     @SuppressLint("CommitPrefEdits")
@@ -550,6 +591,115 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
     public void onCrossingLowBatteryThreshold(boolean isBelowThreshold) {
 
     }
+
+    public BluetoothDevice getPairedAngelSensor() {
+        String angelSensorMac = mDefaultPrefs.getString(Constants.PREFS_CHOSEN_WEARABLE_MAC, null);
+        if(angelSensorMac == null){
+            return null;
+        }
+        BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+        if(!btAdapter.isEnabled())
+            btAdapter.enable();
+
+        Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
+
+        for(BluetoothDevice d : pairedDevices)
+            if(d.getAddress().equalsIgnoreCase(angelSensorMac))
+                return d;
+
+        return null;
+    }
+
+    private BleDevice connectToAngelSensor(){
+        String angelSensorMac = mDefaultPrefs.getString(Constants.PREFS_CHOSEN_WEARABLE_MAC, null);
+        if(angelSensorMac == null){
+            Log.d(TAG, "There is no AngelSensor MAC saved.");
+            return null;
+        }
+
+        if (mAngelSensorBleDevice != null) {
+            mAngelSensorBleDevice.disconnect();
+        }
+
+        com.angel.sdk.BleDevice.LifecycleCallback mDeviceLifecycleCallback = new com.angel.sdk.BleDevice.LifecycleCallback() {
+            @Override
+            public void onBluetoothServicesDiscovered(com.angel.sdk.BleDevice bleDevice) {
+                //bleDevice.getService(SrvActivityMonitoring.class).getStepCount()
+                //        .enableNotifications(mStepCountListener);
+                Log.d(TAG, "Register heart rate...");
+                bleDevice.getService(SrvHeartRate.class).getHeartRateMeasurement().enableNotifications(mHeartRateListener);
+                bleDevice.getService(SrvHealthThermometer.class).getTemperatureMeasurement().enableNotifications(mTemperatureListener);
+                bleDevice.getService(SrvHealthThermometer.class).getIntermediateTemperature().enableNotifications(mTemperatureListener);
+                //bleDevice.getService(SrvWaveformSignal.class).getOpticalWaveform().enableNotifications(mOpticalWaveformListener);
+                //bleDevice.getService(SrvWaveformSignal.class).getAccelerationWaveform().enableNotifications(mAccelerationWaveformListener);
+
+                Log.d(TAG, "Done");
+
+                //bleDevice.getService(SrvBattery.class).getBatteryLevel().enableNotifications(mBatteryLevelListener);
+            }
+
+            @Override
+            public void onBluetoothDeviceDisconnected() {
+
+            }
+
+            @Override
+            public void onReadRemoteRssi(int i) {
+
+                Log.d(TAG, "RSSI read");
+
+            }
+        };
+        mBluetoothHandler = new Handler(this.getMainLooper());
+
+        mAngelSensorBleDevice = new com.angel.sdk.BleDevice(getBaseContext(), mDeviceLifecycleCallback, mBluetoothHandler);
+
+        try {
+            Log.d(TAG, "Register h.r.");
+            mAngelSensorBleDevice.registerServiceClass(SrvHeartRate.class);
+            mAngelSensorBleDevice.registerServiceClass(SrvHealthThermometer.class);
+            mAngelSensorBleDevice.registerServiceClass(SrvWaveformSignal.class);
+
+            Log.d(TAG, "Done");
+
+        } catch (Exception e) {
+            throw new AssertionError();
+        }
+
+        Log.d(TAG, "Connecting to Angel Sensor.");
+        try{
+            mAngelSensorBleDevice.connect(angelSensorMac);
+        } catch (Exception e){
+            Log.e(TAG, "Can't connect to your Angel Sensor: " + e.getMessage());
+        }
+
+        mBluetoothHandler.post(mBluetoothPeriodicReader);
+        return mAngelSensorBleDevice;
+    }
+
+    private final BleCharacteristic.ValueReadyCallback<ChHeartRateMeasurement.HeartRateMeasurementValue> mHeartRateListener = new BleCharacteristic.ValueReadyCallback<ChHeartRateMeasurement.HeartRateMeasurementValue>() {
+
+        @Override
+        public void onValueReady(final ChHeartRateMeasurement.HeartRateMeasurementValue hrMeasurement) {
+
+            Log.d(TAG, "heart rate read");
+
+            Toast.makeText(getBaseContext(), "HR: " + hrMeasurement.getHeartRateMeasurement(), Toast.LENGTH_LONG).show();
+        }
+
+    };
+
+    private final BleCharacteristic.ValueReadyCallback<ChTemperatureMeasurement.TemperatureMeasurementValue> mTemperatureListener =
+            new BleCharacteristic.ValueReadyCallback<ChTemperatureMeasurement.TemperatureMeasurementValue>() {
+                @Override
+                public void onValueReady(final ChTemperatureMeasurement.TemperatureMeasurementValue temperature) {
+
+                    Log.d(TAG, "temp read");
+
+                    Toast.makeText(getBaseContext(), "Temperature: " + temperature.getTemperatureMeasurement(), Toast.LENGTH_LONG).show();
+                }
+            };
+
 
     public static class MyActivityRecognitionIntentService extends IntentService {
 

@@ -79,10 +79,6 @@ public class ChooseWearableActivity extends AppCompatActivity {
                 if (state == BluetoothDevice.BOND_BONDED) { // && prevState == BluetoothDevice.BOND_BONDING) {
                     if (mBtDevice != null) {
                         Log.d(TAG, "Device paired!!!!");
-                        SharedPreferences.Editor edit = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit();
-                        edit.putString(Constants.PREFS_CHOSEN_WEARABLE_NAME, mBtDevice.getAddress());
-                        edit.putString(Constants.PREFS_CHOSEN_WEARABLE_MAC, mBtDevice.getName());
-                        edit.commit();
                         Toast.makeText(ChooseWearableActivity.this, "Device paired!", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(ChooseWearableActivity.this, "Something went wrong, while pairing!", Toast.LENGTH_LONG).show();
@@ -130,18 +126,16 @@ public class ChooseWearableActivity extends AppCompatActivity {
                 stopScan();
                 mBtDevice = mWearableListAdapter.getItem(position).getBluetoothDevice();
                 Assert.assertTrue(mBtDevice != null);
+
+                SharedPreferences.Editor edit = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit();
+                edit.putString(Constants.PREFS_CHOSEN_WEARABLE_NAME, mBtDevice.getName());
+                edit.putString(Constants.PREFS_CHOSEN_WEARABLE_MAC, mBtDevice.getAddress());
+                edit.commit();
+
                 pairDevice(mBtDevice);
                 //connectToBT(addr);
             }
         });
-
-        if (SensorsHelper.isBluetoothEnabled()) {
-            mNoWearables.setText(R.string.no_angel_sensors_found);
-            startScan();
-        } else {
-            mNoWearables.setText(R.string.disabled_bluetooth_msg);
-            mViewSwitcher.setDisplayedChild(1);
-        }
 
         IntentFilter intent = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
         registerReceiver(mPairReceiver, intent);
@@ -165,8 +159,23 @@ public class ChooseWearableActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         unscheduleUpdaters();
+        if(mPairReceiver != null){
+            unregisterReceiver(mPairReceiver);
+        }
         if (mBleDevice != null) {
             mBleDevice.disconnect();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (SensorsHelper.isBluetoothEnabled()) {
+            mNoWearables.setText(R.string.no_angel_sensors_found);
+            startScan();
+        } else {
+            mNoWearables.setText(R.string.disabled_bluetooth_msg);
+            mViewSwitcher.setDisplayedChild(1);
         }
     }
 

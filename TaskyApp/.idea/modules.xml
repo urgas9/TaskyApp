@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SensorManager/SensorManager.iml" filepath="$PROJECT_DIR$/SensorManager/SensorManager.iml" />
       <module fileurl="file://$PROJECT_DIR$/TaskyApp.iml" filepath="$PROJECT_DIR$/TaskyApp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/angel-sdk-debug/angel-sdk-debug.iml" filepath="$PROJECT_DIR$/angel-sdk-debug/angel-sdk-debug.iml" />
+      <module fileurl="file://$PROJECT_DIR$/angel-sdk/angel-sdk.iml" filepath="$PROJECT_DIR$/angel-sdk/angel-sdk.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

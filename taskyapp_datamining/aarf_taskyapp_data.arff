@@ -1,9 +1,0 @@
-% Users Dataset
-@RELATION users
-
-@ATTRIBUTE label NUMERIC
-@ATTRIBUTE num_wifi_devices NUMERIC
-@ATTRIBUTE num_bluetooth_devices NUMERIC
-@ATTRIBUTE accelerometer_mean_x NUMERIC
-@ATTRIBUTE accelerometer_mean_y NUMERIC
-@ATTRIBUTE accelerometer_mean_z NUMERIC

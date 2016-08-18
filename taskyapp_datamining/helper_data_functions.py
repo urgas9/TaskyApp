@@ -82,3 +82,13 @@ def get_hour_of_sensing(data):
         date_hour = "?"
 
     return date_hour
+
+
+def get_day_of_sensing(data):
+    t_started = get_field_param_value(data, ["t_started"])
+    if t_started != "?":
+        date_day = datetime.fromtimestamp(float(t_started) / 1000).weekday()
+    else:
+        date_day = "?"
+
+    return date_day

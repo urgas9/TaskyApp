@@ -62,7 +62,9 @@ public class ListWearableItemsAdapter extends ArrayAdapter<ListWearableItem> {
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
             String wearableMac = prefs.getString(Constants.PREFS_CHOSEN_WEARABLE_MAC, "");
             ImageView itemSelected = (ImageView) view.findViewById(R.id.wearable_selected);
+            Log.d(TAG, "Item key: " + item.getItemKey() + " saved mac: " + wearableMac);
             if(item.getItemKey().equals(wearableMac)) {
+                Log.d(TAG, "Making it visible.");
                 itemSelected.setVisibility(View.VISIBLE);
             }
             else{
