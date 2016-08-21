@@ -26,7 +26,6 @@ import com.angel.sdk.ChHeartRateMeasurement;
 import com.angel.sdk.ChTemperatureMeasurement;
 import com.angel.sdk.SrvHealthThermometer;
 import com.angel.sdk.SrvHeartRate;
-import com.angel.sdk.SrvWaveformSignal;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.ActivityRecognition;
@@ -64,6 +63,7 @@ import si.uni_lj.fri.taskyapp.LabelTaskActivity;
 import si.uni_lj.fri.taskyapp.R;
 import si.uni_lj.fri.taskyapp.data.ActivityData;
 import si.uni_lj.fri.taskyapp.data.AmbientLightData;
+import si.uni_lj.fri.taskyapp.data.AngelSensorData;
 import si.uni_lj.fri.taskyapp.data.EnvironmentData;
 import si.uni_lj.fri.taskyapp.data.LocationData;
 import si.uni_lj.fri.taskyapp.data.MotionSensorData;
@@ -110,6 +110,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
     private Runnable mBluetoothPeriodicReader;
     private static final int RSSI_UPDATE_INTERVAL = 2000; // Milliseconds
     private BleDevice mAngelSensorBleDevice;
+    private AngelSensorData mAngelSensorData;
 
     public SenseDataIntentService() {
         super("SenseDataIntentService");
@@ -161,6 +162,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             return;
         }
 
+        mAngelSensorData = new AngelSensorData();
         if(SensorsHelper.isBluetoothEnabled()){
             mAngelSensorBleDevice = connectToAngelSensor();
 
@@ -383,6 +385,18 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         if (userLabel > 0) {
             srd.setLabel(userLabel);
         }
+
+        if(mAngelSensorData.waitForData()){
+            try {
+                Log.d(TAG, "Waiting to get more AngelSensor data.");
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        Log.d(TAG, "AngelSensor data: " + mAngelSensorData.toString());
+        srd.setAngelSensorData(mAngelSensorData);
+
         Log.d(TAG, "Finishing with SenseDataIntentService method.");
         Log.d(TAG, "Result: " + new Gson().toJson(srd));
         // Persisting sensor readings to database
@@ -412,7 +426,6 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         if(mAngelSensorBleDevice != null) {
             mAngelSensorBleDevice.disconnect();
         }
-
     }
 
     @SuppressLint("CommitPrefEdits")
@@ -626,10 +639,13 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             public void onBluetoothServicesDiscovered(com.angel.sdk.BleDevice bleDevice) {
                 //bleDevice.getService(SrvActivityMonitoring.class).getStepCount()
                 //        .enableNotifications(mStepCountListener);
-                Log.d(TAG, "Register heart rate...");
+                Log.d(TAG, "Register to AngelSensor services...");
+
+                mAngelSensorData.setConnected(true);
+
                 bleDevice.getService(SrvHeartRate.class).getHeartRateMeasurement().enableNotifications(mHeartRateListener);
                 bleDevice.getService(SrvHealthThermometer.class).getTemperatureMeasurement().enableNotifications(mTemperatureListener);
-                bleDevice.getService(SrvHealthThermometer.class).getIntermediateTemperature().enableNotifications(mTemperatureListener);
+                //bleDevice.getService(SrvHealthThermometer.class).getIntermediateTemperature().enableNotifications(mTemperatureListener);
                 //bleDevice.getService(SrvWaveformSignal.class).getOpticalWaveform().enableNotifications(mOpticalWaveformListener);
                 //bleDevice.getService(SrvWaveformSignal.class).getAccelerationWaveform().enableNotifications(mAccelerationWaveformListener);
 
@@ -640,25 +656,25 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
             @Override
             public void onBluetoothDeviceDisconnected() {
-
+                Log.d(TAG, "AngelSensor disconnected.");
             }
 
             @Override
-            public void onReadRemoteRssi(int i) {
-
-                Log.d(TAG, "RSSI read");
+            public void onReadRemoteRssi(int rssi) {
+                // RSSI = Received Signal Strength Indicator
+                Log.d(TAG, "AngelSensor RSSI read (value = " + rssi + ")");
 
             }
         };
         mBluetoothHandler = new Handler(this.getMainLooper());
 
-        mAngelSensorBleDevice = new com.angel.sdk.BleDevice(getBaseContext(), mDeviceLifecycleCallback, mBluetoothHandler);
+        mAngelSensorBleDevice = new com.angel.sdk.BleDevice(getApplicationContext(), mDeviceLifecycleCallback, mBluetoothHandler);
 
         try {
             Log.d(TAG, "Register h.r.");
             mAngelSensorBleDevice.registerServiceClass(SrvHeartRate.class);
             mAngelSensorBleDevice.registerServiceClass(SrvHealthThermometer.class);
-            mAngelSensorBleDevice.registerServiceClass(SrvWaveformSignal.class);
+            //mAngelSensorBleDevice.registerServiceClass(SrvWaveformSignal.class);
 
             Log.d(TAG, "Done");
 
@@ -666,11 +682,11 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             throw new AssertionError();
         }
 
-        Log.d(TAG, "Connecting to Angel Sensor.");
+        Log.d(TAG, "Connecting to AngelSensor.");
         try{
             mAngelSensorBleDevice.connect(angelSensorMac);
         } catch (Exception e){
-            Log.e(TAG, "Can't connect to your Angel Sensor: " + e.getMessage());
+            Log.e(TAG, "Can't connect to your AngelSensor: " + e.getMessage());
         }
 
         mBluetoothHandler.post(mBluetoothPeriodicReader);
@@ -682,9 +698,11 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         @Override
         public void onValueReady(final ChHeartRateMeasurement.HeartRateMeasurementValue hrMeasurement) {
 
-            Log.d(TAG, "heart rate read");
+            int hearRateValue = hrMeasurement.getHeartRateMeasurement();
 
-            Toast.makeText(getBaseContext(), "HR: " + hrMeasurement.getHeartRateMeasurement(), Toast.LENGTH_LONG).show();
+            Log.d(TAG, "AngelSensor: Heart Rate read (" + hearRateValue + ")");
+            mAngelSensorData.setHearRate(hearRateValue);
+            Toast.makeText(getBaseContext(), "Heart Rate: " + hearRateValue, Toast.LENGTH_LONG).show();
         }
 
     };
@@ -694,7 +712,9 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
                 @Override
                 public void onValueReady(final ChTemperatureMeasurement.TemperatureMeasurementValue temperature) {
 
-                    Log.d(TAG, "temp read");
+                    Float temperatureValue = temperature.getTemperatureMeasurement();
+                    Log.d(TAG, "AngelSensor: temp read (" + temperatureValue + "°C)");
+                    mAngelSensorData.setTemperature(temperatureValue);
 
                     Toast.makeText(getBaseContext(), "Temperature: " + temperature.getTemperatureMeasurement(), Toast.LENGTH_LONG).show();
                 }

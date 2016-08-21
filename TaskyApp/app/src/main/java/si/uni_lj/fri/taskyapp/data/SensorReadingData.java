@@ -62,6 +62,9 @@ public class SensorReadingData {
     @SerializedName("volume_settings")
     private VolumeSettingsData volumeSettingsData;
 
+    @SerializedName("angel_sensor")
+    private AngelSensorData angelSensorData;
+
     private Integer label; // Label on Likert scale 1-5 (easy - hard)
     @SerializedName("labeled_after_notif_seconds")
     private Integer labeledAfterNotifSeconds;
@@ -210,6 +213,14 @@ public class SensorReadingData {
         this.labeledAfterNotifSeconds = labeledAfterNotifSeconds;
     }
 
+    public AngelSensorData getAngelSensorData() {
+        return angelSensorData;
+    }
+
+    public void setAngelSensorData(AngelSensorData angelSensorData) {
+        this.angelSensorData = angelSensorData;
+    }
+
     @Override
     public String toString() {
         return "SensorReadingData{" +
@@ -227,6 +238,7 @@ public class SensorReadingData {
                 ", screenStatusData=" + screenStatusData +
                 ", calendarEvents=" + calendarEvents +
                 ", volumeSettingsData=" + volumeSettingsData +
+                ", angelSensorData=" + angelSensorData +
                 ", labeledAfterNotifSeconds=" + labeledAfterNotifSeconds +
                 ", label=" + label +
                 ", dbRecordId=" + dbRecordId +

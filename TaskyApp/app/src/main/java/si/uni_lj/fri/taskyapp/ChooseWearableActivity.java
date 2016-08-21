@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -22,9 +23,6 @@ import android.widget.ViewSwitcher;
 import com.angel.sdk.BleDevice;
 import com.angel.sdk.BleScanner;
 import com.angel.sdk.BluetoothInaccessibleException;
-import com.angel.sdk.SrvHealthThermometer;
-import com.angel.sdk.SrvHeartRate;
-import com.angel.sdk.SrvWaveformSignal;
 
 import junit.framework.Assert;
 
@@ -68,29 +66,7 @@ public class ChooseWearableActivity extends AppCompatActivity {
         }
     };
     private BluetoothDevice mBtDevice;
-    private final BroadcastReceiver mPairReceiver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-
-            if (BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(action)) {
-                final int state = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.ERROR);
-                final int prevState = intent.getIntExtra(BluetoothDevice.EXTRA_PREVIOUS_BOND_STATE, BluetoothDevice.ERROR);
-
-                if (state == BluetoothDevice.BOND_BONDED) { // && prevState == BluetoothDevice.BOND_BONDING) {
-                    if (mBtDevice != null) {
-                        Log.d(TAG, "Device paired!!!!");
-                        Toast.makeText(ChooseWearableActivity.this, "Device paired!", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(ChooseWearableActivity.this, "Something went wrong, while pairing!", Toast.LENGTH_LONG).show();
-                    }
-
-                } else if (state == BluetoothDevice.BOND_NONE && prevState == BluetoothDevice.BOND_BONDED) {
-                    Log.d(TAG, "Device unpaired.");
-                }
-
-            }
-        }
-    };
+    private BroadcastReceiver mPairReceiver;
     private Handler mHandler;
     private Runnable mPeriodicReader;
 
@@ -117,6 +93,7 @@ public class ChooseWearableActivity extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         if (ab != null) {
             ab.setTitle(R.string.pair_angel_sensor);
+            ab.setDisplayHomeAsUpEnabled(true);
         }
         mListView.setEmptyView(findViewById(R.id.no_wearables_view));
         mListView.setAdapter(mWearableListAdapter);
@@ -132,10 +109,36 @@ public class ChooseWearableActivity extends AppCompatActivity {
                 edit.putString(Constants.PREFS_CHOSEN_WEARABLE_MAC, mBtDevice.getAddress());
                 edit.commit();
 
+                mWearableListAdapter.notifyDataSetChanged();
+
                 pairDevice(mBtDevice);
                 //connectToBT(addr);
             }
         });
+
+        mPairReceiver = new BroadcastReceiver() {
+            public void onReceive(Context context, Intent intent) {
+                String action = intent.getAction();
+
+                if (BluetoothDevice.ACTION_BOND_STATE_CHANGED.equals(action)) {
+                    final int state = intent.getIntExtra(BluetoothDevice.EXTRA_BOND_STATE, BluetoothDevice.ERROR);
+                    final int prevState = intent.getIntExtra(BluetoothDevice.EXTRA_PREVIOUS_BOND_STATE, BluetoothDevice.ERROR);
+
+                    if (state == BluetoothDevice.BOND_BONDED) { // && prevState == BluetoothDevice.BOND_BONDING) {
+                        if (mBtDevice != null) {
+                            Log.d(TAG, "Device paired!!!!");
+                            Toast.makeText(ChooseWearableActivity.this, "Device paired!", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(ChooseWearableActivity.this, "Something went wrong, while pairing!", Toast.LENGTH_LONG).show();
+                        }
+
+                    } else if (state == BluetoothDevice.BOND_NONE && prevState == BluetoothDevice.BOND_BONDED) {
+                        Log.d(TAG, "Device unpaired.");
+                    }
+
+                }
+            }
+        };
 
         IntentFilter intent = new IntentFilter(BluetoothDevice.ACTION_BOND_STATE_CHANGED);
         registerReceiver(mPairReceiver, intent);
@@ -158,7 +161,6 @@ public class ChooseWearableActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        unscheduleUpdaters();
         if(mPairReceiver != null){
             unregisterReceiver(mPairReceiver);
         }
@@ -177,6 +179,17 @@ public class ChooseWearableActivity extends AppCompatActivity {
             mNoWearables.setText(R.string.disabled_bluetooth_msg);
             mViewSwitcher.setDisplayedChild(1);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void startScan() {
@@ -207,66 +220,4 @@ public class ChooseWearableActivity extends AppCompatActivity {
         }
     }
 
-    private void scheduleUpdaters() {
-        mHandler.post(mPeriodicReader);
-    }
-
-    private void unscheduleUpdaters() {
-        mHandler.removeCallbacks(mPeriodicReader);
-    }
-
-    private void connectToBT(String address) {
-        if (mBleDevice != null) {
-            mBleDevice.disconnect();
-        }
-
-        BleDevice.LifecycleCallback mDeviceLifecycleCallback = new BleDevice.LifecycleCallback() {
-            @Override
-            public void onBluetoothServicesDiscovered(BleDevice bleDevice) {
-                //bleDevice.getService(SrvActivityMonitoring.class).getStepCount()
-                //        .enableNotifications(mStepCountListener);
-                Log.d(TAG, "Register heart rate...");
-                //bleDevice.getService(SrvHeartRate.class).getHeartRateMeasurement().enableNotifications(mHeartRateListener);
-                //bleDevice.getService(SrvHealthThermometer.class).getTemperatureMeasurement().enableNotifications(mTemperatureListener);
-                //bleDevice.getService(SrvHealthThermometer.class).getIntermediateTemperature().enableNotifications(mTemperatureListener);
-                //bleDevice.getService(SrvWaveformSignal.class).getOpticalWaveform().enableNotifications(mOpticalWaveformListener);
-                //bleDevice.getService(SrvWaveformSignal.class).getAccelerationWaveform().enableNotifications(mAccelerationWaveformListener);
-
-                Log.d(TAG, "Done");
-
-                //bleDevice.getService(SrvBattery.class).getBatteryLevel().enableNotifications(mBatteryLevelListener);
-            }
-
-            @Override
-            public void onBluetoothDeviceDisconnected() {
-
-            }
-
-            @Override
-            public void onReadRemoteRssi(int i) {
-
-                Log.d(TAG, "RSSI read");
-
-            }
-        };
-
-        mBleDevice = new BleDevice(this, mDeviceLifecycleCallback, mHandler);
-
-        try {
-            Log.d(TAG, "Register h.r.");
-            mBleDevice.registerServiceClass(SrvHeartRate.class);
-            mBleDevice.registerServiceClass(SrvHealthThermometer.class);
-            mBleDevice.registerServiceClass(SrvWaveformSignal.class);
-
-            Log.d(TAG, "Done");
-
-        } catch (Exception e) {
-            throw new AssertionError();
-        }
-
-        mBleDevice.connect(address);
-
-        scheduleUpdaters();
-
-    }
 }

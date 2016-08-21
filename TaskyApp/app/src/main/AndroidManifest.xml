@@ -147,6 +147,12 @@
             android:name=".ChooseWearableActivity"
             android:screenOrientation="portrait">
         </activity>
+
+
+        <service
+            android:name="com.angel.sdk.BleController"
+            android:enabled="true" >
+        </service>
     </application>
 
 </manifest>
