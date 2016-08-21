@@ -85,6 +85,11 @@ print first_release_millis
 
 
 best_user_device_id = "d1a0319b57367267"
+second_best_device_id = "b5a838db2b5ce0db"
+third_best_device_id = "2a0083ebe04d60a1"
+
+best_user_device_id = third_best_device_id
+
 arff_data = []
 arff_data_best_user = []
 set_user_record_tuple = set()
@@ -295,7 +300,7 @@ arff.dump(arff_dataset, f)
 f.close()
 
 arff_dataset_best_user["data"] = arff_data_best_user
-f1 = open("arff_taskyapp_data_232_best_user.arff", 'wb')
+f1 = open("arff_taskyapp_data_232_third_best_user.arff", 'wb')
 arff.dump(arff_dataset_best_user, f1)
 f1.close()
 

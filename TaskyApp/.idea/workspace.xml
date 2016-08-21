@@ -10,15 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9fe62428-7497-4113-9934-9077606f95a4" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/AngelSensorData.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../AngelTest/.idea/misc.xml" afterPath="$PROJECT_DIR$/../AngelTest/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/angel-sdk/angel-sdk.iml" afterPath="$PROJECT_DIR$/angel-sdk/angel-sdk.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/ChooseWearableActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/ChooseWearableActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/SensorReadingData.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/SensorReadingData.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../taskyapp_datamining/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../taskyapp_datamining/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../taskyapp_datamining/taskyapp_data_script.py" afterPath="$PROJECT_DIR$/../taskyapp_datamining/taskyapp_data_script.py" />
     </list>
@@ -4659,7 +4652,13 @@
       <option name="project" value="LOCAL" />
       <updated>1471514393008</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="taskyapp now connects to AngelSensor and reads it's temperature (and heart rate)">
+      <created>1471780361839</created>
+      <option name="number" value="00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1471780361839</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -4753,7 +4752,8 @@
     <MESSAGE value="bug fix with too many alarm firings" />
     <MESSAGE value="activity for pairing an angel sensor" />
     <MESSAGE value="included angel sensor sdk source, new files added, data mining changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="included angel sensor sdk source, new files added, data mining changes" />
+    <MESSAGE value="taskyapp now connects to AngelSensor and reads it's temperature (and heart rate)" />
+    <option name="LAST_COMMIT_MESSAGE" value="taskyapp now connects to AngelSensor and reads it's temperature (and heart rate)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
