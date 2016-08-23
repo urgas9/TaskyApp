@@ -10,9 +10,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9fe62428-7497-4113-9934-9077606f95a4" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../AngelTest/.idea/misc.xml" afterPath="$PROJECT_DIR$/../AngelTest/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/angel-sdk/angel-sdk.iml" afterPath="$PROJECT_DIR$/angel-sdk/angel-sdk.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/ChooseWearableActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/ChooseWearableActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../taskyapp_datamining/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../taskyapp_datamining/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../taskyapp_datamining/helper_data_functions.py" afterPath="$PROJECT_DIR$/../taskyapp_datamining/helper_data_functions.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../taskyapp_datamining/helper_functions.py" afterPath="$PROJECT_DIR$/../taskyapp_datamining/helper_functions.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../taskyapp_datamining/taskyapp_data_script.py" afterPath="$PROJECT_DIR$/../taskyapp_datamining/taskyapp_data_script.py" />
     </list>
     <ignored path="TaskyApp.iws" />
@@ -44,16 +50,10 @@
       <file leaf-file-name="ChooseWearableActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/ChooseWearableActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.12177122">
-              <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.55128205">
+              <caret line="168" column="59" selection-start-line="168" selection-start-column="59" selection-end-line="168" selection-end-column="59" />
               <folding>
-                <element signature="e#3290#3316#0" expanded="true" />
-                <element signature="e#3540#4366#0" expanded="true" />
-                <element signature="e#4365#4366#0" expanded="true" />
-                <element signature="e#4394#5639#0" expanded="true" />
-                <element signature="e#5638#5639#0" expanded="true" />
-                <element signature="e#6579#6610#0" expanded="true" />
-                <element signature="e#6688#6719#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -62,13 +62,23 @@
       <file leaf-file-name="SenseDataIntentService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.1578948">
-              <caret line="639" column="82" selection-start-line="639" selection-start-column="82" selection-end-line="639" selection-end-column="82" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="154" column="40" selection-start-line="154" selection-start-column="40" selection-end-line="154" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#31330#31331#0" expanded="true" />
                 <element signature="e#31401#31402#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SensingDecisionHelper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/global/SensingDecisionHelper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="196" column="121" selection-start-line="196" selection-start-column="121" selection-end-line="196" selection-end-column="121" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -83,80 +93,52 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BleCharacteristic.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/angel-sdk/src/main/java/com/angel/sdk/BleCharacteristic.java">
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="91" column="16" selection-start-line="91" selection-start-column="16" selection-end-line="91" selection-end-column="16" />
+              <caret line="7" column="5" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SrvHeartRate.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/angel-sdk/src/main/java/com/angel/sdk/SrvHeartRate.java">
+      <file leaf-file-name="KeepSensingAliveReceiver.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/KeepSensingAliveReceiver.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="39" column="25" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="25" />
+              <caret line="30" column="46" selection-start-line="30" selection-start-column="46" selection-end-line="30" selection-end-column="46" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SrvActivityMonitoring.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/angel-sdk/src/main/java/com/angel/sdk/SrvActivityMonitoring.java">
+      <file leaf-file-name="SensingInitiator.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/SensingInitiator.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
+              <caret line="178" column="61" selection-start-line="178" selection-start-column="61" selection-end-line="178" selection-end-column="61" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SrvTerminal.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/angel-sdk/src/main/java/com/angel/sdk/SrvTerminal.java">
+      <file leaf-file-name="Constants.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="38" column="13" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="13" />
+              <caret line="18" column="112" selection-start-line="18" selection-start-column="112" selection-end-line="19" selection-end-column="61" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ChHeartRateMeasurement.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/angel-sdk/src/main/java/com/angel/sdk/ChHeartRateMeasurement.java">
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="95" column="19" selection-start-line="95" selection-start-column="19" selection-end-line="95" selection-end-column="19" />
-              <folding>
-                <element signature="e#4022#4023#0" expanded="true" />
-                <element signature="e#4074#4075#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AngelSensorData.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/AngelSensorData.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="35" column="35" selection-start-line="35" selection-start-column="35" selection-end-line="35" selection-end-column="35" />
-              <folding>
-                <element signature="e#251#252#0" expanded="true" />
-                <element signature="e#299#300#0" expanded="true" />
-                <element signature="e#336#337#0" expanded="true" />
-                <element signature="e#370#371#0" expanded="true" />
-                <element signature="e#421#422#0" expanded="true" />
-                <element signature="e#460#461#0" expanded="true" />
-                <element signature="e#497#498#0" expanded="true" />
-                <element signature="e#531#532#0" expanded="true" />
-                <element signature="e#584#585#0" expanded="true" />
-                <element signature="e#630#631#0" expanded="true" />
-                <element signature="e#666#667#0" expanded="true" />
-                <element signature="e#697#698#0" expanded="true" />
-                <element signature="e#746#747#0" expanded="true" />
-                <element signature="e#786#787#0" expanded="true" />
-              </folding>
+              <caret line="154" column="18" selection-start-line="154" selection-start-column="18" selection-end-line="154" selection-end-column="18" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -180,6 +162,11 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="GenerateSignedApkSettings">
+    <option name="KEY_STORE_PATH" value="D:\Dropbox\FRI\2.stopnja\2.letnik\MasterThesis\GitHub_repo\TaskyApp\release-key.jks" />
+    <option name="KEY_ALIAS" value="taskyapp" />
+    <option name="REMEMBER_PASSWORDS" value="true" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -3234,7 +3221,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="7357290504944" />
+        <entry key="$PROJECT_DIR$" value="7357585191687" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -3903,13 +3890,13 @@
         <option value="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/adapter/ListWearableItemsAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/wearable_item.xml" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/angel-sdk/build.gradle" />
         <option value="$PROJECT_DIR$/angel-sdk/src/main/java/com/angel/sdk/BleDevice.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/SensorReadingData.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/data/AngelSensorData.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/ChooseWearableActivity.java" />
       </list>
     </option>
@@ -3918,7 +3905,7 @@
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1868" />
-    <option name="height" value="1092" />
+    <option name="height" value="1096" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -3945,7 +3932,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -3962,6 +3948,163 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope">
+        <subPane subId="Production">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="app">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="app">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="TaskyApp">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="TaskyApp">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="app">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="app">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="app">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="app">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="test/java">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="si/uni_lj/fri/taskyapp">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="app">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="app">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="main">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="app">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="app">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="main">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="java">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="si/uni_lj/fri/taskyapp">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="app">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="app">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="src">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -4157,173 +4300,20 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope">
-        <subPane subId="Production">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="app">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="app">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="TaskyApp">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="TaskyApp">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="app">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="app">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="app">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="app">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="test/java">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="si/uni_lj/fri/taskyapp">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="app">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="app">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="main">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="app">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="app">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="main">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="java">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="si/uni_lj/fri/taskyapp">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="app">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="app">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="src">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="android.sdk-updates" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="android.sdk.path" value="D:/AndroidSDK" />
-    <property name="SearchEverywhereHistoryKey" value="wea&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/ChooseWearableActivity.java&#10;build&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/build.gradle&#10;sense&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java&#10;mani&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/AndroidManifest.xml&#10;main&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/res/layout/content_main.xml&#10;grad&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/build.gradle&#10;mainA&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java&#10;strings&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/res/values/strings.xml&#10;listdatait&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/res/layout/list_data_item.xml&#10;item&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/res/layout/wearable_item.xml&#10;list&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/res/layout/activity_list_data.xml&#10;color&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/res/values/colors.xml&#10;label&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/res/layout/activity_label_task.xml&#10;sensorH&#9;PSI&#9;JAVA://si.uni_lj.fri.taskyapp.global.SensorsHelper&#10;app&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java&#10;listdataA&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/ListDataActivity.java&#10;listD&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/res/layout/activity_list_data.xml&#10;constant&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java&#10;buil&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/build.gradle&#10;consta&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java&#10;sen&#9;PSI&#9;JAVA://si.uni_lj.fri.taskyapp.service.SenseDataIntentService&#10;apphelp&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java&#10;keep&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/KeepSensingAliveReceiver.java&#10;manife&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/AndroidManifest.xml&#10;maina&#9;PSI&#9;JAVA://si.uni_lj.fri.taskyapp.MainActivity&#10;sens&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java&#10;gradle.p&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/gradle.properties&#10;daily&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/AggregateDataDailyIntentService.java&#10;keepse&#9;PSI&#9;JAVA://si.uni_lj.fri.taskyapp.broadcast_receivers.KeepSensingAliveReceiver" />
+    <property name="SearchEverywhereHistoryKey" value="keepsen&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/KeepSensingAliveReceiver.java&#10;gradl&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/build.gradle&#10;wea&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/ChooseWearableActivity.java&#10;build&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/build.gradle&#10;sense&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java&#10;mani&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/AndroidManifest.xml&#10;main&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/res/layout/content_main.xml&#10;grad&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/build.gradle&#10;mainA&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/MainActivity.java&#10;strings&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/res/values/strings.xml&#10;listdatait&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/res/layout/list_data_item.xml&#10;item&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/res/layout/wearable_item.xml&#10;list&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/res/layout/activity_list_data.xml&#10;color&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/res/values/colors.xml&#10;label&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/res/layout/activity_label_task.xml&#10;sensorH&#9;PSI&#9;JAVA://si.uni_lj.fri.taskyapp.global.SensorsHelper&#10;app&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java&#10;listdataA&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/ListDataActivity.java&#10;listD&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/res/layout/activity_list_data.xml&#10;constant&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java&#10;buil&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/build.gradle&#10;consta&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java&#10;sen&#9;PSI&#9;JAVA://si.uni_lj.fri.taskyapp.service.SenseDataIntentService&#10;apphelp&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/global/AppHelper.java&#10;keep&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/KeepSensingAliveReceiver.java&#10;manife&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/AndroidManifest.xml&#10;maina&#9;PSI&#9;JAVA://si.uni_lj.fri.taskyapp.MainActivity&#10;sens&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java&#10;gradle.p&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/gradle.properties&#10;daily&#9;FILE&#9;file://D:/Dropbox/FRI/2.stopnja/2.letnik/MasterThesis/GitHub_repo/TaskyApp/app/src/main/java/si/uni_lj/fri/taskyapp/service/AggregateDataDailyIntentService.java&#10;keepse&#9;PSI&#9;JAVA://si.uni_lj.fri.taskyapp.broadcast_receivers.KeepSensingAliveReceiver" />
     <property name="device.picker.selection" value="00baa20e4894bee4" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../AngelTest" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/release-key.jks" />
     <property name="android.project.structure.last.selected" value="app" />
     <property name="android.project.structure.proportion" value="0.15" />
+    <property name="ExportApk.ApkPath" value="D:\Dropbox\FRI\2.stopnja\2.letnik\MasterThesis\GitHub_repo\TaskyApp\app" />
+    <property name="ExportApk.Flavors" value="" />
+    <property name="ExportApk.BuildType" value="debug" />
   </component>
   <component name="RecentsManager">
     <key name="android.template.packageName">
@@ -4658,11 +4648,17 @@
       <option name="project" value="LOCAL" />
       <updated>1471780361839</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="datamining changes">
+      <created>1471780387668</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1471780387668</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1868" height="1092" extended-state="0" />
+    <frame x="-8" y="-8" width="1868" height="1096" extended-state="6" />
     <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3290735" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
@@ -4671,7 +4667,7 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3684771" sideWeight="0.6339581" order="0" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32869378" sideWeight="0.5192944" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3272921" sideWeight="0.5192944" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32694355" sideWeight="0.49558985" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32302773" sideWeight="0.5181918" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32762313" sideWeight="0.49779493" order="11" side_tool="false" content_ui="tabs" />
@@ -4753,7 +4749,8 @@
     <MESSAGE value="activity for pairing an angel sensor" />
     <MESSAGE value="included angel sensor sdk source, new files added, data mining changes" />
     <MESSAGE value="taskyapp now connects to AngelSensor and reads it's temperature (and heart rate)" />
-    <option name="LAST_COMMIT_MESSAGE" value="taskyapp now connects to AngelSensor and reads it's temperature (and heart rate)" />
+    <MESSAGE value="datamining changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="datamining changes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -4817,28 +4814,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/SensingInitiator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.1929824">
-          <caret line="45" column="13" selection-start-line="45" selection-start-column="13" selection-end-line="45" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/KeepSensingAliveReceiver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="46" column="75" selection-start-line="46" selection-start-column="75" selection-end-line="46" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.9454546">
           <caret line="25" column="35" selection-start-line="25" selection-start-column="35" selection-end-line="25" selection-end-column="35" />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/adapter/ListWearableItem.java">
@@ -4856,13 +4839,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_list_data.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-8.036364">
           <caret line="26" column="67" selection-start-line="19" selection-start-column="8" selection-end-line="26" selection-end-column="67" />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/ListDataActivity.java">
@@ -4887,13 +4870,13 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_label_task.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.2727273">
           <caret line="120" column="8" selection-start-line="120" selection-start-column="8" selection-end-line="129" selection-end-column="41" />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
@@ -4904,33 +4887,33 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_choose_wearable.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="51" column="60" selection-start-line="51" selection-start-column="38" selection-end-line="51" selection-end-column="60" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_list_data.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_list_data.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="25" column="38" selection-start-line="25" selection-start-column="38" selection-end-line="25" selection-end-column="38" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_data_item.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_data_item.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="4" column="40" selection-start-line="4" selection-start-column="40" selection-end-line="8" selection-end-column="57" />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
@@ -4990,44 +4973,29 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_main.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="248" column="40" selection-start-line="248" selection-start-column="40" selection-end-line="248" selection-end-column="40" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/wearable_item.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/wearable_item.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="19" column="59" selection-start-line="19" selection-start-column="59" selection-end-line="19" selection-end-column="59" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/global/SensingDecisionHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4605621">
-          <caret line="181" column="74" selection-start-line="181" selection-start-column="74" selection-end-line="181" selection-end-column="74" />
-        </state>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="jar://D:/AndroidSDK/platforms/android-24/android.jar!/android/bluetooth/BluetoothDevice.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="22" column="29" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.10788758">
-          <caret line="7" column="29" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -5035,7 +5003,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="49" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="49" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -5043,15 +5010,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="52" column="4" selection-start-line="52" selection-start-column="4" selection-end-line="52" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -5067,32 +5025,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="49" column="13" selection-start-line="49" selection-start-column="13" selection-end-line="49" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#4445#0" expanded="false" />
-            <element signature="imports" expanded="false" />
-            <element signature="e#3305#3306#0" expanded="false" />
-            <element signature="e#3354#3355#0" expanded="false" />
-            <element signature="e#3498#3499#0" expanded="false" />
-            <element signature="e#3528#3529#0" expanded="false" />
-            <element signature="e#3670#3671#0" expanded="false" />
-            <element signature="e#3715#3716#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-39.692307">
-          <caret line="154" column="18" selection-start-line="154" selection-start-column="18" selection-end-line="154" selection-end-column="18" />
-          <folding>
-            <element signature="e#763#781#0" expanded="true" />
-            <element signature="e#1485#1503#0" expanded="true" />
-            <element signature="e#1719#1753#0" expanded="true" />
-            <element signature="e#3709#3735#0" expanded="true" />
-            <element signature="e#3951#3976#0" expanded="true" />
-            <element signature="e#4191#4224#0" expanded="true" />
-            <element signature="e#4597#4632#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -5118,10 +5050,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="112" column="21" selection-start-line="112" selection-start-column="21" selection-end-line="112" selection-end-column="21" />
-          <folding>
-            <element signature="e#4271#4272#0" expanded="false" />
-            <element signature="e#4325#4326#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -5129,10 +5057,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="95" column="19" selection-start-line="95" selection-start-column="19" selection-end-line="95" selection-end-column="19" />
-          <folding>
-            <element signature="e#4022#4023#0" expanded="true" />
-            <element signature="e#4074#4075#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -5140,7 +5064,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="38" column="13" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -5148,7 +5071,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="39" column="25" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -5156,7 +5078,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -5164,7 +5085,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="91" column="16" selection-start-line="91" selection-start-column="16" selection-end-line="91" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -5207,10 +5127,42 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="7" column="5" selection-start-line="7" selection-start-column="5" selection-end-line="7" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="154" column="18" selection-start-line="154" selection-start-column="18" selection-end-line="154" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/broadcast_receivers/KeepSensingAliveReceiver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="30" column="46" selection-start-line="30" selection-start-column="46" selection-end-line="30" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/SensingInitiator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="178" column="61" selection-start-line="178" selection-start-column="61" selection-end-line="178" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/service/SenseDataIntentService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.1578948">
-          <caret line="639" column="82" selection-start-line="639" selection-start-column="82" selection-end-line="639" selection-end-column="82" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="154" column="40" selection-start-line="154" selection-start-column="40" selection-end-line="154" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#31330#31331#0" expanded="true" />
@@ -5219,18 +5171,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/global/SensingDecisionHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="196" column="121" selection-start-line="196" selection-start-column="121" selection-end-line="196" selection-end-column="121" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/sensor/Constants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="18" column="112" selection-start-line="18" selection-start-column="112" selection-end-line="19" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/si/uni_lj/fri/taskyapp/ChooseWearableActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12177122">
-          <caret line="29" column="0" selection-start-line="29" selection-start-column="0" selection-end-line="29" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.55128205">
+          <caret line="168" column="59" selection-start-line="168" selection-start-column="59" selection-end-line="168" selection-end-column="59" />
           <folding>
-            <element signature="e#3290#3316#0" expanded="true" />
-            <element signature="e#3540#4366#0" expanded="true" />
-            <element signature="e#4365#4366#0" expanded="true" />
-            <element signature="e#4394#5639#0" expanded="true" />
-            <element signature="e#5638#5639#0" expanded="true" />
-            <element signature="e#6579#6610#0" expanded="true" />
-            <element signature="e#6688#6719#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

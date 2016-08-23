@@ -161,9 +161,14 @@ public class ChooseWearableActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if(mPairReceiver != null){
-            unregisterReceiver(mPairReceiver);
+        try {
+            if (mPairReceiver != null) {
+                unregisterReceiver(mPairReceiver);
+            }
+        }catch (Exception e){
+            Log.e(TAG, "Exception while receiver unregister: " + e.getMessage());
         }
+
         if (mBleDevice != null) {
             mBleDevice.disconnect();
         }
