@@ -41,7 +41,7 @@ public class ChooseWearableActivity extends AppCompatActivity {
 
     private static final String TAG = "ChooseWearableActivity";
     private static final int RSSI_UPDATE_INTERVAL = 3000; // Milliseconds
-    private static final int DEVICE_SCAN_INTERVAL = 3500; // Milliseconds
+    private static final int DEVICE_SCAN_INTERVAL = 6000; // Milliseconds
 
     BleScanner mBleScanner = null;
     BleDevice mBleDevice = null;
@@ -56,7 +56,7 @@ public class ChooseWearableActivity extends AppCompatActivity {
         @Override
         public void onBluetoothDeviceFound(BluetoothDevice device) {
             Log.d(TAG, "New device found addr " + device.getAddress() + " name " + device.getName());
-            if (device.getName() != null && device.getName().startsWith("Angel")) {
+            if (device.getName() != null && (device.getName().startsWith("Angel") || device.getName().startsWith("Mi"))) {
 
                 ListWearableItem newDevice = new ListWearableItem(device.getName(), device.getAddress(), device);
                 mWearableListAdapter.add(newDevice);

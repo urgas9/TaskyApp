@@ -48,6 +48,11 @@ import com.ubhave.sensormanager.data.pull.WifiData;
 import com.ubhave.sensormanager.data.pull.WifiScanResult;
 import com.ubhave.sensormanager.data.push.ScreenData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
+import com.zhaoxiaodan.miband.ActionCallback;
+import com.zhaoxiaodan.miband.MiBand;
+import com.zhaoxiaodan.miband.listeners.HeartRateNotifyListener;
+import com.zhaoxiaodan.miband.model.BatteryInfo;
+import com.zhaoxiaodan.miband.model.VibrationMode;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -84,6 +89,7 @@ import si.uni_lj.fri.taskyapp.sensor.SensorThreadsManager;
 
 /**
  * Created by urgas9 on 31. 12. 2015.
+ *
  */
 public class SenseDataIntentService extends IntentService implements GoogleApiClient.ConnectionCallbacks, SensorDataListener {
     //LogCat
@@ -164,6 +170,10 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
         mAngelSensorData = new AngelSensorData();
         if(SensorsHelper.isBluetoothEnabled()){
+
+            Log.d(TAG, "Connecting to MiBand.");
+            connectMiBand();
+            Log.d(TAG, "Connecting to AngelSensor.");
             mAngelSensorBleDevice = connectToAngelSensor();
 
             mBluetoothPeriodicReader = new Runnable() {
@@ -623,6 +633,65 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         return null;
     }
 
+    private BluetoothDevice connectMiBand(){
+        String macAddress = "C8:0F:10:11:09:44";
+        BluetoothDevice device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(macAddress);
+
+        final MiBand miband = new MiBand(getApplicationContext());
+        if(device != null){
+            miband.connect(device, new ActionCallback() {
+                @Override
+                public void onSuccess(Object data) {
+                    Log.e(TAG, "Connected!!!");
+                    miband.startHeartRateScan();
+                    miband.startVibration(VibrationMode.VIBRATION_WITHOUT_LED);
+                    miband.setHeartRateScanListener(new HeartRateNotifyListener() {
+                        @Override
+                        public void onNotify(int heartRate) {
+                            Log.d(TAG, "heart rate: " + heartRate);
+                        }
+                    });
+
+                    miband.getBatteryInfo(new ActionCallback() {
+
+                        @Override
+                        public void onSuccess(Object data) {
+                            BatteryInfo info = (BatteryInfo) data;
+                            Log.d(TAG, info.toString());
+                        }
+
+                        @Override
+                        public void onFail(int errorCode, String msg) {
+                            Log.d(TAG, "getBatteryInfo fail");
+                        }
+                    });
+
+                    miband.readRssi(new ActionCallback() {
+
+                        @Override
+                        public void onSuccess(Object data) {
+                            Log.d(TAG, "rssi:" + (int) data);
+                        }
+
+                        @Override
+                        public void onFail(int errorCode, String msg) {
+                            Log.d(TAG, "readRssi fail");
+                        }
+                    });
+                }
+
+                @Override
+                public void onFail(int errorCode, String msg) {
+                    Log.e(TAG, "Failed, errorCode: " + errorCode);
+                }
+            });
+        }
+        return device;
+    }
+    /**
+     * Method tries to connect to a BleDevice with a MAC Address
+     * @return
+     */
     private BleDevice connectToAngelSensor(){
         String angelSensorMac = mDefaultPrefs.getString(Constants.PREFS_CHOSEN_WEARABLE_MAC, null);
         if(angelSensorMac == null){
