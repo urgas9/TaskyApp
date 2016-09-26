@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2016, University of Ljubljana, Slovenia
+ *
+ * Gasper Urh, gu7668@student.uni-lj.si
+ *
+ * This library was developed as part of the paper submitted for the UbitTention workshop paper (in conjunction with UbiComp'16) and my master thesis. For more information, please visit http://projects.hcilab.org/ubittention/
+ *
+ * Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ */
+
 package si.uni_lj.fri.taskyapp.service;
 
 import android.Manifest;
@@ -89,7 +100,6 @@ import si.uni_lj.fri.taskyapp.sensor.SensorThreadsManager;
 
 /**
  * Created by urgas9 on 31. 12. 2015.
- *
  */
 public class SenseDataIntentService extends IntentService implements GoogleApiClient.ConnectionCallbacks, SensorDataListener {
     //LogCat
@@ -97,6 +107,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
     private static final int[] SENSOR_IDS = {
             SensorUtils.SENSOR_TYPE_LIGHT,
             SensorUtils.SENSOR_TYPE_SCREEN};
+    private static final int RSSI_UPDATE_INTERVAL = 2000; // Milliseconds
     private static List<ActivityData> mDetectedActivityList;
     private GoogleApiClient mGoogleApiClient;
     private PendingIntent mActivityRecognitionPendingIntent;
@@ -110,13 +121,36 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
     private float mMaxRangeLight;
     private long mCountLightValues;
     private SharedPreferences mDefaultPrefs;
-
     // ANGEL SENSOR
     private Handler mBluetoothHandler;
     private Runnable mBluetoothPeriodicReader;
-    private static final int RSSI_UPDATE_INTERVAL = 2000; // Milliseconds
     private BleDevice mAngelSensorBleDevice;
     private AngelSensorData mAngelSensorData;
+    private final BleCharacteristic.ValueReadyCallback<ChHeartRateMeasurement.HeartRateMeasurementValue> mHeartRateListener = new BleCharacteristic.ValueReadyCallback<ChHeartRateMeasurement.HeartRateMeasurementValue>() {
+
+        @Override
+        public void onValueReady(final ChHeartRateMeasurement.HeartRateMeasurementValue hrMeasurement) {
+
+            int hearRateValue = hrMeasurement.getHeartRateMeasurement();
+
+            Log.d(TAG, "AngelSensor: Heart Rate read (" + hearRateValue + ")");
+            mAngelSensorData.setHearRate(hearRateValue);
+            Toast.makeText(getBaseContext(), "Heart Rate: " + hearRateValue, Toast.LENGTH_LONG).show();
+        }
+
+    };
+    private final BleCharacteristic.ValueReadyCallback<ChTemperatureMeasurement.TemperatureMeasurementValue> mTemperatureListener =
+            new BleCharacteristic.ValueReadyCallback<ChTemperatureMeasurement.TemperatureMeasurementValue>() {
+                @Override
+                public void onValueReady(final ChTemperatureMeasurement.TemperatureMeasurementValue temperature) {
+
+                    Float temperatureValue = temperature.getTemperatureMeasurement();
+                    Log.d(TAG, "AngelSensor: temp read (" + temperatureValue + "°C)");
+                    mAngelSensorData.setTemperature(temperatureValue);
+
+                    Toast.makeText(getBaseContext(), "Temperature: " + temperature.getTemperatureMeasurement(), Toast.LENGTH_LONG).show();
+                }
+            };
 
     public SenseDataIntentService() {
         super("SenseDataIntentService");
@@ -169,7 +203,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         }
 
         mAngelSensorData = new AngelSensorData();
-        if(SensorsHelper.isBluetoothEnabled()){
+        if (SensorsHelper.isBluetoothEnabled()) {
 
             Log.d(TAG, "Connecting to MiBand.");
             connectMiBand();
@@ -287,7 +321,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         }
         sensorSubscriptionIds = new LinkedList<>();
 
-            SensorThreadsManager sensorThreadsManager = new SensorThreadsManager();
+        SensorThreadsManager sensorThreadsManager = new SensorThreadsManager();
 
         sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_ACCELEROMETER));
         sensorThreadsManager.submit(SensorCallableGenerator.getSensorDataCallable(sm, SensorUtils.SENSOR_TYPE_GYROSCOPE));
@@ -396,7 +430,7 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
             srd.setLabel(userLabel);
         }
 
-        if(mAngelSensorData.waitForData()){
+        if (mAngelSensorData.waitForData()) {
             try {
                 Log.d(TAG, "Waiting to get more AngelSensor data.");
                 Thread.sleep(3000);
@@ -428,12 +462,12 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         }
 
         // Clean after using AngelSensor
-        if(mBluetoothHandler != null && mBluetoothPeriodicReader != null){
+        if (mBluetoothHandler != null && mBluetoothPeriodicReader != null) {
             mBluetoothHandler.removeCallbacks(mBluetoothPeriodicReader);
         }
         mBluetoothHandler = null;
 
-        if(mAngelSensorBleDevice != null) {
+        if (mAngelSensorBleDevice != null) {
             mAngelSensorBleDevice.disconnect();
         }
     }
@@ -617,28 +651,28 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
 
     public BluetoothDevice getPairedAngelSensor() {
         String angelSensorMac = mDefaultPrefs.getString(Constants.PREFS_CHOSEN_WEARABLE_MAC, null);
-        if(angelSensorMac == null){
+        if (angelSensorMac == null) {
             return null;
         }
         BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
-        if(!btAdapter.isEnabled())
+        if (!btAdapter.isEnabled())
             btAdapter.enable();
 
         Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
 
-        for(BluetoothDevice d : pairedDevices)
-            if(d.getAddress().equalsIgnoreCase(angelSensorMac))
+        for (BluetoothDevice d : pairedDevices)
+            if (d.getAddress().equalsIgnoreCase(angelSensorMac))
                 return d;
 
         return null;
     }
 
-    private BluetoothDevice connectMiBand(){
+    private BluetoothDevice connectMiBand() {
         String macAddress = "C8:0F:10:11:09:44";
         BluetoothDevice device = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(macAddress);
 
         final MiBand miband = new MiBand(getApplicationContext());
-        if(device != null){
+        if (device != null) {
             miband.connect(device, new ActionCallback() {
                 @Override
                 public void onSuccess(Object data) {
@@ -688,13 +722,15 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         }
         return device;
     }
+
     /**
      * Method tries to connect to a BleDevice with a MAC Address
+     *
      * @return
      */
-    private BleDevice connectToAngelSensor(){
+    private BleDevice connectToAngelSensor() {
         String angelSensorMac = mDefaultPrefs.getString(Constants.PREFS_CHOSEN_WEARABLE_MAC, null);
-        if(angelSensorMac == null){
+        if (angelSensorMac == null) {
             Log.d(TAG, "There is no AngelSensor MAC saved.");
             return null;
         }
@@ -752,43 +788,15 @@ public class SenseDataIntentService extends IntentService implements GoogleApiCl
         }
 
         Log.d(TAG, "Connecting to AngelSensor.");
-        try{
+        try {
             mAngelSensorBleDevice.connect(angelSensorMac);
-        } catch (Exception e){
+        } catch (Exception e) {
             Log.e(TAG, "Can't connect to your AngelSensor: " + e.getMessage());
         }
 
         mBluetoothHandler.post(mBluetoothPeriodicReader);
         return mAngelSensorBleDevice;
     }
-
-    private final BleCharacteristic.ValueReadyCallback<ChHeartRateMeasurement.HeartRateMeasurementValue> mHeartRateListener = new BleCharacteristic.ValueReadyCallback<ChHeartRateMeasurement.HeartRateMeasurementValue>() {
-
-        @Override
-        public void onValueReady(final ChHeartRateMeasurement.HeartRateMeasurementValue hrMeasurement) {
-
-            int hearRateValue = hrMeasurement.getHeartRateMeasurement();
-
-            Log.d(TAG, "AngelSensor: Heart Rate read (" + hearRateValue + ")");
-            mAngelSensorData.setHearRate(hearRateValue);
-            Toast.makeText(getBaseContext(), "Heart Rate: " + hearRateValue, Toast.LENGTH_LONG).show();
-        }
-
-    };
-
-    private final BleCharacteristic.ValueReadyCallback<ChTemperatureMeasurement.TemperatureMeasurementValue> mTemperatureListener =
-            new BleCharacteristic.ValueReadyCallback<ChTemperatureMeasurement.TemperatureMeasurementValue>() {
-                @Override
-                public void onValueReady(final ChTemperatureMeasurement.TemperatureMeasurementValue temperature) {
-
-                    Float temperatureValue = temperature.getTemperatureMeasurement();
-                    Log.d(TAG, "AngelSensor: temp read (" + temperatureValue + "°C)");
-                    mAngelSensorData.setTemperature(temperatureValue);
-
-                    Toast.makeText(getBaseContext(), "Temperature: " + temperature.getTemperatureMeasurement(), Toast.LENGTH_LONG).show();
-                }
-            };
-
 
     public static class MyActivityRecognitionIntentService extends IntentService {
 

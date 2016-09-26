@@ -1,3 +1,7 @@
 <component name="CopyrightManager">
-  <settings default="" />
+  <settings default="TaskyApp Copyright">
+    <module2copyright>
+      <element module="All" copyright="TaskyApp Copyright" />
+    </module2copyright>
+  </settings>
 </component>

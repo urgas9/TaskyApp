@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2016, University of Ljubljana, Slovenia
+ *
+ * Gasper Urh, gu7668@student.uni-lj.si
+ *
+ * This library was developed as part of the paper submitted for the UbitTention workshop paper (in conjunction with UbiComp'16) and my master thesis. For more information, please visit http://projects.hcilab.org/ubittention/
+ *
+ * Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ */
+
 package si.uni_lj.fri.taskyapp.sensor;
 
 /**
@@ -41,10 +52,9 @@ public class Constants {
     public static final int REQUEST_CODE_ACTIVITY_UPDATES = 21;
     public static final int REQUEST_CODE_ALARM_UPDATES = 22;
     public static final int REQUEST_CODE_LOCATION_UPDATES = 23;
-    public static int NUM_OF_RANDOMLY_LABEL_NOTIFICATIONS_TO_SEND = 3;
-    public static String ACTION_NOTIF_BTN_NOT_IN_OFFICE = "not_in_office";
-
     public static final String PREFS_CHOSEN_WEARABLE_NAME = "PREFS_CHOSEN_WEARABLE_NAME";
     public static final String PREFS_CHOSEN_WEARABLE_MAC = "PREFS_CHOSEN_WEARABLE_MAC";
+    public static int NUM_OF_RANDOMLY_LABEL_NOTIFICATIONS_TO_SEND = 3;
+    public static String ACTION_NOTIF_BTN_NOT_IN_OFFICE = "not_in_office";
 
 }

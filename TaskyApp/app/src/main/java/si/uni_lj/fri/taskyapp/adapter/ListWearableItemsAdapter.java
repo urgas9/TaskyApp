@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2016, University of Ljubljana, Slovenia
+ *
+ * Gasper Urh, gu7668@student.uni-lj.si
+ *
+ * This library was developed as part of the paper submitted for the UbitTention workshop paper (in conjunction with UbiComp'16) and my master thesis. For more information, please visit http://projects.hcilab.org/ubittention/
+ *
+ * Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ */
+
 package si.uni_lj.fri.taskyapp.adapter;
 
 import android.content.Context;
@@ -23,10 +34,9 @@ import si.uni_lj.fri.taskyapp.sensor.Constants;
 
 public class ListWearableItemsAdapter extends ArrayAdapter<ListWearableItem> {
 
+    public static final String TAG = "ListWearableItemsAdpter";
     private final ArrayList<ListWearableItem> mItems;
     private final Context mContext;
-
-    public static final String TAG = "ListWearableItemsAdpter";
 
     public ListWearableItemsAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
@@ -36,7 +46,7 @@ public class ListWearableItemsAdapter extends ArrayAdapter<ListWearableItem> {
 
 
     public void addItem(ListWearableItem item) {
-        Log.d(TAG, "adding "+item.getItemName());
+        Log.d(TAG, "adding " + item.getItemName());
         mItems.add(item);
     }
 
@@ -63,11 +73,10 @@ public class ListWearableItemsAdapter extends ArrayAdapter<ListWearableItem> {
             String wearableMac = prefs.getString(Constants.PREFS_CHOSEN_WEARABLE_MAC, "");
             ImageView itemSelected = (ImageView) view.findViewById(R.id.wearable_selected);
             Log.d(TAG, "Item key: " + item.getItemKey() + " saved mac: " + wearableMac);
-            if(item.getItemKey().equals(wearableMac)) {
+            if (item.getItemKey().equals(wearableMac)) {
                 Log.d(TAG, "Making it visible.");
                 itemSelected.setVisibility(View.VISIBLE);
-            }
-            else{
+            } else {
                 itemSelected.setVisibility(View.GONE);
             }
             TextView itemNameView = (TextView) view.findViewById(R.id.wearable_name);
