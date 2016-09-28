@@ -42,6 +42,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyA2EHFaZ0JhQWSzeKThVHtDx_Kp82Agg_k"/>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="13e2f1c1cf34311a349f9ea7132fbad2f1d7405b"/>
 
         <activity
             android:name=".MainActivity"
@@ -59,37 +62,6 @@
                 <action android:name="android.intent.action.MAIN"/>
             </intent-filter>
         </activity>
-
-        <receiver
-            android:name=".broadcast_receivers.KeepSensingAliveReceiver"
-            android:enabled="true"
-            android:exported="false"
-            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
-                <!-- specific for HTC phones -->
-                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON"/>
-                <!-- Reboot intent -->
-                <action android:name="android.intent.action.REBOOT"/>
-                <action android:name="si.uni_lj.fri.taskyapp.KeepAliveAction"/>
-            </intent-filter>
-        </receiver>
-        <receiver android:name=".broadcast_receivers.ShowPrizeReminderNotificationReceiver"/>
-        <receiver android:name=".broadcast_receivers.ConnectivityChangedReceiver">
-            <intent-filter>
-                <action android:name="android.net.wifi.STATE_CHANGE"/>
-            </intent-filter>
-        </receiver>
-
-        <service android:name=".service.SenseDataIntentService"/>
-        <service android:name=".service.SenseDataIntentService$MyActivityRecognitionIntentService"/>
-        <service android:name=".service.ScreenStateService"/>
-        <service android:name=".service.SendDataToServerIntentService"/>
-
-        <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="13e2f1c1cf34311a349f9ea7132fbad2f1d7405b"/>
 
         <activity
             android:name=".LabelTaskActivity"
@@ -119,22 +91,12 @@
             android:screenOrientation="portrait">
         </activity>
 
-        <service
-            android:name=".service.AggregateDataDailyIntentService"
-            android:exported="false">
-        </service>
-
         <activity
             android:name=".GoogleMapFullScreenActivity"
             android:label=""
             android:parentActivityName=".StatisticsActivity"
             android:screenOrientation="portrait">
         </activity>
-
-        <service
-            android:name=".service.QueryGoogleFitSleepDataIntentService"
-            android:exported="false">
-        </service>
 
         <activity
             android:name=".SplashScreenActivity"
@@ -146,6 +108,55 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ChooseWearableActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <service
+            android:name=".service.QueryGoogleFitSleepDataIntentService"
+            android:exported="false">
+        </service>
+
+        <service
+            android:name=".service.AggregateDataDailyIntentService"
+            android:exported="false">
+        </service>
+
+        <service
+            android:name="com.angel.sdk.BleController"
+            android:enabled="true">
+        </service>
+
+        <service android:name=".service.SenseDataIntentService"/>
+        <service android:name=".service.SenseDataIntentService$MyActivityRecognitionIntentService"/>
+        <service android:name=".service.ScreenStateService"/>
+        <service android:name=".service.SendDataToServerIntentService"/>
+
+        <receiver
+            android:name=".broadcast_receivers.KeepSensingAliveReceiver"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
+                <!-- specific for HTC phones -->
+                <action android:name="com.htc.intent.action.QUICKBOOT_POWERON"/>
+                <!-- Reboot intent -->
+                <action android:name="android.intent.action.REBOOT"/>
+                <action android:name="si.uni_lj.fri.taskyapp.KeepAliveAction"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name=".broadcast_receivers.ShowPrizeReminderNotificationReceiver"/>
+
+        <receiver android:name=".broadcast_receivers.ConnectivityChangedReceiver">
+            <intent-filter>
+                <action android:name="android.net.wifi.STATE_CHANGE"/>
+            </intent-filter>
+        </receiver>
+
         <receiver
             android:name=".broadcast_receivers.NotificationActionsBroadcastReceiver"
             android:enabled="true">
@@ -154,16 +165,6 @@
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name=".ChooseWearableActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
-
-        <service
-            android:name="com.angel.sdk.BleController"
-            android:enabled="true">
-        </service>
     </application>
 
 </manifest>
