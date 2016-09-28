@@ -5,10 +5,10 @@ TaskyApp
 
 This project is part of TaskyApp system developed for a UbitTention paper and a master thesis at University of Ljubljana. You can find the following in the listed folders:
 
-0. TaskyApp: The code of the Android mobile app named TaskyApp.
-0. taskyapp_server: PHP and HTML code running on our server to store data and show the website.
-0. taskyapp_datamining: Python scripts used for data mining (descriptive statistics, feature extraction, voucher draw)
-0. graphics: Some images used in our research (screenshots, icons...)
+0. **TaskyApp**: The code of the Android mobile app named TaskyApp.
+0. **taskyapp_server**: PHP and HTML code running on our server to store data and show the website.
+0. **taskyapp_datamining**: Python scripts used for data mining (descriptive statistics, feature extraction, voucher draw)
+0. **graphics**: Some images used in our research (screenshots, icons...)
 
 # More information
 [TaskyApp website](http://193.2.72.121/)  
