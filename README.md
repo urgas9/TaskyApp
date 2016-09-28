@@ -20,5 +20,5 @@ If you use the code in research projects please cite:
 >G. Urh and V. Pejovic, [TaskyApp: Inferring Task Engagement via Smartphone Sensing](http://lrss.fri.uni-lj.si/Veljko/docs/Urh16Ubittention.pdf),  
 >Ubittention workshop with ACM UbiComp'16, Heidelberg, Germany, September 2016.
 
-For more information please read the [LICENSE](https://github.com/urgas9/TaskyApp/blob/master/License.md) file.
+For more information please read the [LICENSE](https://github.com/urgas9/TaskyApp/blob/master/LICENSE.md) file.
 
