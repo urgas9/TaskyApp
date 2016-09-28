@@ -2,6 +2,9 @@
 
 # Gasper Urh, gu7668@student.uni-lj.si
 
+# This project was developed as part of the paper submitted for the UbitTention workshop (in conjunction with
+# UbiComp'16) and my master thesis. For more information, please visit http://projects.hcilab.org/ubittention/
+
 # Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby
 # granted, provided that the above copyright notice and this permission notice appear in all copies.
 # THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING

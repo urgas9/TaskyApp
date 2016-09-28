@@ -27,3 +27,6 @@ proguard/
 *.log
 
 info_key.txt
+
+#IntelliJ
+.idea/

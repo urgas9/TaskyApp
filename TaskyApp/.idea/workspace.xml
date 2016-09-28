@@ -10,31 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9fe62428-7497-4113-9934-9077606f95a4" name="Default" comment="updated copyright">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../AngelTest/.idea/compiler.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../AngelTest/.idea/copyright/profiles_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../AngelTest/.idea/encodings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../AngelTest/.idea/gradle.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../AngelTest/.idea/misc.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../AngelTest/.idea/modules.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../AngelTest/.idea/runConfigurations.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../taskyapp_datamining/aarf_taskyapp_data" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../taskyapp_datamining/aarf_taskyapp_data_n.arff" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../ubitention_paper/SIGCHI-Reference-Format.bst" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../ubitention_paper/main.tex" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../ubitention_paper/sigchi-ext.cls" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../weka_outputs/bayes.BayesNet_trainingset" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../weka_outputs/bayes.bayesNet_crossvalidation" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../weka_outputs/lazy.LWL_crossvalidation" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../weka_outputs/meta.LogitBoost_crossvalidation" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../weka_outputs/meta.adaboostm1" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../weka_outputs/meta.bagging_crossvalidation" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../weka_outputs/meta.randomSubSpace" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../weka_outputs/trees.DecisionStump_crossvalidation" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../taskyapp_datamining/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../taskyapp_datamining/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../taskyapp_datamining/helper_data_functions.py" afterPath="$PROJECT_DIR$/../taskyapp_datamining/helper_data_functions.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../taskyapp_datamining/helper_functions.py" afterPath="$PROJECT_DIR$/../taskyapp_datamining/helper_functions.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../taskyapp_datamining/taskyapp_data_script.py" afterPath="$PROJECT_DIR$/../taskyapp_datamining/taskyapp_data_script.py" />
     </list>
     <ignored path="TaskyApp.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -79,11 +55,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="67" selection-start-line="8" selection-start-column="67" selection-end-line="8" selection-end-column="67" />
+            <state relative-caret-position="102">
+              <caret line="6" column="220" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="220" />
               <folding />
             </state>
           </provider>
@@ -92,10 +68,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.iml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="app.iml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/app.iml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2808">
+            <state relative-caret-position="0">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -5245,23 +5221,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/app.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="67" selection-start-line="8" selection-start-column="67" selection-end-line="8" selection-end-column="67" />
+        <state relative-caret-position="102">
+          <caret line="6" column="220" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="220" />
           <folding />
         </state>
       </provider>
       <provider editor-type-id="android-manifest">
         <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/app.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2808">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
       </provider>
     </entry>
   </component>
