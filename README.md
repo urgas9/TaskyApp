@@ -11,7 +11,7 @@ This project is part of TaskyApp system developed for a UbitTention paper and a 
 0. **graphics**: Some images used in our research (screenshots, icons...)
 
 # More information
-[TaskyApp website](http://193.2.72.121/)  
+### [TaskyApp website](http://193.2.72.121/)  
   
 <a href='https://play.google.com/store/apps/details?id=si.uni_lj.fri.taskyapp&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='http://steverichey.github.io/google-play-badge-svg/img/en_get.svg'/></a>
 
