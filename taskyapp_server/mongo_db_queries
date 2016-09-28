@@ -1,0 +1,26 @@
+---- MongoDB queries ----
+-> All auths: 
+db.users.find({}, {auth:1})
+
+-> All record timestamps for device_id: 
+db.users.find({"auth.device_id": "d1a0319b57367267"}, {"data.t_started": 1})
+
+-> Count them:
+db.users.aggregate( [ { $project: { auth: 1, num_readings: { $size: "$data" } } } ] )
+db.users.aggregate( [ { $project: { "auth.device_id": 1, num_readings: { $size: "$data.t_started" } } } ] )
+
+-> Only distinct timestamps:
+db.runCommand ( { distinct: "users", key: "data.t_started" } )
+
+-> Filtered out accelerometer, gyroscope and microphone data:
+db.users.find({"auth.device_id": "d1a0319b57367267"}, {"data.accelerometer": 0, "data.microphone": 0, "data.gyroscope": 0 })
+
+-> Copy data from one collection to another without duplicates:
+db.users.aggregate([ { $unwind: '$data' }, { $group: { _id: '$_id', auth: { $first: '$auth'}, data: { $addToSet: '$data' } } } ]).forEach( function(x){db.demo_users.insert(x)} );
+
+-> Export(dump) / import (restore)
+sudo mongodump --db taskyapp --collection users
+mongorestore -d taskyapp C:\xampp\htdocs\taskyApp_server\taskyapp\users.bson
+
+-> Start MongoDB deamon on Windows
+mongod.exe --dbpath "d:\MongoDb\data"

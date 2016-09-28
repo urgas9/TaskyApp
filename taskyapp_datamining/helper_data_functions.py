@@ -1,4 +1,20 @@
+# Copyright (c) 2016, University of Ljubljana, Slovenia
+
+# Gasper Urh, gu7668@student.uni-lj.si
+
+# Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby
+# granted, provided that the above copyright notice and this permission notice appear in all copies.
+# THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING
+# ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL,
+# DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+# WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE
+# OR PERFORMANCE OF THIS SOFTWARE.
+
+# This helper script is used to help us extract features out of an array objects after querying MongoDB
+
 from datetime import datetime
+
+default_missing_numeric = "?"
 
 
 def get_field_param_value(array, param_names_array):
@@ -12,27 +28,31 @@ def get_field_param_value(array, param_names_array):
 
 
 def get_bluetooth_num_devices(data):
+    global default_missing_numeric
+
     env = get_field_param_value(data, ["environment"])
     if env != "?":
         num = env["num_bluetooth_devices_nearby"]
         if num > 0 or num == 0 and env["bluetooth_turned_on"]:
             return num
         else:
-            return "?"
+            return default_missing_numeric
     else:
-        return "?"
+        return default_missing_numeric
 
 
 def get_wifi_num_devices(data):
+    global default_missing_numeric
+
     env = get_field_param_value(data, ["environment"])
     if env != "?":
         num = env["num_wifi_devices_nearby"]
         if num > 0 or num == 0 and env["wifi_turned_on"]:
             return num
         else:
-            return "?"
+            return default_missing_numeric
     else:
-        return "?"
+        return default_missing_numeric
 
 
 def get_screen_status(data):
@@ -48,6 +68,8 @@ def get_screen_status(data):
 
 
 def get_num_calendar_events(data):
+    global default_missing_numeric
+
     app_ver = get_field_param_value(data, ["app_version"])
     if app_ver == "?":
         print "WRONG APP VERSION, WTF?!"
@@ -61,7 +83,7 @@ def get_num_calendar_events(data):
     elif app_ver != "?" and app_ver > 9:
         count = 0
     else:
-        count = "?"
+        count = default_missing_numeric
 
     return count
 
@@ -75,11 +97,13 @@ def remove_duplicates_from_list(d):
 
 
 def get_hour_of_sensing(data):
+    global default_missing_numeric
+
     t_started = get_field_param_value(data, ["t_started"])
     if t_started != "?":
         date_hour = datetime.fromtimestamp(float(t_started) / 1000).hour
     else:
-        date_hour = "?"
+        date_hour = default_missing_numeric
 
     return date_hour
 

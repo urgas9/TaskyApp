@@ -1,4 +1,15 @@
-﻿<?php 
+<!--
+  ~ Copyright (c) 2016, University of Ljubljana, Slovenia
+  ~
+  ~ Gasper Urh, gu7668@student.uni-lj.si
+  ~
+  ~ This project was developed as part of the paper submitted for the UbitTention workshop (in conjunction with UbiComp'16) and my master thesis. For more information, please visit http://projects.hcilab.org/ubittention/
+  ~
+  ~ Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+  ~ THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+  -->
+<?php 
+// This script is the main api script to handle all calls and connects to the MongoDB
 
 $action = filter_input(INPUT_GET, "action");
 
@@ -16,6 +27,7 @@ switch ($action) {
         break;
     case "leaderboard_message":
         generateLeaderboardMessage();
+        //showWinnerMessage();
         break;
     case "info":
         echo "<h3>This is TaskyApp's server, say hi!</h3>";
@@ -52,12 +64,10 @@ function generateLeaderboardMessage(){
     global $usersCollection;
     
     $inputJSON = file_get_contents('php://input');
-    $input= json_decode( $inputJSON, TRUE ); //convert JSON into array
+    $input= json_decode( $inputJSON, TRUE );
     $myDeviceId = (string)$input["auth"]["device_id"];   
     
     $resultArray = array();
-    
-    // db.users.aggregate( [ { $project: { auth: 1, num_readings: { $size: "$data" } } } ] )
     
     $agrArray =  [ [ '$project' => [ 'auth' => 1, 'num_readings' => [ '$size' => '$data' ] ] ] ];
     $resultAggr = $usersCollection->aggregate($agrArray);
@@ -71,7 +81,6 @@ function generateLeaderboardMessage(){
     arsort($usrNumRecordsArray, 1);
     $ind = 0;
     foreach ($usrNumRecordsArray as $key => $value) {
-        //echo "Val: $value, key: $key, myDeviceId: $myDeviceId<br />";
         if($key === $myDeviceId){
             break;
         }
@@ -79,7 +88,7 @@ function generateLeaderboardMessage(){
     }
     $percentage = $ind / (count($usrNumRecordsArray)-1);
     if($percentage <= 0.2){
-        $leaderboardMessage = "Well done you are among 20% of all TaskyApp users.\n\n"
+        $leaderboardMessage = "Well done! You are among 20% of all TaskyApp users.\n\n"
                 . "Your chances of winning a voucher are very high, keep up the good work.";
     }
     else if($percentage <= 0.5){
@@ -90,14 +99,41 @@ function generateLeaderboardMessage(){
         $leaderboardMessage = "You are in the bottom half of all TaskyApp users.\n\n"
                 . "You will need to label tasks more frequently if you want to win a 50€ voucher.";
     }
-    //echo "You are " . ($ind + 1) . ". Now label morree!";
-    //echo "There are " . count($usrNumRecordsArray). " and you are " . ($ind + 1) . " which is equal to $percentage";
-    
-    //echo json_encode($resultAggr);
     
     $resultArray["success"] = true;
     $resultArray["title"] = "Leaderboard";
     $resultArray["message"] = $leaderboardMessage;
+    $resultArray["hide_message"] = false;
+    echo json_encode($resultArray);
+}
+
+function showWinnerMessage(){
+    $winnerDeviceId = "b5a838db2b5ce0db";
+    
+    $inputJSON = file_get_contents('php://input');
+    $input= json_decode( $inputJSON, TRUE ); //convert JSON into array
+    $myDeviceId = (string)$input["auth"]["device_id"];
+    
+    if(strcmp($myDeviceId, $winnerDeviceId) == 0){
+        
+        $firstFour = strtoupper(substr($myDeviceId, 0, 4));
+        $title = "CONGRATULATIONS!";
+        $message = "You are the lucky winner of the 50€ voucher! We thank you for your contribution. <br /><br />"
+                . "Please send us the following sequence for verification:<br /> "
+                . "<b>$firstFour</b><br /> "
+                . "with your contact details to <br />"
+                . "<b>gu7668@student.uni-lj.si</b>";
+    }
+    else{
+        $title = "Thank you for helping us!";
+        $message = "The study has finished. We are very thankful for your support "
+                . "and contribution in our study. <br /> <br />"
+                . "Unfortunately you are not the lucky winner of the 50€ voucher.";
+    }
+    
+    $resultArray["success"] = true;
+    $resultArray["title"] = $title;
+    $resultArray["message"] = $message;
     $resultArray["hide_message"] = false;
     echo json_encode($resultArray);
 }
@@ -114,14 +150,7 @@ function postRecords(){
         $dataList = $input["data"];
 
         $where = array("auth.device_id" => $authId);
-        /*$count = $usersCollection->count($where);
-        if($count == 0){
-            $usersCollection->insert($input);
-        }
-         * $result = $usersCollection->update($where, 
-                array('$push' => array('data' => array('$each' => $dataList))), 
-                array("upsert" => true));
-        else{*/
+        
         $confirmIds = array();
         $alreadyExistedIds = array();
         foreach ($dataList as $data) {
@@ -142,10 +171,8 @@ function postRecords(){
                     $result = $dbCollectionToSave->update($where, 
                         array('$push' => array('data' => $data)), 
                         array("upsert" => true));
-                    ////print_r($result);
-                    //echo "Ok: " . $result["ok"] ." Modified:  " . $result["nModified"] . " Inserted: " . $result["nInserted"];
+                    
                     if($result["ok"] == 1){
-                        //echo "Confirm ids";
                         $confirmIds[] = $data["database_id"];
                     }
                 } catch(Exception $e){
