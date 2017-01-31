@@ -13,7 +13,7 @@ This project is part of TaskyApp system developed for a UbitTention paper and a 
 # More information
 ### [TaskyApp website](http://193.2.72.121/)  
   
-<a href='https://play.google.com/store/apps/details?id=si.uni_lj.fri.taskyapp&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://cdn.rawgit.com/steverichey/google-play-badge-svg/2add6d4e/img/en_get.svg'/></a>
+<a href='https://play.google.com/store/apps/details?id=si.uni_lj.fri.taskyapp&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://cdn.rawgit.com/steverichey/google-play-badge-svg/2add6d4e/img/en_get.svg' width="40%"/></a>
 
 # License
 If you use the code in research projects please cite:
